@@ -1,0 +1,40 @@
+// input search form
+//sidebar filter
+.input-search {
+  position: relative;
+
+  input {
+    padding-right: 36px;
+  }
+
+  .input-search__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 4px;
+    background-color: #0e808c;
+    padding: 4px;
+    border-radius: 4px;
+
+    i {
+      color: #FFF;
+      font-size: 20px;
+    }
+  }
+}
+
+.input-search-lg {
+  input {
+    padding-right: 50px !important;
+  }
+
+  span {
+    width: 36px;
+    height: 36px;
+    text-align: center;
+
+    i {
+      margin-top: 3px;
+    }
+  }
+}

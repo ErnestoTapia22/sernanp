@@ -1,0 +1,49 @@
+.rl-sidebar {
+  width: var(--width-sidebar) !important;
+
+  @include media-breakpoint-down(md) {
+    &.active {
+      right: 0 !important;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    left: 0;
+  }
+
+  @include media-breakpoint-down(lg) {
+    right: calc(var(--width-sidebar) * -1) !important;
+  }
+
+}
+
+.push-content {
+  width: 100%;
+  
+  @include media-breakpoint-up(lg) {
+    margin-left: var(--width-sidebar);
+    max-width: calc(100% - var(--width-sidebar));
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__wrapper {
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  //max-width: 1280px;
+  //margin-left: 250px;
+ // margin-right: auto;
+
+   @media all and (min-width: 992px) {
+     margin-left:250px;
+     margin-left: var(--width-sidebar);
+     //margin-right:auto;
+     max-width: 1100px;
+     
+     max-width: calc(100% - var(--width-sidebar));
+  } 
+
+}

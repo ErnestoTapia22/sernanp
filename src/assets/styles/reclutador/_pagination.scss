@@ -1,0 +1,17 @@
+/**
+custom pagination
+*/
+.pagination {
+  .page-link {
+    color: $cl-primary !important;
+  }
+}
+
+.pagination .page-item.active .page-link,
+.pagination .page-item:hover .page-link,
+.pagination .page-item:focus .page-link,
+.pagination .page-item:active .page-link {
+  background: $cl-primary!important;
+  border-color: $cl-primary-bold!important;
+  color: #FFF!important;
+}

@@ -1,0 +1,51 @@
+//buttons
+
+.rcl-btn {
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: .03em;
+
+  &:disabled {
+    background-color: $cl-btn-disabled !important;
+    color: #4e4e4e;
+    border-color: #c1c1c1 !important;
+  }
+
+  &:not(:disabled) {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+}
+
+.rcl-btn-delete {
+  width: 110px;
+  height: 38px;
+  padding: 7px;
+}
+
+.rcl-btn-lg {
+  height: 48px;
+  font-size: .98rem !important;
+}
+
+.rcl-btn-primary {
+  background-color: $cl-primary;
+  color: #fff;
+
+  &:hover {
+    background-color: $cl-primary-bold;
+  }
+}
+
+.btn-new-notice {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+}
+.btn-wload{
+    height: 36px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-width: 120px;
+}

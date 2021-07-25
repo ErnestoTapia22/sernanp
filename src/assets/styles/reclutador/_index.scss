@@ -1,0 +1,18 @@
+@import '~ngx-toastr/toastr.css';
+@import './../../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3';
+@import 'settings';
+
+//components
+@import 'navbar';
+@import 'layout-sidebar';
+@import 'sidebar-filter';
+@import 'buttons';
+@import 'inputs';
+@import 'loader';
+@import 'scroll';
+@import 'list-info-ad';
+@import 'new-aviso';
+@import 'new-aviso';
+@import 'badge-tags';
+@import 'pagination';
+@import 'helpers';

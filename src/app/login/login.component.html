@@ -1,0 +1,64 @@
+<div class="container-welcome mt-50">
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- <div
+        *ngIf="alert"
+        class="alert alert-fill-danger text-center"
+        role="alert"
+      >
+        <i class="mdi mdi-alert-circle mr-1"></i>
+        {{ message }}
+      </div> -->
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-sm-12 text-center">
+      <label><strong>Iniciar Sesión</strong></label>
+      <p>Ingrese su usuario y contraseña registrados para poder acceder</p>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <form [formGroup]="loginForm" class="w-100" (ngSubmit)="onSubmit()">
+      <div class="col-sm-12">
+        <div class="form-group form-group-custom">
+          <label for="email" class="label-custom">Usuario:</label>
+          <input
+            type="text"
+            formControlName="email"
+            id="email"
+            class="form-control input-custom"
+            [ngClass]="{ 'border-danger': submitted && f.email.errors }"
+          />
+        </div>
+        <div *ngIf="submitted && f.email.errors" class="invalid">
+          <div *ngIf="f.email.errors.required">usuario es requerido</div>
+          <div *ngIf="f.email.errors.email">El usuario no es válido</div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group form-group-custom">
+          <label for="password" class="label-custom">Contraseña:</label>
+          <input
+            type="password"
+            formControlName="password"
+            id="password"
+            class="form-control input-custom"
+            [ngClass]="{ 'border-danger': submitted && f.password.errors }"
+          />
+        </div>
+        <div *ngIf="submitted && f.password.errors" class="invalid">
+          <div *ngIf="f.password.errors.required">Password es requerido</div>
+        </div>
+      </div>
+      <div class="col-sm-12 mt-3 mb-3">
+        <button class="btn btn-outline-primary btn-register btn-block">
+          <strong>Ingresar</strong>
+        </button>
+      </div>
+    </form>
+    <div class="col-sm-12 text-center text-size text-color">
+      <a routerLink="/authentication/email-send">¿Olvidaste tu contraseña?</a>
+    </div>
+  </div>
+  <div class="line text-center">*</div>
+</div>
