@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { BlankLayoutComponent } from './layout/blank-layout/blank-layout.component';
-import { EmptyLayoutComponent } from './layout/empty-layout/empty-layout.component';
-import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
+import { LoginComponent } from './pages/login/login.component';
+import { BlankLayoutComponent } from './pages/layout/blank-layout/blank-layout.component';
+import { EmptyLayoutComponent } from './pages/layout/empty-layout/empty-layout.component';
+import { FullLayoutComponent } from './pages/layout/full-layout/full-layout.component';
+import { BaseMapComponent } from './base-map/base-map.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -14,6 +15,14 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+    ],
+  },
+  {
+    path: 'map',
+    component: FullLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'visor', pathMatch: 'full' },
+      { path: 'visor', component: BaseMapComponent },
     ],
   },
 ];
