@@ -1,7 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import MapView from '@arcgis/core/views/SceneView';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  NgZone,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
-import Graphic from '@arcgis/core/Graphic';
+import BookMarks from '@arcgis/core/widgets/Bookmarks';
+import Expand from '@arcgis/core/widgets/Expand';
+import WebMap from '@arcgis/core/WebMap';
+import config from '@arcgis/core/config';
 import { EsriMapService } from '../_services/esri-map.service';
 
 @Component({
@@ -9,33 +22,69 @@ import { EsriMapService } from '../_services/esri-map.service';
   templateUrl: './base-map.component.html',
   styleUrls: ['./base-map.component.css'],
 })
-export class BaseMapComponent implements OnInit {
-  @ViewChild('mapViewNode', { static: true }) private viewNode: ElementRef;
-  mapView: MapView;
-  panRequestSubscription: any;
-  constructor(private mapService: EsriMapService) {}
-  panMap(coordinates) {
-    this.mapView.goTo(coordinates).then(() => {
-      this.mapView.zoom = 18;
-      setTimeout(() => {
-        this.mapService.panToWonderComplete();
-      }, 2000);
-    });
-  }
+export class BaseMapComponent implements OnInit, OnDestroy {
+  @ViewChild('mapViewNode', { static: true }) private viewNode!: ElementRef;
+  @Input() mapProperties!: any;
+  @Input() mapViewProperties!: any;
+  @Output() mapInit: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit(): void {
-    this.panRequestSubscription = this.mapService.panRequest.subscribe(() => {
-      this.panMap(this.mapService.wonderCoordinates);
-    });
-    const map: __esri.Map = new Map({
+  private view: any = null;
+
+  constructor(private zone: NgZone, private mapService: EsriMapService) {}
+  initializeMap(): Promise<any> {
+    const container = this.viewNode;
+    const map: Map = new Map({
       basemap: 'hybrid',
       ground: 'world-elevation',
     });
-    this.mapView = new MapView({
+    const mapView = new MapView({
       container: this.viewNode.nativeElement,
       center: [-77.744, -8.9212],
       zoom: 6,
       map,
+    });
+
+    const bookMarks = new BookMarks({
+      view: mapView,
+      editingEnabled: true,
+    });
+    const bkExpand = new Expand({
+      view: mapView,
+      content: bookMarks,
+      expanded: false,
+    });
+    mapView.ui.add(bkExpand, 'bottom-trailing');
+    this.view = mapView;
+    return this.view.when();
+  }
+  ngOnInit(): void {
+    // config.assetsPath='assets/'
+
+    this.initializeMap().then(() => {
+      console.log('the map is ready');
+    });
+    // this.zone.runOutsideAngular(()=>{
+    //   this.loadMap()
+    // })
+  }
+  ngOnDestroy(): void {
+    if (this.view) {
+      // destroy the map view
+      this.view.destroy();
+    }
+  }
+  loadMap(): void {
+    this.mapService.isLoaded.subscribe((n: any) => {
+      this.view = n.view;
+      this.zone.run(() => {
+        this.mapInit.emit({ map: n.map, view: n.view });
+        this.mapInit.complete();
+      });
+    });
+    this.mapService.loadMap({
+      ...this.mapProperties,
+      ...this.mapViewProperties,
+      container: this.viewNode.nativeElement,
     });
   }
 }

@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { EsriMapService } from '../../_services/esri-map.service';
+// import { EsriMapService } from '../../_services/esri-map.service';
 
 export interface Wonder {
   id: number;
@@ -28,14 +28,14 @@ const WONDER_DATA = [
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent {
-  constructor(private mapService: EsriMapService) {}
+  constructor() {}
   displayedColumns: string[] = ['id', 'name', 'coordinates'];
 
   dataSource = new TestDataSource();
 
-  handleClick(row) {
-    this.mapService.panToWonder(row.coordinates);
-  }
+  // handleClick(row) {
+  //   this.mapService.panToWonder(row.coordinates);
+  // }
 }
 
 export class TestDataSource extends DataSource<Wonder> {
