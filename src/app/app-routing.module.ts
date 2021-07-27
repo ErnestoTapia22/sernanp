@@ -6,6 +6,7 @@ import { BlankLayoutComponent } from './pages/layout/blank-layout/blank-layout.c
 import { EmptyLayoutComponent } from './pages/layout/empty-layout/empty-layout.component';
 import { FullLayoutComponent } from './pages/layout/full-layout/full-layout.component';
 import { BaseMapComponent } from './base-map/base-map.component';
+import { IndexComponent } from './pages/index/index.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'visor', pathMatch: 'full' },
       { path: 'visor', component: BaseMapComponent },
+      { path: 'index', component: IndexComponent },
     ],
   },
 ];

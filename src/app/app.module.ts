@@ -20,6 +20,10 @@ import { BaseMapComponent } from './base-map/base-map.component';
 import { TableComponent } from './pages/table/table.component';
 import { EsriMapService } from './_services/esri-map.service';
 import { CdkTableModule } from '@angular/cdk/table';
+import { IndexComponent } from './pages/index/index.component';
+import { BaseWidgetComponent } from './widgets/base-widget/base-widget.component';
+import { CustomWidgetComponent } from './widgets/custom-widget/custom-widget.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,9 @@ import { CdkTableModule } from '@angular/cdk/table';
     HeaderLoginComponent,
     BaseMapComponent,
     TableComponent,
+    IndexComponent,
+    BaseWidgetComponent,
+    CustomWidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,8 +52,10 @@ import { CdkTableModule } from '@angular/cdk/table';
     HttpClientModule,
     BrowserAnimationsModule,
     CdkTableModule,
+    DragDropModule,
   ],
   providers: [EsriMapService],
   bootstrap: [AppComponent],
+  exports: [BaseWidgetComponent, DragDropModule],
 })
 export class AppModule {}

@@ -81,6 +81,6 @@ export class LoginComponent implements OnInit {
     //       //this.router.navigateByUrl('/admin/usuario');
     //     }
     //   });
-    this.router.navigateByUrl('/map/visor');
+    this.router.navigateByUrl('/map/index');
   }
 }
