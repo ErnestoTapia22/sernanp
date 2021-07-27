@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-full-layout',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FullLayoutComponent implements OnInit {
   constructor() {}
-
+  status: boolean = false;
+  clickEvent() {
+    this.status = !this.status;
+  }
   ngOnInit(): void {}
 }

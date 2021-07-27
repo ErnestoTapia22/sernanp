@@ -5,6 +5,7 @@ import WebMap from '@arcgis/core/WebMap';
 import Widget from '@arcgis/core/widgets/Widget';
 import Layer from '@arcgis/core/layers/Layer';
 import Map from '@arcgis/core/Map';
+import layer from '@arcgis/core/layers/MapImageLayer';
 
 export type Position =
   | 'bottom-leading'
