@@ -27,6 +27,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TreeviewModule } from 'ngx-treeview';
 import { LayerService } from './_services/layer.service';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
+import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { ConsultationsComponent } from './pages/consultations/consultations.comp
     BaseWidgetComponent,
     CustomWidgetComponent,
     ConsultationsComponent,
+    ResizeMapDirective,
   ],
   imports: [
     BrowserModule,
