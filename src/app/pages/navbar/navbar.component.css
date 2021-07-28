@@ -4,5 +4,7 @@
 /* Navbar */
 .navbar {
   background-color: #007885;
-  height: 50px;
+  height: 55px;
+  border-top: 1px solid #007885;
+  border-bottom: 1px solid #007885;
 }

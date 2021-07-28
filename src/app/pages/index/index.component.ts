@@ -58,7 +58,7 @@ export class IndexComponent implements OnInit {
     });
 
     view.ui.add(bkExpand, 'bottom-trailing');
-    view.ui.add(MeExpand, 'bottom-trailing');
+    // view.ui.add(MeExpand, 'bottom-trailing');
     view.ui.add(cw, 'bottom-trailing');
   }
 }

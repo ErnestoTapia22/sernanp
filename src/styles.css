@@ -3,7 +3,9 @@
 @import "assets/styles/_misc.scss";
 
 @import "assets/styles/_variables.scss"; */
-
+body {
+  height: 100%;
+}
 /* @import "assets/styles/_fonts.scss";
 @import "assets/styles/_functions.scss";
 @import "assets/styles/mixins/_background.scss";

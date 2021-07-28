@@ -24,7 +24,9 @@ import { IndexComponent } from './pages/index/index.component';
 import { BaseWidgetComponent } from './widgets/base-widget/base-widget.component';
 import { CustomWidgetComponent } from './widgets/custom-widget/custom-widget.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { TreeviewModule } from 'ngx-treeview';
+import { LayerService } from './_services/layer.service';
+import { ConsultationsComponent } from './pages/consultations/consultations.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     IndexComponent,
     BaseWidgetComponent,
     CustomWidgetComponent,
+    ConsultationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,8 +56,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     BrowserAnimationsModule,
     CdkTableModule,
     DragDropModule,
+    TreeviewModule.forRoot(),
   ],
-  providers: [EsriMapService],
+  providers: [EsriMapService, LayerService],
   bootstrap: [AppComponent],
   exports: [BaseWidgetComponent, DragDropModule],
 })

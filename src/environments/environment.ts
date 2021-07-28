@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   apiUrl: 'url-api',
   webUrl: 'web-url',
+  initialLayers:
+    'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_100K/MapServer',
 };
 
 /*

@@ -7,6 +7,7 @@ import { EmptyLayoutComponent } from './pages/layout/empty-layout/empty-layout.c
 import { FullLayoutComponent } from './pages/layout/full-layout/full-layout.component';
 import { BaseMapComponent } from './base-map/base-map.component';
 import { IndexComponent } from './pages/index/index.component';
+import { ConsultationsComponent } from './pages/consultations/consultations.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -25,6 +26,14 @@ const routes: Routes = [
       { path: '', redirectTo: 'visor', pathMatch: 'full' },
       { path: 'visor', component: BaseMapComponent },
       { path: 'index', component: IndexComponent },
+    ],
+  },
+  {
+    path: 'consultations',
+    component: FullLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'index', pathMatch: 'full' },
+      { path: 'index', component: ConsultationsComponent },
     ],
   },
 ];
