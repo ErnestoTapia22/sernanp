@@ -6,6 +6,28 @@
 body {
   height: 100%;
 }
+.center-div {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.mat-form-field-flex {
+  background-color: #ffffff !important;
+}
+
+.mat-card-header-text {
+  margin: 0 0px !important;
+}
+
+.mat-card-header {
+  font-size: 16pt;
+  margin-bottom: 30px;
+}
+
+.card-content {
+  font-size: 12pt;
+}
 /* @import "assets/styles/_fonts.scss";
 @import "assets/styles/_functions.scss";
 @import "assets/styles/mixins/_background.scss";

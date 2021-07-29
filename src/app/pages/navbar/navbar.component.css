@@ -8,3 +8,21 @@
   border-top: 1px solid #007885;
   border-bottom: 1px solid #007885;
 }
+.top-5 {
+  top: 5px !important;
+}
+.color-white {
+  color: #fff;
+}
+.alert-section {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  height: 70px;
+}
+
+.centered-card {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

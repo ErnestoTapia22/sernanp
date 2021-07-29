@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
 import {
   HttpHeaders,
   HttpParams,
@@ -13,8 +12,8 @@ import {
   providedIn: 'root',
 })
 export class ApiBaseService {
-  private segmentAPI = '/api/v2/';
-  private environment_api = `${environment.apiUrl}${this.segmentAPI}`;
+  // private segmentAPI = '/api/v2/';
+  // private environment_api = `${environment.apiUrl}${this.segmentAPI}`;
   private token: any;
 
   private headers;
@@ -23,50 +22,45 @@ export class ApiBaseService {
       this.token = JSON.parse(localStorage.getItem('token')).access_token;
     }
 
-    this.headers = this.getHttHeaders();
+    this.headers = this.getHttpHeaders();
   }
-  get(path: string, params?: any): Observable<any> {
-    //return this.http.get<any>(`${this.enviroment_api}${path}`, { headers: this.headers, params: params })
+  get(url: string, params?: any): Observable<any> {
     return this.http
-      .get<any>(`${environment.apiUrl}/${path}`, { params: params })
+      .get<any>(url, { params: params })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
 
-  post(path: string, body: object = {}): Observable<any> {
-    //return this.http.post(`${this.enviroment_api}${path}`, body, { headers: this.headers })
+  post(url: string, body: object = {}): Observable<any> {
     return this.http
-      .post(`${environment.apiUrl}/${path}`, body)
+      .post(url, body)
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  put(path: string, body: object = {}): Observable<any> {
-    //return this.http.put(`${this.enviroment_api}${path}`, body, { headers: this.headers })
+  put(url: string, body: object = {}): Observable<any> {
     return this.http
-      .put(`${environment.apiUrl}/${path}`, body, { headers: this.headers })
+      .put(url, body, { headers: this.headers })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  postFormData(path: string, body: object = {}): Observable<any> {
+  postFormData(url: string, body: object = {}): Observable<any> {
     const formdata = new FormData();
-    const headers: any = this.getHttHeaders('formdata');
+    const headers: any = this.getHttpHeaders('formdata');
     for (const key in body) {
       formdata.append(key, body[key]);
     }
-    //return this.http.post(`${this.enviroment_api}${path}`, formdata, { headers: headers })
     return this.http
-      .post(`${environment.apiUrl}/${path}`, formdata, { headers: headers })
+      .post(url, formdata, { headers: headers })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  delete(path: string): Observable<any> {
-    //return this.http.delete<any>(`${this.enviroment_api}${path}`, { headers: this.headers })
+  delete(url: string): Observable<any> {
     return this.http
-      .delete<any>(`${environment.apiUrl}/${path}`, { headers: this.headers })
+      .delete<any>(url, { headers: this.headers })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  private getHttHeaders(type?: string): HttpHeaders {
+  private getHttpHeaders(type?: string): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
     switch (type) {
       case 'formdata':

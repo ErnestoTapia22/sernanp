@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   public sidebarOpened = false;
   dataUser: any;
-  constructor() {}
+  hasAlerts: number = 0;
+  constructor(private alertService: AlertService) {}
 
   ngOnInit(): void {}
 
@@ -19,5 +21,9 @@ export class NavbarComponent implements OnInit {
     } else {
       document.querySelector('.sidebar-offcanvas').classList.remove('active');
     }
+  }
+  hasAlertsForDisplay(e) {
+    console.log(e);
+    this.hasAlerts = e;
   }
 }

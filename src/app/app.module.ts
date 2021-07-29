@@ -13,7 +13,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './pages/login/login.component';
 import { BlankLayoutComponent } from './pages/layout/blank-layout/blank-layout.component';
 import { EmptyLayoutComponent } from './pages/layout/empty-layout/empty-layout.component';
-import { AlertDirective } from './pages/_directives/alert.directive';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { HeaderLoginComponent } from './pages/header-login/header-login.component';
 import { BaseMapComponent } from './base-map/base-map.component';
@@ -28,6 +27,9 @@ import { TreeviewModule } from 'ngx-treeview';
 import { LayerService } from './_services/layer.service';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
+import { AlertComponent } from './pages/_directives/alert/alert.component';
+import { BaseService } from './_services/base.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,6 @@ import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
     LoginComponent,
     BlankLayoutComponent,
     EmptyLayoutComponent,
-    AlertDirective,
     NavbarComponent,
     HeaderLoginComponent,
     BaseMapComponent,
@@ -45,6 +46,7 @@ import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
     CustomWidgetComponent,
     ConsultationsComponent,
     ResizeMapDirective,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,8 +62,8 @@ import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
     DragDropModule,
     TreeviewModule.forRoot(),
   ],
-  providers: [EsriMapService, LayerService],
+  providers: [EsriMapService, LayerService, BaseService],
   bootstrap: [AppComponent],
-  exports: [BaseWidgetComponent, DragDropModule],
+  exports: [BaseWidgetComponent, DragDropModule, AlertComponent],
 })
 export class AppModule {}
