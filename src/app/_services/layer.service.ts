@@ -46,16 +46,18 @@ export class LayerService {
             );
             if (found) {
               found['alreadyFound'] = false;
-              responseLayers[i]['alreadyFound'] = true;
-              copyResponseLayers[i]['alreadyFound'] = true;
+              responseLayers[found['id']].alreadyFound = true;
+              copyResponseLayers[found['id']].alreadyFound = true;
               formatTemplate['children'].push(found);
             }
           }
-          this.recursiveConstructor(
-            formatTemplate['children'],
-            null,
-            copyResponseLayers
-          );
+          if (formatTemplate['children'].length > 0) {
+            this.recursiveConstructor(
+              formatTemplate['children'],
+              formatedLayers,
+              copyResponseLayers
+            );
+          }
         }
         formatedLayers.push(formatTemplate);
       }
@@ -63,12 +65,16 @@ export class LayerService {
     console.log(formatedLayers);
   }
 
+  destructuring(obj, target) {
+    let outPut = obj.reduce((out, { id, name }) => {});
+  }
+
   getFormatLayersJson(): any {
     try {
       this.getInitialLayersJson().subscribe(
         (response) => {
           if (response && response.layers && response.layers.length > 0) {
-            let addFound = [];
+            const addFound = [];
             const responseLayers = response.layers;
             console.log(responseLayers);
             for (let i = 0; i < responseLayers.length; i++) {
@@ -77,8 +83,17 @@ export class LayerService {
               formatTemplate['alreadyFound'] = false;
               addFound.push(formatTemplate);
             }
-            let formatedLayers = [];
-            this.recursiveConstructor(addFound, formatedLayers, addFound);
+            const formatedLayers = [];
+            const object1 = [];
+
+            const copyResponse1 = Object.assign(object1, addFound);
+            const object2 = [];
+            const copyResponse2 = Object.assign(object2, addFound);
+            this.recursiveConstructor(
+              copyResponse1,
+              formatedLayers,
+              copyResponse2
+            );
 
             return formatedLayers;
           } else {

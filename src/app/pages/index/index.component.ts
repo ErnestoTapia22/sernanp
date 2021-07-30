@@ -36,8 +36,8 @@ export class IndexComponent implements OnInit {
       center: [-77.744, -8.9212],
       zoom: 6,
     };
-    this.getFormatLayers();
-    // this.getFormatLayers2();
+    // this.getFormatLayers();
+    this.getFormatLayers2();
   }
 
   onMapInit({ map, view }) {
@@ -98,9 +98,18 @@ export class IndexComponent implements OnInit {
         visible: true,
         opacity: 1,
       });
+      let sublayers = [];
+      sublayers.push({
+        id: 0,
+        text: 'test1',
+        value: 0,
+        children: [],
+      });
+      mapImageLayer.when((layer) => {
+        layer.sublayers = sublayers;
+      });
       map.add(mapImageLayer);
       console.log(map.allLayers);
-      //  mapImageLayer.sublayers.push({})
     } catch (error) {
       this.alertService.error(error.error.message, 'Error al crear capas');
     }
