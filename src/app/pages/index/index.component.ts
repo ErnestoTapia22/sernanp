@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { BaseService } from '../../_services/base.service';
-import BookMarks from '@arcgis/core/widgets/Bookmarks';
-import Expand from '@arcgis/core/widgets/Expand';
-import Measurement from '@arcgis/core/widgets/Measurement';
-import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import Basemap from '@arcgis/core/Basemap';
-import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
-import { BaseWidgetComponent } from '../../widgets/base-widget/base-widget.component';
-import CustomWidget from 'src/app/widgets/custom-widget';
-import { expand } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+//services
 import { LayerService } from '../../_services/layer.service';
 import { AlertService } from '../../_services/alert.service';
+import { BaseService } from '../../_services/base.service';
+//widgets
+import BookMarks from '@arcgis/core/widgets/Bookmarks';
+import Expand from '@arcgis/core/widgets/Expand';
+import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
+import CustomWidget from 'src/app/widgets/custom-widget';
+//map
+import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
+//tree
+import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
+//enviroment
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-index',
@@ -18,15 +21,27 @@ import { AlertService } from '../../_services/alert.service';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
+  //variables
   mapProperties: any;
   mapViewProperties: any;
-  @ViewChild('test', { static: true }) private viewNode!: ElementRef;
+  items: any[] = [];
+
+  selectedLayers: any;
+  unseLectedLayers: any;
+  map: any;
+  view: any;
+  parentLayer: MapImageLayer;
+
+  //change detector in dom
+  @ViewChild(TreeviewComponent, { static: false })
+  treeviewComponent: TreeviewComponent;
+  //constructor
   constructor(
     private baseService: BaseService,
     private layerService: LayerService,
     private alertService: AlertService
   ) {}
-
+  //index init
   ngOnInit(): void {
     this.mapProperties = {
       basemap: 'hybrid',
@@ -36,16 +51,16 @@ export class IndexComponent implements OnInit {
       center: [-77.744, -8.9212],
       zoom: 6,
     };
-    // this.getFormatLayers();
-    this.getFormatLayers2();
+    this.getItems([]);
   }
-
+  //on map init
   onMapInit({ map, view }) {
+    this.map = map;
     this.addWidget(map, view);
     this.addLayers(map);
   }
+  //create widgets
   addWidget(map, view) {
-    //create widgets
     const customW = new CustomWidget((map = map), (view = view));
     const bmg = new BaseMapGallery({
       view: view,
@@ -77,44 +92,75 @@ export class IndexComponent implements OnInit {
     view.ui.add(bkExpand, 'bottom-trailing');
     view.ui.add(cw, 'bottom-trailing');
   }
-  getFormatLayers(): void {
-    this.layerService.getInitialLayersJson().subscribe(
-      (response) => {
-        console.log(response);
-        // this.alertService.success('Todo ok', 'Funciono', { autoClose: false });
-      },
-      (error) => {
-        console.log(error.errors.message);
-        this.alertService.error(error.errors.message, 'Error en el servicio');
-      }
-    );
-  }
-  addLayers(map) {
+  //add initial layers
+  async addLayers(map) {
     try {
-      const mapImageLayer = new MapImageLayer({
-        url:
-          'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/SCADA/MapServer',
-        id: this.baseService.newUUID(),
-        visible: true,
-        opacity: 1,
-      });
-      let sublayers = [];
-      sublayers.push({
-        id: 0,
-        text: 'test1',
-        value: 0,
-        children: [],
-      });
-      mapImageLayer.when((layer) => {
-        layer.sublayers = sublayers;
-      });
-      map.add(mapImageLayer);
-      console.log(map.allLayers);
+      const initialLayers = environment.initialLayers;
+      if (initialLayers.length > 0) {
+        initialLayers.forEach(async (layer) => {
+          if (!layer.disabled) {
+            const mapImageLayer = new MapImageLayer({
+              url: layer.url,
+              id: 'layerMain',
+              visible: true,
+              opacity: 1,
+              imageMaxHeight: 500,
+              imageMaxWidth: 500,
+            });
+            let layers = await this.layerService.getFormatLayersJson2(
+              layer.url
+            );
+            mapImageLayer.sublayers = layers;
+            this.getItems(layers);
+
+            map.add(mapImageLayer);
+          }
+        });
+      }
     } catch (error) {
-      this.alertService.error(error.error.message, 'Error al crear capas');
+      this.alertService.error(error, 'Error al crear capas');
     }
   }
-  getFormatLayers2() {
-    console.log(this.layerService.getFormatLayersJson());
+  // add sublayers to tree
+  async getItems(parentChildObj) {
+    if (parentChildObj === undefined) return [];
+    let itemsArray = [];
+
+    parentChildObj.forEach((set) => {
+      itemsArray.push(new TreeviewItem(set));
+    });
+    this.items = itemsArray;
+  }
+  //on tree selected checkbox to change visibility
+  onSelectedChange(event) {
+    const unCheckedItems = this.treeviewComponent.selection.uncheckedItems;
+    const checkedItems = this.treeviewComponent.selection.checkedItems;
+    this.selectedLayers = checkedItems.map((item) => item.value);
+    this.unseLectedLayers = unCheckedItems.map((item) => item.value);
+
+    const parentLayer = this.map.findLayerById('layerMain'); //parent layer
+    if (parentLayer) {
+      if (this.unseLectedLayers.length > 0) {
+        this.unseLectedLayers.forEach((element) => {
+          let subLayerUnchecked = parentLayer.findSublayerById(element);
+
+          if (subLayerUnchecked) {
+            subLayerUnchecked.visible = false;
+          }
+        });
+        this.selectedLayers.forEach((element) => {
+          let subLayerChecked = parentLayer.findSublayerById(element);
+          if (subLayerChecked) {
+            subLayerChecked.visible = true;
+          }
+        });
+      }
+    }
+  }
+  testService() {
+    let obj = this.layerService.getFormatLayersJson2(
+      'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_100K/MapServer'
+    );
+    console.log(obj);
   }
 }

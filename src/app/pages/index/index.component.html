@@ -1,9 +1,35 @@
-<app-base-map
-  [mapProperties]="mapProperties"
-  [mapViewProperties]="mapViewProperties"
-  (mapInit)="onMapInit($event)"
->
-</app-base-map>
+<div>
+  <app-base-map
+    [mapProperties]="mapProperties"
+    [mapViewProperties]="mapViewProperties"
+    (mapInit)="onMapInit($event)"
+  >
+  </app-base-map>
+
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvasRight"
+    aria-labelledby="offcanvasRightLabel"
+    data-bs-backdrop="false"
+  >
+    <div class="offcanvas-header">
+      <h5 id="offcanvasRightLabel">Capas</h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <ngx-treeview
+        [items]="items"
+        (selectedChange)="onSelectedChange($event)"
+      ></ngx-treeview>
+    </div>
+  </div>
+</div>
 <!-- <div class="widget-container" #test>
   <div class="widget" cdkDragBoundary=".widget-container" cdkDrag>
     I can only be dragged within the dotted container

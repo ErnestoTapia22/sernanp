@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiBaseService } from './api-base.service';
 import { AlertService } from '../_services/alert.service';
+import { lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,8 +20,8 @@ export class LayerService {
     this.urlInitialLayerJson = `${environment.initialLayers}${this.jsonLayer}`;
   }
 
-  getInitialLayersJson(): Observable<any> {
-    return this.apiService.get(this.urlInitialLayerJson);
+  getInitialLayersJson(url): Observable<any> {
+    return this.apiService.get(`${url}${this.jsonLayer}`);
   }
   getInitialLayers(): Observable<any> {
     return this.apiService.get(`${environment.initialLayers}`);
@@ -65,51 +66,605 @@ export class LayerService {
     console.log(formatedLayers);
   }
 
-  destructuring(obj, target) {
-    let outPut = obj.reduce((out, { id, name }) => {});
-  }
-
-  getFormatLayersJson(): any {
+  async getFormatLayersJson2(url): Promise<any> {
     try {
-      this.getInitialLayersJson().subscribe(
-        (response) => {
-          if (response && response.layers && response.layers.length > 0) {
-            const addFound = [];
-            const responseLayers = response.layers;
-            console.log(responseLayers);
-            for (let i = 0; i < responseLayers.length; i++) {
-              let formatTemplate = {};
-              formatTemplate = responseLayers[i];
-              formatTemplate['alreadyFound'] = false;
-              addFound.push(formatTemplate);
-            }
-            const formatedLayers = [];
-            const object1 = [];
+      const layers$ = this.getInitialLayersJson(url);
+      const layers$$ = await lastValueFrom(layers$);
+      console.log(layers$$);
+      if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
+        const responseLayers = layers$$.layers;
+        const jsonSublayers = [
+          {
+            id: 0,
+            title: 'Geología - Franja Sur',
+            visible: true,
+            text: 'Geología - Franja Sur',
+            value: 0,
+            checked: true,
+            collapsed: true,
+            disabled: false,
+            children: [
+              {
+                id: 8,
+                title: 'Geología 100K',
+                visible: true,
+                text: 'Geología 100K',
+                value: 8,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 10,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 10,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 9,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 9,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 10,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 10,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 9,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 9,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+              {
+                id: 5,
+                title: 'Geología 50K',
+                visible: true,
+                text: 'Geología 50K',
+                value: 5,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 7,
+                    title: 'Geología 50K Franjas',
+                    visible: true,
+                    text: 'Geología 50K Franjas',
+                    value: 7,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 6,
+                    title: 'Contacto 50K Franjas',
+                    visible: true,
+                    text: 'Contacto 50K Franjas',
+                    value: 6,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 7,
+                    title: 'Geología 50K Franjas',
+                    visible: true,
+                    text: 'Geología 50K Franjas',
+                    value: 7,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 6,
+                    title: 'Contacto 50K Franjas',
+                    visible: true,
+                    text: 'Contacto 50K Franjas',
+                    value: 6,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+              {
+                id: 1,
+                title: 'Hojas',
+                visible: true,
+                text: 'Hojas',
+                value: 1,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 4,
+                    title: 'Boletines',
+                    visible: true,
+                    text: 'Boletines',
+                    value: 4,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 3,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 3,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 2,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 2,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 4,
+                    title: 'Boletines',
+                    visible: true,
+                    text: 'Boletines',
+                    value: 4,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 3,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 3,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 2,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 2,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+            ],
+            sublayers: [
+              {
+                id: 8,
+                title: 'Geología 100K',
+                visible: true,
+                text: 'Geología 100K',
+                value: 8,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 10,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 10,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 9,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 9,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 10,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 10,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 9,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 9,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+              {
+                id: 5,
+                title: 'Geología 50K',
+                visible: true,
+                text: 'Geología 50K',
+                value: 5,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 7,
+                    title: 'Geología 50K Franjas',
+                    visible: true,
+                    text: 'Geología 50K Franjas',
+                    value: 7,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 6,
+                    title: 'Contacto 50K Franjas',
+                    visible: true,
+                    text: 'Contacto 50K Franjas',
+                    value: 6,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 7,
+                    title: 'Geología 50K Franjas',
+                    visible: true,
+                    text: 'Geología 50K Franjas',
+                    value: 7,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 6,
+                    title: 'Contacto 50K Franjas',
+                    visible: true,
+                    text: 'Contacto 50K Franjas',
+                    value: 6,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+              {
+                id: 1,
+                title: 'Hojas',
+                visible: true,
+                text: 'Hojas',
+                value: 1,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 4,
+                    title: 'Boletines',
+                    visible: true,
+                    text: 'Boletines',
+                    value: 4,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 3,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 3,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 2,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 2,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 4,
+                    title: 'Boletines',
+                    visible: true,
+                    text: 'Boletines',
+                    value: 4,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    sublayers: [],
+                  },
+                  {
+                    id: 3,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 3,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 2,
+                    title: 'Franjas',
+                    visible: true,
+                    text: 'Franjas',
+                    value: 2,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 11,
+            title: 'Geología - Boletin Serie A',
+            visible: true,
+            text: 'Geología - Boletin Serie A',
+            value: 11,
+            checked: true,
+            collapsed: true,
+            disabled: false,
+            children: [
+              {
+                id: 12,
+                title: 'Geología 100K',
+                visible: true,
+                text: 'Geología 100K',
+                value: 12,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 14,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 14,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 13,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 13,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 14,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 14,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 13,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 13,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+            ],
+            sublayers: [
+              {
+                id: 12,
+                title: 'Geología 100K',
+                visible: true,
+                text: 'Geología 100K',
+                value: 12,
+                checked: true,
+                collapsed: true,
+                disabled: false,
+                children: [
+                  {
+                    id: 14,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 14,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 13,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 13,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+                sublayers: [
+                  {
+                    id: 14,
+                    title: 'Geología 100K',
+                    visible: true,
+                    text: 'Geología 100K',
+                    value: 14,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                  {
+                    id: 13,
+                    title: 'Contacto',
+                    visible: true,
+                    text: 'Contacto',
+                    value: 13,
+                    checked: true,
+                    collapsed: true,
+                    disabled: false,
+                    children: [],
+                    sublayers: [],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 15,
+            title: 'Relieve Topográfico',
+            visible: true,
+            text: 'Relieve Topográfico',
+            value: 15,
+            checked: true,
+            collapsed: true,
+            disabled: false,
+            children: [],
+            sublayers: [],
+          },
+        ];
 
-            const copyResponse1 = Object.assign(object1, addFound);
-            const object2 = [];
-            const copyResponse2 = Object.assign(object2, addFound);
-            this.recursiveConstructor(
-              copyResponse1,
-              formatedLayers,
-              copyResponse2
-            );
-
-            return formatedLayers;
-          } else {
-            return [];
-          }
-        },
-        (error) => {
-          this.alertService.error(
-            error.errors.message,
-            'Error en capas iniciales'
-          );
-          return [];
-        }
-      );
+        return jsonSublayers;
+      } else {
+        return [];
+      }
     } catch (error) {
-      this.alertService.error(error.errors.message, 'Error en capas iniciales');
+      this.alertService.error(error, 'Error al traer el json');
       return [];
     }
   }

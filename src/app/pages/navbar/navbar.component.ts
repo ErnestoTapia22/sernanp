@@ -23,7 +23,6 @@ export class NavbarComponent implements OnInit {
     }
   }
   hasAlertsForDisplay(e) {
-    console.log(e);
     this.hasAlerts = e;
   }
 }

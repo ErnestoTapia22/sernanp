@@ -16,7 +16,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   MeExpand: Expand;
   susbcription: Subscription;
   simpleItems = {
+    id: 1,
     text: 'parent-1',
+
     value: 'p1',
     children: [
       {
@@ -108,9 +110,17 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.status = !this.status;
   }
   ngOnInit(): void {
-    this.items = this.getItems([this.simpleItems, this.simpleItems2]);
+    // this.items = this.getItems([this.simpleItems, this.simpleItems2]);
+    // console.log(this.items);
     // this.loadMap();
   }
+
+  onSelectedChange(event) {
+    // console.log(event);
+  }
+
+  loadMap(): void {}
+  ngOnDestroy() {}
   getItems(parentChildObj) {
     let itemsArray = [];
     parentChildObj.forEach((set) => {
@@ -118,10 +128,4 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     });
     return itemsArray;
   }
-  onSelectedChange(event) {
-    // console.log(event);
-  }
-
-  loadMap(): void {}
-  ngOnDestroy() {}
 }
