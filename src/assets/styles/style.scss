@@ -1,0 +1,349 @@
+.modal .modal-dialog {
+  margin-top: 60px !important;
+}
+
+.btn-save {
+  color: #fff;
+  border-color: #007885;
+  background-color: #007885;
+  font-weight: 600;
+}
+
+.btn-cancelar {
+  color: #007885;
+  background-color: #fff;
+  border-color: #fff;
+  font-weight: 600;
+}
+
+.bg-modal .modal-content {
+  background-color: #fff !important;
+}
+
+.bg-download {
+  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 12px 12px;
+}
+
+.icon-circle {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 2px solid #dadada;
+  text-align: center;
+  color: #dadada;
+}
+
+.label-verificado-color {
+  color: #f1c60f;
+}
+
+.pl-add {
+  padding-left: 12.5px;
+}
+
+.form-control:focus {
+  border-color: #007885;
+  color: #007885;
+}
+
+.input-custom {
+  background: #f7f7f7;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  color: #007885;
+}
+
+.divider {
+  background: #039bab;
+  border: 1.5px solid #039bab;
+  //margin-left: 15px;
+  //margin-right: 15px;
+}
+
+.subdivider {
+  border: 1.5px solid #ede8e8;
+}
+
+.btn-edit {
+  background-color: #3ac2c2;
+  padding: 5px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.btn-anadir {
+  background-color: #3ac2c2;
+  padding: 5px 10px 5px 10px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.btn-download {
+  background: #f1c60f;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.btn-guardar {
+  background: #f1c60f;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.btn-delete {
+  background: #f76f6f;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.btn-delete .menu-icon {
+  margin-right: 0;
+}
+
+.btn-edit .menu-icon {
+  margin-right: 0;
+}
+
+.btn-download .menu-icon {
+  margin-right: 0;
+}
+
+.p-color {
+  color: #6f6f6f;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.p-size {
+  font-size: 13px;
+  color: #a09aa0;
+}
+
+.p-size-10 {
+  font-size: 10px;
+}
+
+.text-color {
+  color: #039bab;
+}
+
+.invalid {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+.avatar-img {
+  display: inline-block;
+  position: relative;
+}
+
+.avatarUpload {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.pt-65 {
+  padding-top: 65px;
+}
+
+.pb-65 {
+  padding-bottom: 65px;
+}
+
+.img-circle {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  height: 150px !important;
+}
+
+.border-dashed {
+  border: 4px dashed #d8d8d8;
+}
+
+.main-custom {
+  //width: 132%;
+  margin-left: 19%;
+}
+
+.page-body-wrapper {
+  display: block;
+  background-color: #f7f7f7;
+}
+
+.sobre-empresa {
+  background-color: #fff;
+  border: 1px solid #f5f5f5;
+  border-radius: 14px;
+}
+
+.seccion-filtros {
+  background-color: #fff;
+  border-radius: 14px;
+  padding-top: 14px;
+}
+
+.border-aviso {
+  border-radius: 16px;
+  padding: 13px 13px 0 13px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #ede8e8;
+}
+
+.btn-detalle {
+  padding: 30px 10px 15px 10px;
+  border-radius: 6px;
+  border: 1px solid #039bab;
+  color: #039bab;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1220px;
+  }
+}
+
+.btn-search {
+  position: absolute !important;
+  right: 8px;
+  padding: 5px;
+  border-radius: 6px;
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
+  padding-right: 0;
+  top: 5px;
+  z-index: 11 !important;
+}
+
+.btn-fb {
+  background: #3b5998;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 6px;
+  color: white;
+}
+
+.btn-twitter {
+  background: #55acee;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 6px;
+  color: white;
+}
+
+.btn-google-plus {
+  background: #dc4e41;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 6px;
+  color: white;
+}
+
+.btn-linkedin {
+  background: #007ab9;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 6px;
+  color: white;
+}
+
+.badge-tags {
+  background-color: #10aacc;
+  color: #fff;
+}
+
+.navbar-nav[_ngcontent-c2] .dropdown-menu[_ngcontent-c2] {
+  top: -10px !important;
+}
+
+.btn-practicante {
+  color: #fff;
+  background-color: #815985;
+  border-color: #815985;
+}
+
+.ngx-pagination .current {
+  border-radius: 6px;
+  background-color: #039bab !important;
+}
+
+.progress {
+  height: 1rem !important;
+}
+
+.bg-info {
+  background-color: #039bab !important;
+}
+
+.line {
+  position: relative;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .fondo {
+    display: none;
+  }
+
+  .btn-login-show {
+    display: inline !important;
+  }
+  .main-custom {
+    margin-left: 0 !important;
+  }
+}
+@media (max-width: 767px) {
+  .main-custom {
+    margin-left: 0 !important;
+  }
+  .seccion-filtros {
+    margin-left: 0 !important;
+    margin-right: 0.25rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .main-custom {
+    margin-left: 0 !important;
+  }
+}
+
+.navbar {
+  flex-wrap: nowrap !important;
+}
+
+.container-welcome {
+  width: 100%;
+  padding-right: 48px;
+  padding-left: 33.5px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.mt-55 {
+  margin-top: 55px;
+}
+
+.black-overlay {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}

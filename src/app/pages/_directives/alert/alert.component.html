@@ -1,0 +1,20 @@
+<!-- <div
+  *ngFor="let alert of alerts"
+  class="{{ cssClass(alert) }}"
+  style="display: flex; text-align: center; width: 50%; margin: 0 auto"
+> -->
+<li *ngFor="let alert of alerts" class="dropdown-item">
+  <!-- <div class="message-div"><span [innerHTML]="alert.message"></span></div> -->
+  <div
+    [ngClass]="'card mb-3 border-' + cssClass(alert)"
+    style="max-width: 18rem"
+  >
+    <div [ngClass]="'card-body text-' + cssClass(alert)">
+      <h5 class="card-title">{{ alert.tittle }}</h5>
+      <p class="justify-text">{{ alert.message }}</p>
+    </div>
+  </div>
+  <!-- <div class="close-div">
+    <a class="close" (click)="removeAlert(alert)">&times;</a>
+  </div> -->
+</li>

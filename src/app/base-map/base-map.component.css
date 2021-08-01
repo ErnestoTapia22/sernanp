@@ -1,0 +1,9 @@
+@import "https://js.arcgis.com/4.10/esri/css/main.css";
+
+/* .esri-view {
+  height: 98vh;
+  width: 100%;
+} */
+.map {
+  height: 100vh;
+}
