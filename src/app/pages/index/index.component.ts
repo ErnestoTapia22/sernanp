@@ -5,6 +5,8 @@ import { AlertService } from '../../_services/alert.service';
 import { BaseService } from '../../_services/base.service';
 //widgets
 import BookMarks from '@arcgis/core/widgets/Bookmarks';
+import Home from '@arcgis/core/widgets/Home';
+import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 import Expand from '@arcgis/core/widgets/Expand';
 import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
 import CustomWidget from 'src/app/widgets/custom-widget';
@@ -69,6 +71,12 @@ export class IndexComponent implements OnInit {
       view: view,
       editingEnabled: true,
     });
+    const home = new Home({
+      view: view
+    });
+    const scaleBar = new ScaleBar({
+      view: view,
+    });
     //expands
     const bkExpand = new Expand({
       view: view,
@@ -88,9 +96,11 @@ export class IndexComponent implements OnInit {
       expandTooltip: 'Estilos de mapa',
     });
     //adds
-    view.ui.add(MeExpand, 'bottom-trailing');
-    view.ui.add(bkExpand, 'bottom-trailing');
-    view.ui.add(cw, 'bottom-trailing');
+    view.ui.add(MeExpand, 'top-left');
+    view.ui.add(bkExpand, 'top-left');
+    view.ui.add(cw, 'top-left');
+    view.ui.add(home, 'top-left');
+    view.ui.add(scaleBar, 'bottom-left');
   }
   //add initial layers
   async addLayers(map) {
@@ -103,16 +113,19 @@ export class IndexComponent implements OnInit {
               url: layer.url,
               id: 'layerMain',
               visible: true,
-              opacity: 1,
-              imageMaxHeight: 500,
-              imageMaxWidth: 500,
+              opacity: 1
             });
-            let layers = await this.layerService.getFormatLayersJson2(
-              layer.url
-            );
-            mapImageLayer.sublayers = layers;
-            this.getItems(layers);
-
+            let layers = await this.layerService.getFormatLayersJson2(layer);
+            let subLayers = [];
+            layers.layers.forEach(t => {
+                subLayers.push({ id: t.id, popupTemplate: null, visible: t.defaultVisibility, name: t.name, type: "map-image", minScale: t.minScale });
+            });
+            mapImageLayer.when(layer => {
+                layer.sublayers = subLayers;
+                return layer;
+            }, error => null).then(data => {
+            });
+            this.getItems(layers.json);
             map.add(mapImageLayer);
           }
         });
@@ -156,11 +169,5 @@ export class IndexComponent implements OnInit {
         });
       }
     }
-  }
-  testService() {
-    let obj = this.layerService.getFormatLayersJson2(
-      'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_100K/MapServer'
-    );
-    console.log(obj);
   }
 }
