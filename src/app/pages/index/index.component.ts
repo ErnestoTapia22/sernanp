@@ -12,7 +12,7 @@ import CustomWidget from 'src/app/widgets/custom-widget';
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
 //tree
 import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
-//enviroment
+//environment
 import { environment } from '../../../environments/environment';
 
 @Component({
