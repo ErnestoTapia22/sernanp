@@ -24,6 +24,7 @@
     </div>
     <div class="offcanvas-body">
       <ngx-treeview
+        [config]="treeConfig"
         [items]="items"
         (selectedChange)="onSelectedChange($event)"
       ></ngx-treeview>

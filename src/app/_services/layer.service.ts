@@ -27,7 +27,11 @@ export class LayerService {
     return this.apiService.get(`${environment.initialLayers}`);
   }
 
-  recursiveConstructor(responseLayers: any, formatedLayers?: any, copyResponseLayers?: any) {
+  recursiveConstructor(
+    responseLayers: any,
+    formatedLayers?: any,
+    copyResponseLayers?: any
+  ) {
     for (let i = 0; i < responseLayers.length; i++) {
       if (responseLayers[i]['alreadyFound'] == false) {
         let formatTemplate = {};
@@ -66,24 +70,26 @@ export class LayerService {
     try {
       const layers$ = this.getInitialLayersJson(layer.url);
       const layers$$ = await lastValueFrom(layers$);
-      console.log(layers$$);
+
       if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
         const responseLayers = layers$$.layers;
         const json = [];
         let item = layers$$;
-        item.layers.forEach(t => t.parentLayer = { id: t.parentLayerId });        
-        item.layers.forEach(t => {          
-          t.sublayers = item.layers.filter(t3 => t3.parentLayer.id === t.id);
+        item.layers.forEach((t) => (t.parentLayer = { id: t.parentLayerId }));
+        item.layers.forEach((t) => {
+          t.sublayers = item.layers.filter((t3) => t3.parentLayer.id === t.id);
         });
         item.allSublayers = item.layers;
-        item.sublayers = item.allSublayers.filter(t => t.parentLayer.id === -1);
-        //console.log(item.sublayers);
-        item.sublayers.forEach(t=> {
-          this._filterParents(t, json);
+        item.sublayers = item.allSublayers.filter(
+          (t) => t.parentLayer.id === -1
+        );
+
+        item.sublayers.forEach((t) => {
+          this._filterParents(t, json, layer.uuid);
         });
         //this._filterParents(item.sublayers, json);
         item.json = json;
-        console.log(json);
+
         const jsonSublayers = [
           {
             id: 0,
@@ -669,7 +675,7 @@ export class LayerService {
             sublayers: [],
           },
         ];
-        console.log(jsonSublayers);
+
         //return json;
         layer.layers = item.allSublayers;
         layer.json = item.json;
@@ -680,23 +686,24 @@ export class LayerService {
     return layer;
   }
 
-  _filterParents(item, json) {
+  _filterParents(item, json, parentId) {
     let item2 = {
-      id: item.id,     
+      id: item.id,
       title: item.name,
       visible: item.defaultVisibility,
       text: item.name,
-      value: item.id,
+      value: `${parentId}_${item.id}`,
       checked: item.defaultVisibility,
       collapsed: false,
       disabled: false,
-      children:[]
+      parentId: parentId,
+      children: [],
     };
     json.push(item2);
     if (item.sublayers.length > 0) {
-        item.sublayers.forEach(t=> {
-          this._filterParents(t, item2.children);
-        });
-    }      
+      item.sublayers.forEach((t) => {
+        this._filterParents(t, item2.children, parentId);
+      });
+    }
   }
 }

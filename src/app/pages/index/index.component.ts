@@ -14,6 +14,7 @@ import CustomWidget from 'src/app/widgets/custom-widget';
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
 //tree
 import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
+import { TreeModel } from '../../_models/tree-model';
 //environment
 import { environment } from '../../../environments/environment';
 
@@ -33,6 +34,8 @@ export class IndexComponent implements OnInit {
   map: any;
   view: any;
   parentLayer: MapImageLayer;
+  itemsArray: any[] = [];
+  treeConfig: any;
 
   //change detector in dom
   @ViewChild(TreeviewComponent, { static: false })
@@ -42,7 +45,15 @@ export class IndexComponent implements OnInit {
     private baseService: BaseService,
     private layerService: LayerService,
     private alertService: AlertService
-  ) {}
+  ) {
+    this.treeConfig = {
+      hasAllCheckBox: false,
+      hasFilter: false,
+      hasCollapseExpand: false,
+      decoupleChildFromParent: false,
+      maxHeight: 800,
+    };
+  }
   //index init
   ngOnInit(): void {
     this.mapProperties = {
@@ -72,7 +83,7 @@ export class IndexComponent implements OnInit {
       editingEnabled: true,
     });
     const home = new Home({
-      view: view
+      view: view,
     });
     const scaleBar = new ScaleBar({
       view: view,
@@ -109,23 +120,44 @@ export class IndexComponent implements OnInit {
       if (initialLayers.length > 0) {
         initialLayers.forEach(async (layer) => {
           if (!layer.disabled) {
+            const uuid = `layer_${this.baseService.newUUID()}`;
             const mapImageLayer = new MapImageLayer({
               url: layer.url,
-              id: 'layerMain',
+              id: uuid,
               visible: true,
-              opacity: 1
+              opacity: 1,
             });
-            let layers = await this.layerService.getFormatLayersJson2(layer);
+            let newLayer = { ...layer, uuid: uuid };
+            let layers = await this.layerService.getFormatLayersJson2(newLayer);
             let subLayers = [];
-            layers.layers.forEach(t => {
-                subLayers.push({ id: t.id, popupTemplate: null, visible: t.defaultVisibility, name: t.name, type: "map-image", minScale: t.minScale });
+            layers.layers.forEach((t) => {
+              subLayers.push({
+                id: t.id,
+                popupTemplate: null,
+                visible: t.defaultVisibility,
+                name: t.name,
+                type: 'map-image',
+                minScale: t.minScale,
+              });
             });
-            mapImageLayer.when(layer => {
-                layer.sublayers = subLayers;
-                return layer;
-            }, error => null).then(data => {
-            });
-            this.getItems(layers.json);
+            mapImageLayer
+              .when(
+                (layer) => {
+                  layer.sublayers = subLayers;
+                  return layer;
+                },
+                (error) => null
+              )
+              .then((data) => {});
+            let parentJson = {
+              value: newLayer.uuid,
+              text: layer.name,
+              checked: layer.disabled,
+              disabled: false,
+              collapsed: true,
+              children: layers.json,
+            };
+            this.getItems([parentJson]);
             map.add(mapImageLayer);
           }
         });
@@ -136,13 +168,12 @@ export class IndexComponent implements OnInit {
   }
   // add sublayers to tree
   async getItems(parentChildObj) {
-    if (parentChildObj === undefined) return [];
-    let itemsArray = [];
+    if (parentChildObj === undefined || parentChildObj === null) return;
 
     parentChildObj.forEach((set) => {
-      itemsArray.push(new TreeviewItem(set));
+      this.itemsArray.push(new TreeviewItem(set));
     });
-    this.items = itemsArray;
+    this.items = this.itemsArray;
   }
   //on tree selected checkbox to change visibility
   onSelectedChange(event) {
@@ -151,23 +182,25 @@ export class IndexComponent implements OnInit {
     this.selectedLayers = checkedItems.map((item) => item.value);
     this.unseLectedLayers = unCheckedItems.map((item) => item.value);
 
-    const parentLayer = this.map.findLayerById('layerMain'); //parent layer
-    if (parentLayer) {
-      if (this.unseLectedLayers.length > 0) {
-        this.unseLectedLayers.forEach((element) => {
-          let subLayerUnchecked = parentLayer.findSublayerById(element);
-
-          if (subLayerUnchecked) {
-            subLayerUnchecked.visible = false;
-          }
-        });
-        this.selectedLayers.forEach((element) => {
-          let subLayerChecked = parentLayer.findSublayerById(element);
-          if (subLayerChecked) {
-            subLayerChecked.visible = true;
-          }
-        });
-      }
+    if (this.unseLectedLayers.length > 0) {
+      this.unseLectedLayers.forEach((element) => {
+        let arr = element.split('_');
+        const parentLayer = this.map.findLayerById(`${arr[0]}_${arr[1]}`);
+        let sublayer = parentLayer.findSublayerById(Number(arr[2]));
+        if (sublayer) {
+          sublayer.visible = false;
+        }
+      });
+    }
+    if (this.selectedLayers.length > 0) {
+      this.selectedLayers.forEach((element) => {
+        let arr = element.split('_');
+        const parentLayer = this.map.findLayerById(`${arr[0]}_${arr[1]}`);
+        let sublayer = parentLayer.findSublayerById(Number(arr[2]));
+        if (sublayer) {
+          sublayer.visible = true;
+        }
+      });
     }
   }
 }
