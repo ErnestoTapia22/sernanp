@@ -1,53 +1,73 @@
-CREATE TABLE public.persona2
+DROP FUNCTION public.persona2_update(integer, character varying, character varying, integer, character varying);
+DROP FUNCTION public.persona2_insert(integer, character varying, character varying, integer, character varying);
+DROP FUNCTION public.persona2_list();
+drop table public.persona2;
+
+create schema geo;
+
+
+CREATE TABLE geo.persona2
 (
   id serial NOT NULL primary key,
   lastname character varying(50),
   email character varying(30),
   name character varying(50),
-  age int
-)
+  age int,
+  geometry geometry
+);
 
 
-CREATE OR REPLACE FUNCTION public.persona2_update(pid INT, pname VARCHAR(50), plastname VARCHAR(50), page INT, pemail VARCHAR(30))
+
+CREATE OR REPLACE FUNCTION geo.persona2_update(IN pid INT, IN pname VARCHAR(50), IN plastname VARCHAR(50), IN page INT, IN pemail VARCHAR(30), IN pgeometry geometry, IN psrid integer)
   RETURNS INT
 LANGUAGE plpgsql
-AS $$
+AS $BODY$
 BEGIN
-    UPDATE public.persona2
-    SET name = pname, lastname = plastname, age = page, email = pemail
+    UPDATE geo.persona2
+    SET name = pname, lastname = plastname, age = page, email = pemail, geometry = ST_GeomFromWKB(pgeometry, psrid)
     WHERE id = pid;
   RETURN pid;
 END;
-$$;
+$BODY$;
 
 
-CREATE OR REPLACE FUNCTION public.persona2_insert(pid INT, pname VARCHAR(50), plastname VARCHAR(50), page INT, pemail VARCHAR(30))
+CREATE OR REPLACE FUNCTION geo.persona2_insert(OUT pid INT, IN pname VARCHAR(50), IN plastname VARCHAR(50), IN page INT, IN pemail VARCHAR(30), IN pgeometry geometry, IN psrid integer)
   RETURNS INT
 LANGUAGE plpgsql
-AS $$
+AS $BODY$
 BEGIN
-    INSERT INTO public.persona2 (name, lastname, age, email) VALUES (pname, plastname, page, pemail) RETURNING id INTO pid;
-  RETURN pid;
+    INSERT INTO geo.persona2 (name, lastname, age, email, geometry) VALUES (pname, plastname, page, pemail, ST_GeomFromWKB(pgeometry, psrid)); --RETURNING id INTO pid;
+    pid := currval(pg_get_serial_sequence('geo.persona2','id'));
 END;
-$$;
+$BODY$;
 
 
-CREATE OR REPLACE FUNCTION public.persona2_list()
+
+CREATE OR REPLACE FUNCTION geo.persona2_list()
   RETURNS refcursor AS
 $BODY$
 declare 
 pcursor refcursor;
 begin
-	open pcursor for select id,name, lastname, age, email from public.persona2;
+	open pcursor for 
+		select 
+			id
+			,name
+			,lastname
+			,age
+			,email
+			,ST_AsBinary(geometry) as geometry
+			,ST_Srid(geometry) as spatialreferenceid
+		from geo.persona2;
 	return pcursor;
 end;
 $BODY$
   LANGUAGE plpgsql VOLATILE
 
 
-select public.persona2_list();
+select geo.persona2_list();
 FETCH ALL IN "<unnamed portal 4>";
 
 
 
-select * from persona2
+select * from geo.persona2

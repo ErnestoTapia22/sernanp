@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import org.locationtech.jts.geom.Geometry;
 
 public class Person {
 	private int Id;
@@ -8,8 +9,9 @@ public class Person {
 	private String LastName;
 	private String Email;
 	private int Age;
+	private Geometry Geometry;
 	
-	
+
 	public Person () {
 		
 	}
@@ -60,6 +62,12 @@ public class Person {
 	public void setAge(int age) {
 		Age = age;
 	}
-	
-	
+		
+	public Geometry getGeometry() {
+		return Geometry;
+	}
+
+	public void setGeometry(Geometry geometry) {
+		Geometry = geometry;
+	}
 }
