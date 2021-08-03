@@ -9,7 +9,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class LayerService {
   private jsonLayer: string;
-  private urlInitialLayer: string;
+  private legendLayer: string;
   private urlInitialLayerJson: string;
 
   constructor(
@@ -17,62 +17,28 @@ export class LayerService {
     private alertService: AlertService
   ) {
     this.jsonLayer = '?f=json';
+    this.legendLayer = '/legend?f=pjson';
     this.urlInitialLayerJson = `${environment.initialLayers}${this.jsonLayer}`;
   }
 
   getInitialLayersJson(url): Observable<any> {
     return this.apiService.get(`${url}${this.jsonLayer}`);
   }
+  getLegendLayersJson(url): Observable<any> {
+    return this.apiService.get(`${url}${this.legendLayer}`);
+  }
   getInitialLayers(): Observable<any> {
     return this.apiService.get(`${environment.initialLayers}`);
-  }
-
-  recursiveConstructor(
-    responseLayers: any,
-    formatedLayers?: any,
-    copyResponseLayers?: any
-  ) {
-    for (let i = 0; i < responseLayers.length; i++) {
-      if (responseLayers[i]['alreadyFound'] == false) {
-        let formatTemplate = {};
-        formatTemplate = responseLayers[i];
-        formatTemplate['text'] = responseLayers[i].name;
-        formatTemplate['value'] = responseLayers[i].id;
-        formatTemplate['collapsed'] = true;
-        formatTemplate['children'] = [];
-        if (responseLayers[i].subLayerIds !== null) {
-          for (let j = 0; j < responseLayers[i].subLayerIds.length; j++) {
-            let found = copyResponseLayers.find(
-              (x) => x.id == copyResponseLayers[i].subLayerIds[j]
-            );
-            if (found) {
-              found['alreadyFound'] = false;
-              responseLayers[found['id']].alreadyFound = true;
-              copyResponseLayers[found['id']].alreadyFound = true;
-              formatTemplate['children'].push(found);
-            }
-          }
-          if (formatTemplate['children'].length > 0) {
-            this.recursiveConstructor(
-              formatTemplate['children'],
-              formatedLayers,
-              copyResponseLayers
-            );
-          }
-        }
-        formatedLayers.push(formatTemplate);
-      }
-    }
-    console.log(formatedLayers);
   }
 
   async getFormatLayersJson2(layer): Promise<any> {
     try {
       const layers$ = this.getInitialLayersJson(layer.url);
       const layers$$ = await lastValueFrom(layers$);
+      const legendLagers$ = this.getLegendLayersJson(layer.url);
+      const legendLayers$$ = await lastValueFrom(legendLagers$);
 
       if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
-        const responseLayers = layers$$.layers;
         const json = [];
         let item = layers$$;
         item.layers.forEach((t) => (t.parentLayer = { id: t.parentLayerId }));
@@ -85,598 +51,15 @@ export class LayerService {
         );
 
         item.sublayers.forEach((t) => {
-          this._filterParents(t, json, layer.uuid);
+          this._filterParents(
+            t,
+            json,
+            layer.uuid,
+            legendLayers$$ ? legendLayers$$ : []
+          );
         });
-        //this._filterParents(item.sublayers, json);
+
         item.json = json;
-
-        const jsonSublayers = [
-          {
-            id: 0,
-            title: 'Geología - Franja Sur',
-            visible: true,
-            text: 'Geología - Franja Sur',
-            value: 0,
-            checked: true,
-            collapsed: true,
-            disabled: false,
-            children: [
-              {
-                id: 8,
-                title: 'Geología 100K',
-                visible: true,
-                text: 'Geología 100K',
-                value: 8,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 10,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 10,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 9,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 9,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 10,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 10,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 9,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 9,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-              {
-                id: 5,
-                title: 'Geología 50K',
-                visible: true,
-                text: 'Geología 50K',
-                value: 5,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 7,
-                    title: 'Geología 50K Franjas',
-                    visible: true,
-                    text: 'Geología 50K Franjas',
-                    value: 7,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 6,
-                    title: 'Contacto 50K Franjas',
-                    visible: true,
-                    text: 'Contacto 50K Franjas',
-                    value: 6,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 7,
-                    title: 'Geología 50K Franjas',
-                    visible: true,
-                    text: 'Geología 50K Franjas',
-                    value: 7,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 6,
-                    title: 'Contacto 50K Franjas',
-                    visible: true,
-                    text: 'Contacto 50K Franjas',
-                    value: 6,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-              {
-                id: 1,
-                title: 'Hojas',
-                visible: true,
-                text: 'Hojas',
-                value: 1,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 4,
-                    title: 'Boletines',
-                    visible: true,
-                    text: 'Boletines',
-                    value: 4,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 3,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 3,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 2,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 2,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 4,
-                    title: 'Boletines',
-                    visible: true,
-                    text: 'Boletines',
-                    value: 4,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 3,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 3,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 2,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 2,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-            ],
-            sublayers: [
-              {
-                id: 8,
-                title: 'Geología 100K',
-                visible: true,
-                text: 'Geología 100K',
-                value: 8,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 10,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 10,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 9,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 9,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 10,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 10,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 9,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 9,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-              {
-                id: 5,
-                title: 'Geología 50K',
-                visible: true,
-                text: 'Geología 50K',
-                value: 5,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 7,
-                    title: 'Geología 50K Franjas',
-                    visible: true,
-                    text: 'Geología 50K Franjas',
-                    value: 7,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 6,
-                    title: 'Contacto 50K Franjas',
-                    visible: true,
-                    text: 'Contacto 50K Franjas',
-                    value: 6,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 7,
-                    title: 'Geología 50K Franjas',
-                    visible: true,
-                    text: 'Geología 50K Franjas',
-                    value: 7,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 6,
-                    title: 'Contacto 50K Franjas',
-                    visible: true,
-                    text: 'Contacto 50K Franjas',
-                    value: 6,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-              {
-                id: 1,
-                title: 'Hojas',
-                visible: true,
-                text: 'Hojas',
-                value: 1,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 4,
-                    title: 'Boletines',
-                    visible: true,
-                    text: 'Boletines',
-                    value: 4,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 3,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 3,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 2,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 2,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 4,
-                    title: 'Boletines',
-                    visible: true,
-                    text: 'Boletines',
-                    value: 4,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    sublayers: [],
-                  },
-                  {
-                    id: 3,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 3,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 2,
-                    title: 'Franjas',
-                    visible: true,
-                    text: 'Franjas',
-                    value: 2,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 11,
-            title: 'Geología - Boletin Serie A',
-            visible: true,
-            text: 'Geología - Boletin Serie A',
-            value: 11,
-            checked: true,
-            collapsed: true,
-            disabled: false,
-            children: [
-              {
-                id: 12,
-                title: 'Geología 100K',
-                visible: true,
-                text: 'Geología 100K',
-                value: 12,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 14,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 14,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 13,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 13,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 14,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 14,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 13,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 13,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-            ],
-            sublayers: [
-              {
-                id: 12,
-                title: 'Geología 100K',
-                visible: true,
-                text: 'Geología 100K',
-                value: 12,
-                checked: true,
-                collapsed: true,
-                disabled: false,
-                children: [
-                  {
-                    id: 14,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 14,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 13,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 13,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-                sublayers: [
-                  {
-                    id: 14,
-                    title: 'Geología 100K',
-                    visible: true,
-                    text: 'Geología 100K',
-                    value: 14,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                  {
-                    id: 13,
-                    title: 'Contacto',
-                    visible: true,
-                    text: 'Contacto',
-                    value: 13,
-                    checked: true,
-                    collapsed: true,
-                    disabled: false,
-                    children: [],
-                    sublayers: [],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 15,
-            title: 'Relieve Topográfico',
-            visible: true,
-            text: 'Relieve Topográfico',
-            value: 15,
-            checked: true,
-            collapsed: true,
-            disabled: false,
-            children: [],
-            sublayers: [],
-          },
-        ];
-
-        //return json;
         layer.layers = item.allSublayers;
         layer.json = item.json;
       }
@@ -686,7 +69,7 @@ export class LayerService {
     return layer;
   }
 
-  _filterParents(item, json, parentId) {
+  _filterParents(item, json, parentId, legendLayers) {
     let item2 = {
       id: item.id,
       title: item.name,
@@ -697,12 +80,15 @@ export class LayerService {
       collapsed: false,
       disabled: false,
       parentId: parentId,
+      legends:
+        (legendLayers.layers.find((t2) => t2.layerId === item.id) || {})
+          .legend || [],
       children: [],
     };
     json.push(item2);
     if (item.sublayers.length > 0) {
       item.sublayers.forEach((t) => {
-        this._filterParents(t, item2.children, parentId);
+        this._filterParents(t, item2.children, parentId, legendLayers);
       });
     }
   }

@@ -18,7 +18,7 @@ export const environment = {
       id: 2,
       url:
         'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/SCADA/MapServer',
-      disabled: true,
+      disabled: false,
       name: 'SCADA',
     },
     {

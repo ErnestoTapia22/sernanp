@@ -15,6 +15,7 @@ import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
 //tree
 import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
 import { TreeModel } from '../../_models/tree-model';
+import { CustomTreeItem } from '../../helpers/custom-tree-item';
 //environment
 import { environment } from '../../../environments/environment';
 
@@ -151,11 +152,12 @@ export class IndexComponent implements OnInit {
               .then((data) => {});
             let parentJson = {
               value: newLayer.uuid,
-              text: layer.name,
+              text: layer.name || 'Sin nombre',
               checked: layer.disabled,
               disabled: false,
               collapsed: true,
               children: layers.json,
+              legends: [],
             };
             this.getItems([parentJson]);
             map.add(mapImageLayer);
@@ -171,7 +173,7 @@ export class IndexComponent implements OnInit {
     if (parentChildObj === undefined || parentChildObj === null) return;
 
     parentChildObj.forEach((set) => {
-      this.itemsArray.push(new TreeviewItem(set));
+      this.itemsArray.push(new CustomTreeItem(set));
     });
     this.items = this.itemsArray;
   }

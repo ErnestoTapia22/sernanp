@@ -28,6 +28,15 @@ body {
 .card-content {
   font-size: 12pt;
 }
+.treeview-item {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 330px;
+}
+.pdr-6 {
+  padding-right: 6px;
+}
 /* @import "assets/styles/_fonts.scss";
 @import "assets/styles/_functions.scss";
 @import "assets/styles/mixins/_background.scss";
