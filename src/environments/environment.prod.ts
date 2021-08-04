@@ -31,5 +31,13 @@ export const environment = {
       disabled: false,
       name: 'Catastro Minero',
     },
+
+    {
+      id: 5,
+      url:
+        'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/ADMGSP/MapServer',
+      disabled: false,
+      name: 'Infraestructura',
+    },
   ],
 };

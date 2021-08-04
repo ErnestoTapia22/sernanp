@@ -37,7 +37,6 @@ export class LayerService {
       const layers$$ = await lastValueFrom(layers$);
       const legendLagers$ = this.getLegendLayersJson(layer.url);
       const legendLayers$$ = await lastValueFrom(legendLagers$);
-
       if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
         const json = [];
         let item = layers$$;

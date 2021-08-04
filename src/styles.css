@@ -37,6 +37,10 @@ body {
 .pdr-6 {
   padding-right: 6px;
 }
+/* popup */
+.esri-view-height-less-than-medium .esri-popup__main-container {
+  max-height: 300px !important;
+}
 /* @import "assets/styles/_fonts.scss";
 @import "assets/styles/_functions.scss";
 @import "assets/styles/mixins/_background.scss";

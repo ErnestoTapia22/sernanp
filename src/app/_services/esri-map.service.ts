@@ -6,6 +6,7 @@ import Widget from '@arcgis/core/widgets/Widget';
 import Layer from '@arcgis/core/layers/Layer';
 import Map from '@arcgis/core/Map';
 import layer from '@arcgis/core/layers/MapImageLayer';
+import Popup from '@arcgis/core/widgets/Popup';
 
 export type Position =
   | 'bottom-leading'
@@ -26,6 +27,7 @@ export class EsriMapService {
   view!: MapView;
   map!: Map;
   loaded = false;
+  defaultPopup: any;
   isLoaded = new EventEmitter();
 
   constructor() {}
@@ -37,11 +39,20 @@ export class EsriMapService {
     zoom: any;
   }): void {
     this.map = new Map({ basemap: props.basemap });
+    this.defaultPopup = new Popup({ defaultPopupTemplateEnabled: true });
+    // this.defaultPopup.container = document.getElementById('popupContainerDiv');
+
+    this.defaultPopup.defaultPopupTemplateEnabled = true;
+
+    this.defaultPopup.dockOptions = {
+      buttonEnabled: false,
+    };
     this.view = new MapView({
       container: props.container,
       map: this.map,
       center: props.center,
       zoom: props.zoom,
+      popup: this.defaultPopup,
     });
     this.loaded = true;
     this.isLoaded.emit({

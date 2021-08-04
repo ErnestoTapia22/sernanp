@@ -18,7 +18,7 @@ export const environment = {
       id: 2,
       url:
         'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/SCADA/MapServer',
-      disabled: false,
+      disabled: true,
       name: 'SCADA',
     },
     {
@@ -34,6 +34,13 @@ export const environment = {
         'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer',
       disabled: false,
       name: 'Catastro Minero',
+    },
+    {
+      id: 5,
+      url:
+        'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/ADMGSP/MapServer',
+      disabled: true,
+      name: 'Infraestructura',
     },
   ],
 };

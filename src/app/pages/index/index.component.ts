@@ -12,12 +12,16 @@ import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
 import CustomWidget from 'src/app/widgets/custom-widget';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 //tree
 import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
 import { TreeModel } from '../../_models/tree-model';
 import { CustomTreeItem } from '../../helpers/custom-tree-item';
 //environment
 import { environment } from '../../../environments/environment';
+//popup
+import PopupTemplate from '@arcgis/core/PopupTemplate';
+import Popup from '@arcgis/core/widgets/Popup';
 
 @Component({
   selector: 'app-index',
@@ -71,7 +75,7 @@ export class IndexComponent implements OnInit {
   onMapInit({ map, view }) {
     this.map = map;
     this.addWidget(map, view);
-    this.addLayers(map);
+    this.addLayers(map, view);
   }
   //create widgets
   addWidget(map, view) {
@@ -115,7 +119,7 @@ export class IndexComponent implements OnInit {
     view.ui.add(scaleBar, 'bottom-left');
   }
   //add initial layers
-  async addLayers(map) {
+  async addLayers(map, view) {
     try {
       const initialLayers = environment.initialLayers;
       if (initialLayers.length > 0) {
@@ -130,14 +134,15 @@ export class IndexComponent implements OnInit {
             });
             let newLayer = { ...layer, uuid: uuid };
             let layers = await this.layerService.getFormatLayersJson2(newLayer);
+
             let subLayers = [];
             layers.layers.forEach((t) => {
               subLayers.push({
                 id: t.id,
-                popupTemplate: null,
                 visible: t.defaultVisibility,
                 name: t.name,
                 type: 'map-image',
+                popupEnabled: true,
                 minScale: t.minScale,
               });
             });
@@ -145,6 +150,15 @@ export class IndexComponent implements OnInit {
               .when(
                 (layer) => {
                   layer.sublayers = subLayers;
+                  layer.sublayers.forEach((sublayer) => {
+                    sublayer
+                      .createFeatureLayer()
+                      .then((featureLayer) => featureLayer.load())
+                      .then((featureLayer) => {
+                        sublayer.popupTemplate = featureLayer.createPopupTemplate();
+                      });
+                  });
+
                   return layer;
                 },
                 (error) => null
@@ -160,6 +174,7 @@ export class IndexComponent implements OnInit {
               legends: [],
             };
             this.getItems([parentJson]);
+
             map.add(mapImageLayer);
           }
         });
