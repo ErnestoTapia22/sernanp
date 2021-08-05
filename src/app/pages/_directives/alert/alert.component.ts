@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Alert, AlertSettings } from '../../../_models/alert';
-import { AlertService } from '../../../_services/alert.service';
+import { Alert, AlertSettings } from '../../../_models/base/alert';
+import { AlertService } from '../../../_services/base/alert.service';
 
 @Component({
   selector: 'app-alert',

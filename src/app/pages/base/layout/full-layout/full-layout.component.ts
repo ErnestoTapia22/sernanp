@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { TreeviewItem } from 'ngx-treeview';
 import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import { EsriMapService } from '../../../../_services/esri-map.service';
+import { EsriMapService } from '../../../../_services/geometry/esri-map.service';
 import Expand from '@arcgis/core/widgets/Expand';
 import { first } from 'rxjs/operators';
 import { Observable, Subject, Subscription } from 'rxjs';

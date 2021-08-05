@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { ApiBaseService } from './api-base.service';
-import { AlertService } from '../_services/alert.service';
+import { environment } from '../../../environments/environment';
+import { ApiBaseService } from '../base/api-base.service';
+import { AlertService } from '../base/alert.service';
 import { lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
