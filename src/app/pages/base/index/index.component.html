@@ -14,7 +14,7 @@
     data-bs-backdrop="false"
   >
     <div class="offcanvas-header">
-      <h5 id="offcanvasRightLabel">Capas</h5>
+      <h5 id="offcanvasRightLabel">Control de capas</h5>
       <button
         type="button"
         class="btn-close text-reset"
@@ -75,12 +75,15 @@
     <i
       *ngIf="!item.children"
       aria-hidden="false"
-      class="pdr-6"
+      class="pdr-6 bi-plus-lg"
       data-bs-toggle="collapse"
       [attr.data-bs-target]="'#' + item.value"
       [attr.aria-controls]="item.value"
+      (click)="clickIcon($event)"
+      [id]="item.value + '_icon'"
     >
-      <svg
+      <!-- <svg
+        *ngIf="!iconStatus"
         xmlns="http://www.w3.org/2000/svg"
         width="0.7rem"
         height="0.7rem"
@@ -91,7 +94,18 @@
         <path
           d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
         />
-      </svg>
+      </svg> -->
+      <!-- <svg
+        *ngIf="iconStatus"
+        xmlns="http://www.w3.org/2000/svg"
+        width="0.7rem"
+        height="0.7rem"
+        fill="currentColor"
+        class="bi bi-dash"
+        viewBox="0 0 16 16"
+      >
+        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+      </svg> -->
     </i>
 
     <div class="form-check">
@@ -119,11 +133,11 @@
                   [src]="
                     'data:' + legend.contentType + ';base64,' + legend.imageData
                   "
-                  height="20"
-                  width="20"
+                  [height]="legend.height || '20'"
+                  [width]="legend.width || '20'"
                   alt="Concesión sin Actividad Minera"
                 />
-                <span> {{ legend.label }}</span>
+                <span [title]="legend.label"> {{ legend.label }}</span>
               </li>
             </ul>
           </div>

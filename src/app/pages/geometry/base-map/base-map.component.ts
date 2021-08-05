@@ -15,7 +15,7 @@ import BookMarks from '@arcgis/core/widgets/Bookmarks';
 import Expand from '@arcgis/core/widgets/Expand';
 // import WebMap from '@arcgis/core/WebMap';
 import config from '@arcgis/core/config';
-import { EsriMapService } from '../_services/esri-map.service';
+import { EsriMapService } from '../../../_services/esri-map.service';
 
 @Component({
   selector: 'app-base-map',

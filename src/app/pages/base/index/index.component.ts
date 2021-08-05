@@ -1,24 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 //services
-import { LayerService } from '../../_services/layer.service';
-import { AlertService } from '../../_services/alert.service';
-import { BaseService } from '../../_services/base.service';
+import { LayerService } from '../../../_services/layer.service';
+import { AlertService } from '../../../_services/alert.service';
+import { BaseService } from '../../../_services/base.service';
 //widgets
 import BookMarks from '@arcgis/core/widgets/Bookmarks';
 import Home from '@arcgis/core/widgets/Home';
 import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 import Expand from '@arcgis/core/widgets/Expand';
 import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import CustomWidget from 'src/app/widgets/custom-widget';
+import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 //tree
 import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
-import { TreeModel } from '../../_models/tree-model';
-import { CustomTreeItem } from '../../helpers/custom-tree-item';
+import { TreeModel } from '../../../_models/tree-model';
+import { CustomTreeItem } from '../../../helpers/custom-tree-item';
 //environment
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 //popup
 import PopupTemplate from '@arcgis/core/PopupTemplate';
 import Popup from '@arcgis/core/widgets/Popup';
@@ -218,6 +218,23 @@ export class IndexComponent implements OnInit {
           sublayer.visible = true;
         }
       });
+    }
+  }
+
+  clickIcon(event) {
+    var target = event.target || event.srcElement || event.currentTarget;
+    var idAttr = target.attributes.id;
+    var value = idAttr.nodeValue;
+
+    var element = document.getElementById(value);
+    if (element) {
+      if (element.classList.contains('bi-plus-lg')) {
+        element.classList.remove('bi-plus-lg');
+        element.classList.add('bi-dash-lg');
+      } else {
+        element.classList.remove('bi-dash-lg');
+        element.classList.add('bi-plus-lg');
+      }
     }
   }
 }
