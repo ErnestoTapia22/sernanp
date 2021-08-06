@@ -1,15 +1,6 @@
-<div class="container-welcome mt-50">
+<!-- <div class="container-welcome mt-50">
   <div class="row">
-    <div class="col-sm-12">
-      <!-- <div
-        *ngIf="alert"
-        class="alert alert-fill-danger text-center"
-        role="alert"
-      >
-        <i class="mdi mdi-alert-circle mr-1"></i>
-        {{ message }}
-      </div> -->
-    </div>
+    <div class="col-sm-12"></div>
   </div>
   <div class="row mb-3">
     <div class="col-sm-12 text-center">
@@ -32,7 +23,6 @@
         </div>
         <div *ngIf="submitted && f.user.errors" class="invalid">
           <div *ngIf="f.user?.errors?.required">usuario es requerido</div>
-          <!-- <div *ngIf="f.email.errors.email">El usuario no es válido</div> -->
         </div>
       </div>
       <div class="col-sm-12">
@@ -61,4 +51,104 @@
     </div>
   </div>
   <div class="line text-center">*</div>
+</div> -->
+
+<!-- <article class="ui-auth-about-sistem">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-primary fw-bold">
+          Dev Customized <span class="text-version"> v1.0</span>
+        </h1>
+        <p class="text-primary fw-bold mb-2">
+          Desarrollo de software personalizado
+        </p>
+      </div>
+    </div>
+  </article>  -->
+
+<div class="card w-100">
+  <div class="card-body">
+    <div class="text-center mt-2 mb-5">
+      <a href="javascript:void(0)">
+        <img
+          src="../../../../assets/images/logo.png"
+          alt="Home"
+          class="img-fluid"
+        />
+      </a>
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="form-material d-grid gap-5"
+    >
+      <!-- <input
+        type="email"
+        class="form-control"
+        name="email"
+        autocomplete="email"
+        placeholder="Correo electrónico"
+        required
+        autofocus
+      /> -->
+      <input
+        type="text"
+        formControlName="user"
+        id="user"
+        class="form-control"
+        [ngClass]="{ 'border-danger': submitted && f.user.errors }"
+        placeholder="Usuario"
+        required
+        autofocus
+      />
+      <div *ngIf="submitted && f.user.errors" class="invalid">
+        <div *ngIf="f.user?.errors?.required">usuario es requerido</div>
+      </div>
+
+      <!-- <input
+        id="password"
+        type="password"
+        class="form-control"
+        name="password"
+        autocomplete="current-password"
+        placeholder="Contraseña"
+        required
+      /> -->
+      <input
+        type="password"
+        formControlName="password"
+        id="password"
+        class="form-control"
+        [ngClass]="{ 'border-danger': submitted && f.password.errors }"
+        required
+        autocomplete="current-password"
+        placeholder="Contraseña"
+      />
+      <div *ngIf="submitted && f.password.errors" class="invalid">
+        <div *ngIf="f.password?.errors?.required">Password es requerido</div>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckDefault"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Recuerdame
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-lg text-uppercase rounded-pill">
+        Acceder
+      </button>
+
+      <a href="#" class="text-center">
+        <i class="fas fa-lock"></i>
+        ¿Olvidaste tu contraseña?
+      </a>
+    </form>
+  </div>
 </div>

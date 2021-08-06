@@ -1,13 +1,13 @@
 /* Navbar */
-
-@import "../../../../styles.css";
+@import "../../../../assets/styles/_theme.css";
 /* Navbar */
-.navbar {
+/* .navbar {
   background-color: #007885;
   height: 55px;
   border-top: 1px solid #007885;
   border-bottom: 1px solid #007885;
-}
+} */
+
 .top-5 {
   top: 5px !important;
 }
@@ -25,4 +25,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+/* nav import  */
+.opt {
+  image-rendering: crisp-edges;
+}
+.header-logo {
+  margin-top: 2px;
+  margin-left: 17px;
+  min-width: 82px;
+}
+.dropdown {
+  padding: 0 5px 0 5px;
 }

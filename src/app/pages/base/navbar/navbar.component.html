@@ -1,31 +1,127 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container-fluid">
-    <span class="navbar-brand" href="#">
-      <img src="../../../assets/images/LOGO-MINAGRI.png" alt="" height="40" />
-    </span>
-    <div class="dropdown color-white">
-      <span
-        class="dropdown-toggle"
-        id="notification"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        [ngClass]="{ disabled: !hasAlerts }"
-      >
-        <i class="bi bi-bell" style="font-size: 1.5rem"></i>
-        <span
-          *ngIf="hasAlerts"
-          class="position-absolute top-5 translate-middle p-1 bg-danger border border-light rounded-circle"
-        >
-          <span class="visually-hidden">New alerts</span>
-        </span>
+<header class="topbar">
+  <nav class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-header">
+      <span class="navbar-brand header-logo" href="#">
+        <!-- Logo icon -->
+        <b>
+          <img
+            src="../../../assets/images/LOGO-MINAGRI.png"
+            alt=""
+            height="45"
+            class="opt"
+          />
+        </b>
       </span>
-      <ul
-        class="dropdown-menu dropdown-menu-end"
-        aria-labelledby="notification"
-      >
-        <app-alert (hasAlerts)="hasAlertsForDisplay($event)"></app-alert>
+    </div>
+    <!-- <span class="navbar-brand" >
+      <b>
+        <img src="../../../assets/images/LOGO-MINAGRI.png" alt="" height="40" />
+      </b>
+      
+    </span> -->
+    <div class="navbar-collapse">
+      <!-- ============================================================== -->
+      <!-- toggle and nav items -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav me-auto">
+        <!-- This is  -->
+        <li class="nav-item">
+          <a
+            class="nav-link nav-toggler d-block d-md-none"
+            href="javascript:void(0)"
+          >
+            <i class="bi bi-list"></i>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <img
+            src="assets/img/logo-text.png"
+            class="light-logo img-fluid d-none d-md-block"
+            alt="homepage"
+            style="max-width: 150px"
+          />
+        </li> -->
+        <!-- <li class="nav-item">
+              <a class="nav-link sidebartoggler d-none d-md-block"
+                  href="javascript:void(0)">
+                  <i class="fas fa-bars"></i>
+              </a>
+          </li> -->
+      </ul>
+      <ul class="navbar-nav my-lg-0 pe-2">
+        <!-- ============================================================== -->
+        <!-- User Profile -->
+        <!-- ============================================================== -->
+
+        <li class="nav-item">
+          <div class="dropdown color-white">
+            <span
+              class="dropdown-toggle"
+              id="notification"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              [ngClass]="{ disabled: !hasAlerts }"
+            >
+              <i class="bi bi-bell" style="font-size: 1.5rem"></i>
+              <span
+                *ngIf="hasAlerts"
+                class="position-absolute top-5 translate-middle p-1 bg-danger border border-light rounded-circle"
+              >
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </span>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="notification"
+            >
+              <app-alert (hasAlerts)="hasAlertsForDisplay($event)"></app-alert>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item dropdown u-pro">
+          <a
+            class="nav-link dropdown-toggle profile-pic"
+            href=""
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-circle"></i>
+            <span class="hidden-md-down">Mark &nbsp;</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end animated flipInY">
+            <!-- text-->
+            <a href="javascript:void(0)" class="dropdown-item"
+              ><i class="bi bi-person-circle"></i> My Profile</a
+            >
+            <!-- text-->
+            <a href="javascript:void(0)" class="dropdown-item"
+              ><i class="bi bi-wallet"></i> My Balance</a
+            >
+            <!-- text-->
+            <a href="javascript:void(0)" class="dropdown-item"
+              ><i class="bi bi-envelope"></i> Inbox</a
+            >
+            <!-- text-->
+            <div class="dropdown-divider"></div>
+            <!-- text-->
+            <a href="javascript:void(0)" class="dropdown-item"
+              ><i class="bi bi-gear-fill"></i> Account Setting</a
+            >
+            <!-- text-->
+            <div class="dropdown-divider"></div>
+            <!-- text-->
+            <a href="login.html" class="dropdown-item"
+              ><i class="bi bi-power"></i> Logout</a
+            >
+            <!-- text-->
+          </div>
+        </li>
+        <!-- ============================================================== -->
+        <!-- End User Profile -->
+        <!-- ============================================================== -->
       </ul>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>

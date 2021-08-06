@@ -15,45 +15,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   items: any;
   MeExpand: Expand;
   susbcription: Subscription;
-  simpleItems = {
-    id: 1,
-    text: 'parent-1',
-
-    value: 'p1',
-    children: [
-      {
-        text: 'child-1',
-        value: 'c1',
-      },
-      {
-        text: 'child-2',
-        value: 'c2',
-        children: [
-          {
-            text: 'child-1-2',
-            value: 'c12',
-          },
-          {
-            text: 'child-1-2',
-            value: 'c12',
-            disabled: true,
-            collapsed: true,
-            checked: true,
-            children: [
-              {
-                text: 'child-1-2',
-                value: 'c12',
-              },
-              {
-                text: 'child-1-2',
-                value: 'c12',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
 
   simpleItems2 = {
     text: 'parent-2',
@@ -110,9 +71,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.status = !this.status;
   }
   ngOnInit(): void {
-    // this.items = this.getItems([this.simpleItems, this.simpleItems2]);
-    // console.log(this.items);
-    // this.loadMap();
+    // this.loadJsFile('../../../../../assets/js/custom.js');
   }
 
   onSelectedChange(event) {
@@ -128,4 +87,10 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     });
     return itemsArray;
   }
+  // loadJsFile(url) {
+  //   let node = document.createElement('script');
+  //   node.src = url;
+  //   node.type = 'text/javascript';
+  //   document.getElementsByTagName('head')[0].appendChild(node);
+  // }
 }

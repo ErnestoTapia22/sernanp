@@ -1,83 +1,218 @@
-<div class="container-scroller">
-  <app-navbar></app-navbar>
-  <div
-    class="d-flex flex-column flex-shrink-0 bg-light custom-sidebar"
-    style="width: 4.5rem"
-  >
-    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-      <li class="nav-item">
-        <a
-          class="nav-link py-3 border-bottom"
-          aria-current="page"
-          title="Home"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-          routerLink="/map/index"
-          routerLinkActive="active"
-        >
-          <i class="bi bi-geo-alt-fill custom-icon"></i>
-        </a>
-      </li>
-      <li>
-        <a
-          class="nav-link py-3 border-bottom"
-          title="Dashboard"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-          routerLink="/consultations"
-          routerLinkActive="active"
-        >
-          <i class="bi bi-ui-checks-grid custom-icon"></i>
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          class="nav-link py-3 border-bottom"
-          title="Orders"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-        >
-          <i class="bi bi-box custom-icon"></i>
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          class="nav-link py-3 border-bottom"
-          title="Products"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-        >
-          <i class="bi bi-cart-dash-fill custom-icon"></i>
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          class="nav-link py-3 border-bottom"
-          title="Customers"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-        >
-          <i class="bi bi-cloud-arrow-up custom-icon"></i>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="container-fluid page-body-wrapper">
-    <div class="wrap-main">
-      <section>
-        <router-outlet></router-outlet>
-      </section>
+<div class="skin fixed-layout mini-sidebar">
+  <div id="main-wrapper">
+    <app-navbar></app-navbar>
+    <!-- <div
+      class="d-flex flex-column flex-shrink-0 bg-light custom-sidebar"
+      style="width: 4.5rem"
+    >
+      <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li class="nav-item">
+          <a
+            class="nav-link py-3 border-bottom"
+            aria-current="page"
+            title="Home"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            routerLink="/map/index"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-geo-alt-fill custom-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            class="nav-link py-3 border-bottom"
+            title="Dashboard"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            routerLink="/consultations"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-ui-checks-grid custom-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title="Orders"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-box custom-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title="Products"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-cart-dash-fill custom-icon"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="nav-link py-3 border-bottom"
+            title="Customers"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-cloud-arrow-up custom-icon"></i>
+          </a>
+        </li>
+      </ul>
+    </div> -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav">
+            <li class="user-pro">
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+                routerLink="/map/index"
+                routerLinkActive="active"
+              >
+                <i class="bi bi-geo-alt-fill"></i>
+                <span class="hide-menu">Página principal</span>
+              </a>
+            </li>
+            <!-- <li class="nav-small-cap">--- PERSONAL</li> -->
+            <li>
+              <a
+                class="has-arrow"
+                aria-expanded="false"
+                routerLink="/consultations"
+                routerLinkActive="active"
+              >
+                <i class="bi bi-bar-chart"></i>
+                <span class="hide-menu"
+                  >Dashboard
+                  <!-- <span class="badge rounded-pill bg-info ms-auto"
+                    >4</span
+                  > -->
+                </span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Minimal </a></li>
+                <li><a href="javascript:void(0)">Analytical</a></li>
+                <li><a href="javascript:void(0)">Demographical</a></li>
+                <li><a href="javascript:void(0)">Modern</a></li>
+              </ul>
+            </li>
+            <li>
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                <i class="bi bi-calculator-fill"></i>
+                <span class="hide-menu">Apps</span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Calendar</a></li>
+                <li><a href="javascript:void(0)">Chat app</a></li>
+                <li><a href="javascript:void(0)">Support Ticket</a></li>
+                <li><a href="javascript:void(0)">Contact / Employee</a></li>
+                <li><a href="javascript:void(0)">Contact Grid</a></li>
+                <li><a href="javascript:void(0)">Contact Detail</a></li>
+              </ul>
+            </li>
+            <li>
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                <i class="bi bi-envelope"></i>
+                <span class="hide-menu">Inbox</span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Mailbox</a></li>
+                <li><a href="javascript:void(0)">Mailbox Detail</a></li>
+                <li><a href="javascript:void(0)">Compose Mail</a></li>
+              </ul>
+            </li>
+            <li class="nav-small-cap">--- FORMS, TABLE &amp; WIDGETS</li>
+            <li>
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                <i class="bi bi-ui-checks-grid"></i>
+                <span class="hide-menu">Forms</span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Basic Forms</a></li>
+                <li><a href="javascript:void(0)">Form Layouts</a></li>
+                <li><a href="javascript:void(0)">Form Addons</a></li>
+              </ul>
+            </li>
+            <li>
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                <i class="bi bi-table"></i>
+                <span class="hide-menu">Tables</span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Basic Tables</a></li>
+                <li><a href="javascript:void(0)">Table Layouts</a></li>
+                <li><a href="javascript:void(0)">Data Tables</a></li>
+              </ul>
+            </li>
+            <li class="nav-small-cap">--- EXTRA COMPONENTS</li>
+            <li>
+              <a
+                class="has-arrow"
+                href="javascript:void(0)"
+                aria-expanded="false"
+              >
+                <i class="bi bi-cast"></i>
+                <span class="hide-menu">Multi level dd</span>
+              </a>
+              <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">item 1.1</a></li>
+                <li><a href="javascript:void(0)">item 1.2</a></li>
+                <li>
+                  <a
+                    class="has-arrow"
+                    href="javascript:void(0)"
+                    aria-expanded="false"
+                    >Menu 1.3</a
+                  >
+                  <ul aria-expanded="false" class="collapse">
+                    <li><a href="javascript:void(0)">item 1.3.1</a></li>
+                    <li><a href="javascript:void(0)">item 1.3.2</a></li>
+                    <li><a href="javascript:void(0)">item 1.3.3</a></li>
+                    <li><a href="javascript:void(0)">item 1.3.4</a></li>
+                  </ul>
+                </li>
+                <li><a href="javascript:void(0)">item 1.4</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <div class="container-fluid page-body-wrapper">
+      <div class="wrap-main">
+        <section>
+          <router-outlet></router-outlet>
+        </section>
+      </div>
     </div>
   </div>
-  <button
-    class="float"
-    data-bs-toggle="offcanvas"
-    data-bs-target="#offcanvasRight"
-    aria-controls="offcanvasRight"
-  >
-    <i class="bi bi-stack my-float" style="font-size: 1.5rem"></i>
-  </button>
 </div>
