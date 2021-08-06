@@ -55,24 +55,12 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     ],
   };
   private view: any = null;
-  constructor(private mapService: EsriMapService) {
-    // const bmg = new BaseMapGallery({
-    //   view: this.view,
-    // });
-    // this.MeExpand = new Expand({
-    //   view: this.view,
-    //   content: bmg,
-    //   expanded: false,
-    //   expandTooltip: 'Estilos de mapa',
-    // });
-  }
+  constructor(private mapService: EsriMapService) {}
   status: boolean = false;
   clickEvent() {
     this.status = !this.status;
   }
-  ngOnInit(): void {
-    // this.loadJsFile('../../../../../assets/js/custom.js');
-  }
+  ngOnInit(): void {}
 
   onSelectedChange(event) {
     // console.log(event);
@@ -87,10 +75,43 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     });
     return itemsArray;
   }
-  // loadJsFile(url) {
-  //   let node = document.createElement('script');
-  //   node.src = url;
-  //   node.type = 'text/javascript';
-  //   document.getElementsByTagName('head')[0].appendChild(node);
-  // }
+
+  clickAside(evt) {
+    // const sidebarnav = document.getElementById('sidebarnav');
+    // if (sidebarnav) {
+    //   let elmA = (evt.target as Element).closest('a');
+    //   if (!elmA) return;
+    //   let addressValue = elmA.getAttribute('href');
+    //   if (
+    //     '#' == addressValue ||
+    //     '' == addressValue ||
+    //     '/#' == addressValue ||
+    //     '#/' == addressValue ||
+    //     'javascript:void(0)' == addressValue
+    //   )
+    //     evt.preventDefault();
+    //   if (!elmA.classList.contains('active')) {
+    //     let elmUls = Array.from(sidebarnav.querySelectorAll('ul'));
+    //     let elmAs = Array.from(sidebarnav.querySelectorAll('a'));
+    //     let prevElem = null;
+    //     let nextElem = elmA.nextElementSibling;
+    //     if (!nextElem) nextElem = elmA.closest('ul');
+    //     if (nextElem) prevElem = nextElem.previousElementSibling;
+    //     elmUls.forEach((itemUl) => {
+    //       itemUl.classList.remove('in');
+    //     });
+    //     elmAs.forEach((itemA) => {
+    //       itemA.classList.remove('active');
+    //     });
+    //     if (nextElem) nextElem.classList.add('in');
+    //     if (prevElem) prevElem.classList.add('active');
+    //     elmA.classList.add('active');
+    //   } else if (elmA.classList.contains('active')) {
+    //     let nextElem = elmA.nextElementSibling;
+    //     if (!nextElem) nextElem = elmA.closest('ul');
+    //     if (nextElem) nextElem.classList.remove('in');
+    //     elmA.classList.remove('active');
+    //   }
+    // }
+  }
 }

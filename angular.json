@@ -27,10 +27,7 @@
               "src/styles.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.js",
-              "src/assets/js/custom.js"
-            ],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.js"],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

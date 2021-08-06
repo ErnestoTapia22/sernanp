@@ -12,7 +12,9 @@ export class NavbarComponent implements OnInit {
   hasAlerts: number = 0;
   constructor(private alertService: AlertService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.clickNav(null);
+  }
 
   toggleOffcanvas() {
     this.sidebarOpened = !this.sidebarOpened;
@@ -25,4 +27,53 @@ export class NavbarComponent implements OnInit {
   hasAlertsForDisplay(e) {
     this.hasAlerts = e;
   }
+  clickNav(evt) {
+    const elmBody = document.querySelector('body');
+    const elmNavTogglerIcon = document.querySelector('.nav-toggler i');
+    elmBody.addEventListener('resize', this.setResize);
+    elmBody.classList.toggle('show-sidebar');
+
+    if (elmNavTogglerIcon) {
+      if (elmBody.classList.contains('show-sidebar')) {
+        elmNavTogglerIcon.classList.remove('bi-list');
+        elmNavTogglerIcon.classList.add('bi-x-lg');
+      } else {
+        elmNavTogglerIcon.classList.remove('bi-x-lg');
+        elmNavTogglerIcon.classList.add('bi-list');
+      }
+      // elmNavTogglerIcon.classList.toggle('');
+      // elmNavTogglerIcon.classList.toggle('bi-x-lg');
+    }
+  }
+  setResize = () => {
+    let width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+    let topOffset = 55;
+
+    const elmPageBody = document.querySelector('body');
+    const elmNavbarBrand = document.querySelector('.navbar-brand span');
+    const elmSidebartogglerIcon = document.querySelector('.sidebartoggler i');
+    const elmPageWrapper = document.querySelector('.page-wrapper');
+
+    // console.log(elmNavbarBrand, elmSidebartogglerIcon);
+    elmPageBody.classList.add('mini-sidebar');
+
+    // if (width < 1170) {
+    //     elmPageBody.classList.add('mini-sidebar');
+    //     if(elmNavbarBrand) elmNavbarBrand.style.display = 'none';
+    //     if(elmSidebartogglerIcon) elmSidebartogglerIcon.classList.add('fa-bars')
+    // }
+    // else {
+    //     elmPageBody.classList.remove('mini-sidebar');
+    //     if(elmNavbarBrand) elmNavbarBrand.style.display = 'block';
+    // }
+
+    var height =
+      (window.innerHeight > 0 ? window.innerHeight : screen.height) - 1;
+    height = height - topOffset;
+    if (height < 1) height = 1;
+    if (height > topOffset) {
+      if (elmPageWrapper)
+        elmPageWrapper.setAttribute('style', 'min-height:' + height + 'px'); //style.minHeight = (height) + "px";
+    }
+  };
 }

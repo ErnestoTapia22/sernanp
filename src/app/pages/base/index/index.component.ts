@@ -66,7 +66,7 @@ export class IndexComponent implements OnInit {
       ground: 'world-elevation',
     };
     this.mapViewProperties = {
-      center: [-77.744, -8.9212],
+      center: [-75.744, -8.9212],
       zoom: 6,
     };
     this.getItems([]);
@@ -134,48 +134,53 @@ export class IndexComponent implements OnInit {
             });
             let newLayer = { ...layer, uuid: uuid };
             let layers = await this.layerService.getFormatLayersJson2(newLayer);
-
-            let subLayers = [];
-            layers.layers.forEach((t) => {
-              subLayers.push({
-                id: t.id,
-                visible: t.defaultVisibility,
-                name: t.name,
-                type: 'map-image',
-                popupEnabled: true,
-                minScale: t.minScale,
+            if (
+              layers !== undefined &&
+              layers.layers !== undefined &&
+              layers.layers !== null
+            ) {
+              let subLayers = [];
+              layers.layers.forEach((t) => {
+                subLayers.push({
+                  id: t.id,
+                  visible: t.defaultVisibility,
+                  name: t.name,
+                  type: 'map-image',
+                  popupEnabled: true,
+                  minScale: t.minScale,
+                });
               });
-            });
-            mapImageLayer
-              .when(
-                (layer) => {
-                  layer.sublayers = subLayers;
-                  layer.sublayers.forEach((sublayer) => {
-                    sublayer
-                      .createFeatureLayer()
-                      .then((featureLayer) => featureLayer.load())
-                      .then((featureLayer) => {
-                        sublayer.popupTemplate = featureLayer.createPopupTemplate();
-                      });
-                  });
+              mapImageLayer
+                .when(
+                  (layer) => {
+                    layer.sublayers = subLayers;
+                    layer.sublayers.forEach((sublayer) => {
+                      sublayer
+                        .createFeatureLayer()
+                        .then((featureLayer) => featureLayer.load())
+                        .then((featureLayer) => {
+                          sublayer.popupTemplate = featureLayer.createPopupTemplate();
+                        });
+                    });
 
-                  return layer;
-                },
-                (error) => null
-              )
-              .then((data) => {});
-            let parentJson = {
-              value: newLayer.uuid,
-              text: layer.name || 'Sin nombre',
-              checked: layer.disabled,
-              disabled: false,
-              collapsed: true,
-              children: layers.json,
-              legends: [],
-            };
-            this.getItems([parentJson]);
+                    return layer;
+                  },
+                  (error) => null
+                )
+                .then((data) => {});
+              let parentJson = {
+                value: newLayer.uuid,
+                text: layer.name || 'Sin nombre',
+                checked: layer.disabled,
+                disabled: false,
+                collapsed: true,
+                children: layers.json,
+                legends: [],
+              };
+              this.getItems([parentJson]);
 
-            map.add(mapImageLayer);
+              map.add(mapImageLayer);
+            }
           }
         });
       }
