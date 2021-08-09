@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { BlankLayoutComponent } from './pages/layout/blank-layout/blank-layout.component';
-import { EmptyLayoutComponent } from './pages/layout/empty-layout/empty-layout.component';
-import { FullLayoutComponent } from './pages/layout/full-layout/full-layout.component';
-import { BaseMapComponent } from './base-map/base-map.component';
-import { IndexComponent } from './pages/index/index.component';
-import { ConsultationsComponent } from './pages/consultations/consultations.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { BlankLayoutComponent } from './pages/base/layout/blank-layout/blank-layout.component';
+import { EmptyLayoutComponent } from './pages/base/layout/empty-layout/empty-layout.component';
+import { FullLayoutComponent } from './pages/base/layout/full-layout/full-layout.component';
+import { BaseMapComponent } from './pages/geometry/base-map/base-map.component';
+import { IndexComponent } from './pages/base/index/index.component';
+import { ConsultationsComponent } from './pages/base/consultations/consultations.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
