@@ -1,0 +1,367 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Monitoreo</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/map">Home</a></li>
+            <li class="breadcrumb-item">
+              <a routerLink="/monitoring">Monitoreo</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+          </ol>
+        </nav>
+
+        <button type="button" class="btn btn-info ms-3">
+          <i class="fa fa-plus-circle"></i>
+          <span class="d-none d-sm-inline-block">Nuevo acuerdo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">AC20180201</label>
+        </div>
+        <div class="card-body">
+          <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="datos-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabDatos"
+                type="button"
+                role="tab"
+              >
+                Datos
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="mapa-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabMapa"
+                type="button"
+                role="tab"
+              >
+                Mapa
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="workPlan-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabWorkPlan"
+                type="button"
+                role="tab"
+              >
+                Plan de trabajo
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane pt-2 fade show active"
+              id="tabDatos"
+              role="tabpanel"
+              aria-labelledby="datos-tab"
+            >
+              <form class="row g-3" action="#">
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label">Categoria</label>
+                  <select id="inputState" class="form-select" disabled>
+                    <option selected>SELECCIONE</option>
+                    <option>Bosque de protección</option>
+                    <option>Parque nacional</option>
+                    <option selected>Reserva nacional</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Area natural protegida
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Área Natural Protegida/Zona de Amortiguamiento o Paisaje Asociado"
+                  ></i>
+                  <select id="inputState" class="form-select" disabled>
+                    <option selected>SELECCIONE</option>
+                    <option>BP. Alto mayo</option>
+                    <option>BP. Alto mayo y zona de amortiguamiento</option>
+                    <option selected>PN. Cordillera azul</option>
+                    <option>RN. Tambopata</option>
+                    <option>Zona de amortiguamiento</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Suscriptores del acuerdo de conservación</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Nombres"
+                    value="RNTAMB - Asociación de castañeros de la RNTAMB los Pioneros"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Tipo de ecosistema conservado
+                  </label>
+                  <select id="inputState" class="form-select" disabled>
+                    <option selected>SELECCIONE</option>
+                    <option>Bosque</option>
+                    <option selected>Bosque de neblina</option>
+                    <option>Bosque montamo</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Denominación del acuerdo de conservación</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Denominación"
+                    value="Acuerdo de Conservación "
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Actividades económicas sostenibles</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Actividad"
+                    value="Siembra y cosecha de café orgánico"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Estado del acuerdo
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Estado del Acuerdo de Conservación: Vigente, concluido, actualizado"
+                  ></i>
+                  <select id="inputState" class="form-select" disabled>
+                    <option selected>SELECCIONE</option>
+                    <option>Activo</option>
+                    <option>Inactivo</option>
+                    <option>Por renovar</option>
+                    <option selected>Vigente</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="date" class="form-label"
+                    >Fecha de suscripción</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date"
+                    value="2021-07-22"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de acuerdos de Conservación</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                    value="1"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de Hectáreas conservadas</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                    value="0.29945"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputPassword4" class="form-label"
+                    >Compromisos de la comunidad/organización</label
+                  >
+                  <textarea
+                    class="form-control"
+                    placeholder="Compromisos"
+                    id="inputPassword4"
+                    disabled
+                  >
+Apoyat y participar de manera conjunta con las Jefatura en las actividades de vigilancia participativa para garantizar la conservación del ANP y su ZA.
+Adecuar e implementar en sus instrumentos de gestión actividades relacionadas directamente en favor de la conservación y reforetsación con especies nativas.
+Mantener un precio diferenciado superior al mercado local y de acuerdo a la calidad, durante la campaña cafetalera de los suscriptores.
+Respetar los acuerdos comerciales celebrados entre la COOPBAM, socio y aliados comerciales.
+La marca SERNANP "Aliados por la conservación" será utilizado por la COOPBAM bajo condiciones previstas en la directiva actual. 
+
+                </textarea
+                  >
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de Beneficiarios</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                    value="1"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Coordenadas del polígono</label
+                  >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="">Lat - Lng</span>
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      value="220142"
+                      disabled
+                    />
+                    <input
+                      type="number"
+                      class="form-control"
+                      value="9359766"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div>
+                    <label for="formFile" class="form-label"
+                      >Medio de verificación
+                    </label>
+                    <i
+                      class="bi bi-info-lg"
+                      title="Medio de verificación: Acuerdo de conservacion suscrito y el mapa del área conservada, (JGP-PDF)"
+                    ></i>
+                    <div class="input-group">
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="formFile"
+                        disabled
+                      />
+                      <label class="input-group-text" for="formFile">
+                        <i class="fas fa-folder-open"></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputPassword4" class="form-label"
+                    >Compromisos de la jefatura ANP(JANP)</label
+                  >
+                  <textarea
+                    class="form-control"
+                    placeholder="Compromisos"
+                    id="inputPassword4"
+                    disabled
+                  >
+Establecer los protocolos de vigilancia de manera coordinada con la COOPBAM.</textarea
+                  >
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Vigencia (años)
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Vigencia del Acuerdo de Conservación"
+                  ></i>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                    value="5"
+                    disabled
+                  />
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    routerLink="/monitoring"
+                  >
+                    <i class="bi bi-backspace-fill"></i>
+                    Regresar
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div
+              class="tab-pane pt-2 fade"
+              id="tabMapa"
+              role="tabpanel"
+              aria-labelledby="mapa-tab"
+            >
+              <app-base-map
+                [mapProperties]="mapProperties"
+                [mapViewProperties]="mapViewProperties"
+                [maxHeight]="500"
+                (mapInit)="onMapInit($event)"
+              >
+              </app-base-map>
+            </div>
+            <div
+              class="tab-pane pt-2 fade"
+              id="tabWorkPlan"
+              role="tabpanel"
+              aria-labelledby="workPlan-tab"
+            >
+              da
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->

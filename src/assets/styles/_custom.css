@@ -490,7 +490,7 @@
 .fixed-sidebar.mini-sidebar .navbar-collapse {
   margin-left: 70px;
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .wrap-main {
     margin-left: 0px !important;
   }

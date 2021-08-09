@@ -31,7 +31,9 @@ export class NavbarComponent implements OnInit {
     const elmBody = document.querySelector('body');
     const elmNavTogglerIcon = document.querySelector('.nav-toggler i');
     elmBody.addEventListener('resize', this.setResize);
-    elmBody.classList.toggle('show-sidebar');
+    if (window.innerWidth < 768) {
+      elmBody.classList.toggle('show-sidebar');
+    }
 
     if (elmNavTogglerIcon) {
       if (elmBody.classList.contains('show-sidebar')) {

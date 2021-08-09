@@ -1,0 +1,334 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Monitoreo</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/map">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Monitoreo
+            </li>
+          </ol>
+        </nav>
+
+        <button type="button" class="btn btn-info ms-3">
+          <i class="fa fa-plus-circle"></i>
+          <span class="d-none d-sm-inline-block">Nuevo acuerdo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">Búsqueda</label>
+          <div>
+            <button type="button" class="btn btn-sm btn-outline-primary mx-2">
+              <i class="bi bi-search"></i>
+              Buscar
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-brush"></i>
+              Limpiar
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <label class="form-label">Código</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <label class="form-label">Fecha de suscripción</label>
+              <!-- <input type="text" class="form-control" placeholder="Last name" /> -->
+
+              <input type="date" class="form-control" />
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <label class="form-label">Suscriptores del acuerdo</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <label for="inputState" class="form-label">Categoria </label>
+              <select class="form-select">
+                <option selected>SELECCIONE</option>
+                <option>Bosque de protección</option>
+                <option>Parque nacional</option>
+                <option>Reserva nacional</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <label for="inputState" class="form-label"
+                >Estado del acuerdo
+              </label>
+              <select class="form-select">
+                <option selected>SELECCIONE</option>
+                <option>Activo</option>
+                <option>Inactivo</option>
+                <option>Por renovar</option>
+                <option>Vigente</option>
+              </select>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Categoría</th>
+                  <th>Estado</th>
+                  <th>Suscriptores</th>
+                  <th>Vigencia</th>
+                  <th>Fecha Suscr.</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>AC20210801</td>
+                  <td>Reserva nacional</td>
+                  <td>Vigente</td>
+                  <td>
+                    SERNANP - Reserva nacional Tambopata - Asoc. pamicultores
+                    San Juan
+                  </td>
+                  <td>5 años</td>
+                  <td>12/09/2020</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>AC20190702</td>
+                  <td>Reserva nacional</td>
+                  <td>Vigente</td>
+                  <td>
+                    RNTAMB - Cooperativa agraria de servicios múltiples
+                    Tambopata Candamo
+                  </td>
+                  <td>3 años</td>
+                  <td>20/10/2019</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>AC20180201</td>
+                  <td>Reserva nacional</td>
+                  <td>Vigente</td>
+                  <td>
+                    RNTAMB - Asociación de castañeros de la RNTAMB los Pioneros
+                  </td>
+                  <td>5 Años</td>
+                  <td>23/04/2019</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>AC20210801</td>
+                  <td>Reserva nacional</td>
+                  <td>Vigente</td>
+                  <td>DIS - Fruta Tambopata E.I.R.L.</td>
+                  <td>5 años</td>
+                  <td>22/04/2019</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>AC20210801</td>
+                  <td>Parque nacional</td>
+                  <td>Vigente</td>
+                  <td>JPNCAZ - SERNANP-CC.NN. - Mushuck Llacta de Chipaota.</td>
+                  <td>2 años</td>
+                  <td>12/12/2019</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>AC20210801</td>
+                  <td>Parque nacional</td>
+                  <td>Vigente</td>
+                  <td>JPNCAZ/SERNANP - COOPAIN - CIMA.</td>
+                  <td>3 años</td>
+                  <td>11/07/2019</td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-info border-0"
+                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
+                      >
+                        <i class="bi bi-eye fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                      >
+                        <i class="bi bi-pencil fs-lg"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                      >
+                        <i class="bi bi-trash fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+              <li class="page-item">
+                <a class="page-link" href="#">Previous</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
