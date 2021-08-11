@@ -33,260 +33,462 @@
   <!-- ============================================================== -->
   <div class="row">
     <div class="col-12">
-      <div class="card">
-        <!-- <div class="card-header">
-              <label class="mb-0 fw-bold">Tabs & Formulario</label>
-            </div> -->
-        <div class="card-body">
-          <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link active"
-                id="datos-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#tabDatos"
-                type="button"
-                role="tab"
-              >
-                Generar
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link disabled"
-                id="mapa-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#tabMapa"
-                type="button"
-                role="tab"
-              >
-                Publicar
-              </button>
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div
-              class="tab-pane pt-2 fade show active"
-              id="tabDatos"
-              role="tabpanel"
-              aria-labelledby="datos-tab"
-            >
-              <form class="row g-3" action="#">
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label">Categoria</label>
-                  <select id="inputState" class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>Bosque de protección</option>
-                    <option>Parque nacional</option>
-                    <option>Reserva nacional</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label"
-                    >Area natural protegida
-                  </label>
-                  <i
-                    class="bi bi-info-lg"
-                    title="Área Natural Protegida/Zona de Amortiguamiento o Paisaje Asociado"
-                  ></i>
-                  <select id="inputState" class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>BP. Alto mayo</option>
-                    <option>BP. Alto mayo y zona de amortiguamiento</option>
-                    <option>PN. Cordillera azul</option>
-                    <option>RN. Tambopata</option>
-                    <option>Zona de amortiguamiento</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputAddress" class="form-label"
-                    >Suscriptores del acuerdo de conservación</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Nombres"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label"
-                    >Tipo de ecosistema conservado
-                  </label>
-                  <select id="inputState" class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>Bosque</option>
-                    <option>Bosque de neblina</option>
-                    <option>Bosque montamo</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputAddress" class="form-label"
-                    >Denominación del acuerdo de conservación</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Denominación"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label for="inputAddress" class="form-label"
-                    >Actividades económicas sostenibles</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Actividad"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label for="inputState" class="form-label"
-                    >Estado del acuerdo
-                  </label>
-                  <i
-                    class="bi bi-info-lg"
-                    title="Estado del Acuerdo de Conservación: Vigente, concluido, actualizado"
-                  ></i>
-                  <select id="inputState" class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>Activo</option>
-                    <option>Inactivo</option>
-                    <option>Por renovar</option>
-                    <option>Vigente</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="date" class="form-label"
-                    >Fecha de suscripción</label
-                  >
-                  <input type="date" class="form-control" id="date" />
-                </div>
-                <div class="col-md-2">
-                  <label for="inputPassword4" class="form-label"
-                    >Nro. de acuerdos de Conservación</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputPassword4"
-                  />
-                </div>
-                <div class="col-md-2">
-                  <label for="inputPassword4" class="form-label"
-                    >Nro. de Hectáreas conservadas</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputPassword4"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label for="inputPassword4" class="form-label"
-                    >Compromisos de la comunidad/organización</label
-                  >
-                  <textarea
-                    class="form-control"
-                    placeholder="Compromisos"
-                    id="inputPassword4"
-                  ></textarea>
-                </div>
-                <div class="col-md-2">
-                  <label for="inputPassword4" class="form-label"
-                    >Nro. de Beneficiarios</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputPassword4"
-                  />
-                </div>
-                <div class="col-md-2">
-                  <label for="inputPassword4" class="form-label"
-                    >Coordenadas del polígono</label
-                  >
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="">Lat - Lng</span>
-                    </div>
-                    <input type="number" class="form-control" />
-                    <input type="number" class="form-control" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div>
-                    <label for="formFile" class="form-label"
-                      >Medio de verificación
-                    </label>
-                    <i
-                      class="bi bi-info-lg"
-                      title="Medio de verificación: Acuerdo de conservacion suscrito y el mapa del área conservada, (JGP-PDF)"
-                    ></i>
-                    <div class="input-group">
-                      <input type="file" class="form-control" id="formFile" />
-                      <label class="input-group-text" for="formFile">
-                        <i class="fas fa-folder-open"></i>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label for="inputPassword4" class="form-label"
-                    >Compromisos de la jefatura ANP(JANP)</label
-                  >
-                  <textarea
-                    class="form-control"
-                    placeholder="Compromisos"
-                    id="inputPassword4"
-                  ></textarea>
-                </div>
-                <div class="col-md-2">
-                  <label for="inputPassword4" class="form-label"
-                    >Vigencia (años)
-                  </label>
-                  <i
-                    class="bi bi-info-lg"
-                    title="Vigencia del Acuerdo de Conservación"
-                  ></i>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="inputPassword4"
-                  />
-                </div>
-                <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-light">
-                    <i class="fas fa-brush"></i>
-                    Limpiar</button
-                  >&nbsp;
-                  <button type="button" class="btn btn-secondary">
-                    <i class="fas fa-times-circle"></i>
-                    Cancelar</button
-                  >&nbsp;
-                  <button type="button" class="btn btn-success">
-                    <i class="fas fa-save"></i>
-                    Guardar
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div
-              class="tab-pane pt-2 fade"
-              id="tabMapa"
-              role="tabpanel"
-              aria-labelledby="mapa-tab"
-            >
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Officiis, quos? Eaque accusantium fuga rerum magnam, voluptates
-              excepturi doloremque alias harum voluptatum incidunt est atque,
-              voluptas veniam architecto natus, amet quo.
+      <form action="#">
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">General</label>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="txtCode" class="form-label">Código (*)</label>
+                <input
+                  id="txtCode"
+                  type="text"
+                  class="form-control"
+                  placeholder="Código"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="ddAnp" class="form-label">ANP (*)</label>
+                <select id="ddAnp" class="form-select">
+                  <option selected>SELECCIONE</option>
+                  <option>ANP 1</option>
+                  <option>ANP 2</option>
+                  <option>ANP 3</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaGoal" class="form-label"
+                  >Objetivo del ADC (*)</label
+                >
+                <textarea
+                  id="txtaGoal"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="ddState" class="form-label">Estado (*)</label>
+                <select id="ddState" class="form-select">
+                  <option selected>SELECCIONE</option>
+                  <option>En envaluación</option>
+                  <option>En diseño</option>
+                  <option>Firmado</option>
+                  <option>
+                    En implementación: con plan de trabajo en implementación
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="txtSuscriptionDate" class="form-label"
+                  >Fecha de suscripción (*)</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="txtSuscriptionDate"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="numbValidity"
+                  >Vigencia en años (*)</label
+                >
+                <input
+                  type="number"
+                  id="numbValidity"
+                  class="form-control"
+                  min="0"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">Beneficiarios</label>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">Número de participantes </label
+                ><i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Número de personas  participando del AdC"
+                ></i>
+                <div class="input-group">
+                  <span class="input-group-text">H</span>
+                  <input
+                    type="number"
+                    min="0"
+                    id="numbMenQ"
+                    class="form-control"
+                  />
+                  <span class="input-group-text">M</span>
+                  <input
+                    type="number"
+                    min="0"
+                    id="numbWomanQ"
+                    class="form-control"
+                  />
+                  <span class="input-group-text">Total</span>
+                  <input
+                    type="number"
+                    min="0"
+                    id="numbTotal"
+                    class="form-control"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaDetailB" class="form-label"
+                  >Detalle del beneficiario</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Detalle del beneficiario (a nivel de personas)"
+                ></i>
+                <textarea
+                  id="txtaDetailB"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="numbFamiliesBQ" class="form-label"
+                  >Número de familias beneficiadas</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Número de familias beneficiadas (según el AdC firmado)"
+                ></i>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbFamiliesBQ"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="txtaDetailBF" class="form-label"
+                  >Detalle del beneficiario familia</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Detalle del beneficiario (a nivel de familia)"
+                ></i>
+                <textarea
+                  id="txtaDetailBF"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaIndirectB" class="form-label"
+                  >Beneficiarios indirectos</label
+                >
+                <textarea
+                  id="txtaIndirectB"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">Ámbito</label>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label for="numbScope" class="form-label"
+                  >Ámbito del ADC (Ha)</label
+                >
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbScope"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="numbProductiveA" class="form-label"
+                  >Superficie productiva (Ha)</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Superficie bajo manejo productivo "
+                ></i>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbProductiveA"
+                />
+              </div>
+
+              <div class="col-md-3">
+                <label for="txtaProductiveAD" class="form-label"
+                  >Detalle superficie productiva
+                </label>
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Detalle del ámbito bajo manejo productivo, actividad económica sostenible asociada al AdC"
+                ></i>
+                <textarea
+                  id="txtaProductiveAD"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="numbAreaR" class="form-label"
+                  >Superficie bajo restauración (Ha)</label
+                >
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbAreaR"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="txtaIndirectB" class="form-label"
+                  >Detalle ámbito bajo restauración</label
+                >
+                <textarea
+                  id="txtaDetailAR"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaSectorVC" class="form-label"
+                  >Nombre(s) del(os) sector(es) de V y C
+                </label>
+                <textarea
+                  id="txtaSectorVC"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="numbAreaVC" class="form-label"
+                  >Superficie del(os) sector(es) de V y C (Ha)</label
+                >
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbAreaVC"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="txtaDetailSVC" class="form-label"
+                  >Detalle del(os) sector(es) de V y C
+                </label>
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Detalle del sector de VyC (tanto dentro como en el paisaje asociado del ANP)"
+                ></i>
+                <textarea
+                  id="txtaDetailSVC"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaModeAdc" class="form-label"
+                  >Modalidad de gestión del territorio en el ADC
+                </label>
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Señale algún otro tipo de modalidad de gestión del territorio comprometida en el AdC "
+                ></i>
+                <textarea
+                  id="txtaModeAdc"
+                  class="form-control"
+                  rows="1"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">Articulaciones</label>
+          </div>
+          <div class="card-body">
+            <label for="ddMasterP" class="form-label">Plan maestro (*)</label>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <select id="ddMasterP" class="form-select">
+                  <option selected>SELECCIONE</option>
+                  <option>Plan maestro 1</option>
+                  <option>Plan maestro 2</option>
+                  <option>Plan maestro 3</option>
+                </select>
+              </div>
+              <div class="col-md-9">
+                <div class="form-check form-switch form-check-inline mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="chkComunityL"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="chkComunityL"
+                    >Plan de vida de comunidades</label
+                  >
+                </div>
+                <div class="form-check form-switch form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="chkInstitutionL"
+                    value="option2"
+                  />
+                  <label class="form-check-label" for="chkInstitutionL"
+                    >Plan de vida institucional (ECA)</label
+                  >
+                </div>
+                <div class="form-check form-switch form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="chkLocalD"
+                    value="option3"
+                  />
+                  <label class="form-check-label" for="chkLocalD"
+                    >Plan de desarrollo local</label
+                  >
+                </div>
+                <div class="form-check form-switch form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="chkDetailM"
+                    value="option3"
+                  />
+                  <label class="form-check-label" for="chkDetailM"
+                    >Detalle del/los municipios del ADC</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">Financiamiento</label>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <div class="form-check form-switch form-check-inline mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="chkComunityL"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="chkComunityL"
+                    >Se ha apalancado financiamiento
+                  </label>
+                  <i
+                    class="bi bi-info-circle mx-1"
+                    placement="top"
+                    ngbTooltip="¿Se ha apalancado financiamiento en el marco del AdC?"
+                  ></i>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="numbFinanc" class="form-label"
+                  >Financiamiento (Soles)</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="¿A cuánto asciende el financiamiento? "
+                ></i>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="numbFinanc"
+                />
+              </div>
+              <div class="col-md-3">
+                <label for="txtSourceF" class="form-label"
+                  >Fuente de financiamiento</label
+                >
+                <input type="text" class="form-control" id="txtSourceF" />
+              </div>
+              <div class="col-md-3">
+                <label for="txtModF" class="form-label"
+                  >Modalidad de financiamiento</label
+                >
+                <input type="text" class="form-control" id="txtModF" />
+              </div>
+              <div class="col-md-3">
+                <label for="txtNameF" class="form-label"
+                  >Nombre del fondo</label
+                >
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Si aplica "
+                ></i>
+                <input type="text" class="form-control" id="txtNameF" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold"></label>
+          </div>
+          <div class="card-body">
+            <div class="row g-3" action="#">
+              <div class="col-md-3">
+                <label for="txtaObs" class="form-label">Observaciones </label>
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Observaciones/comentarios adicionales a considerar en relación al AdC"
+                ></i>
+                <textarea id="txtaObs" class="form-control" rows="1"></textarea>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-light">
+                  <i class="fas fa-brush"></i>
+                  Limpiar</button
+                >&nbsp;
+                <button type="button" class="btn btn-secondary">
+                  <i class="fas fa-times-circle"></i>
+                  Cancelar</button
+                >&nbsp;
+                <button type="button" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <!-- ============================================================== -->
