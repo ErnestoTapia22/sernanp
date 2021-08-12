@@ -43,8 +43,6 @@ export class NavbarComponent implements OnInit {
         elmNavTogglerIcon.classList.remove('bi-x-lg');
         elmNavTogglerIcon.classList.add('bi-list');
       }
-      // elmNavTogglerIcon.classList.toggle('');
-      // elmNavTogglerIcon.classList.toggle('bi-x-lg');
     }
   }
   setResize = () => {
@@ -56,18 +54,7 @@ export class NavbarComponent implements OnInit {
     const elmSidebartogglerIcon = document.querySelector('.sidebartoggler i');
     const elmPageWrapper = document.querySelector('.page-wrapper');
 
-    // console.log(elmNavbarBrand, elmSidebartogglerIcon);
     elmPageBody.classList.add('mini-sidebar');
-
-    // if (width < 1170) {
-    //     elmPageBody.classList.add('mini-sidebar');
-    //     if(elmNavbarBrand) elmNavbarBrand.style.display = 'none';
-    //     if(elmSidebartogglerIcon) elmSidebartogglerIcon.classList.add('fa-bars')
-    // }
-    // else {
-    //     elmPageBody.classList.remove('mini-sidebar');
-    //     if(elmNavbarBrand) elmNavbarBrand.style.display = 'block';
-    // }
 
     var height =
       (window.innerHeight > 0 ? window.innerHeight : screen.height) - 1;
