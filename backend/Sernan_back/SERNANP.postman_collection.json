@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "7dfdce06-38f2-4f8c-a9ad-fe745214a2a6",
+		"name": "SERNANP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PersonList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/persona/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persona",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonInsert",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 23,\r\n    \"email\": \"onori@hotmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persona/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persona",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonUpdate",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 25,\r\n    \"email\": \"onori10@hotmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persona/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persona",
+						"save"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
