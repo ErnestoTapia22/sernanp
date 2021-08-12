@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import "assets/styles/style.scss";
-@import "assets/styles/_misc.scss";
+@import "assets/styles/_misc.scss";*/
 
-@import "assets/styles/_variables.scss"; */
+@import "assets/styles/_custom.css";
+@import "assets/styles/_theme.css";
 body {
   height: 100%;
 }
@@ -27,6 +28,42 @@ body {
 
 .card-content {
   font-size: 12pt;
+}
+.treeview-item {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 330px;
+}
+.pdr-6 {
+  padding-right: 6px;
+  font-size: 12px;
+}
+/* popup */
+.esri-view-height-less-than-medium .esri-popup__main-container {
+  max-height: 300px !important;
+}
+/* esri buttons */
+.esri-widget--button {
+  font-size: 14px;
+  background-color: #333 !important;
+  color: #fff !important;
+  width: 38px !important;
+  height: 38px !important;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border: 1.5px solid #989898 !important;
+  transition: background-color 125ms ease-in-out;
+}
+.esri-widget--button:hover {
+  color: #fb9d13 !important;
 }
 /* @import "assets/styles/_fonts.scss";
 @import "assets/styles/_functions.scss";
@@ -71,3 +108,7 @@ body {
 /* @import "assets/styles/_demo.scss"; */
 
 /* You can add global styles to this file, and also import other style files */
+.row-item {
+  display: flex;
+}
+/* custom login */

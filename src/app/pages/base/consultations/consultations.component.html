@@ -1,0 +1,300 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Crear Acuerdo</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'">
+          <ol class="breadcrumb justify-content-end">
+            <li class="breadcrumb-item text-nowrap">
+              <a href="javascript:void(0)">Home</a>
+            </li>
+            <li class="breadcrumb-item text-nowrap active">Nuevo acuerdo</li>
+          </ol>
+        </nav>
+
+        <button type="button" class="btn btn-info ms-3">
+          <i class="fa fa-plus-circle"></i>
+          <span class="d-none d-sm-inline-block">Nuevo acuerdo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <!-- <div class="card-header">
+              <label class="mb-0 fw-bold">Tabs & Formulario</label>
+            </div> -->
+        <div class="card-body">
+          <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="datos-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabDatos"
+                type="button"
+                role="tab"
+              >
+                Generar
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link disabled"
+                id="mapa-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabMapa"
+                type="button"
+                role="tab"
+              >
+                Publicar
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane pt-2 fade show active"
+              id="tabDatos"
+              role="tabpanel"
+              aria-labelledby="datos-tab"
+            >
+              <form class="row g-3" action="#">
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label">Categoria</label>
+                  <select id="inputState" class="form-select">
+                    <option selected>SELECCIONE</option>
+                    <option>Bosque de protección</option>
+                    <option>Parque nacional</option>
+                    <option>Reserva nacional</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Area natural protegida
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Área Natural Protegida/Zona de Amortiguamiento o Paisaje Asociado"
+                  ></i>
+                  <select id="inputState" class="form-select">
+                    <option selected>SELECCIONE</option>
+                    <option>BP. Alto mayo</option>
+                    <option>BP. Alto mayo y zona de amortiguamiento</option>
+                    <option>PN. Cordillera azul</option>
+                    <option>RN. Tambopata</option>
+                    <option>Zona de amortiguamiento</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Suscriptores del acuerdo de conservación</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Nombres"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Tipo de ecosistema conservado
+                  </label>
+                  <select id="inputState" class="form-select">
+                    <option selected>SELECCIONE</option>
+                    <option>Bosque</option>
+                    <option>Bosque de neblina</option>
+                    <option>Bosque montamo</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Denominación del acuerdo de conservación</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Denominación"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputAddress" class="form-label"
+                    >Actividades económicas sostenibles</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Actividad"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label"
+                    >Estado del acuerdo
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Estado del Acuerdo de Conservación: Vigente, concluido, actualizado"
+                  ></i>
+                  <select id="inputState" class="form-select">
+                    <option selected>SELECCIONE</option>
+                    <option>Activo</option>
+                    <option>Inactivo</option>
+                    <option>Por renovar</option>
+                    <option>Vigente</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="date" class="form-label"
+                    >Fecha de suscripción</label
+                  >
+                  <input type="date" class="form-control" id="date" />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de acuerdos de Conservación</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de Hectáreas conservadas</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="inputPassword4" class="form-label"
+                    >Compromisos de la comunidad/organización</label
+                  >
+                  <textarea
+                    class="form-control"
+                    placeholder="Compromisos"
+                    id="inputPassword4"
+                  ></textarea>
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Nro. de Beneficiarios</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Coordenadas del polígono</label
+                  >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="">Lat - Lng</span>
+                    </div>
+                    <input type="number" class="form-control" />
+                    <input type="number" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div>
+                    <label for="formFile" class="form-label"
+                      >Medio de verificación
+                    </label>
+                    <i
+                      class="bi bi-info-lg"
+                      title="Medio de verificación: Acuerdo de conservacion suscrito y el mapa del área conservada, (JGP-PDF)"
+                    ></i>
+                    <div class="input-group">
+                      <input type="file" class="form-control" id="formFile" />
+                      <label class="input-group-text" for="formFile">
+                        <i class="fas fa-folder-open"></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="inputPassword4" class="form-label"
+                    >Compromisos de la jefatura ANP(JANP)</label
+                  >
+                  <textarea
+                    class="form-control"
+                    placeholder="Compromisos"
+                    id="inputPassword4"
+                  ></textarea>
+                </div>
+                <div class="col-md-2">
+                  <label for="inputPassword4" class="form-label"
+                    >Vigencia (años)
+                  </label>
+                  <i
+                    class="bi bi-info-lg"
+                    title="Vigencia del Acuerdo de Conservación"
+                  ></i>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPassword4"
+                  />
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-light">
+                    <i class="fas fa-brush"></i>
+                    Limpiar</button
+                  >&nbsp;
+                  <button type="button" class="btn btn-secondary">
+                    <i class="fas fa-times-circle"></i>
+                    Cancelar</button
+                  >&nbsp;
+                  <button type="button" class="btn btn-success">
+                    <i class="fas fa-save"></i>
+                    Guardar
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div
+              class="tab-pane pt-2 fade"
+              id="tabMapa"
+              role="tabpanel"
+              aria-labelledby="mapa-tab"
+            >
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Officiis, quos? Eaque accusantium fuga rerum magnam, voluptates
+              excepturi doloremque alias harum voluptatum incidunt est atque,
+              voluptas veniam architecto natus, amet quo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
