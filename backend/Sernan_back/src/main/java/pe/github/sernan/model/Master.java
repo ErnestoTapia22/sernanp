@@ -1,28 +1,19 @@
-package com.example.demo.model;
+package pe.github.sernan.model;
 
-import org.locationtech.jts.geom.Geometry;
+public class Master {
 
-public class Person {
 	private int Id;
 	
 	private String Name;
 	private String LastName;
 	private String Email;
 	private int Age;
-	private Geometry Geometry;
 	
-
-	public Person () {
+	
+	public Master() {
 		
 	}
 	
-	public Person(int id, String nombre, String apellido, String correo) {
-		this.Id = id;
-		this.Name = nombre;
-		this.LastName = apellido;
-		this.Email = correo;
-	}
-
 	public int getId() {
 		return Id;
 	}
@@ -62,12 +53,5 @@ public class Person {
 	public void setAge(int age) {
 		Age = age;
 	}
-		
-	public Geometry getGeometry() {
-		return Geometry;
-	}
-
-	public void setGeometry(Geometry geometry) {
-		Geometry = geometry;
-	}
+	
 }
