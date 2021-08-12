@@ -12,6 +12,7 @@ import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.co
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
+import { TestComponent } from './pages/base/test/test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -38,6 +39,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: AgreementComponent },
+      {
+        path: 'test',
+        component: TestComponent,
+      },
     ],
   },
   {

@@ -33,6 +33,7 @@ import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.co
 import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
+import { TestComponent } from './pages/base/test/test.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DetailComponent } from './pages/base/monitoring/detail/detail.component
     ReportsComponent,
     UserComponent,
     DetailComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
