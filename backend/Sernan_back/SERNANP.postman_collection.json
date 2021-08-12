@@ -27,12 +27,20 @@
 		},
 		{
 			"name": "PersonInsert",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"anthony\",\r\n    \"lastname\": \"onori\",\r\n    \"age\": 23,\r\n    \"email\": \"onori@hotmail.com\"\r\n}"
+					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 23,\r\n    \"email\": \"onori@hotmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:8080/persona/save",
@@ -51,12 +59,20 @@
 		},
 		{
 			"name": "PersonUpdate",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony2\",\r\n    \"lastname\": \"onori2\",\r\n    \"age\": 25,\r\n    \"email\": \"onori1@hotmail.com\"\r\n}"
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 25,\r\n    \"email\": \"onori10@hotmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:8080/persona/save",
