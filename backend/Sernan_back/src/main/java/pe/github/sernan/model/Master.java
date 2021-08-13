@@ -1,4 +1,5 @@
 package pe.github.sernan.model;
+import java.sql.Date;
 
 public class Master {
 
@@ -8,12 +9,34 @@ public class Master {
 	private String LastName;
 	private String Email;
 	private int Age;
+	private Date Registration;
+	private Boolean State;
+	private String Description;
+	
+	
 	
 	
 	public Master() {
 		
 	}
-	
+	public Date getRegistration() {
+		return Registration;
+	}
+	public void setRegistration(Date registration) {
+		Registration = registration;
+	}
+	public Boolean getState() {
+		return State;
+	}
+	public void setState(Boolean state) {
+		State = state;
+	}
+	public String getDescription() {
+		return Description;
+	}
+	public void setDescription(String description) {
+		Description = description;
+	}
 	public int getId() {
 		return Id;
 	}
