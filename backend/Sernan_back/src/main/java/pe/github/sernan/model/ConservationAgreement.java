@@ -5,7 +5,7 @@ import java.sql.Date;
 	public class ConservationAgreement {
 
 	private int id;
-	private AgreementState stateid;
+	private AgreementState agreementState;
 	private String typeecosystemid;
 	private Date firm;
 	private int validity;
@@ -28,12 +28,12 @@ import java.sql.Date;
 		this.id = id;
 	}
 	
-	public AgreementState getStateid() {
-		return stateid;
+	public AgreementState getAgreementState() {
+		return agreementState;
 	}
 
-	public void setStateid(AgreementState Stateid) {
-		this.stateid = Stateid;
+	public void setAgreementState(AgreementState Stateid) {
+		this.agreementState = Stateid;
 	}
 	
 	public String getTypeecosystemid() {

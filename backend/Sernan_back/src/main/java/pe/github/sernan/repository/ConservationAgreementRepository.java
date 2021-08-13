@@ -54,7 +54,9 @@ public class ConservationAgreementRepository {
 			{
 				conservationAgreement = new ConservationAgreement();
 				conservationAgreement.setId(results.getInt("srl_id"));
-				conservationAgreement.setStateid(Search(conn,results.getInt("int_estadoid")));
+				AgreementState aState = new AgreementState();
+				aState.setName(results.getString("txt_agreementstatename"));
+				conservationAgreement.setAgreementState(aState);
 				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
 				conservationAgreement.setFirm(results.getDate("dt_fec_firma"));
 				conservationAgreement.setValidity(results.getInt("int_vig"));
@@ -68,40 +70,6 @@ public class ConservationAgreementRepository {
 		}
 		
 		return persons;
-	}
-	
-	public AgreementState Search(Connection conn, int id)
-	{
-		AgreementState aState = new AgreementState();
-		try {
-			
-		
-//		Connection conn = jdbcTemplate.getDataSource().getConnection();
-		conn.setAutoCommit(false);
-		CallableStatement proc = conn.prepareCall("{? = call simrac.fn_search_estado(?) }");
-		proc.setInt(1, id);
-		proc.execute();
-		
-		ResultSet results = (ResultSet) proc.getObject(1);
-		while (results.next())
-		{
-			 
-			aState.setId(results.getInt("srl_id"));
-			aState.setName(results.getString("var_nom"));
-			aState.setDescription(results.getString("txt_des"));
-			aState.setRegistration(results.getDate("tsp_fec"));
-			aState.setState(results.getBoolean("bol_flg"));		
-			
-		}
-		
-		results.close();
-		proc.close();
-		}catch(Exception e) {
-			
-		}
-		return aState;
-		
-	}
-	
+	}	
 	
 }
