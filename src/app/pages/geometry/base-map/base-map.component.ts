@@ -23,39 +23,17 @@ import { EsriMapService } from '../../../_services/geometry/esri-map.service';
   styleUrls: ['./base-map.component.css'],
 })
 export class BaseMapComponent implements OnInit, OnDestroy {
+  setMaxHeight: number = 0;
   @ViewChild('mapViewNode', { static: true }) private viewNode!: ElementRef;
   @Input() mapProperties!: any;
   @Input() mapViewProperties!: any;
+  @Input() maxHeight?: any;
   @Output() mapInit: EventEmitter<any> = new EventEmitter();
 
   private view: any = null;
 
   constructor(private zone: NgZone, private mapService: EsriMapService) {}
-  // initializeMap(): Promise<any> {
-  //   const map: Map = new Map({
-  //     basemap: 'hybrid',
-  //     ground: 'world-elevation',
-  //   });
-  //   const mapView = new MapView({
-  //     container: this.viewNode.nativeElement,
-  //     center: [-77.744, -8.9212],
-  //     zoom: 6,
-  //     map,
-  //   });
 
-  //   const bookMarks = new BookMarks({
-  //     view: mapView,
-  //     editingEnabled: true,
-  //   });
-  //   const bkExpand = new Expand({
-  //     view: mapView,
-  //     content: bookMarks,
-  //     expanded: false,
-  //   });
-  //   mapView.ui.add(bkExpand, 'bottom-trailing');
-  //   this.view = mapView;
-  //   return this.view.when();
-  // }
   ngOnInit(): void {
     // config.assetsPath='assets/'
 
@@ -65,6 +43,7 @@ export class BaseMapComponent implements OnInit, OnDestroy {
     this.zone.runOutsideAngular(() => {
       this.loadMap();
     });
+    this.setMaxHeight = this.maxHeight;
   }
   ngOnDestroy(): void {
     if (this.view) {

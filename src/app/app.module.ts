@@ -25,10 +25,15 @@ import { CustomWidgetComponent } from './pages/geometry/widgets/custom-widget/cu
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TreeviewModule } from 'ngx-treeview';
 import { LayerService } from './_services/geometry/layer.service';
-import { ConsultationsComponent } from './pages/base/consultations/consultations.component';
+import { AgreementComponent } from './pages/base/agreement/agreement.component';
 import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
 import { AlertComponent } from './pages/_directives/alert/alert.component';
 import { BaseService } from './_services/base/base.service';
+import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
+import { ReportsComponent } from './pages/base/reports/reports.component';
+import { UserComponent } from './pages/base/user/user.component';
+import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
+import { TestComponent } from './pages/base/test/test.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +49,14 @@ import { BaseService } from './_services/base/base.service';
     IndexComponent,
     BaseWidgetComponent,
     CustomWidgetComponent,
-    ConsultationsComponent,
+    AgreementComponent,
     ResizeMapDirective,
     AlertComponent,
+    MonitoringComponent,
+    ReportsComponent,
+    UserComponent,
+    DetailComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,

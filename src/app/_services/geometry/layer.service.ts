@@ -4,6 +4,9 @@ import { environment } from '../../../environments/environment';
 import { ApiBaseService } from '../base/api-base.service';
 import { AlertService } from '../base/alert.service';
 import { lastValueFrom } from 'rxjs';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import WFSLayer from '@arcgis/core/layers/WFSLayer';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -90,5 +93,14 @@ export class LayerService {
         this._filterParents(t, item2.children, parentId, legendLayers);
       });
     }
+  }
+  async TestWFSLayer(): Promise<any> {
+    const featureLayer = new FeatureLayer({
+      url:
+        'https://gisem.osinergmin.gob.pe/serverdc/rest/services/GasNatural/Produccion/FeatureServer',
+      outFields: ['*'],
+      popupEnabled: false,
+      id: 'featureTest',
+    });
   }
 }

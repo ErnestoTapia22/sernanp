@@ -24,6 +24,9 @@ public class BaseRepository<TEntity extends Master> {
 		params.put("plastname", entity.getLastName());
 		params.put("page", entity.getAge());
 		params.put("pemail", entity.getEmail());
+		params.put("pdescription", entity.getDescription());
+		params.put("pstate", entity.getState());
+		params.put("pregistration", entity.getRegistration());
 		
 		//geometry
 		//params.put("pgeometry", entity.getGeometryWKB());
@@ -109,6 +112,24 @@ public class BaseRepository<TEntity extends Master> {
         return (Integer) result.get("returnvalue");
 	}
 		
+	// ######################################### SEARCH ######################################
+	
+//	public <T>T Search(String procedure, int id)
+//	{
+//		String[] temp = procedure.split("\\.");
+//		temp = (temp.length == 1) ? new String[] {"simrac", temp[0]} : temp;
+//		
+//		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(temp[0]).withFunctionName(temp[1]);
+//		
+//		final Map<String,Object> params = new HashMap<>();
+//		params.put("id", id);
+//		final Map<String, Object> result = simpleJdbcCall.execute(params);
+//         return (T) result.get("returnvalue");
+//        
+//	}
+	
+	// ######################################### END SEARCH ######################################
+	
 	
 	/*
 	public int InsertQuery(Person persona) {

@@ -16,6 +16,7 @@ import { debounceTime, throttleTime } from 'rxjs/operators';
 export class ResizeMapDirective implements AfterViewInit, OnDestroy {
   @Input('appResizeMap') topOffset: number;
   @Input() minHeight: number;
+  @Input() maxHeight?: number = 0;
   // @HostBinding('style.overflow-y') overflowY = 'auto';
 
   private doomElement: HTMLElement;
@@ -36,13 +37,24 @@ export class ResizeMapDirective implements AfterViewInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
   setHeight() {
+    const parentHeight = this.doomElement.parentElement.clientHeight;
     const windowHeight = window?.innerHeight;
-    const topOffSet = this.topOffset || 55;
+    const topOffSet = this.topOffset || 57;
     let height = windowHeight - topOffSet;
     if (this.minHeight && height < this.minHeight) {
       height = this.minHeight;
     }
-    this.renderer.setStyle(this.doomElement, 'height', `${height}px`);
+
+    if (this.maxHeight !== undefined && this.maxHeight !== 0) {
+      this.renderer.setStyle(
+        this.doomElement,
+        'max-height',
+        `${this.maxHeight}px`
+      );
+      this.renderer.setStyle(this.doomElement, 'height', `${height}px`);
+    } else {
+      this.renderer.setStyle(this.doomElement, 'height', `${height}px`);
+    }
   }
   private calcTopOffset(): number {
     try {

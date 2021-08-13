@@ -5,11 +5,16 @@ import java.sql.Date;
 	public class ConservationAgreement {
 
 	private int id;
-	private int stateid;
+	private AgreementState stateid;
 	private String typeecosystemid;
 	private Date firm;
 	private int validity;
 	private Boolean state;
+	private String category;
+	private String name;
+	private int vigency;
+	private String code;
+	
 	
 	public ConservationAgreement() {
 		
@@ -23,11 +28,11 @@ import java.sql.Date;
 		this.id = id;
 	}
 	
-	public int getStateid() {
+	public AgreementState getStateid() {
 		return stateid;
 	}
 
-	public void setStateid(int Stateid) {
+	public void setStateid(AgreementState Stateid) {
 		this.stateid = Stateid;
 	}
 	
