@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'url-api',
+  apiUrl: 'http://localhost:8080',
   webUrl: 'web-url',
   initialLayers: [
     {
