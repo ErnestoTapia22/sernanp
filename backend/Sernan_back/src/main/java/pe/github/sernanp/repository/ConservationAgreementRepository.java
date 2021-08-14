@@ -25,7 +25,7 @@ import pe.github.sernanp.model.PersonModel;
 public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {
 
 	@Autowired
-    JdbcTemplate jdbcTemplate;
+	JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCall;
 	
 	/* @Override
@@ -47,8 +47,8 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		return super.list(ds, "simrac.fn_list_acuerdo_conservacion", new ConservationAgreementMapper());
 	}*/
 	
-	@Override
-	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
+	
+	public List<ConservationAgreementModel> List() {
 		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
 		ConservationAgreementModel conservationAgreement;
 		try {
@@ -57,10 +57,9 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
 			proc.registerOutParameter(1, Types.OTHER);
 			proc.execute();
-			
+
 			ResultSet results = (ResultSet) proc.getObject(1);
-			while (results.next())
-			{
+			while (results.next()) {
 				conservationAgreement = new ConservationAgreementModel();
 				conservationAgreement.setId(results.getInt("srl_id"));
 				AgreementStateModel aState = new AgreementStateModel();
@@ -69,7 +68,11 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
 				conservationAgreement.setFirm(results.getDate("dt_fec_firma"));
 				conservationAgreement.setValidity(results.getInt("int_vig"));
-				conservationAgreement.setState(results.getBoolean("bol_flg"));		
+				conservationAgreement.setState(results.getBoolean("bol_flg"));
+				conservationAgreement.setName(results.getString("var_nom"));
+				conservationAgreement.setCategory(results.getString("var_cat"));
+				conservationAgreement.setCode(results.getString("num_cod"));
+
 				persons.add(conservationAgreement);
 			}
 			results.close();
@@ -77,8 +80,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		} catch (Exception e) {
 
 		}
-		
+
 		return persons;
 	}
-	
 }

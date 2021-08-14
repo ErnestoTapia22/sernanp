@@ -34,6 +34,7 @@ import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { TestComponent } from './pages/base/test/test.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { TestComponent } from './pages/base/test/test.component';
     CdkTableModule,
     DragDropModule,
     TreeviewModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [EsriMapService, LayerService, BaseService],
   bootstrap: [AppComponent],
