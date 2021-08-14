@@ -9,19 +9,36 @@ import org.locationtech.jts.io.WKBWriter;
 //import org.opengis.referencing.operation.MathTransform;
 
 public class PersonModel extends BaseModel {
-	private Geometry Geometry;
+	private String _lastName;
+	private String _email;
+	private int _age;
 	
+	public String getLastName() {
+		return _lastName;
+	}
 
-	public PersonModel () {
-		
+	public void setLastName(String value) {
+		_lastName = value;
+	}
+
+	public String getEmail() {
+		return _email;
+	}
+
+	public void setEmail(String name) {
+		_email = name;
 	}
 	
-	public PersonModel(int id, String name, String lastName, String email) {
-		setId(id);
-		setName(name);
-		setLastName(lastName);
-		setEmail(email);
+	public int getAge() {
+		return _age;
 	}
+
+	public void setAge(int value) {
+		_age = value;
+	}
+	
+	private Geometry Geometry;	
+	
 	
 	public Geometry getGeometry() {
 		return Geometry;

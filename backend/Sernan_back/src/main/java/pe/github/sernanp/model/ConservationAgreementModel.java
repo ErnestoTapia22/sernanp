@@ -4,84 +4,58 @@ import java.sql.Date;
 
 public class ConservationAgreementModel extends BaseModel {
 
-	private int id;
-	private AgreementStateModel agreementState;
-	private String typeecosystemid;
-	private Date firm;
-	private int validity;
-	private Boolean state;
-	private String category;
-	private String name;
-	private int vigency;
-	private String code;
+	private AgreementStateModel _agreementState;
+	private String _typeecosystemid;
+	private Date _firm;
+	private int _validity;
+	private String _category;	
+	private int _vigency;
 	
-	private String Category;
-	private String Name;
-	private String Code;
-
-
 	public void setCategory(String category) {
-		this.Category = category;
+		this._category = category;
 	}
 
 	public String getCategory() {
-		return Category;
-	}
-
-	public String getCode() {
-		return Code;
-	}
-
-	public void setCode(String code) {
-		this.Code = code;
-	}
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String name) {
-		this.Name = name;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+		return _category;
+	}	
+	
 	public AgreementStateModel getAgreementState() {
-		return agreementState;
+		return _agreementState;
 	}
 
 	public void setAgreementState(AgreementStateModel Stateid) {
-		this.agreementState = Stateid;
+		this._agreementState = Stateid;
 	}
 
 	public String getTypeecosystemid() {
-		return typeecosystemid;
+		return _typeecosystemid;
 	}
 
 	public void setTypeecosystemid(String Typeecosystemid) {
-		this.typeecosystemid = Typeecosystemid;
+		this._typeecosystemid = Typeecosystemid;
 	}
 
 	public Date getFirm() {
-		return firm;
+		return _firm;
 	}
 
 	public void setFirm(Date firm) {
-		this.firm = firm;
+		this._firm = firm;
 	}
 
 	public int getValidity() {
-		return validity;
+		return _validity;
 	}
 
 	public void setValidity(int validity) {
-		this.validity = validity;
+		this._validity = validity;
+	}
+	
+	public int getVigency() {
+		return _vigency;
 	}
 
-	public void setState(boolean state) {
-		this.state = state;
+	public void setVigency(int value) {
+		this._vigency = value;
 	}
-
 }

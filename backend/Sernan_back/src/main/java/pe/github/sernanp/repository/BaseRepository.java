@@ -36,12 +36,12 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	public Map<String, Object> ConfigParameters(Map<String, Object> params, TEntity entity) {
 		params.put("pid", entity.getId());
 		params.put("pname", entity.getName());
-		params.put("plastname", entity.getLastName());
-		params.put("page", entity.getAge());
-		params.put("pemail", entity.getEmail());
+		//params.put("plastname", entity.getLastName());
+		//params.put("page", entity.getAge());
+		//params.put("pemail", entity.getEmail());
 		params.put("pdescription", entity.getDescription());
 		params.put("pstate", entity.getState());
-		params.put("pregistration", entity.getRegistration());
+		params.put("pregistration", entity.getRegistrationDate());
 		
 		//geometry
 		//params.put("pgeometry", entity.getGeometryWKB());

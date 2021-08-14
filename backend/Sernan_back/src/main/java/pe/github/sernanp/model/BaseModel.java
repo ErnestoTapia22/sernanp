@@ -1,13 +1,12 @@
 package pe.github.sernanp.model;
 
+import java.util.Calendar;
 import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.StringUtils;
 
 @Entity
@@ -16,13 +15,7 @@ public class BaseModel {
 	@NotNull
 	@Id
 	protected Object _id;
-	private String Name;
-	private String LastName;
-	private String Email;
-	private int Age;
-	private Date Registration;
-	private Boolean State;
-	private String Description;
+	private String _name;
 	private String _code;
 	
 	protected String _observation;
@@ -32,19 +25,18 @@ public class BaseModel {
 	private String _stateName;
 	@JsonIgnore
 	private Date _registrationDate2;
-
-	private String _key;
 	private Boolean _issynchronized;
 	private String _guid;
 	@JsonIgnore
 	private int _rowsAffected;
 	
-	public Date getRegistration() {
-		return Registration;
+	public Date getRegistrationDate() {
+		Calendar calendar = Calendar.getInstance();
+		return null;
 	}
 	
-	public void setRegistration(Date registration) {
-		Registration = registration;
+	public void setRegistrationDate(Date registration) {
+		_registrationDate2 = registration;
 	}
 	
 	public Object getId() {
@@ -64,35 +56,11 @@ public class BaseModel {
 	}
 
 	public String getName() {
-		return Name;
+		return _name;
 	}
 
 	public void setName(String name) {
-		Name = name;
-	}
-
-	public String getLastName() {
-		return LastName;
-	}
-
-	public void setLastName(String lastName) {
-		LastName = lastName;
-	}
-
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		Email = email;
-	}
-
-	public int getAge() {
-		return Age;
-	}
-
-	public void setAge(int age) {
-		Age = age;
+		_name = name;
 	}
 	
 	public String getObservation() {

@@ -25,11 +25,10 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	
 	@Autowired
     JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
-
+	private SimpleJdbcCall simpleJdbcCall;	
 	
-	public List<EconomicActivityModel> List()
-	{
+	@Override
+	public List<EconomicActivityModel> list(DataSource ds) throws Exception {
 		List<EconomicActivityModel> persons = new ArrayList<EconomicActivityModel>();
 		EconomicActivityModel economicactivity;	
 		try {
@@ -46,7 +45,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 				economicactivity.setId(results.getInt("id"));
 				economicactivity.setName(results.getString("name"));
 				economicactivity.setDescription(results.getString("descrption"));
-				economicactivity.setRegistratioDate(results.getTimestamp("registratiodate"));
+				//economicactivity.setRegistrationDate(results.getTimestamp("registrationdate"));
 				economicactivity.setState(results.getBoolean("state"));
 				persons.add(economicactivity);
 			}
@@ -57,11 +56,6 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 		}
 		
 		return persons;
-	}	
-	
-	@Override
-	public List<EconomicActivityModel> list(DataSource ds) throws Exception {
-		return super.list(ds, "simrac.fn_list_actividadeconomica", new EconomicActivityMapper());
 	}
 	
 }

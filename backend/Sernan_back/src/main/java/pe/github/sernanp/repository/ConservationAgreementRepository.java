@@ -83,4 +83,41 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 
 		return persons;
 	}
+	
+	@Override
+	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
+		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
+		ConservationAgreementModel conservationAgreement;
+		try {
+			Connection conn = jdbcTemplate.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
+			proc.registerOutParameter(1, Types.OTHER);
+			proc.execute();
+
+			ResultSet results = (ResultSet) proc.getObject(1);
+			while (results.next()) {
+				conservationAgreement = new ConservationAgreementModel();
+				conservationAgreement.setId(results.getInt("srl_id"));
+				AgreementStateModel aState = new AgreementStateModel();
+				aState.setName(results.getString("txt_agreementstatename"));
+				conservationAgreement.setAgreementState(aState);
+				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
+				conservationAgreement.setFirm(results.getDate("dt_fec_firma"));
+				conservationAgreement.setValidity(results.getInt("int_vig"));
+				conservationAgreement.setState(results.getBoolean("bol_flg"));
+				conservationAgreement.setName(results.getString("var_nom"));
+				conservationAgreement.setCategory(results.getString("var_cat"));
+				conservationAgreement.setCode(results.getString("num_cod"));
+
+				persons.add(conservationAgreement);
+			}
+			results.close();
+			proc.close();
+		} catch (Exception e) {
+
+		}
+
+		return persons;
+	}
 }
