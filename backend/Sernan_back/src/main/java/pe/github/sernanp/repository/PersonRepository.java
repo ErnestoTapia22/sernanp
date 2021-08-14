@@ -80,33 +80,25 @@ public class PersonRepository extends BaseRepository<PersonModel> {
 		
 	@Override
 	public List<PersonModel> list(DataSource ds) throws Exception {
-		List<PersonModel> persons = new ArrayList<PersonModel>();
-		PersonModel person;	
+		List<PersonModel> items = new ArrayList<PersonModel>();
 		try {
 			Connection conn = jdbcTemplate.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
 			proc.registerOutParameter(1, Types.OTHER);
-			proc.execute();
-			
+			proc.execute();			
 			ResultSet results = (ResultSet) proc.getObject(1);
+			PersonMapper mapper = new PersonMapper();
 			while (results.next())
-			{
-				person = new PersonModel();
-				person.setId(results.getInt("srl_id"));
-				person.setName(results.getString("txt_agreementstatename"));
-				person.setLastName(results.getString("txt_agreementstatename"));
-				person.setAge(results.getInt("int_vig"));
-				person.setEmail(results.getString("txt_agreementstatename"));
-				persons.add(person);
+			{				
+				PersonModel item = mapper.mapRow(results, 0);
+				items.add(item);
 			}
 			results.close();
 			proc.close();
 		} catch (Exception e) {
-
-		}
-		
-		return persons;
+		}		
+		return items;
 	}
 	
 }

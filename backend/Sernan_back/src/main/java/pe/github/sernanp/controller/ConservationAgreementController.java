@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pe.github.sernanp.entity.ResponseEntity;
 import pe.github.sernanp.model.ConservationAgreementModel;
-import pe.github.sernanp.model.PersonModel;
 import pe.github.sernanp.service.ConservationAgreementService;
-import pe.github.sernanp.service.PersonService;
 
 @RestController
 @RequestMapping(value = "/conservationagreement/")
@@ -18,12 +16,6 @@ public class ConservationAgreementController extends BaseController<Conservation
 	@Autowired
 	private ConservationAgreementService _service;
 	
-	/*@RequestMapping(value = "list")
-	public java.util.List<ConservationAgreementModel> List()
-    {
-		java.util.List<ConservationAgreementModel> ConservationAgreement = conservationAgreementService.List();
-		return ConservationAgreement; //new ResponseEntity(persons, HttpStatus.OK);
-    }*/
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseEntity<ConservationAgreementModel> list() {

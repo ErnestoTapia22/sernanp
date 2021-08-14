@@ -45,11 +45,7 @@ public class PersonService extends BaseService<PersonModel> {
 			e.printStackTrace();
 			return 0;
 		}
-	}
-	
-	/*public java.util.List<PersonModel> List() {
-		return personaRepository.List();
-	}*/
+	}	
 	
 	@Override
 	public ResponseEntity<PersonModel> list() throws Exception{

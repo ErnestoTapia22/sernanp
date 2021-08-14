@@ -31,13 +31,6 @@ public class PersonController extends BaseController<PersonModel, PersonService>
 		return id; //new ResponseEntity(id, HttpStatus.OK);
     }
 	
-	/*@RequestMapping(value = "list")
-	public java.util.List<PersonModel> List()
-    {
-		java.util.List<PersonModel> persons = _service.List();
-		return persons; //new ResponseEntity(persons, HttpStatus.OK);
-    }*/
-	
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseEntity<PersonModel> list() {
