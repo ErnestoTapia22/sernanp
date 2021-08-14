@@ -1,7 +1,7 @@
-package pe.github.sernan.model;
+package pe.github.sernanp.model;
 
 
-public class EconomicActivity {
+public class EconomicActivityModel extends BaseModel {
 	
 	private int id;
 	private String name;
@@ -9,14 +9,6 @@ public class EconomicActivity {
 	private java.sql.Timestamp registratiodate;
 	private Boolean state;
 	
-	public EconomicActivity() {
-		
-	}
-	
-	public int getId() {
-		return id;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -44,14 +36,9 @@ public class EconomicActivity {
 	public void setRegistratioDate(java.sql.Timestamp RegistratioDate) {
 		this.registratiodate = RegistratioDate;
 	}
-	
-	public boolean getState() {
-		return state;
-	}
 
 	public void setState(boolean state) {
 		this.state = state;
-	}
-	
+	}	
 	
 }

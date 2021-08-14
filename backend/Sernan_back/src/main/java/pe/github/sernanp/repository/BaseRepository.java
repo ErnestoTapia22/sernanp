@@ -1,18 +1,33 @@
-package pe.github.sernan.repository;
+package pe.github.sernanp.repository;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.locationtech.jts.io.WKBReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import pe.github.sernan.model.Master;
+import pe.github.sernanp.model.BaseModel;
+
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+
 
 @Repository
-public class BaseRepository<TEntity extends Master> {
+public abstract class BaseRepository<TEntity extends BaseModel> {
 
 	@Autowired
     JdbcTemplate jdbcTemplate;
@@ -139,4 +154,75 @@ public class BaseRepository<TEntity extends Master> {
         return result;
 	}
 	 */
+	
+	public List<TEntity> List() {
+		List<TEntity> items = new ArrayList<TEntity>();	
+		return items;
+	} 
+	
+	public List<TEntity> list(DataSource ds) throws Exception {
+		
+		throw new Exception("no implementado");
+	}
+	
+	protected List<TEntity> list(DataSource ds, String storedProcedure, String id,
+			RowMapper<TEntity> mapper) throws Exception {
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("pid", id);
+		return this.list(ds, storedProcedure, parameters, mapper);
+	}
+
+	protected List<TEntity> list(DataSource ds, String storedProcedure, RowMapper<TEntity> mapper)
+			throws Exception {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
+		jdbcTemplate.setResultsMapCaseInsensitive(true);
+		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
+		this.setStoredProcedure(jdbc, storedProcedure);
+		jdbc.returningResultSet("list", mapper);
+		Map<String, Object> results = jdbc.execute();
+		@SuppressWarnings("unchecked")
+		List<TEntity> items = (List<TEntity>) results.get("list");
+		//List<TEntity> items = (List<TEntity>) results.get();
+      
+		return items;
+	}
+
+	protected List<TEntity> list(DataSource ds, String storedProcedure, Map<String, Object> parameters,
+			RowMapper<TEntity> mapper) throws Exception {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
+		jdbcTemplate.setResultsMapCaseInsensitive(true);
+		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
+		this.setStoredProcedure(jdbc, storedProcedure);
+		jdbc.returningResultSet("list", mapper);
+
+		SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
+
+		Map<String, Object> results = jdbc.execute(sqlParameters);
+		@SuppressWarnings("unchecked")
+		List<TEntity> items = (List<TEntity>) results.get("list");
+		return items;
+	}
+	
+	protected void setStoredProcedure(SimpleJdbcCall jdbc, String storedProcedure) throws Exception {
+        String[] partes = storedProcedure.split(Pattern.quote("."));
+        //jdbc.withoutProcedureColumnMetaDataAccess();
+        switch (partes.length) {
+            case 3:
+                jdbc.withCatalogName(partes[0]);
+                jdbc.withSchemaName(partes[1]);
+                jdbc.withProcedureName(partes[2]);
+                break;
+            case 2:
+                jdbc.withSchemaName(partes[0]);
+                jdbc.withProcedureName(partes[1]);
+                break;
+            case 1:
+                jdbc.withProcedureName(partes[0]);
+                break;
+            default:
+                throw new Exception("El procedimiento almacenado no es válido");
+        }
+        jdbc.setFunction(true);
+    }
 }

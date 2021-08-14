@@ -1,8 +1,9 @@
-package pe.github.sernan.repository;
+package pe.github.sernanp.repository;
 
 import java.sql.CallableStatement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -14,12 +15,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import pe.github.sernan.model.AgreementState;
-import pe.github.sernan.model.ConservationAgreement;
-import pe.github.sernan.model.Person;
+import pe.github.sernanp.mapper.ConservationAgreementMapper;
+import pe.github.sernanp.mapper.PersonMapper;
+import pe.github.sernanp.model.AgreementStateModel;
+import pe.github.sernanp.model.ConservationAgreementModel;
+import pe.github.sernanp.model.PersonModel;
 
 @Repository
-public class ConservationAgreementRepository {
+public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {
 
 	@Autowired
     JdbcTemplate jdbcTemplate;
@@ -38,10 +41,16 @@ public class ConservationAgreementRepository {
 	}
 	
 	*/
-	public List<ConservationAgreement> List()
-	{
-		List<ConservationAgreement> persons = new ArrayList<ConservationAgreement>();
-		ConservationAgreement conservationAgreement;	
+	
+	/*@Override
+	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
+		return super.list(ds, "simrac.fn_list_acuerdo_conservacion", new ConservationAgreementMapper());
+	}*/
+	
+	@Override
+	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
+		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
+		ConservationAgreementModel conservationAgreement;
 		try {
 			Connection conn = jdbcTemplate.getDataSource().getConnection();
 			conn.setAutoCommit(false);
@@ -52,9 +61,9 @@ public class ConservationAgreementRepository {
 			ResultSet results = (ResultSet) proc.getObject(1);
 			while (results.next())
 			{
-				conservationAgreement = new ConservationAgreement();
+				conservationAgreement = new ConservationAgreementModel();
 				conservationAgreement.setId(results.getInt("srl_id"));
-				AgreementState aState = new AgreementState();
+				AgreementStateModel aState = new AgreementStateModel();
 				aState.setName(results.getString("txt_agreementstatename"));
 				conservationAgreement.setAgreementState(aState);
 				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
@@ -70,6 +79,6 @@ public class ConservationAgreementRepository {
 		}
 		
 		return persons;
-	}	
+	}
 	
 }

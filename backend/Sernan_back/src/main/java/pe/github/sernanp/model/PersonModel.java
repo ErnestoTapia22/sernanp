@@ -1,4 +1,4 @@
-package pe.github.sernan.model;
+package pe.github.sernanp.model;
 
 //import org.geotools.geometry.jts.JTS;
 //import org.geotools.referencing.CRS;
@@ -8,15 +8,15 @@ import org.locationtech.jts.io.WKBWriter;
 //import org.opengis.referencing.crs.CoordinateReferenceSystem;
 //import org.opengis.referencing.operation.MathTransform;
 
-public class Person extends Master {
+public class PersonModel extends BaseModel {
 	private Geometry Geometry;
 	
 
-	public Person () {
+	public PersonModel () {
 		
 	}
 	
-	public Person(int id, String name, String lastName, String email) {
+	public PersonModel(int id, String name, String lastName, String email) {
 		setId(id);
 		setName(name);
 		setLastName(lastName);

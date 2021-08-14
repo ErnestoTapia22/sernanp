@@ -1,4 +1,4 @@
-package pe.github.sernan.repository;
+package pe.github.sernanp.repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -7,24 +7,31 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
-import pe.github.sernan.model.EconomicActivity;
+
+import pe.github.sernanp.mapper.EconomicActivityMapper;
+import pe.github.sernanp.mapper.PersonMapper;
+import pe.github.sernanp.model.ConservationAgreementModel;
+import pe.github.sernanp.model.EconomicActivityModel;
+import pe.github.sernanp.model.PersonModel;
 
 @Repository
-public class EconomicActivityRepository {
+public class EconomicActivityRepository extends BaseRepository<EconomicActivityModel> {
 	
 	@Autowired
     JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCall;
 
 	
-	public List<EconomicActivity> List()
+	public List<EconomicActivityModel> List()
 	{
-		List<EconomicActivity> persons = new ArrayList<EconomicActivity>();
-		EconomicActivity economicactivity;	
+		List<EconomicActivityModel> persons = new ArrayList<EconomicActivityModel>();
+		EconomicActivityModel economicactivity;	
 		try {
 			Connection conn = jdbcTemplate.getDataSource().getConnection();
 			conn.setAutoCommit(false);
@@ -35,7 +42,7 @@ public class EconomicActivityRepository {
 			ResultSet results = (ResultSet) proc.getObject(1);
 			while (results.next())
 			{
-				economicactivity = new EconomicActivity();
+				economicactivity = new EconomicActivityModel();
 				economicactivity.setId(results.getInt("id"));
 				economicactivity.setName(results.getString("name"));
 				economicactivity.setDescription(results.getString("descrption"));
@@ -51,6 +58,10 @@ public class EconomicActivityRepository {
 		
 		return persons;
 	}	
-		
+	
+	@Override
+	public List<EconomicActivityModel> list(DataSource ds) throws Exception {
+		return super.list(ds, "simrac.fn_list_actividadeconomica", new EconomicActivityMapper());
+	}
 	
 }

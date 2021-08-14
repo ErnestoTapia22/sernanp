@@ -1,4 +1,4 @@
-package pe.github.sernan;
+package pe.github.sernanp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

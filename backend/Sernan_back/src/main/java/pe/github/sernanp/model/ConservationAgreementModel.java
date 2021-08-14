@@ -1,11 +1,11 @@
-package pe.github.sernan.model;
+package pe.github.sernanp.model;
 
 import java.sql.Date;
 
-	public class ConservationAgreement {
+public class ConservationAgreementModel extends BaseModel {
 
 	private int id;
-	private AgreementState agreementState;
+	private AgreementStateModel agreementState;
 	private String typeecosystemid;
 	private Date firm;
 	private int validity;
@@ -15,24 +15,11 @@ import java.sql.Date;
 	private int vigency;
 	private String code;
 	
-	
-	public ConservationAgreement() {
-		
-	}
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public AgreementState getAgreementState() {
+	public AgreementStateModel getAgreementState() {
 		return agreementState;
 	}
 
-	public void setAgreementState(AgreementState Stateid) {
+	public void setAgreementState(AgreementStateModel Stateid) {
 		this.agreementState = Stateid;
 	}
 	
@@ -58,14 +45,6 @@ import java.sql.Date;
 
 	public void setValidity(int validity) {
 		this.validity = validity;
-	}
-	
-	public boolean getState() {
-		return state;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
 	}
 	
 }
