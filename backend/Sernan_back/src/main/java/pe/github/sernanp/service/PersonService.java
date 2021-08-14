@@ -1,4 +1,4 @@
-package pe.github.sernan.service;
+package pe.github.sernanp.service;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.locationtech.jts.geom.Coordinate;
@@ -7,18 +7,19 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
-import pe.github.sernan.model.Person;
-import pe.github.sernan.repository.PersonRepository;
+import pe.github.sernanp.entity.ResponseEntity;
+import pe.github.sernanp.model.PersonModel;
+import pe.github.sernanp.repository.PersonRepository;
 
 @Service
-public class PersonService {
+public class PersonService extends BaseService<PersonModel> {
 
 	@Autowired
-	private PersonRepository personaRepository;
+	private PersonRepository _repository;
 	
-	
-	public int Save(Person person) {
+	public int Save(PersonModel person) {
 		
 		int id2 = 0;
 
@@ -33,10 +34,10 @@ public class PersonService {
 		
 		try {
 			
-			if (person.getId() == 0)
-				id2 = personaRepository.Insert(person);
+			if (person.getId2() == 0)
+				id2 = _repository.Insert(person);
 			else
-				id2 = personaRepository.Update(person);
+				id2 = _repository.Update(person);
 			
 			return id2;
 			
@@ -44,9 +45,18 @@ public class PersonService {
 			e.printStackTrace();
 			return 0;
 		}
-	}
+	}	
 	
-	public java.util.List<Person> List() {
-		return personaRepository.List();
-	} 
+	@Override
+	public ResponseEntity<PersonModel> list() throws Exception{
+		try {
+			ResponseEntity<PersonModel> response = new ResponseEntity<PersonModel>();
+			List<PersonModel> items = this._repository.list(this._dataSource);
+			response.setItems(items);
+			return response;
+			
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

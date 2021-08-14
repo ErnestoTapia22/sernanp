@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>Test_connect_postgresql</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Test_connect_postgresql</name>
-	<description>Demo crud</description>
+	<name>sernanp</name>
+	<description>backend</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,6 +56,19 @@
             <artifactId>gt-swing</artifactId>
             <version>${geotools.version}</version>
         </dependency>
+        <dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+		   <groupId>org.gdal</groupId>
+		   <artifactId>gdal</artifactId>
+		   <version>1.11.2</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 	    <repository>
