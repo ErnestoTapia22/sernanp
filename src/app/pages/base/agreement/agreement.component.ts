@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// import ogr2ogr from 'ogr2ogr';
+import { AgreementService } from '../../../_services/base/agreement.service';
+
+import ogr2ogr from 'ogr2ogr';
 
 @Component({
   selector: 'app-agreement',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agreement.component.css'],
 })
 export class AgreementComponent implements OnInit {
-  constructor() {}
+  constructor(private agreementService: AgreementService) {}
 
   ngOnInit(): void {}
   readURL(event): void {
@@ -16,6 +18,18 @@ export class AgreementComponent implements OnInit {
       var file = event.target.files[0];
       console.log(file);
       console.log(file.size);
+      let shape = new FileReader();
+      shape.readAsBinaryString(file);
+      this.convertToGeoJson(file);
+
+      // try {
+      //   this.agreementService.uploadShape(file).subscribe((data) => {
+      //     console.log(data);
+      //   });
+      // } catch (error) {
+      //   console.log(error);
+      // }
+
       // let shape = new FileReader();
       // shape.readAsBinaryString(file);
 

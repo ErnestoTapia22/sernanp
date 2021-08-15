@@ -10,30 +10,28 @@ import pe.github.sernanp.model.ConservationAgreementModel;
 import pe.github.sernanp.model.PersonModel;
 import pe.github.sernanp.repository.ConservationAgreementRepository;
 
-
 @Service
 public class ConservationAgreementService extends BaseService<ConservationAgreementModel> {
 
-	
 	@Autowired
 	private ConservationAgreementRepository _repository;
-	
-	
-	
-	/*public java.util.List<ConservationAgreementModel> List() {
-		return conservationAgreementRepository.List();
-	}*/ 
-	
+
+	/*
+	 * public java.util.List<ConservationAgreementModel> List() { return
+	 * conservationAgreementRepository.List(); }
+	 */
+
 	@Override
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<ConservationAgreementModel> list() throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.list(this._dataSource);
 			response.setItems(items);
 			return response;
-			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
+
 }
