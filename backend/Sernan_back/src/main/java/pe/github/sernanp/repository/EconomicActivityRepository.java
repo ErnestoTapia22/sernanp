@@ -86,12 +86,12 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	}
 	@Override
 	public int insert(DataSource ds, EconomicActivityModel item) throws Exception {
-		return super.insert(ds, "mc.miningconcession_insert", item);
+		return super.insert(ds, "simrac.fn_insertar_actividadeconomica2", item);
 	}
 
 	@Override
 	public int update(DataSource ds, EconomicActivityModel item) throws Exception {
-		return super.update(ds, "mc.miningconcession_update", item);
+		return super.update(ds, "simrac.fn_actualizar_actividadeconomica", item);
 	}
 	public int insertDocument(DataSource ds, int id, int documentId)
 			throws Exception {
@@ -103,26 +103,13 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	@Override
 	protected void setParameters(Map<String, Object> parameters, EconomicActivityModel item) throws IOException{
 		 parameters.put("pid", item.getId2());
-		 parameters.put("pcode", item.getCode());
 		 parameters.put("pname", item.getName());
-		 //parameters.put("pholderid", item.getHolder().getId());
-		 //parameters.put("parea", item.getArea());
-		 //parameters.put("pueaid", item.getUEA().getId());
-		 //parameters.put("psituationalstatusid", item.getSituationalStatus().getId());
-		 //parameters.put("presolutionholder", item.getResolutionHolder());
-		 //parameters.put("presolutiondateholder", item.getResolutionDateHolder());
-		 //parameters.put("pcertificatetitle", item.getCertificateTitle());
-		 //parameters.put("pplacetitle", item.getPlaceTitle());
-		 //parameters.put("prrppid", item.getRRPP().getId());
-		 parameters.put("pobservation", item.getObservation());
-		 parameters.put("pstate",item.getState());
-		 //WKBWriter wkb = new WKBWriter();
-		 //byte[] geometryWkb = wkb.write(item.getGeometry());
-		 //parameters.put("pgeometry", geometryWkb);
-		 //parameters.put("psrid", item.getGeometry().getSRID());
+		 parameters.put("pdescription", item.getDescription());
+		 //parameters.put("pregistrationdate", item.getRegistrationDate2());
+		 parameters.put("pstate", item.getState());
 	}
 	public EconomicActivityModel detail(DataSource ds, int id) throws Exception {
-		return super.detail(ds, "simrac.fn_detalle_actividadeconomica", id, new EconomicActivityMapper());
+		return super.detail2(ds, "simrac.fn_detalle_actividadeconomica", id, new EconomicActivityMapper());
 	}
 	//public List<DocumentModel> findDocuments(DataSource ds, int id) throws Exception {
 	//	Map<String, Object> parameters = new HashMap<>();

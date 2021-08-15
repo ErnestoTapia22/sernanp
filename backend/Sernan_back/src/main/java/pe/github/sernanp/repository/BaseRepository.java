@@ -37,17 +37,12 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	public Map<String, Object> ConfigParameters(Map<String, Object> params, TEntity entity) {
 		params.put("pid", entity.getId());
 		params.put("pname", entity.getName());
-		//params.put("plastname", entity.getLastName());
-		//params.put("page", entity.getAge());
-		//params.put("pemail", entity.getEmail());
-		params.put("pdescription", entity.getDescription());
+		params.put("pdescription", entity.getDescription());		
+		params.put("pregistration", entity.getRegistrationDate2());
 		params.put("pstate", entity.getState());
-		params.put("pregistration", entity.getRegistrationDate());
-		
 		//geometry
 		//params.put("pgeometry", entity.getGeometryWKB());
-		//params.put("psrid", 4326);
-		
+		//params.put("psrid", 4326);		
 		return params;
 	}
 	
@@ -431,21 +426,37 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	}
 
 	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure,
-			Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {
+			int id, RowMapper<TEntity2> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
-		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
-		this.setStoredProcedure(jdbc, storedProcedure);
-		jdbc.returningResultSet("list", mapper);
-		SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
-		Map<String, Object> results = jdbc.execute(sqlParameters);
-		@SuppressWarnings("unchecked")
-		List<TEntity2> items = (List<TEntity2>) results.get("list");
+		Connection conn = jdbcTemplate.getDataSource().getConnection();
+		conn.setAutoCommit(false);
+		String functionName = "{? = call " + storedProcedure + "(?) }";
+		CallableStatement proc = conn.prepareCall(functionName);
+		proc.registerOutParameter(1, Types.OTHER);
+		proc.setInt(2, id);
+		//proc.execute();
 		TEntity2 item = null;
-		if (items.size() > 0) {
-			item = items.get(0);
-		}
+		if (proc.execute())
+		{
+			ResultSet results = (ResultSet) proc.getObject(1);
+			item = mapper.mapRow(results, 0);
+			results.close();
+		}		
+		proc.close();
 		return item;
+		//SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
+		//this.setStoredProcedure(jdbc, storedProcedure);
+		//jdbc.returningResultSet("list", mapper);
+		//SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
+		//Map<String, Object> results = jdbc.execute(sqlParameters);
+		//@SuppressWarnings("unchecked")
+		//List<TEntity2> items = (List<TEntity2>) results.get("list");
+		//TEntity2 item = null;
+		//if (items.size() > 0) {
+		//	item = items.get(0);
+		//}
+		//return item;
 	}
 	protected String findValue(DataSource ds,String storedProcedure, Object id) throws Exception {
 

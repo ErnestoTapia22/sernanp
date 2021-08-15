@@ -32,7 +32,7 @@ public class BaseModel {
 	
 	public Date getRegistrationDate() {
 		Calendar calendar = Calendar.getInstance();
-		return null;
+		return (Date) calendar.getTime();
 	}
 	
 	public void setRegistrationDate(Date registration) {
