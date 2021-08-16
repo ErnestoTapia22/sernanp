@@ -1,91 +1,182 @@
 {
 	"info": {
-		"_postman_id": "7dfdce06-38f2-4f8c-a9ad-fe745214a2a6",
+		"_postman_id": "177975f3-3e7b-449b-8bc9-8fc287c57f10",
 		"name": "SERNANP",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "ConservationAgreementList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8050/simrac/api/conservationagreement/list"
+			},
+			"response": []
+		},
+		{
+			"name": "ConservationAgreementSearch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "item",
+							"value": "{\"name\":\"\"}",
+							"type": "text"
+						},
+						{
+							"key": "paginator",
+							"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8050/simrac/api/conservationagreement/search"
+			},
+			"response": []
+		},
 		{
 			"name": "PersonList",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/persona/list",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"persona",
-						"list"
-					]
-				}
+				"url": "http://localhost:8080/persona/list"
 			},
 			"response": []
 		},
 		{
 			"name": "PersonInsert",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 23,\r\n    \"email\": \"onori@hotmail.com\"\r\n}",
+					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/persona/save",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"persona",
-						"save"
-					]
-				}
+				"url": "http://localhost:8080/economicactivity/save"
 			},
 			"response": []
 		},
 		{
 			"name": "PersonUpdate",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony\",\r\n    \"lastName\": \"onori\",\r\n    \"age\": 25,\r\n    \"email\": \"onori10@hotmail.com\"\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony2\",\r\n    \"lastname\": \"onori2\",\r\n    \"age\": 25,\r\n    \"email\": \"onori1@hotmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/persona/save",
-					"protocol": "http",
-					"host": [
-						"localhost"
+				"url": "http://localhost:8080/persona/save"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivityList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8050/simrac/api/economicactivity/list"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivityDetail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8050/simrac/api/economicactivity/detail/1"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivityDelete",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8050/simrac/api/economicactivity/delete/1"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivitySearch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "item",
+							"value": "{\"name\":\"c\"}",
+							"type": "text"
+						},
+						{
+							"key": "paginator",
+							"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+							"type": "text"
+						}
 					],
-					"port": "8080",
-					"path": [
-						"persona",
-						"save"
-					]
-				}
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8050/simrac/api/economicactivity/search"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivityInsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"csdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8050/simrac/api/economicactivity/save"
+			},
+			"response": []
+		},
+		{
+			"name": "EconomicActivityUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8050/simrac/api/economicactivity/save"
 			},
 			"response": []
 		}

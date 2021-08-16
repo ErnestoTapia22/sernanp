@@ -22,7 +22,7 @@ public class BaseMapper<TEntity extends BaseModel> implements RowMapper<TEntity>
 		item.setObservation(StringUtils.trimToNull(ResultSetExtension.getString2(rs, "observation")));
 		item.setState(ResultSetExtension.getBoolean2(rs, "state"));
 		item.setGUID(ResultSetExtension.getString2(rs, "guid"));
-// sólo para solventar el tema de los refcursor
+		// sólo para solventar el tema de los refcursor
 		item.setRecordsTotal(ResultSetExtension.getInt2(rs, "totalrecords"));
 		item.setRowNum(ResultSetExtension.getInt2(rs, "rownum"));
 		return item;

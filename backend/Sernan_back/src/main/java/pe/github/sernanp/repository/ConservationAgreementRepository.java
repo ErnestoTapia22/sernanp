@@ -1,105 +1,43 @@
 package pe.github.sernanp.repository;
 
-import java.sql.CallableStatement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Types;
-import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.io.WKBReader;
 import org.springframework.stereotype.Repository;
 
+import pe.github.sernanp.entity.PaginatorEntity;
 import pe.github.sernanp.mapper.ConservationAgreementMapper;
-import pe.github.sernanp.model.AgreementStateModel;
 import pe.github.sernanp.model.ConservationAgreementModel;
 
 @Repository
 public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {	
-		
-	public List<ConservationAgreementModel> List() {
-		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
-		ConservationAgreementModel conservationAgreement;
-		try {
-			Connection conn = _jdbcTemplate.getDataSource().getConnection();
-			conn.setAutoCommit(false);
-			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
-			proc.registerOutParameter(1, Types.OTHER);
-			proc.execute();
-
-			ResultSet results = (ResultSet) proc.getObject(1);
-			while (results.next()) {
-				conservationAgreement = new ConservationAgreementModel();
-				conservationAgreement.setId(results.getInt("srl_id"));
-				AgreementStateModel aState = new AgreementStateModel();
-				aState.setName(results.getString("txt_agreementstatename"));
-				conservationAgreement.setAgreementState(aState);
-				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
-				conservationAgreement.setFirm(results.getDate("dt_fec_firma"));
-				conservationAgreement.setValidity(results.getInt("int_vig"));
-				conservationAgreement.setState(results.getBoolean("bol_flg"));
-				conservationAgreement.setName(results.getString("var_nom"));
-				conservationAgreement.setCategory(results.getString("var_cat"));
-				conservationAgreement.setCode(results.getString("num_cod"));
-
-				persons.add(conservationAgreement);
-			}
-			results.close();
-			proc.close();
-		} catch (Exception e) {
-
-		}
-
-		return persons;
-	}
 	
 	@Override
 	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
-		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
-		ConservationAgreementModel conservationAgreement;
-		try {
-			Connection conn = ds.getConnection();
-			conn.setAutoCommit(false);
-			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
-			proc.registerOutParameter(1, Types.OTHER);
-			proc.execute();
-
-			ResultSet results = (ResultSet) proc.getObject(1);
-			while (results.next()) {
-				conservationAgreement = new ConservationAgreementModel();
-				conservationAgreement.setId(results.getInt("srl_id"));
-				AgreementStateModel aState = new AgreementStateModel();
-				aState.setName(results.getString("txt_agreementstatename"));
-				conservationAgreement.setAgreementState(aState);
-				conservationAgreement.setTypeecosystemid(results.getString("int_tipoecosistemaid"));
-				conservationAgreement.setFirm(results.getDate("dt_fec_firma"));
-				conservationAgreement.setValidity(results.getInt("int_vig"));
-				conservationAgreement.setState(results.getBoolean("bol_flg"));
-				conservationAgreement.setName(results.getString("var_nom"));
-				conservationAgreement.setCategory(results.getString("var_cat"));
-				conservationAgreement.setCode(results.getString("num_cod"));
-
-				persons.add(conservationAgreement);
-			}
-			results.close();
-			proc.close();
-		} catch (Exception e) {
-
-		}
-
-		return persons;
+		return super.list2(ds, "simrac.fn_listar_acuerdo_conservacion", new ConservationAgreementMapper());
+	}
+	
+	public ConservationAgreementModel detail(DataSource ds, int id) throws Exception {
+		return super.detail2(ds, "simrac.fn_detalle_", id, new ConservationAgreementMapper());
+	}
+	
+	@Override
+	public List<ConservationAgreementModel> search(DataSource ds, ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{		
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("pname", item.getName());
+		return super.search2(ds,"simrac.fn_buscar_acuerdoconservacion",parameters,paginator, new ConservationAgreementMapper());
 	}
 	
 	@Override
 	public int insert(DataSource ds, ConservationAgreementModel item) throws Exception {
-		return super.insert(ds, "simrac.fn_insertar_actividadeconomica", item);
+		return super.insert(ds, "simrac.fn_insertar_", item);
 	}
 
 	@Override
 	public int update(DataSource ds, ConservationAgreementModel item) throws Exception {
-		return super.update(ds, "simrac.fn_actualizar_actividadeconomica", item);
+		return super.update(ds, "simrac.fn_actualizar_", item);
 	}
 	
 	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{
@@ -130,12 +68,6 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		parameters.put("pdocumentid", documentId);
 		return super.insert(ds, "mc.miningconcession_insertdocument", parameters);
 	}
-
-	//public List<DocumentModel> findDocuments(DataSource ds, int id) throws Exception {
-	//	Map<String, Object> parameters = new HashMap<>();
-	//	parameters.put("pid", id);
-	//	return super.search2(ds, "mc.miningconcession_finddocuments", parameters, new DocumentMapper());
-	//}
 	
 	public List<ConservationAgreementModel> findBy2(DataSource ds, ConservationAgreementModel item) throws Exception {
 		Map<String, Object> parameters = new HashMap<>();
