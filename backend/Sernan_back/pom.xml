@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pe.github.sernanp</groupId>
-	<artifactId>module</artifactId>
+	<artifactId>sernanp</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-RELEASE</version>
 	<name>sernanp</name>
