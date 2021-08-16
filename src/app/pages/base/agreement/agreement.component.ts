@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AgreementService } from '../../../_services/base/agreement.service';
-
-import ogr2ogr from 'ogr2ogr';
+import { environment } from 'src/environments/environment';
+var shp = require('shpjs');
+// var shapefile = require('shapefile');
 
 @Component({
   selector: 'app-agreement',
@@ -12,15 +13,30 @@ export class AgreementComponent implements OnInit {
   constructor(private agreementService: AgreementService) {}
 
   ngOnInit(): void {}
-  readURL(event): void {
+  async readURL(event) {
+    let thiss = this;
     // this.validateSize = false;
     if (event.target.files[0] && event.target.files) {
-      var file = event.target.files[0];
+      var file: File = event.target.files[0];
       console.log(file);
-      console.log(file.size);
-      let shape = new FileReader();
-      shape.readAsBinaryString(file);
-      this.convertToGeoJson(file);
+      // const blob = new Blob(file.arrayBuffer);
+      // var bufferPromise = blob.arrayBuffer();
+
+      // blob.arrayBuffer().then(buffer => /* process the ArrayBuffer */);
+
+      // var buffer = await blob.arrayBuffer();
+      // console.log(file.size);
+      // let shape = new FileReader();
+      // const fileContentStream = await file.stream();
+      // const fileSliceBlob = file.slice(0, file.length);
+      // const fileSliceBlobStream = await fileSliceBlob.stream();
+      // shape.onloadend = function (e) {
+      // const result = await this.readFile(file);
+
+      thiss.convertToGeoJson2(file.stream);
+      // };
+
+      // shape.readAsArrayBuffer(file);
 
       // try {
       //   this.agreementService.uploadShape(file).subscribe((data) => {
@@ -51,8 +67,47 @@ export class AgreementComponent implements OnInit {
 
     // this.onRefreshPostulanteResumen();
   }
-  async convertToGeoJson(file) {
-    // let data = await ogr2ogr(file);
-    // console.log(data);
+  // convertToGeoJson(file) {
+  //   shapefile
+  //     .open(file)
+  //     .then((source) =>
+  //       source.read().then(function log(result) {
+  //         if (result.done) return;
+  //         console.log(result.value);
+  //         return source.read().then(log);
+  //       })
+  //     )
+  //     .catch((error) => console.error(error.stack));
+  // }
+  async convertToGeoJson2(file) {
+    // debugger;
+    const geojson = await shp(file);
+    console.log(geojson);
+    // shp(file).then(function (data) {
+    //   //do stuff with data
+    //   console.log(data);
+    // });
+
+    //   shapefile
+    //     .open(file)
+    //     .then((source) =>
+    //       source.read().then(function log(result) {
+    //         if (result.done) return;
+    //         console.log(result.value);
+    //         return source.read().then(log);
+    //       })
+    //     )
+    //     .catch((error) => console.error(error.stack));
+  }
+  async readFile(file) {
+    const arrayBuffer = await new Promise((resolve) => {
+      const reader = new FileReader();
+      // reader.onload = () => resolve(reader.result);
+
+      reader.onload = () => resolve(reader.result);
+      reader.readAsArrayBuffer(file);
+    });
+
+    return arrayBuffer;
   }
 }
