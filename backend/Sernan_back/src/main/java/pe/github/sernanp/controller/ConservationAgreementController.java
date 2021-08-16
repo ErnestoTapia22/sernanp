@@ -41,7 +41,7 @@ public class ConservationAgreementController extends BaseController<Conservation
 		try {
 			PaginatorEntity paginador = super.setPaginator();
 			ConservationAgreementModel item2 = super.fromJson(item, ConservationAgreementModel.class);
-			ResponseEntity<ConservationAgreementModel> response = _service.search(item2, paginador);
+			ResponseEntity<ConservationAgreementModel> response = this._service.search(item2, paginador);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
