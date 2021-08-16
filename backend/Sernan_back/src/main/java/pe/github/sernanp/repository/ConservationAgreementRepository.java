@@ -10,46 +10,15 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.io.WKBReader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import pe.github.sernanp.mapper.ConservationAgreementMapper;
-import pe.github.sernanp.mapper.PersonMapper;
 import pe.github.sernanp.model.AgreementStateModel;
 import pe.github.sernanp.model.ConservationAgreementModel;
-import pe.github.sernanp.model.PersonModel;
 
 @Repository
-public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {
-
-	//@Autowired
-	//JdbcTemplate jdbcTemplate;
-	//private SimpleJdbcCall simpleJdbcCall;
-	//@Autowired
-    //private DataSource dataSource;
-	
-	/* @Override
-	public int Insert(ConservationAgreement conservationAgreement) 
-	{
-		return super.Insert("public.ConservationAgreement_insert", conservationAgreement);
-	}
-	
-	@Override
-	public int Update(ConservationAgreement conservationAgreement) 
-	{
-		return super.Update("public.ConservationAgreement_update", conservationAgreement);
-	}
-	
-	*/
-	
-	/*@Override
-	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
-		return super.list(ds, "simrac.fn_list_acuerdo_conservacion", new ConservationAgreementMapper());
-	}*/
-	
-	
+public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {	
+		
 	public List<ConservationAgreementModel> List() {
 		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
 		ConservationAgreementModel conservationAgreement;
@@ -122,4 +91,66 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 
 		return persons;
 	}
+	
+	@Override
+	public int insert(DataSource ds, ConservationAgreementModel item) throws Exception {
+		return super.insert(ds, "simrac.fn_insertar_actividadeconomica", item);
+	}
+
+	@Override
+	public int update(DataSource ds, ConservationAgreementModel item) throws Exception {
+		return super.update(ds, "simrac.fn_actualizar_actividadeconomica", item);
+	}
+	
+	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{
+		System.out.println(ds);
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("pid",2);
+		return super.search2(ds,"mc.miningconcession_search2",parameters, new ConservationAgreementMapper());
+	}
+	
+	public List<ConservationAgreementModel> findBy(DataSource ds, ConservationAgreementModel item) throws Exception {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("pcode", item.getCode());
+		parameters.put("pname", item.getName());
+		//parameters.put("pcertificatetitle", item.getCertificateTitle());
+		parameters.put("pstate", item.getState());
+		return null;
+		//return super.search(ds, "mc.miningconcession_findby", parameters, new EconomicActivityMapper());
+	}	
+	
+	public int deleteDocument(DataSource ds, int id) throws Exception {
+		return super.delete(ds, "mc.miningconcession_deletedocument", id);
+	}
+	
+	public int insertDocument(DataSource ds, int id, int documentId)
+			throws Exception {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("pminingconcessionid", id);
+		parameters.put("pdocumentid", documentId);
+		return super.insert(ds, "mc.miningconcession_insertdocument", parameters);
+	}
+
+	//public List<DocumentModel> findDocuments(DataSource ds, int id) throws Exception {
+	//	Map<String, Object> parameters = new HashMap<>();
+	//	parameters.put("pid", id);
+	//	return super.search2(ds, "mc.miningconcession_finddocuments", parameters, new DocumentMapper());
+	//}
+	
+	public List<ConservationAgreementModel> findBy2(DataSource ds, ConservationAgreementModel item) throws Exception {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("ptext", item.getName());
+		int srid = 0;
+		byte[] geometryWkb = null;
+		//if(item.getGeometry() != null) {
+		//	WKBWriter wkb = new WKBWriter();
+		//		geometryWkb = wkb.write(item.getGeometry());
+		//		srid = item.getGeometry().getSRID();
+		//}
+		parameters.put("pgeometry", geometryWkb);
+		parameters.put("psrid", srid);
+		return null;
+		//return super.search(ds, "mc.miningconcession_findby2", parameters, new EconomicActivityMapper());
+	}
+	
 }

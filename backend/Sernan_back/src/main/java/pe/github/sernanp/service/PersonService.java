@@ -19,7 +19,7 @@ public class PersonService extends BaseService<PersonModel> {
 	@Autowired
 	private PersonRepository _repository;
 	
-	public int Save(PersonModel person) {
+	/*public int Save(PersonModel person) {
 		
 		int id2 = 0;
 
@@ -45,7 +45,7 @@ public class PersonService extends BaseService<PersonModel> {
 			e.printStackTrace();
 			return 0;
 		}
-	}	
+	}*/	
 	
 	@Override
 	public ResponseEntity<PersonModel> list() throws Exception{

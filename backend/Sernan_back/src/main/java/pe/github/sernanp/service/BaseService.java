@@ -11,8 +11,10 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import pe.github.sernanp.entity.PaginatorEntity;
 import pe.github.sernanp.entity.ResponseEntity;
 import pe.github.sernanp.model.BaseModel;
+import pe.github.sernanp.model.EconomicActivityModel;
 import pe.github.sernanp.repository.BaseRepository;
 
 import java.io.File;
@@ -100,5 +102,9 @@ public class BaseService<TEntity extends BaseModel> {
 		} finally {
 
 		}
+	}
+	
+	public ResponseEntity<TEntity> search(TEntity item, PaginatorEntity paginator) throws Exception {
+		throw new Exception("No implementado");
 	}
 }
