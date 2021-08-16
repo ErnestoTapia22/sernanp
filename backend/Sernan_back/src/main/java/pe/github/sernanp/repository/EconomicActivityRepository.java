@@ -52,7 +52,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	
 	@Override
 	public List<EconomicActivityModel> list(DataSource ds) throws Exception {
-		return super.list(ds, "simrac.fn_list_actividadeconomica", new EconomicActivityMapper());
+		return super.list(ds, "simrac.fn_listar_actividadeconomica", new EconomicActivityMapper());
 	}
 	
 	public List<EconomicActivityModel> find(DataSource ds) throws Exception{
