@@ -52,7 +52,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	
 	@Override
 	public List<EconomicActivityModel> list(DataSource ds) throws Exception {
-		return super.list2(ds, "simrac.fn_list_actividadeconomica", new EconomicActivityMapper());
+		return super.list(ds, "simrac.fn_list_actividadeconomica", new EconomicActivityMapper());
 	}
 	
 	public List<EconomicActivityModel> find(DataSource ds) throws Exception{
@@ -86,7 +86,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	}
 	@Override
 	public int insert(DataSource ds, EconomicActivityModel item) throws Exception {
-		return super.insert(ds, "simrac.fn_insertar_actividadeconomica2", item);
+		return super.insert(ds, "simrac.fn_insertar_actividadeconomica", item);
 	}
 
 	@Override
@@ -105,11 +105,11 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 		 parameters.put("pid", item.getId2());
 		 parameters.put("pname", item.getName());
 		 parameters.put("pdescription", item.getDescription());
-		 //parameters.put("pregistrationdate", item.getRegistrationDate2());
+		 parameters.put("pregistrationdate", item.getRegistrationDate());
 		 parameters.put("pstate", item.getState());
 	}
 	public EconomicActivityModel detail(DataSource ds, int id) throws Exception {
-		return super.detail2(ds, "simrac.fn_detalle_actividadeconomica", id, new EconomicActivityMapper());
+		return super.detail(ds, "simrac.fn_detalle_actividadeconomica", id, new EconomicActivityMapper());
 	}
 	//public List<DocumentModel> findDocuments(DataSource ds, int id) throws Exception {
 	//	Map<String, Object> parameters = new HashMap<>();

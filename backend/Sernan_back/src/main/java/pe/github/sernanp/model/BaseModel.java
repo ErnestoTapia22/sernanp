@@ -1,7 +1,7 @@
 package pe.github.sernanp.model;
 
 import java.util.Calendar;
-import java.sql.Date;
+import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class BaseModel {
 	
 	public Date getRegistrationDate() {
 		Calendar calendar = Calendar.getInstance();
-		return (Date) calendar.getTime();
+		return calendar.getTime();
 	}
 	
 	public void setRegistrationDate(Date registration) {

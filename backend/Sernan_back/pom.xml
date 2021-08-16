@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.3</version>
+		<version>2.1.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -16,7 +16,12 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>24-SNAPSHOT</geotools.version>
+        <geotools.version>24-SNAPSHOT</geotools.version>    
+        <org.apache.maven-compiler.plugins.version>3.8.0</org.apache.maven-compiler.plugins.version>
+		<org.apache.maven-dependency.plugins.version>3.1.1</org.apache.maven-dependency.plugins.version>
+		<tomcat.version>9.0.17</tomcat.version>
+		<javax.validation.version>2.0.1.Final</javax.validation.version>
+		<javax.persistence.version>2.2</javax.persistence.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -30,10 +35,10 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-jdbc</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -59,10 +64,12 @@
         <dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>javax.persistence-api</artifactId>
+			<version>${javax.persistence.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
+			<version>${javax.validation.version}</version>
 		</dependency>
 		<dependency>
 		   <groupId>org.gdal</groupId>

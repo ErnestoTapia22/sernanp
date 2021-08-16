@@ -82,7 +82,7 @@ public class PersonRepository extends BaseRepository<PersonModel> {
 	public List<PersonModel> list(DataSource ds) throws Exception {
 		List<PersonModel> items = new ArrayList<PersonModel>();
 		try {
-			Connection conn = jdbcTemplate.getDataSource().getConnection();
+			Connection conn = ds.getConnection();
 			conn.setAutoCommit(false);
 			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
 			proc.registerOutParameter(1, Types.OTHER);

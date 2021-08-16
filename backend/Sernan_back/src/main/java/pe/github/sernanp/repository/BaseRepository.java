@@ -3,6 +3,7 @@ package pe.github.sernanp.repository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.locationtech.jts.io.WKBReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -21,24 +21,31 @@ import pe.github.sernanp.entity.PaginatorEntity;
 import pe.github.sernanp.model.BaseModel;
 
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 
 @Repository
-public abstract class BaseRepository<TEntity extends BaseModel> {
+public abstract class BaseRepository<TEntity extends BaseModel> implements IRepository {
 
-	@Autowired
-    JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
+	//@Autowired
+    //JdbcTemplate jdbcTemplate;
+	protected JdbcTemplate _jdbcTemplate;
+	
+	//@PostConstruct
+    //private void initialize() throws SQLException {
+    //    setDataSource(dataSource);
+    //}
+	
+	//private SimpleJdbcCall simpleJdbcCall;
 	
 	public Map<String, Object> ConfigParameters(Map<String, Object> params, TEntity entity) {
 		params.put("pid", entity.getId());
 		params.put("pname", entity.getName());
 		params.put("pdescription", entity.getDescription());		
-		params.put("pregistration", entity.getRegistrationDate2());
+		params.put("pregistration", entity.getRegistrationDate());
 		params.put("pstate", entity.getState());
 		//geometry
 		//params.put("pgeometry", entity.getGeometryWKB());
@@ -116,9 +123,9 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		String[] temp = procedure.split("\\.");
 		temp = (temp.length == 1) ? new String[] {"public", temp[0]} : temp;
 		
-		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(temp[0]).withFunctionName(temp[1]);
+		SimpleJdbcCall item = new SimpleJdbcCall(_jdbcTemplate).withSchemaName(temp[0]).withFunctionName(temp[1]);
 		
-		final Map<String, Object> result = simpleJdbcCall.execute(params);
+		final Map<String, Object> result = item.execute(params);
 
         return (Integer) result.get("returnvalue");
 	}
@@ -185,7 +192,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	
 	protected List<TEntity> list2(DataSource ds, String storedProcedure, RowMapper<TEntity> mapper)
 			throws Exception {
-		Connection conn = jdbcTemplate.getDataSource().getConnection();
+		Connection conn = _jdbcTemplate.getDataSource().getConnection();
 		conn.setAutoCommit(false);
 		String functionName = "{? = call " + storedProcedure + "() }";
 		CallableStatement proc = conn.prepareCall(functionName);
@@ -228,7 +235,8 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
                 break;
             case 2:
                 jdbc.withSchemaName(partes[0]);
-                jdbc.withProcedureName(partes[1]);
+                jdbc.withFunctionName(partes[1]);
+                //jdbc.withProcedureName(partes[1]);
                 break;
             case 1:
                 jdbc.withProcedureName(partes[0]);
@@ -328,7 +336,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
 		this.setStoredProcedure(jdbc, storedProcedure);
-		jdbc.returningResultSet("list", mapper);		
+		jdbc.returningResultSet("list", mapper);
 		this.setPaginator(parameters, paginator);
 		SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
 		Map<String, Object> results = jdbc.execute(sqlParameters);
@@ -437,26 +445,15 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		proc.setInt(2, id);
 		//proc.execute();
 		TEntity2 item = null;
-		if (proc.execute())
-		{
-			ResultSet results = (ResultSet) proc.getObject(1);
+		proc.execute();
+		ResultSet results = (ResultSet) proc.getObject(1);
+		if (results.first())
+		{			
 			item = mapper.mapRow(results, 0);
-			results.close();
-		}		
+		}	
+		results.close();
 		proc.close();
 		return item;
-		//SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
-		//this.setStoredProcedure(jdbc, storedProcedure);
-		//jdbc.returningResultSet("list", mapper);
-		//SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
-		//Map<String, Object> results = jdbc.execute(sqlParameters);
-		//@SuppressWarnings("unchecked")
-		//List<TEntity2> items = (List<TEntity2>) results.get("list");
-		//TEntity2 item = null;
-		//if (items.size() > 0) {
-		//	item = items.get(0);
-		//}
-		//return item;
 	}
 	protected String findValue(DataSource ds,String storedProcedure, Object id) throws Exception {
 

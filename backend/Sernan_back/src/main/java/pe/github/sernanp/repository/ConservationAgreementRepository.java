@@ -24,9 +24,11 @@ import pe.github.sernanp.model.PersonModel;
 @Repository
 public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
+	//@Autowired
+	//JdbcTemplate jdbcTemplate;
+	//private SimpleJdbcCall simpleJdbcCall;
+	//@Autowired
+    //private DataSource dataSource;
 	
 	/* @Override
 	public int Insert(ConservationAgreement conservationAgreement) 
@@ -52,7 +54,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
 		ConservationAgreementModel conservationAgreement;
 		try {
-			Connection conn = jdbcTemplate.getDataSource().getConnection();
+			Connection conn = _jdbcTemplate.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
 			proc.registerOutParameter(1, Types.OTHER);
@@ -89,7 +91,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		List<ConservationAgreementModel> persons = new ArrayList<ConservationAgreementModel>();
 		ConservationAgreementModel conservationAgreement;
 		try {
-			Connection conn = jdbcTemplate.getDataSource().getConnection();
+			Connection conn = ds.getConnection();
 			conn.setAutoCommit(false);
 			CallableStatement proc = conn.prepareCall("{? = call simrac.fn_list_acuerdo_conservacion() }");
 			proc.registerOutParameter(1, Types.OTHER);
