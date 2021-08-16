@@ -11,158 +11,25 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.locationtech.jts.io.WKBReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import pe.github.sernanp.entity.PaginatorEntity;
+import pe.github.sernanp.extension.ResultSetExtension;
 import pe.github.sernanp.model.BaseModel;
 
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-
 @Repository
-public abstract class BaseRepository<TEntity extends BaseModel> {
-
-	@Autowired
-    JdbcTemplate jdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
+public abstract class BaseRepository<TEntity extends BaseModel> implements IRepository {
 	
-	public Map<String, Object> ConfigParameters(Map<String, Object> params, TEntity entity) {
-		params.put("pid", entity.getId());
-		params.put("pname", entity.getName());
-		//params.put("plastname", entity.getLastName());
-		//params.put("page", entity.getAge());
-		//params.put("pemail", entity.getEmail());
-		params.put("pdescription", entity.getDescription());
-		params.put("pstate", entity.getState());
-		params.put("pregistration", entity.getRegistrationDate());
+	protected JdbcTemplate _jdbcTemplate;	
 		
-		//geometry
-		//params.put("pgeometry", entity.getGeometryWKB());
-		//params.put("psrid", 4326);
-		
-		return params;
-	}
-	
-	// ######################################### INSERT #########################################
-	
-	public int Insert(TEntity entity) 
-	{
-		throw new NotImplementedException("No implementado");
-	}
-	
-	public int Insert(String procedure, TEntity entity) 
-	{
-		Map<String, Object> params = new HashMap<String, Object>();
-		params = this.ConfigParameters(params, entity);
-		return UpSertDel(procedure, params);
-	}
-	
-	public int Insert(String procedure, Map<String, Object> params) 
-	{
-		return UpSertDel(procedure, params);
-	}
-	
-	// ######################################### END INSERT #####################################
-	
-	// ######################################### UPDATE #########################################
-	
-	public int Update(TEntity entity) 
-	{
-		throw new NotImplementedException("No implementado");
-	}
-	
-	public int Update(String procedure, TEntity entity) 
-	{
-		Map<String, Object> params = new HashMap<String, Object>();
-		params = this.ConfigParameters(params, entity);
-		return UpSertDel(procedure, params);
-	}
-	
-	public int Update(String procedure, Map<String, Object> params) 
-	{
-		return UpSertDel(procedure, params);
-	}
-	
-	// ######################################### END UPDATE ######################################
-	
-
-	// ######################################### DELETE ##########################################
-	
-	public int Delete(int id) 
-	{
-		throw new NotImplementedException("No implementado");
-	}
-	
-	public int Delete(String procedure, int id) 
-	{
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("pid", id);
-		return UpSertDel(procedure, params);
-	}
-	
-	public int Delete(String procedure, Map<String, Object> params) 
-	{
-		return UpSertDel(procedure, params);
-	}
-	
-	// ######################################### END DELETE ######################################
-	
-	
-	public int UpSertDel(String procedure, Map<String, Object> params) 
-	{
-		String[] temp = procedure.split("\\.");
-		temp = (temp.length == 1) ? new String[] {"public", temp[0]} : temp;
-		
-		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(temp[0]).withFunctionName(temp[1]);
-		
-		final Map<String, Object> result = simpleJdbcCall.execute(params);
-
-        return (Integer) result.get("returnvalue");
-	}
-		
-	// ######################################### SEARCH ######################################
-	
-//	public <T>T Search(String procedure, int id)
-//	{
-//		String[] temp = procedure.split("\\.");
-//		temp = (temp.length == 1) ? new String[] {"simrac", temp[0]} : temp;
-//		
-//		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(temp[0]).withFunctionName(temp[1]);
-//		
-//		final Map<String,Object> params = new HashMap<>();
-//		params.put("id", id);
-//		final Map<String, Object> result = simpleJdbcCall.execute(params);
-//         return (T) result.get("returnvalue");
-//        
-//	}
-	
-	// ######################################### END SEARCH ######################################
-	
-	
-	/*
-	public int InsertQuery(Person persona) {
-		String sql = "INSERT INTO persona2 (nombre, apellido, correo) VALUES (?, ?, ?)";
-        int result = jdbcTemplate.update(sql, persona.getName(), persona.getLastName(), persona.getEmail());
-         
-        return result;
-	}
-	 */
-	
-	public List<TEntity> List() {
-		List<TEntity> items = new ArrayList<TEntity>();	
-		return items;
-	} 
-	
-	public List<TEntity> list(DataSource ds) throws Exception {
-		
+	public List<TEntity> list(DataSource ds) throws Exception {		
 		throw new Exception("no implementado");
 	}
 	
@@ -190,7 +57,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	
 	protected List<TEntity> list2(DataSource ds, String storedProcedure, RowMapper<TEntity> mapper)
 			throws Exception {
-		Connection conn = jdbcTemplate.getDataSource().getConnection();
+		Connection conn = ds.getConnection();
 		conn.setAutoCommit(false);
 		String functionName = "{? = call " + storedProcedure + "() }";
 		CallableStatement proc = conn.prepareCall(functionName);
@@ -233,7 +100,8 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
                 break;
             case 2:
                 jdbc.withSchemaName(partes[0]);
-                jdbc.withProcedureName(partes[1]);
+                jdbc.withFunctionName(partes[1]);
+                //jdbc.withProcedureName(partes[1]);
                 break;
             case 1:
                 jdbc.withProcedureName(partes[0]);
@@ -272,7 +140,11 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	}
 
 	protected void setParameters(Map<String, Object> parameters, TEntity item) throws Exception {
-
+		 parameters.put("pid", item.getId2());
+		 parameters.put("pname", item.getName());
+		 parameters.put("pdescription", item.getDescription());
+		 parameters.put("pregistrationdate", item.getRegistrationDate());
+		 parameters.put("pstate", item.getState());
 	}
 	
 	public List<TEntity> search(DataSource ds, TEntity item, PaginatorEntity paginator) throws Exception {
@@ -318,7 +190,48 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		this.setParametersSearch(parameters, item);
 		return this.search(ds, storedProcedure, parameters, paginator, mapper);
 	}
+	
+	protected List<TEntity> search2(DataSource ds, String storedProcedure, Map<String, Object> item, PaginatorEntity paginator, RowMapper<TEntity> mapper) throws Exception {
+		Connection conn = ds.getConnection();
+		conn.setAutoCommit(false);
+		String parametersCount = " (";
+		for (int k = 0; k<item.size(); k++) {
+			parametersCount += "?,";
+	    }
+		parametersCount +="?,?,?,?)";
+		String functionName = "{? = call " + storedProcedure + parametersCount + "  }";
+		CallableStatement proc = conn.prepareCall(functionName);
+		proc.registerOutParameter(1, Types.OTHER);
+		int i = 2; 
+		for (Map.Entry<String, Object> entry : item.entrySet()) {
+			proc.setObject(i, entry.getValue());
+	        i++;
+	    }		
+		this.setPaginator(i, paginator, proc);
+		proc.execute();
+		ResultSet results = (ResultSet) proc.getObject(1);
+		List<TEntity> items = new ArrayList<TEntity>();
+		Boolean isFirst = false;
+		while (results.next())
+		{
+			if (isFirst == false) {
+				paginator.setTotal(ResultSetExtension.getInt2(results, "precordstotal"));
+				isFirst = true;
+			}				
+			TEntity item2 = mapper.mapRow(results, 0);
+			items.add(item2);
+		}
+		results.close();
+		proc.close();
+		return items;		
+	}
 
+	protected void setPaginator(int position, PaginatorEntity paginator, CallableStatement proc) throws Exception {
+		proc.setObject(position++, paginator.getOffset());
+		proc.setObject(position++, paginator.getLimit());
+		proc.setObject(position++, paginator.getSort());
+		proc.setObject(position++, paginator.getOrder());
+	}
 	protected List<TEntity> search(DataSource ds, String storedProcedure, TEntity item,
 			RowMapper<TEntity> mapper) throws Exception {
 
@@ -333,7 +246,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
 		this.setStoredProcedure(jdbc, storedProcedure);
-		jdbc.returningResultSet("list", mapper);		
+		jdbc.returningResultSet("list", mapper);
 		this.setPaginator(parameters, paginator);
 		SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
 		Map<String, Object> results = jdbc.execute(sqlParameters);
@@ -342,7 +255,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 		this.getPaginator(results, paginator);
 		return items;
 	}
-
+	
 	protected List<TEntity> search(DataSource ds, String storedProcedure, Map<String, Object> parameters,
 			RowMapper<TEntity> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
@@ -431,22 +344,28 @@ public abstract class BaseRepository<TEntity extends BaseModel> {
 	}
 
 	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure,
-			Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {
+			int id, RowMapper<TEntity2> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
-		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
-		this.setStoredProcedure(jdbc, storedProcedure);
-		jdbc.returningResultSet("list", mapper);
-		SqlParameterSource sqlParameters = new MapSqlParameterSource(parameters);
-		Map<String, Object> results = jdbc.execute(sqlParameters);
-		@SuppressWarnings("unchecked")
-		List<TEntity2> items = (List<TEntity2>) results.get("list");
+		Connection conn = jdbcTemplate.getDataSource().getConnection();
+		conn.setAutoCommit(false);
+		String functionName = "{? = call " + storedProcedure + "(?) }";
+		CallableStatement proc = conn.prepareCall(functionName);
+		proc.registerOutParameter(1, Types.OTHER);
+		proc.setInt(2, id);
+		proc.execute();
 		TEntity2 item = null;
-		if (items.size() > 0) {
-			item = items.get(0);
-		}
+		proc.execute();
+		ResultSet results = (ResultSet) proc.getObject(1);
+		while (results.next())
+		{
+			item = mapper.mapRow(results, 0);
+		}	
+		results.close();
+		proc.close();
 		return item;
 	}
+	
 	protected String findValue(DataSource ds,String storedProcedure, Object id) throws Exception {
 
 		Map<String, Object> parameters = new HashMap<String, Object>(1);

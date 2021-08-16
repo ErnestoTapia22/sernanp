@@ -1,6 +1,6 @@
 package pe.github.sernanp.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ConservationAgreementModel extends BaseModel {
 
@@ -8,17 +8,8 @@ public class ConservationAgreementModel extends BaseModel {
 	private String _typeecosystemid;
 	private Date _firm;
 	private int _validity;
-	private String _category;	
 	private int _vigency;
-	
-	public void setCategory(String category) {
-		this._category = category;
-	}
-
-	public String getCategory() {
-		return _category;
-	}	
-	
+		
 	public AgreementStateModel getAgreementState() {
 		return _agreementState;
 	}

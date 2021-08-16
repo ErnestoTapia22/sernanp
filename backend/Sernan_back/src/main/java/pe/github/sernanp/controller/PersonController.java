@@ -15,22 +15,8 @@ import pe.github.sernanp.service.PersonService;
 public class PersonController extends BaseController<PersonModel, PersonService> {
 
 	@Autowired
-	private PersonService _service;
-	
-	@RequestMapping(value = "saveQuery")
-	public int saveQuery (@RequestBody PersonModel persona)
-    {
-		int id = _service.Save(persona);
-		return id; //new ResponseEntity(id, HttpStatus.OK);
-    }
-	
-	@RequestMapping(value = "save")
-	public int Save (@RequestBody PersonModel person)
-    {
-		int id = _service.Save(person);
-		return id; //new ResponseEntity(id, HttpStatus.OK);
-    }
-	
+	private PersonService _service;	
+		
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseEntity<PersonModel> list() {

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TestConnectPostgresqlApplication {
+public class SernanpApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestConnectPostgresqlApplication.class, args);
+		SpringApplication.run(SernanpApplication.class, args);
 	}
 
 }
