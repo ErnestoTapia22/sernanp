@@ -1,12 +1,14 @@
-package pe.github.sernanp;
+package pe.sernanp.simrac;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SernanpApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SernanpApplication.class, args);
+		System.out.println("inicio de aplicación");
+		SpringApplication.run(Application.class, args);
 	}
+
 }

@@ -8,12 +8,11 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>pe.github.sernanp</groupId>
-	<artifactId>sernanp</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1-RELEASE</version>
-	<name>sernanp</name>
-	<description>Proyecto modular</description>
+	<groupId>pe.sernanp.simrac</groupId>
+	<artifactId>pe.sernanp.simrac</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>pe.sernanp.simrac</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +26,7 @@
 		<org.geotools.version>18.2</org.geotools.version>
 		<com.fasterxml.jackson.core.version>2.9.5</com.fasterxml.jackson.core.version>
 	</properties>
-	<dependencies>
+	<dependencies>		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -37,28 +36,18 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${org.postgresql.version}</version>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.geotools</groupId>
-            <artifactId>gt-shapefile</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.geotools</groupId>
-            <artifactId>gt-swing</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>
-        <dependency>
+		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>javax.persistence-api</artifactId>
 			<version>${javax.persistence.version}</version>
@@ -67,6 +56,11 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>${javax.validation.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-lang3</artifactId>
+		  <version>3.12.0</version>
 		</dependency>
 		
 		<dependency>
@@ -84,7 +78,7 @@
 			<artifactId>jackson-core</artifactId>
 			<version>${com.fasterxml.jackson.core.version}</version>
 		</dependency>
-			
+		
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-geometry</artifactId>
@@ -131,23 +125,17 @@
 			<version>${org.geotools.version}</version>
 		</dependency>
 	</dependencies>
+
 	<repositories>
-	    <repository>
+		<repository>
         <id>osgeo</id>
         <name>OSGeo Release Repository</name>
         <url>https://repo.osgeo.org/repository/release/</url>
         <snapshots><enabled>false</enabled></snapshots>
         <releases><enabled>true</enabled></releases>
       </repository>
-      <repository>
-        <id>osgeo-snapshot</id>
-        <name>OSGeo Snapshot Repository</name>
-        <url>https://repo.osgeo.org/repository/snapshot/</url>
-        <snapshots><enabled>true</enabled></snapshots>
-        <releases><enabled>false</enabled></releases>
-      </repository>
 	</repositories>
-
+	
 	<build>
 		<plugins>
 			<plugin>
