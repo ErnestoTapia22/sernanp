@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonitoringService } from '../../../../_services/base/monitoring.service';
 import { AlertService } from '../../../../_services/base/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,7 +17,7 @@ import { query } from '@angular/animations';
   templateUrl: './monitoring.component.html',
   styleUrls: ['./monitoring.component.css'],
 })
-export class MonitoringComponent implements OnInit {
+export class MonitoringComponent implements OnInit, OnDestroy {
   agreementList: any[];
   total: number;
   isLoading: boolean = false;
@@ -55,12 +55,13 @@ export class MonitoringComponent implements OnInit {
       order: 'asc',
     };
     let item = {
-      code: '',
+      name: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
       paginator: JSON.stringify(paginator),
     });
+    this.onSearch();
   }
   onDateSelect(e) {
     console.log(e);
@@ -74,8 +75,12 @@ export class MonitoringComponent implements OnInit {
         .subscribe((data) => {
           console.log(data);
 
-          if (data && data.length > 0) {
-            this.agreementList = data;
+          if (data && data.items && data.items.length > 0) {
+            console.log(data);
+            this.agreementList = data.items;
+            this.total = data.total;
+            this.page = data.paginator.offset;
+            this.pageSize = data.paginator.limit;
             this.isLoading = false;
             this.spinner.hide();
           } else {
@@ -105,15 +110,9 @@ export class MonitoringComponent implements OnInit {
     return this.form.controls;
   }
   getPage(page: number) {
-    // this.loading = true;
-    // this.asyncMeals = serverCall(this.meals, page).pipe(
-    //     tap(res => {
-    //         this.total = res.total;
-    //         this.p = page;
-    //         this.loading = false;
-    //     }),
-    //     map(res => res.items)
-    // );
+    console.log(page);
+    this.parseData('paginator', 'offset', page);
+    this.onSearch();
   }
   onChangePageSize(event) {
     console.log(this.f.pageSizes.value);
@@ -126,10 +125,10 @@ export class MonitoringComponent implements OnInit {
   }
   search(filters: any): void {
     console.log(filters);
-    const q = this.queryObserver.getValue();
-    q.item = JSON.stringify(filters);
-    this.queryObserver.next(q);
-    console.log(this.queryObserver.getValue());
+    // const q = this.queryObserver.getValue();
+    // q.item = JSON.stringify(filters);
+    // this.queryObserver.next(q);
+    // console.log(this.queryObserver.getValue());
 
     this.onSearch();
   }
@@ -149,5 +148,8 @@ export class MonitoringComponent implements OnInit {
       state: ['', Validators.compose([])],
       pageSizes: ['', Validators.compose([])],
     });
+  }
+  ngOnDestroy() {
+    this.queryObserver.unsubscribe();
   }
 }
