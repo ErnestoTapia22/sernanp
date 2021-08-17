@@ -15,7 +15,7 @@ public class PaginatorEntity {
 		return this._offset;
 	}
 	public void setOffset(int value){
-		this._offset=value +1;
+		this._offset=value;
 	}
 	public int getLimit(){
 		return this._limit;
