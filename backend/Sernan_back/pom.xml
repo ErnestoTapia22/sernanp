@@ -24,6 +24,7 @@
 		<javax.persistence.version>2.2</javax.persistence.version>
 		<junit.version>4.11</junit.version>
 		<org.postgresql.version>42.2.12</org.postgresql.version>
+		<org.geotools.version>18.2</org.geotools.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -67,9 +68,49 @@
 			<version>${javax.validation.version}</version>
 		</dependency>
 		<dependency>
-		   <groupId>org.gdal</groupId>
-		   <artifactId>gdal</artifactId>
-		   <version>1.11.2</version>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-geometry</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-render</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-geojson</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-geotiff</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-wms</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools.xsd</groupId>
+			<artifactId>gt-xsd-gml3</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-svg</artifactId>
+			<version>${org.geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-cql</artifactId>
+			<version>${org.geotools.version}</version>
 		</dependency>
 	</dependencies>
 	<repositories>
@@ -99,6 +140,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                	<source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
