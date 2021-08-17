@@ -111,7 +111,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngIf="isLoading">
+                  <ngx-spinner
+                    [fullScreen]="false"
+                    type="ball-clip-rotate"
+                    size="medium"
+                  >
+                  </ngx-spinner>
+                  <!-- <tr *ngIf="isLoading">
                     <td colspan="7">
                       <div class="card" style="min-height: 400px">
                         <ngx-spinner
@@ -122,7 +128,7 @@
                         </ngx-spinner>
                       </div>
                     </td>
-                  </tr>
+                  </tr> -->
                   <ng-container *ngIf="!isLoading">
                     <tr
                       *ngFor="
