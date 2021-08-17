@@ -70,6 +70,9 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 			TEntity item = mapper.mapRow(results, 0);
 			items.add(item);
 		}
+		results.close();
+		proc.close();
+		conn.close();
 		return items;
 	}
 
@@ -223,6 +226,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 		}
 		results.close();
 		proc.close();
+		conn.close();
 		return items;		
 	}
 
@@ -344,10 +348,8 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 	}
 
 	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure,
-			int id, RowMapper<TEntity2> mapper) throws Exception {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
-		jdbcTemplate.setResultsMapCaseInsensitive(true);
-		Connection conn = jdbcTemplate.getDataSource().getConnection();
+			int id, RowMapper<TEntity2> mapper) throws Exception {		
+		Connection conn = ds.getConnection();
 		conn.setAutoCommit(false);
 		String functionName = "{? = call " + storedProcedure + "(?) }";
 		CallableStatement proc = conn.prepareCall(functionName);
@@ -363,6 +365,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 		}	
 		results.close();
 		proc.close();
+		conn.close();
 		return item;
 	}
 	
