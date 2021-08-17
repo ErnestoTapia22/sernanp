@@ -18,7 +18,8 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 
 import pe.gisriv.extension.spatial.transform.Projector;
 
-public class BaseGeometryEntity {
+@Entity
+public class BaseGeometryEntity extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 	public static int SRIDDEFAULT;

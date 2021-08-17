@@ -2,6 +2,9 @@ package pe.sernanp.simrac.controller;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
@@ -83,5 +88,42 @@ public class ConservationAgreementController extends BaseController<Conservation
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/savecoordinatesmultiple", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity saveCoordinatesMultiple(@RequestParam("item") String item, @RequestParam(value = "filFileCoordinate", required = true) MultipartFile filFileCoordinate){
+		try
+        {
+			ConservationAgreementModel item2 = super.fromJson(item, ConservationAgreementModel.class);
+            FileEntity itemFile = this.getFileCoordinates(filFileCoordinate);
+            ResponseEntity response= this._service.saveGeometry(item2,itemFile);
+            return response;
+        }
+        catch (Exception ex){
+            return super.getJSON(ex);
+        }
+    }
 	
+	private final String[] _fileCoordinateExtensions=new String[]{"zip","xlsx","txt"};
+	
+	protected FileEntity getFileCoordinates(MultipartFile file) throws Exception{
+		if(file==null)
+			throw new Exception("No existe ningún archivo");
+		String extension= FilenameUtils.getExtension(file.getOriginalFilename());
+		if (extension != null && !extension.equals("")) {
+			if(!Arrays.asList(this._fileCoordinateExtensions).contains(extension))
+				throw new Exception(String.format("La extensión %s no es válida",extension));
+		}
+		return this.getFile(file);
+	}
+	
+	protected FileEntity getFile(MultipartFile file) throws Exception {
+		FileEntity item = new FileEntity();
+		// InputStream is = new ByteArrayInputStream(file.getBytes());
+		item.setContent(file.getBytes());
+		item.setName(file.getOriginalFilename());
+		item.setContentType(file.getContentType());
+		item.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
+		return item;
+	}
 }
