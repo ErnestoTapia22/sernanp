@@ -1,4 +1,4 @@
-package pe.github.sernanp.model;
+package pe.sernanp.simrac.model;
 
 public class ResponseMessage {
     private String message;

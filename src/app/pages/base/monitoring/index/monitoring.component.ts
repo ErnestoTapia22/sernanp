@@ -25,8 +25,8 @@ export class MonitoringComponent implements OnInit {
   page: Number;
   form: FormGroup;
   queryObserver = new BehaviorSubject({
-    item: {},
-    paginator: {},
+    item: '',
+    paginator: '',
   });
   parsed: any;
   constructor(
@@ -57,7 +57,10 @@ export class MonitoringComponent implements OnInit {
     let item = {
       code: '',
     };
-    this.queryObserver.next({ item: item, paginator: paginator });
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
   }
   onDateSelect(e) {
     console.log(e);
@@ -86,18 +89,16 @@ export class MonitoringComponent implements OnInit {
       this.alertService.error('Error al traer acuerdos:' + error, 'Error');
     }
   }
-  parseData() {
+  parseData(parent, key, value) {
     // debugger;
-    return this.queryObserver.asObservable().pipe(
-      map((obj) => {
-        let result = {};
-        if (obj && Object.keys(obj).length > 0)
-          for (const key in obj) {
-            result[key] = JSON.stringify(obj[key]);
-          }
-        return result;
-      })
-    );
+    const item = this.queryObserver.getValue();
+
+    if (typeof item[parent] === 'string') {
+      let parsed = JSON.parse(item[parent]);
+      parsed[key] = value;
+      item[parent] = JSON.stringify(parsed);
+      this.queryObserver.next(item);
+    }
   }
 
   get f() {
@@ -116,18 +117,20 @@ export class MonitoringComponent implements OnInit {
   }
   onChangePageSize(event) {
     console.log(this.f.pageSizes.value);
-    const q = this.queryObserver.getValue();
-    q.paginator['limit'] = this.f.pageSizes.value;
-    this.queryObserver.next(q);
+    // const q = this.queryObserver.getValue();
+    // q.paginator['limit'] = this.f.pageSizes.value;
+    this.parseData('paginator', 'limit', parseInt(this.f.pageSizes.value));
+
     this.onSearch();
     // this.queryObserver.next({item:this.f.})
   }
   search(filters: any): void {
     console.log(filters);
     const q = this.queryObserver.getValue();
-    q.item = filters;
+    q.item = JSON.stringify(filters);
     this.queryObserver.next(q);
     console.log(this.queryObserver.getValue());
+
     this.onSearch();
   }
 
