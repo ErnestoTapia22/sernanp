@@ -184,7 +184,7 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public ResponseEntity saveGeometry(BaseGeometryEntity item, FileEntity itemFile) throws Exception {
+	public ResponseEntity saveGeometry(ConservationAgreementModel item, FileEntity itemFile) throws Exception {
 		try {
 			BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
 			item.setGeometry(itemGeometry.getGeometry());
@@ -233,7 +233,7 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 
         String separator = FileSystems.getDefault().getSeparator();
         String tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(separator));		
-		return absolutePath;
+		return "D:\\shape";
 	}
 	
 	

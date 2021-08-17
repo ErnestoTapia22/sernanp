@@ -10,13 +10,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FilenameUtils;
 import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FileDataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -28,7 +31,9 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import pe.gisriv.extension.spatial.transform.SridReader;
 
+
 public class ShapeFileReader extends Reader {
+
 	final static int BUFFER = 2048;
 
 	private FeatureIterator<SimpleFeature> _features;
@@ -104,7 +109,9 @@ public class ShapeFileReader extends Reader {
 		DataStore dataStore = null;
 		try {
 			//this._fileShapeFile.setReadOnly();
-			dataStore = FileDataStoreFinder.getDataStore(this._fileShapeFile);
+			Map<String, Object> map = new HashMap<>();
+	        map.put("url", this._fileShapeFile.toURI().toURL());
+			dataStore = DataStoreFinder.getDataStore(map);// FileDataStoreFinder.getDataStore(this._fileShapeFile);
 			String typeName = dataStore.getTypeNames()[0];
 			SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
 			SimpleFeatureCollection collection = source.getFeatures();

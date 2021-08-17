@@ -2,7 +2,10 @@ package pe.sernanp.simrac.model;
 
 import java.util.Date;
 
-public class ConservationAgreementModel extends BaseModel {
+import javax.persistence.Entity;
+
+@Entity
+public class ConservationAgreementModel extends BaseGeometryEntity {
 
 	private AgreementStateModel _agreementState;
 	private String _typeecosystemid;
