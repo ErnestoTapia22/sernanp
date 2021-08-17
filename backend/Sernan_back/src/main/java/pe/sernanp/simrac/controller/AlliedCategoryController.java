@@ -16,8 +16,6 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AlliedCategoryModel;
 import pe.sernanp.simrac.service.AlliedCategoryService;
 
-
-
 @RestController
 @RequestMapping(value = "/alliedcategory")
 public class AlliedCategoryController extends BaseController<AlliedCategoryModel, AlliedCategoryService> {

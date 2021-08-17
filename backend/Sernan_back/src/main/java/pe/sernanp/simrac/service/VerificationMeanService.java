@@ -16,7 +16,7 @@ import pe.sernanp.simrac.repository.VerificationMeanRepository;
 @Service
 public class VerificationMeanService extends BaseService<VerificationMeanModel> {
 	
-	@Autowired
+	/*@Autowired
 	private VerificationMeanRepository _repository;
 	
 	@Override
@@ -58,12 +58,12 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
 			if (id == 0) {
-				id = _repository.insert(this._dataSource, item);
+				id = this._repository.insert(this._dataSource, item);
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			} else {
-				id = _repository.update(this._dataSource, item);
+				id = this._repository.update(this._dataSource, item);
 				message += "Se actualizaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			}
@@ -93,7 +93,7 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 		try {
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);			
-			Integer rowsAffected = _repository.delete(this._dataSource, id);
+			Integer rowsAffected = this._repository.delete(this._dataSource, id);
 			this.transactionManager.commit(status);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");
@@ -122,5 +122,5 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}
+	}*/
 }

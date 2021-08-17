@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 import javax.sql.DataSource;
 
 @Service
-public class BaseService<TEntity extends BaseModel> {
+public class BaseService<TEntity extends BaseModel> implements IBaseService {
 
 	protected final Logger _logger = LoggerFactory.getLogger(this.getClass());
 	protected static String _contextPath;

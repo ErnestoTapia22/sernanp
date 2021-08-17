@@ -19,7 +19,7 @@ import pe.sernanp.simrac.service.VerificationMeanService;
 @RequestMapping(value = "/verificationmean")
 public class VerificationMeanController extends BaseController<VerificationMeanModel, VerificationMeanService> {
 
-	@Autowired
+	/*@Autowired
 	private VerificationMeanService _service;
 	
 	@RequestMapping(value = "/list")
@@ -79,6 +79,6 @@ public class VerificationMeanController extends BaseController<VerificationMeanM
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
-	}
+	}*/
 	
 }
