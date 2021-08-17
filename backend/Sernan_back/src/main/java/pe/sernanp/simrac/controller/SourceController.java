@@ -17,7 +17,7 @@ import pe.sernanp.simrac.service.SourceService;
 
 
 @RestController
-@RequestMapping(value = "/economicactivity")
+@RequestMapping(value = "/source")
 public class SourceController extends BaseController<SourceModel, SourceService> {
 	
 

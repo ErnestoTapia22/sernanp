@@ -23,7 +23,7 @@ public class VerificationMeanController extends BaseController<VerificationMeanM
 	@Autowired
 	private VerificationMeanService _service;
 	
-	@RequestMapping(value = "/list")
+	/*@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseEntity<VerificationMeanModel> list() {
 		ResponseEntity<VerificationMeanModel> response = new ResponseEntity<>();
@@ -80,6 +80,6 @@ public class VerificationMeanController extends BaseController<VerificationMeanM
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
-	}
+	}*/
 	
 }
