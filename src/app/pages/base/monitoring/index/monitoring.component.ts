@@ -73,10 +73,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       this.monitoringService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {
-          console.log(data);
-
           if (data && data.items && data.items.length > 0) {
-            console.log(data);
             this.agreementList = data.items;
             this.total = data.total;
             this.page = data.paginator.offset;
@@ -110,15 +107,13 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
   getPage(page: number) {
-    console.log(page);
     this.parseData('paginator', 'offset', page);
     this.onSearch();
   }
   onChangePageSize(event) {
-    console.log(this.f.pageSizes.value);
     // const q = this.queryObserver.getValue();
     // q.paginator['limit'] = this.f.pageSizes.value;
-    this.parseData('paginator', 'limit', parseInt(this.f.pageSizes.value));
+    this.parseData('paginator', 'limit', parseInt(this.f.pageSize.value));
 
     this.onSearch();
     // this.queryObserver.next({item:this.f.})
@@ -146,7 +141,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       ],
       category: ['', Validators.compose([])],
       state: ['', Validators.compose([])],
-      pageSizes: ['', Validators.compose([])],
+      pageSize: ['5', Validators.compose([])],
     });
   }
   ngOnDestroy() {
