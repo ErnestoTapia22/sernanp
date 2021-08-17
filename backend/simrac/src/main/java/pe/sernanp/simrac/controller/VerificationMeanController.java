@@ -15,12 +15,11 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.VerificationMeanModel;
 import pe.sernanp.simrac.service.VerificationMeanService;
 
-
 @RestController
 @RequestMapping(value = "/verificationmean")
 public class VerificationMeanController extends BaseController<VerificationMeanModel, VerificationMeanService> {
 
-	@Autowired(required=true)
+	@Autowired
 	private VerificationMeanService _service;
 	
 	@RequestMapping(value = "/list")
