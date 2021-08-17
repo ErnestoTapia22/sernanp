@@ -9,5 +9,4 @@ public class SernanpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SernanpApplication.class, args);
 	}
-
 }

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
-
 import org.springframework.stereotype.Repository;
 import pe.github.sernanp.entity.PaginatorEntity;
 import pe.github.sernanp.mapper.EconomicActivityMapper;
@@ -26,7 +25,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 	public List<EconomicActivityModel> search(DataSource ds, EconomicActivityModel item, PaginatorEntity paginator) throws Exception{		
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("pname", item.getName());
-		return super.search2(ds,"simrac.buscar_actividadeconomica",parameters,paginator, new EconomicActivityMapper());
+		return super.search2(ds,"simrac.fn_buscar_actividadeconomica",parameters,paginator, new EconomicActivityMapper());
 		//return super.search(ds,"simrac.buscar_actividadeconomica",item,paginator, new EconomicActivityMapper());
 	}
 	

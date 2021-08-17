@@ -10,22 +10,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import pe.github.sernanp.entity.PaginatorEntity;
 import pe.github.sernanp.entity.ResponseEntity;
-import pe.github.sernanp.model.AgreementStateModel;
-import pe.github.sernanp.model.EconomicActivityModel;
-import pe.github.sernanp.repository.AgreementStateRepository;
-import pe.github.sernanp.repository.EconomicActivityRepository;
+import pe.github.sernanp.model.AlliedCategoryModel;
+import pe.github.sernanp.repository.AlliedCategoryRepository;
 
 @Service
-public class AgreementStateService extends BaseService<AgreementStateModel> {
+
+public class AlliedCategoryService extends BaseService<AlliedCategoryModel> {
 
 	@Autowired
-	private AgreementStateRepository _repository;
+	private AlliedCategoryRepository _repository;
 	
 	@Override
-	public ResponseEntity<AgreementStateModel> list() throws Exception{
+	public ResponseEntity<AlliedCategoryModel> list() throws Exception{
 		try {
-			ResponseEntity<AgreementStateModel> response = new ResponseEntity<AgreementStateModel>();
-			List<AgreementStateModel> items = this._repository.list(this._dataSource);
+			ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<AlliedCategoryModel>();
+			List<AlliedCategoryModel> items = this._repository.list(this._dataSource);
 			response.setItems(items);
 			return response;
 			
@@ -34,10 +33,10 @@ public class AgreementStateService extends BaseService<AgreementStateModel> {
 		}
 	}
 	
-	public ResponseEntity<AgreementStateModel> search(AgreementStateModel item, PaginatorEntity paginator) throws Exception{
+	public ResponseEntity<AlliedCategoryModel> search(AlliedCategoryModel item, PaginatorEntity paginator) throws Exception{
 		try {
-			ResponseEntity<AgreementStateModel> response = new ResponseEntity<AgreementStateModel>();
-			List<AgreementStateModel> items = this._repository.search(this._dataSource, item, paginator);
+			ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<AlliedCategoryModel>();
+			List<AlliedCategoryModel> items = this._repository.search(this._dataSource, item, paginator);
 			response.setItems(items);
 			response.setPaginator(paginator);
 			return response;
@@ -49,7 +48,7 @@ public class AgreementStateService extends BaseService<AgreementStateModel> {
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(AgreementStateModel item) throws Exception {		
+	public ResponseEntity save(AlliedCategoryModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -110,14 +109,14 @@ public class AgreementStateService extends BaseService<AgreementStateModel> {
 		}
 	}
 	
-	public ResponseEntity<AgreementStateModel> detail(int id) throws Exception {
+	public ResponseEntity<AlliedCategoryModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<AgreementStateModel> response = new ResponseEntity<AgreementStateModel>();
-			AgreementStateModel item = this._repository.detail(this._dataSource, id);
+			ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<AlliedCategoryModel>();
+			AlliedCategoryModel item = this._repository.detail(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;

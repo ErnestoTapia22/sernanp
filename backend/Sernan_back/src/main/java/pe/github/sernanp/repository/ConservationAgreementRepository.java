@@ -16,11 +16,11 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 	
 	@Override
 	public List<ConservationAgreementModel> list(DataSource ds) throws Exception {
-		return super.list2(ds, "simrac.fn_listar_acuerdo_conservacion", new ConservationAgreementMapper());
+		return super.list2(ds, "simrac.fn_listar_acuerdoconservacion", new ConservationAgreementMapper());
 	}
 	
 	public ConservationAgreementModel detail(DataSource ds, int id) throws Exception {
-		return super.detail2(ds, "simrac.fn_detalle_", id, new ConservationAgreementMapper());
+		return super.detail2(ds, "simrac.fn_detalle_acuerdoconservacion", id, new ConservationAgreementMapper());
 	}
 	
 	@Override
@@ -32,12 +32,12 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 	
 	@Override
 	public int insert(DataSource ds, ConservationAgreementModel item) throws Exception {
-		return super.insert(ds, "simrac.fn_insertar_", item);
+		return super.insert(ds, "simrac.fn_insertar_acuerdoconservacion", item);
 	}
 
 	@Override
 	public int update(DataSource ds, ConservationAgreementModel item) throws Exception {
-		return super.update(ds, "simrac.fn_actualizar_", item);
+		return super.update(ds, "simrac.fn_actualizar_acuerdoconservacion", item);
 	}
 	
 	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{
