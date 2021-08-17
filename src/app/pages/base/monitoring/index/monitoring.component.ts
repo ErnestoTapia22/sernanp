@@ -38,7 +38,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.page = 1;
-    this.total = 10;
+    this.total = 0;
     this.pageSize = 5;
     this.builForm();
     // this.spinner.show();
@@ -50,7 +50,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
 
     let paginator = {
       limit: this.pageSize,
-      offset: '0',
+      offset: '1',
       sort: 'name',
       order: 'asc',
     };
