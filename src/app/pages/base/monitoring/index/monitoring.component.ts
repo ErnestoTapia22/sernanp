@@ -2,6 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MonitoringService } from '../../../../_services/base/monitoring.service';
 import { AlertService } from '../../../../_services/base/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-monitoring',
@@ -14,45 +23,85 @@ export class MonitoringComponent implements OnInit {
   isLoading: boolean = false;
   pageSize: any;
   page: Number;
+  form: FormGroup;
+  queryObserver = new BehaviorSubject({
+    item: {},
+    paginator: {},
+  });
+  parsed: any;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.page = 1;
     this.total = 10;
     this.pageSize = 5;
+    this.builForm();
     // this.spinner.show();
     // setTimeout(() => {
     //   this.spinner.hide();
     // }, 5000);
     //this.spinner.show();
-    this.getItems();
+    // this.getItems();
+
+    let paginator = {
+      limit: this.pageSize,
+      offset: '0',
+      sort: 'name',
+      order: 'asc',
+    };
+    let item = {
+      code: '',
+    };
+    this.queryObserver.next({ item: item, paginator: paginator });
   }
   onDateSelect(e) {
     console.log(e);
   }
-  async getItems() {
+  onSearch() {
     try {
       this.isLoading = true;
       this.spinner.show();
-      const items = await this.monitoringService.agreementMonitoringList();
-      console.log(items);
-      if (items && items.length > 0) {
-        this.agreementList = items;
-        this.isLoading = false;
-        this.spinner.hide();
-      } else {
-        this.isLoading = false;
-        this.spinner.hide();
-      }
+      this.monitoringService
+        .agreementSearch(this.queryObserver.getValue())
+        .subscribe((data) => {
+          console.log(data);
+
+          if (data && data.length > 0) {
+            this.agreementList = data;
+            this.isLoading = false;
+            this.spinner.hide();
+          } else {
+            this.isLoading = false;
+            this.spinner.hide();
+          }
+        });
     } catch (error) {
       this.isLoading = false;
       this.spinner.hide();
-      this.alertService.error('Error al traer acuerdos', 'Error');
+      this.alertService.error('Error al traer acuerdos:' + error, 'Error');
     }
+  }
+  parseData() {
+    // debugger;
+    return this.queryObserver.asObservable().pipe(
+      map((obj) => {
+        let result = {};
+        if (obj && Object.keys(obj).length > 0)
+          for (const key in obj) {
+            result[key] = JSON.stringify(obj[key]);
+          }
+        return result;
+      })
+    );
+  }
+
+  get f() {
+    return this.form.controls;
   }
   getPage(page: number) {
     // this.loading = true;
@@ -66,6 +115,36 @@ export class MonitoringComponent implements OnInit {
     // );
   }
   onChangePageSize(event) {
-    console.log(event);
+    console.log(this.f.pageSizes.value);
+    const q = this.queryObserver.getValue();
+    q.paginator['limit'] = this.f.pageSizes.value;
+    this.queryObserver.next(q);
+    this.onSearch();
+    // this.queryObserver.next({item:this.f.})
+  }
+  search(filters: any): void {
+    console.log(filters);
+    const q = this.queryObserver.getValue();
+    q.item = filters;
+    this.queryObserver.next(q);
+    console.log(this.queryObserver.getValue());
+    this.onSearch();
+  }
+
+  builForm(): void {
+    this.form = this.fb.group({
+      code: ['', Validators.compose([Validators.maxLength(10)])],
+      firm: [
+        '',
+        Validators.compose([
+          Validators.pattern(
+            '/^(((0[1-9]|[12]d|3[01])/(0[13578]|1[02])/((19|[2-9]d)d{2}))|((0[1-9]|[12]d|30)/(0[13456789]|1[012])/((19|[2-9]d)d{2}))|((0[1-9]|1d|2[0-8])/02/((19|[2-9]d)d{2}))|(29/02/((1[6-9]|[2-9]d)(0[48]|[2468][048]|[13579][26])|(([1][26]|[2468][048]|[3579][26])00))))$/g'
+          ),
+        ]),
+      ],
+      category: ['', Validators.compose([])],
+      state: ['', Validators.compose([])],
+      pageSizes: ['', Validators.compose([])],
+    });
   }
 }

@@ -9,13 +9,22 @@ import { AlertService } from '../base/alert.service';
 })
 export class MonitoringService {
   private segmentList;
+  private segmentSearch;
 
   constructor(private apiService: ApiBaseService) {
     this.segmentList = '/conservationagreement/list';
+    this.segmentSearch = '/simrac/api/conservationagreement/search';
   }
   agreementList(): Observable<any> {
     return this.apiService.get(`${environment.apiUrl}${this.segmentList}`);
   }
+  agreementSearch(item): Observable<any> {
+    return this.apiService.postFormData(
+      `${environment.apiUrl}${this.segmentSearch}`,
+      item
+    );
+  }
+
   async agreementMonitoringList(): Promise<any> {
     const agreement$ = this.agreementList();
     return await lastValueFrom(agreement$);

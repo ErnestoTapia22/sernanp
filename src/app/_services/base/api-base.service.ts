@@ -57,13 +57,17 @@ export class ApiBaseService {
   delete(url: string): Observable<any> {
     return this.http
       .delete<any>(url, { headers: this.headers })
-      .pipe(catchError(this.formatError))
+      .pipe(catchError(catchError(this.formatError)))
       .pipe(map((res: HttpResponse<any>) => res));
   }
   private getHttpHeaders(type?: string): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
     switch (type) {
       case 'formdata':
+        // httpOptions.headers = httpOptions.headers.set(
+        //   'Content-Type',
+        //   'multipart/form-data'
+        // );
         break;
       default:
         httpOptions.headers = httpOptions.headers.set(
@@ -93,5 +97,6 @@ export class ApiBaseService {
       fieldsError: fields,
     };
   }
-  private formatError = (error) => throwError(this.getErrorProperties(error));
+  private formatError = (error) =>
+    throwError(() => new Error(JSON.stringify(this.getErrorProperties(error))));
 }

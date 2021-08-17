@@ -39,7 +39,11 @@
         <div class="card-header">
           <label class="mb-0 fw-bold">Búsqueda</label>
           <div>
-            <button type="button" class="btn btn-sm btn-outline-primary mx-2">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary mx-2"
+              (click)="search(form.value)"
+            >
               <i class="bi bi-search"></i>
               Buscar
             </button>
@@ -50,153 +54,142 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="row g-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label class="form-label">Código</label>
-              <input type="text" class="form-control" />
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label">Código</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="code"
+                />
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label">Fecha de suscripción</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="firm"
+                />
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="inputState" class="form-label">Categoria </label>
+                <select class="form-select" formControlName="category">
+                  <option value="">SELECCIONE</option>
+                  <option value="1">Bosque de protección</option>
+                  <option value="2">Parque nacional</option>
+                  <option value="3">Reserva nacional</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="inputState" class="form-label"
+                  >Estado del acuerdo
+                </label>
+                <select class="form-select" formControlName="state">
+                  <option value="">SELECCIONE</option>
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                  <option value="3">Por renovar</option>
+                  <option value="4">Vigente</option>
+                </select>
+              </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label class="form-label">Fecha de suscripción</label>
-              <input type="date" class="form-control" />
+
+            <hr />
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                    <th>Suscriptores</th>
+                    <th>Vigencia</th>
+                    <th>Fecha Suscr.</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="isLoading">
+                    <td colspan="7">
+                      <div class="card" style="min-height: 400px">
+                        <ngx-spinner
+                          [fullScreen]="false"
+                          type="ball-clip-rotate"
+                          size="medium"
+                        >
+                        </ngx-spinner>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    *ngFor="
+                      let item of agreementList
+                        | paginate
+                          : {
+                              id: 'agreementMonitoring',
+                              itemsPerPage: pageSize,
+                              currentPage: page,
+                              totalItems: total
+                            };
+                      index as idx
+                    "
+                  >
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.agreementState.name }}</td>
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>{{ item.validity }}</td>
+                    <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
+                    <td>
+                      <div class="text-nowrap">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info border-0"
+                          [routerLink]="['/monitoring/detail', item.code]"
+                        >
+                          <i class="bi bi-eye fs-lg"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-success border-0"
+                        >
+                          <i class="bi bi-pencil fs-lg"></i>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger border-0"
+                        >
+                          <i class="bi bi-trash fs-lg"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label class="form-label">Suscriptores del acuerdo</label>
-              <input type="text" class="form-control" />
-            </div> -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label for="inputState" class="form-label">Categoria </label>
-              <select class="form-select">
-                <option selected>SELECCIONE</option>
-                <option>Bosque de protección</option>
-                <option>Parque nacional</option>
-                <option>Reserva nacional</option>
+
+            <div class="d-flex justify-content-end">
+              <select
+                class="form-select custom-select"
+                formControlName="pageSizes"
+                (change)="onChangePageSize($event)"
+              >
+                <option [value]="5" [selected]="true">5/PÁGINA</option>
+                <option [value]="10">10/PÁGINA</option>
+                <option [value]="20">20/PÁGINA</option>
+                <option [value]="30">30/PÁGINA</option>
               </select>
+              <pagination-controls
+                (pageChange)="getPage($event)"
+                id="agreementMonitoring"
+                class="pagination justify-content-end"
+              ></pagination-controls>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label for="inputState" class="form-label"
-                >Estado del acuerdo
-              </label>
-              <select class="form-select">
-                <option selected>SELECCIONE</option>
-                <option>Activo</option>
-                <option>Inactivo</option>
-                <option>Por renovar</option>
-                <option>Vigente</option>
-              </select>
-            </div>
-          </div>
-
-          <hr />
-
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Código</th>
-                  <th>Categoría</th>
-                  <th>Estado</th>
-                  <th>Suscriptores</th>
-                  <th>Vigencia</th>
-                  <th>Fecha Suscr.</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngIf="isLoading">
-                  <td colspan="7">
-                    <div class="card" style="min-height: 400px">
-                      <ngx-spinner
-                        [fullScreen]="false"
-                        type="ball-clip-rotate"
-                        size="medium"
-                      >
-                      </ngx-spinner>
-                    </div>
-                  </td>
-                </tr>
-                <tr
-                  *ngFor="
-                    let item of agreementList
-                      | paginate
-                        : {
-                            id: 'agreementMonitoring',
-                            itemsPerPage: pageSize,
-                            currentPage: page,
-                            totalItems: total
-                          };
-                    index as idx
-                  "
-                >
-                  <td>{{ item.code }}</td>
-                  <td>{{ item.category }}</td>
-                  <td>{{ item.agreementState.name }}</td>
-                  <td>
-                    {{ item.name }}
-                  </td>
-                  <td>{{ item.validity }}</td>
-                  <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', item.code]"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <nav aria-label="Page navigation">
-            <select
-              class="form-select justify-content-end"
-              (ngModelChange)="onChangePageSize($event)"
-              [ngModel]="pageSize"
-            >
-              <option value="5" selected>5/PÁGINA</option>
-              <option value="10">10/PÁGINA</option>
-              <option value="20">20/PÁGINA</option>
-              <option value="30">30/PÁGINA</option>
-            </select>
-            <pagination-controls
-              (pageChange)="getPage($event)"
-              id="agreementMonitoring"
-              class="pagination justify-content-end"
-            ></pagination-controls>
-            <!-- <ul class="pagination justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#">Previous</a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul> -->
-          </nav>
+          </form>
         </div>
       </div>
     </div>
