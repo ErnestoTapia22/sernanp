@@ -1,10 +1,10 @@
 package pe.sernanp.simrac.service;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.Polygon;
+//import org.locationtech.jts.geom.Coordinate;
+//import org.locationtech.jts.geom.GeometryFactory;
+//import org.locationtech.jts.geom.Point;
+//import org.locationtech.jts.geom.Polygon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

@@ -59,12 +59,12 @@ public class ArticulateService extends BaseService<ArticulateModel>{
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
 			if (id == 0) {
-				id = _repository.insert(this._dataSource, item);
+				id = this._repository.insert(this._dataSource, item);
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			} else {
-				id = _repository.update(this._dataSource, item);
+				id = this._repository.update(this._dataSource, item);
 				message += "Se actualizaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			}
@@ -94,7 +94,7 @@ public class ArticulateService extends BaseService<ArticulateModel>{
 		try {
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);			
-			Integer rowsAffected = _repository.delete(this._dataSource, id);
+			Integer rowsAffected = this._repository.delete(this._dataSource, id);
 			this.transactionManager.commit(status);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");

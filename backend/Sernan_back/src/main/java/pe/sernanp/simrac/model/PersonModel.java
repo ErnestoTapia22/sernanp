@@ -3,8 +3,8 @@ package pe.sernanp.simrac.model;
 //import org.geotools.geometry.jts.JTS;
 //import org.geotools.referencing.CRS;
 //import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.io.WKBWriter;
+//import org.locationtech.jts.geom.Geometry;
+//import org.locationtech.jts.io.WKBWriter;
 //import org.opengis.referencing.crs.CoordinateReferenceSystem;
 //import org.opengis.referencing.operation.MathTransform;
 
@@ -37,7 +37,7 @@ public class PersonModel extends BaseModel {
 		_age = value;
 	}
 	
-	private Geometry Geometry;	
+	/*private Geometry Geometry;	
 	
 	
 	public Geometry getGeometry() {
@@ -66,11 +66,11 @@ public class PersonModel extends BaseModel {
 			}
 			
 			return writer.write(temp);
-			*/
+			
 			return writer.write(Geometry);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 }

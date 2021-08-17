@@ -10,4 +10,5 @@ public class SernanpApplication {
 		System.out.println("inicio de aplicación");
 		SpringApplication.run(SernanpApplication.class, args);
 	}
+
 }

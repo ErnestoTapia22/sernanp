@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import java.util.List;
-import org.locationtech.jts.io.WKBReader;
+//import org.locationtech.jts.io.WKBReader;
 import org.springframework.stereotype.Repository;
 
 import pe.gisriv.entity.PaginatorEntity;
