@@ -13,7 +13,8 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setAgreementState(new AgreementStateModel());
 		super.mapRowWithTable(rs, item.getAgreementState(), "agreementstate");
 		item.setFirm(ResultSetExtension.getDate2(rs, "firm"));
-		item.setValidity(ResultSetExtension.getInt2(rs, "vigency"));
+		item.setVigency(ResultSetExtension.getInt2(rs, "vigency"));
+		
 		return item;
 	}
 }
