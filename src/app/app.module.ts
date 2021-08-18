@@ -35,6 +35,7 @@ import { UserComponent } from './pages/base/user/user.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { TestComponent } from './pages/base/test/test.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminComponent } from './pages/base/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserComponent,
     DetailComponent,
     TestComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

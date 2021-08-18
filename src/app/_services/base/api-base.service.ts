@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { AlertService } from '../../_services/base/alert.service';
+
 import {
   HttpHeaders,
   HttpParams,
   HttpClient,
   HttpResponse,
 } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,11 @@ export class ApiBaseService {
   private token: any;
 
   private headers;
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
+  ) {
     if (JSON.parse(localStorage.getItem('token')) != null) {
       this.token = JSON.parse(localStorage.getItem('token')).access_token;
     }
@@ -98,5 +105,13 @@ export class ApiBaseService {
     };
   }
   private formatError = (error) =>
-    throwError(() => new Error(JSON.stringify(this.getErrorProperties(error))));
+    throwError(() => {
+      const errorProperties = JSON.stringify(this.getErrorProperties(error));
+      this.spinner.hide();
+      this.alertService.error(
+        'error en el api service: ' + errorProperties,
+        'error'
+      );
+      new Error(errorProperties);
+    });
 }
