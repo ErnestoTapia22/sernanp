@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8050',
+  apiUrl: 'http://100.122.8.47:8050/simrac/api',
   webUrl: 'web-url',
   initialLayers: [
     {

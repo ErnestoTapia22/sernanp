@@ -13,7 +13,7 @@ export class MonitoringService {
 
   constructor(private apiService: ApiBaseService) {
     this.segmentList = '/conservationagreement/list';
-    this.segmentSearch = '/simrac/api/conservationagreement/search';
+    this.segmentSearch = '/conservationagreement/search';
   }
   agreementList(): Observable<any> {
     return this.apiService.get(`${environment.apiUrl}${this.segmentList}`);

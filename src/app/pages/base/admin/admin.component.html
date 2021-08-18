@@ -45,7 +45,12 @@
                     </div>
 
                     <div class="col-md-2 float-end">
-                      <button class="btn btn-sm btn-primary">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="
+                          onRegisterModal(contentRegister, 'economicactivity')
+                        "
+                      >
                         <i class="bi bi-plus-lg"></i>
                       </button>
                     </div>
@@ -59,9 +64,42 @@
                           <td>Nombre</td>
                           <td>Descripción</td>
                           <td>Fecha</td>
+                          <td>Opciones</td>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of modules['economicactivity'].items;
+                            index as idx
+                          "
+                        >
+                          <td>{{ item.id }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>
+                          <td>
+                            {{ item.registrationDate | date: "dd/MM/yyyy" }}
+                          </td>
+
+                          <td>
+                            <div class="text-nowrap">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-success border-0"
+                                (click)="onUpdateModal(contentUpdate, item.id)"
+                              >
+                                <i class="bi bi-pencil fs-lg"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-danger border-0"
+                              >
+                                <i class="bi bi-trash fs-lg"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -76,7 +114,10 @@
                     </div>
 
                     <div class="col-md-2 float-end">
-                      <button class="btn btn-sm btn-primary">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="onRegisterModal(contentRegister, 'MV')"
+                      >
                         <i class="bi bi-plus-lg"></i>
                       </button>
                     </div>
@@ -106,7 +147,10 @@
                     </div>
 
                     <div class="col-md-2 float-end">
-                      <button class="btn btn-sm btn-primary">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="onRegisterModal(contentRegister, 'F')"
+                      >
                         <i class="bi bi-plus-lg"></i>
                       </button>
                     </div>
@@ -136,7 +180,10 @@
                     </div>
 
                     <div class="col-md-2 float-end">
-                      <button class="btn btn-sm btn-primary">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="onRegisterModal(contentRegister, 'EA')"
+                      >
                         <i class="bi bi-plus-lg"></i>
                       </button>
                     </div>
@@ -166,6 +213,173 @@
   <!-- End PAge Content -->
   <!-- ============================================================== -->
 </div>
+<ng-template #contentRegister let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <label class="form-label">DNI</label>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-sm btn-primary">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check form-switch form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="chkInstitutionL"
+            value="option2"
+          />
+          <label class="form-check-label" for="chkInstitutionL">Activo</label>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>DNI</td>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>Usuario</td>
+            <td>Seleccionar</td>
+            <td>Perfil</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345678</td>
+            <td>Juan</td>
+            <td>Perez</td>
+            <td>Jperez</td>
+            <td>
+              <div class="text-nowrap">
+                <input type="checkbox" class="form-check-input" />
+              </div>
+            </td>
+            <td>
+              <select class="form-select">
+                <option>Seleccione</option>
+                <option>Perfil 1</option>
+                <option>Perfil 2</option>
+                <option>Perfil 3</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-dismiss="modal"
+      (click)="modal.close()"
+    >
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary">Guardar</button>
+  </div>
+</ng-template>
+<ng-template #contentUpdate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <label class="form-label">DNI</label>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-sm btn-primary">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check form-switch form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="chkInstitutionL"
+            value="option2"
+          />
+          <label class="form-check-label" for="chkInstitutionL">Activo</label>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>DNI</td>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>Usuario</td>
+            <td>Seleccionar</td>
+            <td>Perfil</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345678</td>
+            <td>Juan</td>
+            <td>Perez</td>
+            <td>Jperez</td>
+            <td>
+              <div class="text-nowrap">
+                <input type="checkbox" class="form-check-input" />
+              </div>
+            </td>
+            <td>
+              <select class="form-select">
+                <option>Seleccione</option>
+                <option>Perfil 1</option>
+                <option>Perfil 2</option>
+                <option>Perfil 3</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-dismiss="modal"
+      (click)="modal.close()"
+    >
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary">Guardar</button>
+  </div>
+</ng-template>
+
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
