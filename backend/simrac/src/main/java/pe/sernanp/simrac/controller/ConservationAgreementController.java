@@ -21,7 +21,7 @@ import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.service.ConservationAgreementService;
 
 @RestController
-@RequestMapping(value = "/conservationagreement/")
+@RequestMapping(value = "/api/conservationagreement/")
 public class ConservationAgreementController extends BaseController<ConservationAgreementModel, ConservationAgreementService>  {
 	
 	@Autowired

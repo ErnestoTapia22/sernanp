@@ -17,7 +17,7 @@ import pe.sernanp.simrac.model.SourceModel;
 import pe.sernanp.simrac.service.SourceService;
 
 @RestController
-@RequestMapping(value = "/source")
+@RequestMapping(value = "/api/source")
 public class SourceController extends BaseController<SourceModel, SourceService> {
 	
 	@Autowired
