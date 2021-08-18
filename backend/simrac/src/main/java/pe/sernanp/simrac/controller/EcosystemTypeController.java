@@ -17,7 +17,7 @@ import pe.sernanp.simrac.model.EcosystemTypeModel;
 import pe.sernanp.simrac.service.EcosystemTypeService;
 
 @RestController
-@RequestMapping(value = "/ecosystemtype")
+@RequestMapping(value = "/api/ecosystemtype")
 public class EcosystemTypeController extends BaseController<EcosystemTypeModel, EcosystemTypeService> {
 	
 	@Autowired

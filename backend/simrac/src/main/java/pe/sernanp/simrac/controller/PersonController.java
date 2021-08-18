@@ -11,7 +11,7 @@ import pe.sernanp.simrac.model.PersonModel;
 import pe.sernanp.simrac.service.PersonService;
 
 @RestController
-@RequestMapping(value = "/persona/")
+@RequestMapping(value = "/persona")
 public class PersonController extends BaseController<PersonModel, PersonService> {
 
 	@Autowired
