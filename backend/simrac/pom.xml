@@ -22,7 +22,7 @@
 		<org.apache.maven-dependency.plugins.version>3.1.1</org.apache.maven-dependency.plugins.version>
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
 		<javax.persistence.version>2.2</javax.persistence.version>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 		<org.postgresql.version>42.2.12</org.postgresql.version>
 		<org.geotools.version>18.2</org.geotools.version>
 		<com.fasterxml.jackson.core.version>2.9.5</com.fasterxml.jackson.core.version>
