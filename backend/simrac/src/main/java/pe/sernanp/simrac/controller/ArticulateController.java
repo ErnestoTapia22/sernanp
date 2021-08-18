@@ -17,7 +17,7 @@ import pe.sernanp.simrac.model.ArticulateModel;
 import pe.sernanp.simrac.service.ArticulateService;
 
 @RestController
-@RequestMapping(value = "/articulate")
+@RequestMapping(value = "/api/articulate")
 public class ArticulateController extends BaseController<ArticulateModel, ArticulateService>{
 		
 	@Autowired

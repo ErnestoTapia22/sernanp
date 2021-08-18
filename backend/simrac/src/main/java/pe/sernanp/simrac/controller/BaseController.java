@@ -17,10 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public abstract class BaseController<TEntity extends BaseModel, TService extends BaseService<TEntity>> {
-	
-	@Autowired
-	protected ApplicationContext _appContext;
-	
+			
 	@Autowired
 	protected HttpServletRequest _request;
 	

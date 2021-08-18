@@ -17,7 +17,7 @@ import pe.sernanp.simrac.model.EconomicActivityModel;
 import pe.sernanp.simrac.service.EconomicActivityService;
 
 @RestController
-@RequestMapping(value = "/economicactivity")
+@RequestMapping(value = "/api/economicactivity")
 public class EconomicActivityController extends BaseController<EconomicActivityModel, EconomicActivityService> {
 
 	@Autowired

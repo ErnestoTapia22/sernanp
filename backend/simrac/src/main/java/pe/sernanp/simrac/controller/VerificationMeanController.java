@@ -15,7 +15,7 @@ import pe.sernanp.simrac.model.VerificationMeanModel;
 import pe.sernanp.simrac.service.VerificationMeanService;
 
 @RestController
-@RequestMapping(value = "/verificationmean")
+@RequestMapping(value = "/api/verificationmean")
 public class VerificationMeanController extends BaseController<VerificationMeanModel, VerificationMeanService> {
 
 	/*@Autowired

@@ -17,7 +17,7 @@ import pe.sernanp.simrac.model.AgreementStateModel;
 import pe.sernanp.simrac.service.AgreementStateService;
 
 @RestController
-@RequestMapping(value = "/agreementstate")
+@RequestMapping(value = "/api/agreementstate")
 public class AgreementStateController extends BaseController<AgreementStateModel, AgreementStateService> {
 	
 	@Autowired
