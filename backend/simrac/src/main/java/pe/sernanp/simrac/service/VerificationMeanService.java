@@ -16,7 +16,7 @@ import pe.sernanp.simrac.repository.VerificationMeanRepository;
 @Service
 public class VerificationMeanService extends BaseService<VerificationMeanModel> {
 	
-	/*@Autowired
+	/* @Autowired
 	private VerificationMeanRepository _repository;
 	
 	@Override
