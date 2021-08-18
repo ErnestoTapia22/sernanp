@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 public class ConservationAgreementModel extends BaseGeometryEntity {
 
 	private AgreementStateModel _agreementState;
-	private String _typeecosystemid;
 	private Date _firm;
 	private int _validity;
 	private int _vigency;
@@ -19,14 +18,6 @@ public class ConservationAgreementModel extends BaseGeometryEntity {
 
 	public void setAgreementState(AgreementStateModel Stateid) {
 		this._agreementState = Stateid;
-	}
-
-	public String getTypeecosystemid() {
-		return _typeecosystemid;
-	}
-
-	public void setTypeecosystemid(String Typeecosystemid) {
-		this._typeecosystemid = Typeecosystemid;
 	}
 
 	public Date getFirm() {

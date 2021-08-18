@@ -40,6 +40,15 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		return super.update(ds, "simrac.fn_actualizar_acuerdoconservacion", item);
 	}
 	
+	@Override
+	protected void setParameters(Map<String, Object> parameters, ConservationAgreementModel item) throws Exception {
+		 parameters.put("pid", item.getId2());
+		 parameters.put("pname", item.getName());
+		 parameters.put("pdescription", item.getDescription());
+		 parameters.put("pregistrationdate", item.getRegistrationDate());
+		 parameters.put("pstate", item.getState());
+	}
+	
 	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{
 		System.out.println(ds);
 		Map<String, Object> parameters = new HashMap<>();
