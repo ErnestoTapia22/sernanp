@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.service.ConservationAgreementService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping(value = "/api/conservationagreement/")
 public class ConservationAgreementController extends BaseController<ConservationAgreementModel, ConservationAgreementService>  {

@@ -1,6 +1,7 @@
 package pe.sernanp.simrac.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +11,7 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.PersonModel;
 import pe.sernanp.simrac.service.PersonService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping(value = "/persona")
 public class PersonController extends BaseController<PersonModel, PersonService> {

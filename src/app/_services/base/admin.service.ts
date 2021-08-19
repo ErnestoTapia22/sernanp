@@ -24,23 +24,22 @@ export class AdminService {
     );
   }
   moduleRegister(segment, item): Observable<any> {
-    return this.apiBaseService.post(
-      `${environment.apiUrl}/${segment}${this.segmentInsert}`,
-      item
-    );
-
-    // let headers = {
-    //   'Content-Type': 'application/json',
-    // }
-    // // prettier-ignore
-    // const testdata={
-    //   item : {
-    //   "name": "ernesto 5",
-    //   "description": "tapia 5",
-    //   "state": true
-    // }
-    // }
-    // return this.http.post<any>(
+    //return this.apiBaseService.post(
+    //  `${environment.apiUrl}/${segment}${this.segmentInsert}`,
+    //  item
+    //);
+     const testdata = {
+       "name": "ernesto 5",
+       "description": "tapia 5",
+       "state": true
+     };
+     console.log(testdata);
+     return this.http.post<any>(
+       `http://localhost:8050/simrac/api/economicactivity/save`,
+       // `${environment.apiUrl}/${segment}${this.segmentInsert}`,
+       testdata
+     );
+     // return this.http.post<any>(
     //   `http://localhost:8050/simrac/api/economicactivity/save2`,
     //   // `${environment.apiUrl}/${segment}${this.segmentInsert}`,
     //   'sadasdas'

@@ -3,6 +3,7 @@ package pe.sernanp.simrac.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ArticulateModel;
 import pe.sernanp.simrac.service.ArticulateService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping(value = "/api/articulate")
 public class ArticulateController extends BaseController<ArticulateModel, ArticulateService>{

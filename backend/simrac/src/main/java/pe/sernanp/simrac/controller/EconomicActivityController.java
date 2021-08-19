@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.EconomicActivityModel;
 import pe.sernanp.simrac.service.EconomicActivityService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping(value = "/api/economicactivity")
 public class EconomicActivityController extends BaseController<EconomicActivityModel, EconomicActivityService> {
@@ -51,7 +53,7 @@ public class EconomicActivityController extends BaseController<EconomicActivityM
 		}
 	}
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+	@RequestMapping(value = "/save", method = RequestMethod.POST )
 	@ResponseBody()
 	public ResponseEntity<?> save(@RequestBody EconomicActivityModel item) throws IOException {
 		try {
