@@ -11,12 +11,18 @@ export class AdminService {
   private segmentList;
   private segmentInsert;
   private segmentSearch;
+  private segmentDelete;
+  private segmentDetail;
+  private segmentUpdate;
   constructor(
     private apiBaseService: ApiBaseService,
     private http: HttpClient
   ) {
     this.segmentList = '/list';
     this.segmentInsert = '/save';
+    this.segmentDelete = '/delete';
+    this.segmentDetail = '/detail';
+    this.segmentUpdate = '/save';
   }
   moduleList(segment): Observable<any> {
     return this.apiBaseService.get(
@@ -24,25 +30,25 @@ export class AdminService {
     );
   }
   moduleRegister(segment, item): Observable<any> {
-    //return this.apiBaseService.post(
-    //  `${environment.apiUrl}/${segment}${this.segmentInsert}`,
-    //  item
-    //);
-     const testdata = {
-       "name": "ernesto 5",
-       "description": "tapia 5",
-       "state": true
-     };
-     console.log(testdata);
-     return this.http.post<any>(
-       `http://localhost:8050/simrac/api/economicactivity/save`,
-       // `${environment.apiUrl}/${segment}${this.segmentInsert}`,
-       testdata
-     );
-     // return this.http.post<any>(
-    //   `http://localhost:8050/simrac/api/economicactivity/save2`,
-    //   // `${environment.apiUrl}/${segment}${this.segmentInsert}`,
-    //   'sadasdas'
-    // );
+    return this.apiBaseService.post(
+      `${environment.apiUrl}/${segment}${this.segmentInsert}`,
+      item
+    );
+  }
+  moduleDelete(segment, id): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}/${segment}${this.segmentDelete}/${id}`
+    );
+  }
+  moduleDetail(segment, id): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}/${segment}${this.segmentDetail}/${id}`
+    );
+  }
+  moduleUpdate(segment, item): Observable<any> {
+    return this.apiBaseService.post(
+      `${environment.apiUrl}/${segment}${this.segmentUpdate}`,
+      item
+    );
   }
 }

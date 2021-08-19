@@ -86,13 +86,26 @@
                               <button
                                 type="button"
                                 class="btn btn-sm btn-outline-success border-0"
-                                (click)="onUpdateModal(contentUpdate, item.id)"
+                                (click)="
+                                  onUpdateModal(
+                                    contentUpdate,
+                                    item.id,
+                                    'economicactivity'
+                                  )
+                                "
                               >
                                 <i class="bi bi-pencil fs-lg"></i>
                               </button>
                               <button
                                 type="button"
                                 class="btn btn-sm btn-outline-danger border-0"
+                                (click)="
+                                  onDeleteModal(
+                                    contentDelete,
+                                    item.id,
+                                    'economicactivity'
+                                  )
+                                "
                               >
                                 <i class="bi bi-trash fs-lg"></i>
                               </button>
@@ -293,7 +306,86 @@
 </ng-template>
 <ng-template #contentUpdate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
+    <h5 class="modal-title" id="createUserLabel">
+      Modificar {{ moduleContext.name }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit('update')" novalidate>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{
+              'input-invalid': submitted && g.name.errors?.required
+            }"
+            formControlName="name"
+          />
+          <div
+            *ngIf="submitted && g.name.errors?.required"
+            class="label-invalid"
+          >
+            Nombre es requerido
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Descripción</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{
+              'input-invalid': submitted && g.description.errors?.required
+            }"
+            formControlName="description"
+          />
+          <div
+            *ngIf="submitted && g.description.errors?.required"
+            class="label-invalid"
+          >
+            Descripción es requerido
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-check form-switch form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="chkstate"
+              formControlName="state"
+              checked
+            />
+
+            <label class="form-check-label" for="chkstate">Activo</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+  s
+</ng-template>
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar {{ moduleContext.name }}</h4>
     <button
       type="button"
       class="btn-close"
@@ -303,78 +395,21 @@
     ></button>
   </div>
   <div class="modal-body">
-    <label class="form-label">DNI</label>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <input type="text" class="form-control" />
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-sm btn-primary">
-          <i class="bi bi-search"></i>
-        </button>
-      </div>
-      <div class="col-md-4">
-        <div class="form-check form-switch form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="chkInstitutionL"
-            value="option2"
-          />
-          <label class="form-check-label" for="chkInstitutionL">Activo</label>
-        </div>
-      </div>
-    </div>
-    <hr />
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <td>DNI</td>
-            <td>Nombre</td>
-            <td>Apellidos</td>
-            <td>Usuario</td>
-            <td>Seleccionar</td>
-            <td>Perfil</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12345678</td>
-            <td>Juan</td>
-            <td>Perez</td>
-            <td>Jperez</td>
-            <td>
-              <div class="text-nowrap">
-                <input type="checkbox" class="form-check-input" />
-              </div>
-            </td>
-            <td>
-              <select class="form-select">
-                <option>Seleccione</option>
-                <option>Perfil 1</option>
-                <option>Perfil 2</option>
-                <option>Perfil 3</option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
   </div>
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-secondary"
-      data-bs-dismiss="modal"
-      (click)="modal.close()"
-    >
+    <button type="button" class="btn btn-cancelar" (click)="modal.close()">
       Cancelar
     </button>
-    <button type="button" class="btn btn-primary">Guardar</button>
+    <button type="button" ngbAutofocus (click)="delete()" class="btn btn-save">
+      Aceptar
+    </button>
   </div>
 </ng-template>
-
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
