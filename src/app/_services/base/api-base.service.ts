@@ -39,8 +39,9 @@ export class ApiBaseService {
   }
 
   post(url: string, body: object = {}): Observable<any> {
+    debugger;
     return this.http
-      .post(url, body)
+      .post(url, body, { headers: this.getHttpHeaders() })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }

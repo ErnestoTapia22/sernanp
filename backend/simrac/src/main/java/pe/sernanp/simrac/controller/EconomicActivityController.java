@@ -3,6 +3,8 @@ package pe.sernanp.simrac.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +51,7 @@ public class EconomicActivityController extends BaseController<EconomicActivityM
 		}
 	}
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody()
 	public ResponseEntity<?> save(@RequestBody EconomicActivityModel item) throws IOException {
 		try {
@@ -59,6 +61,18 @@ public class EconomicActivityController extends BaseController<EconomicActivityM
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/save2", method = RequestMethod.POST )
+	@ResponseBody()
+	public ResponseEntity<?> save(@RequestBody String name) throws IOException {
+		try {
+			ResponseEntity<?> response = null;
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	@ResponseBody()
