@@ -80,6 +80,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             this.pageSize = data.paginator.limit;
             this.isLoading = false;
             this.spinner.hide();
+            this.setTableHeight(this.pageSize);
           } else {
             this.isLoading = false;
             this.spinner.hide();
@@ -119,7 +120,6 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     // this.queryObserver.next({item:this.f.})
   }
   search(filters: any): void {
-    console.log(filters);
     // const q = this.queryObserver.getValue();
     // q.item = JSON.stringify(filters);
     // this.queryObserver.next(q);
@@ -146,5 +146,12 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.queryObserver.unsubscribe();
+  }
+  setTableHeight(rows) {
+    if (rows !== undefined && rows !== null) {
+      const cm = document.getElementById('tableBody');
+      const height = 50.838 * parseInt(rows);
+      cm.setAttribute('style', `height:${height}px`);
+    }
   }
 }

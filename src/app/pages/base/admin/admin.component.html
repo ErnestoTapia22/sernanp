@@ -68,13 +68,16 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <!-- prettier-ignore -->
                         <tr
+                       
                           *ngFor="
-                            let item of modules['economicactivity'].items;
+                            let item of modules['economicactivity'].items
+                              ;
                             index as idx
                           "
                         >
-                          <td>{{ item.id }}</td>
+                          <td>{{ idx + 1 }}</td>
                           <td>{{ item.name }}</td>
                           <td>{{ item.description }}</td>
                           <td>
@@ -123,46 +126,13 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10">
-                      <h5 class="card-title">Medio verificación</h5>
-                    </div>
-
-                    <div class="col-md-2 float-end">
-                      <button
-                        class="btn btn-sm btn-primary"
-                        (click)="onRegisterModal(contentRegister, 'MV')"
-                      >
-                        <i class="bi bi-plus-lg"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table mb-0">
-                      <thead>
-                        <tr>
-                          <td>ID</td>
-                          <td>Nombre</td>
-                          <td>Descripción</td>
-                          <td>Fecha</td>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-10">
                       <h5 class="card-title">Fuente</h5>
                     </div>
 
                     <div class="col-md-2 float-end">
                       <button
                         class="btn btn-sm btn-primary"
-                        (click)="onRegisterModal(contentRegister, 'F')"
+                        (click)="onRegisterModal(contentRegister, 'source')"
                       >
                         <i class="bi bi-plus-lg"></i>
                       </button>
@@ -176,9 +146,55 @@
                           <td>Nombre</td>
                           <td>Descripción</td>
                           <td>Fecha</td>
+                          <td>Opciones</td>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of modules['source'].items;
+                            index as idx
+                          "
+                        >
+                          <td>{{ idx + 1 }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>
+                          <td>
+                            {{ item.registrationDate | date: "dd/MM/yyyy" }}
+                          </td>
+
+                          <td>
+                            <div class="text-nowrap">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-success border-0"
+                                (click)="
+                                  onUpdateModal(
+                                    contentUpdate,
+                                    item.id,
+                                    'source'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-pencil fs-lg"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-danger border-0"
+                                (click)="
+                                  onDeleteModal(
+                                    contentDelete,
+                                    item.id,
+                                    'source'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-trash fs-lg"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -189,13 +205,15 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10">
-                      <h5 class="card-title">Estado acuerdo</h5>
+                      <h5 class="card-title">Categoría aliado</h5>
                     </div>
 
                     <div class="col-md-2 float-end">
                       <button
                         class="btn btn-sm btn-primary"
-                        (click)="onRegisterModal(contentRegister, 'EA')"
+                        (click)="
+                          onRegisterModal(contentRegister, 'alliedcategory')
+                        "
                       >
                         <i class="bi bi-plus-lg"></i>
                       </button>
@@ -209,9 +227,136 @@
                           <td>Nombre</td>
                           <td>Descripción</td>
                           <td>Fecha</td>
+                          <td>Opciones</td>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of modules['alliedcategory'].items;
+                            index as idx
+                          "
+                        >
+                          <td>{{ idx + 1 }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>
+                          <td>
+                            {{ item.registrationDate | date: "dd/MM/yyyy" }}
+                          </td>
+
+                          <td>
+                            <div class="text-nowrap">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-success border-0"
+                                (click)="
+                                  onUpdateModal(
+                                    contentUpdate,
+                                    item.id,
+                                    'alliedcategory'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-pencil fs-lg"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-danger border-0"
+                                (click)="
+                                  onDeleteModal(
+                                    contentDelete,
+                                    item.id,
+                                    'alliedcategory'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-trash fs-lg"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <h5 class="card-title">Tipo ecosistema</h5>
+                    </div>
+
+                    <div class="col-md-2 float-end">
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="
+                          onRegisterModal(contentRegister, 'ecosystemtype')
+                        "
+                      >
+                        <i class="bi bi-plus-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <td>ID</td>
+                          <td>Nombre</td>
+                          <td>Descripción</td>
+                          <td>Fecha</td>
+                          <td>Opciones</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let item of modules['ecosystemtype'].items;
+                            index as idx
+                          "
+                        >
+                          <td>{{ idx + 1 }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>
+                          <td>
+                            {{ item.registrationDate | date: "dd/MM/yyyy" }}
+                          </td>
+
+                          <td>
+                            <div class="text-nowrap">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-success border-0"
+                                (click)="
+                                  onUpdateModal(
+                                    contentUpdate,
+                                    item.id,
+                                    'ecosystemtype'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-pencil fs-lg"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-danger border-0"
+                                (click)="
+                                  onDeleteModal(
+                                    contentDelete,
+                                    item.id,
+                                    'ecosystemtype'
+                                  )
+                                "
+                              >
+                                <i class="bi bi-trash fs-lg"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -402,10 +547,15 @@
     </p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-cancelar" (click)="modal.close()">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
       Cancelar
     </button>
-    <button type="button" ngbAutofocus (click)="delete()" class="btn btn-save">
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="delete()"
+      class="btn btn-primary"
+    >
       Aceptar
     </button>
   </div>

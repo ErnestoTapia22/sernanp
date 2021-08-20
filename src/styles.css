@@ -96,3 +96,9 @@ body {
   font-size: 0.875em;
   color: #dc3545;
 }
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+/* pagination */

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from '../../../_services/base/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -23,12 +23,34 @@ export class AdminComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private changeDetection: ChangeDetectorRef
   ) {
     this.modules = {
       economicactivity: {
         name: 'Actividad económica',
         ownName: 'economicactivity',
+        id: 0,
+        items: [],
+        item: {},
+      },
+      source: {
+        name: 'Fuente',
+        ownName: 'source',
+        id: 0,
+        items: [],
+        item: {},
+      },
+      alliedcategory: {
+        name: 'Categoría aliado',
+        ownName: 'alliedcategory',
+        id: 0,
+        items: [],
+        item: {},
+      },
+      ecosystemtype: {
+        name: 'Tipo ecosistema',
+        ownName: 'ecosystemtype',
         id: 0,
         items: [],
         item: {},
@@ -39,13 +61,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.required])],
+      description: [''],
       state: [true],
     });
     this.updateForm = this.formBuilder.group({
       id: [0, Validators.compose([Validators.required])],
       name: ['', Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.required])],
+      description: [''],
       state: [true],
     });
     this.listTables();
@@ -89,6 +111,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.moduleContext = {};
       this.submitted = false;
     });
+    console.log({ content, id, module });
     this.getDetail(module, id);
   }
   onDeleteModal(content, id, module) {
@@ -111,8 +134,12 @@ export class AdminComponent implements OnInit, OnDestroy {
         for (const key in this.modules) {
           this.adminService.moduleList(key).subscribe((response) => {
             if (response && response.items && response.items.length > 0) {
+              if (key == 'alliedcategory') {
+              }
+              this.modules[key].items = [];
               this.modules[key].items = response.items;
             } else {
+              this.modules[key].items = [];
             }
           });
         }
@@ -204,9 +231,11 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.adminService
         .moduleDelete(this.moduleContext.ownName, this.moduleContext.id)
         .subscribe((response) => {
-          if (response && response.success === true) {
-            this.modalRef.close();
+          if (response.success == true) {
+            console.log(response);
             this.listTables();
+            console.log(this.modules);
+            this.modalRef.close();
           } else {
             this.modalRef.close();
           }
@@ -217,6 +246,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.closeRegisterObserver.unsubscribe();
+    if (this.closeRegisterObserver !== undefined)
+      this.closeRegisterObserver.unsubscribe();
   }
 }

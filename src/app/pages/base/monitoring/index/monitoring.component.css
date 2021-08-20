@@ -4,7 +4,7 @@
 .custom-select {
   display: inline-block;
   width: auto;
-  height: calc(1.5em + 0.75rem + 2px);
+  height: calc(1.5em + 0.59rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -33,3 +33,57 @@
   background-color: #fff;
   border: 1px solid #dee2e6;
 } */
+
+.pagination /deep/ .ngx-pagination .current {
+  z-index: 3;
+  color: #fff;
+  background-color: #fb9d13;
+  border-color: #fb9d13;
+  padding: 0.3754rem 0;
+  border: 1px solid #cccc;
+}
+
+.pagination /deep/ .ngx-pagination li {
+  border: 1px solid #cccc;
+  margin-right: -1px;
+}
+
+.pagination /deep/ .ngx-pagination li:not(:first-child) a {
+  margin-left: -1px;
+}
+.pagination /deep/ .ngx-pagination li a,
+.current span:not(:first-child) {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination .disabled {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination .pagination-previous {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination /deep/ .ngx-pagination .pagination-next {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.pagination /deep/ .ngx-pagination .current span:not(:first-child) {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination a::after {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination li::before {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination li::after {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination a::before {
+  display: none;
+}
