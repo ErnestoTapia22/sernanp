@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import pe.gisriv.entity.PaginatorEntity;
 import pe.sernanp.simrac.mapper.ConservationAgreementMapper;
+import pe.sernanp.simrac.mapper.EconomicActivityMapper;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.model.EconomicActivityModel;
 
 @Repository
 public class ConservationAgreementRepository extends BaseRepository<ConservationAgreementModel> {	
@@ -47,6 +49,21 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		 parameters.put("pdescription", item.getDescription());
 		 parameters.put("pregistrationdate", item.getRegistrationDate());
 		 parameters.put("pstate", item.getState());
+		 
+		 parameters.put("pcode", item.getCode());
+		 parameters.put("pvigency", item.getVigency());
+		 parameters.put("pfirm", item.getFirm());
+		 parameters.put("ppartmen", item.getPartMen());
+		 parameters.put("ppartwomen", item.getPartWomen());
+		 parameters.put("pbenperson", item.getBenPerson());
+		 parameters.put("pbenindirect", item.getBenIndirect());
+		 parameters.put("pnumfamily", item.getNumFamily());
+		 parameters.put("pbenfamily", item.getBenFamily());
+		 parameters.put("pareaambitc", item.getAreaAmbitc());
+		 parameters.put("pproducedarea", item.getProducedArea());
+		 parameters.put("pdetalleproduction", item.getDetalleProduction());
+		 
+		 
 	}
 	
 	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{
@@ -93,5 +110,11 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		return null;
 		//return super.search(ds, "mc.miningconcession_findby2", parameters, new EconomicActivityMapper());
 	}
+	
+	@Override
+	public int delete(DataSource ds, int id) throws Exception {
+		return super.delete(ds, "simrac.fn_eliminar_acuerdoconservacion", id);
+	}
+	
 	
 }
