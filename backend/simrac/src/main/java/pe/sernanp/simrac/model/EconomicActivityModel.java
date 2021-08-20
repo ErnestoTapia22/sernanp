@@ -1,6 +1,8 @@
 package pe.sernanp.simrac.model;
 
-public class EconomicActivityModel extends BaseModel {
+import java.io.Serializable;
+
+public class EconomicActivityModel extends BaseModel  implements Serializable {
 	
 	
 }

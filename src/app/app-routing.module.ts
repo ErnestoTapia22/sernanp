@@ -13,6 +13,7 @@ import { DetailComponent } from './pages/base/monitoring/detail/detail.component
 import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
 import { TestComponent } from './pages/base/test/test.component';
+import { AdminComponent } from './pages/base/admin/admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -71,6 +72,17 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: UserComponent },
+    ],
+  },
+  {
+    path: 'admin',
+    component: FullLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'index', pathMatch: 'full' },
+      {
+        path: 'index',
+        component: AdminComponent,
+      },
     ],
   },
 ];

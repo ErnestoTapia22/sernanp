@@ -27,34 +27,35 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 
 	@Autowired
 	private ConservationAgreementRepository _repository;
-	
+
 	@Override
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<ConservationAgreementModel> list() throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.list(this._dataSource);
 			response.setItems(items);
 			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	@Override
-	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{
-		try {
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			List<ConservationAgreementModel> items = this._repository.search(this._dataSource, item, paginator);
-			response.setItems(items);
-			response.setPaginator(paginator);
-			return response;			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
 
-	public ResponseEntity<ConservationAgreementModel> find() throws Exception{
+	@Override
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator)
+			throws Exception {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			List<ConservationAgreementModel> items = this._repository.search(this._dataSource, item, paginator);
+			response.setItems(items);
+			response.setPaginator(paginator);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+
+	public ResponseEntity<ConservationAgreementModel> find() throws Exception {
 		try {
 			System.out.println(this._dataSource);
 			boolean success = true;
@@ -63,11 +64,11 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			response.setSuccess(success);
 			response.setItems(items);
 			return response;
-			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}	
+	}
 
 	@SuppressWarnings({ "rawtypes", "unused" })
 	// @Transactional
@@ -82,14 +83,14 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-			//if(item.getRRPP().getId2()==0)
-			//	item.getRRPP().setId(null);
-			//if(item.getUEA().getId2() == 0)
-			//	item.getUEA().setId(null);
-			//if(item.getHolder().getId2()==0)
-			//	item.getHolder().setId(null);
-			//if(item.getSituationalStatus().getId2() ==0)
-			//	item.getSituationalStatus().setId(null);
+			// if(item.getRRPP().getId2()==0)
+			// item.getRRPP().setId(null);
+			// if(item.getUEA().getId2() == 0)
+			// item.getUEA().setId(null);
+			// if(item.getHolder().getId2()==0)
+			// item.getHolder().setId(null);
+			// if(item.getSituationalStatus().getId2() ==0)
+			// item.getSituationalStatus().setId(null);
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
 			if (id == 0) {
@@ -102,30 +103,33 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 				message += "Se actualizaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			}
-			//if (item.getDocuments() != null && item.getDocuments().size() > 0) {
-			//	List<DocumentModel> itemsDocumentDeleted = item.getDocuments().stream().filter(t->t.getId2()>0).collect(Collectors.toList());
-			//	for (int i = 0; i < itemsDocumentDeleted.size(); i++) {
-			//		DocumentModel t = itemsDocumentDeleted.get(i);
-			//		this._repositoryDocument.delete(this._dataSource, t.getId2());
-			//	};
-			//	List<DocumentModel> itemsDocumentNew = item.getDocuments().stream().filter(t->t.getId2()==0).collect(Collectors.toList());
-			//	  for (int i = 0; i < itemsDocumentNew.size(); i++) {
-			//			DocumentModel t = itemsDocumentNew.get(i);
-			//			String fileName =  System.getProperty("java.io.tmpdir") + t.getGUID() + t.getExtension();
-			//			File file = new File(fileName);
-			//			FileEntity itemFile = FileEntity.fromFile(file);
-			//			t.setContent(itemFile.getContent());
-			//			t.setPhysicalLocation(baseTargetPath);
-			//			t.setDocument(new DocumentModel());
-			//			t.setGUID(t.getGUID());
-			//			t.setName(itemFile.getName());
-			//			t.setOriginalName(t.getOriginalName());
-			//			t.setContentType(itemFile.getContentType());
-			//			t.setExtension(itemFile.getExtension());
-			//			Integer documentId = this._serviceDocument.save(this._dataSource, t);
-			//			this._repository.insertDocument(this._dataSource, id, documentId);
-			//	};
-			//}
+			// if (item.getDocuments() != null && item.getDocuments().size() > 0) {
+			// List<DocumentModel> itemsDocumentDeleted =
+			// item.getDocuments().stream().filter(t->t.getId2()>0).collect(Collectors.toList());
+			// for (int i = 0; i < itemsDocumentDeleted.size(); i++) {
+			// DocumentModel t = itemsDocumentDeleted.get(i);
+			// this._repositoryDocument.delete(this._dataSource, t.getId2());
+			// };
+			// List<DocumentModel> itemsDocumentNew =
+			// item.getDocuments().stream().filter(t->t.getId2()==0).collect(Collectors.toList());
+			// for (int i = 0; i < itemsDocumentNew.size(); i++) {
+			// DocumentModel t = itemsDocumentNew.get(i);
+			// String fileName = System.getProperty("java.io.tmpdir") + t.getGUID() +
+			// t.getExtension();
+			// File file = new File(fileName);
+			// FileEntity itemFile = FileEntity.fromFile(file);
+			// t.setContent(itemFile.getContent());
+			// t.setPhysicalLocation(baseTargetPath);
+			// t.setDocument(new DocumentModel());
+			// t.setGUID(t.getGUID());
+			// t.setName(itemFile.getName());
+			// t.setOriginalName(t.getOriginalName());
+			// t.setContentType(itemFile.getContentType());
+			// t.setExtension(itemFile.getExtension());
+			// Integer documentId = this._serviceDocument.save(this._dataSource, t);
+			// this._repository.insertDocument(this._dataSource, id, documentId);
+			// };
+			// }
 			this.transactionManager.commit(status);
 			ResponseEntity respuesta = new ResponseEntity();
 			respuesta.setExtra(id.toString());
@@ -143,7 +147,6 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 				throw new Exception(ex.getMessage());
 		}
 	}
-	
 
 	public ResponseEntity<ConservationAgreementModel> findBy2(ConservationAgreementModel item) throws Exception {
 		try {
@@ -153,11 +156,12 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			boolean success = true;
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.findBy2(this._dataSource, item);
-			//items.forEach(t ->{
-			//	t.setIsClient(true);
-			//});
-			//List<DocumentModel> itemsDocument = this._repository.findDocuments(this._dataSource, id);
-			//item.setDocuments(itemsDocument);
+			// items.forEach(t ->{
+			// t.setIsClient(true);
+			// });
+			// List<DocumentModel> itemsDocument =
+			// this._repository.findDocuments(this._dataSource, id);
+			// item.setDocuments(itemsDocument);
 			response.setSuccess(success);
 			response.setItems(items);
 			return response;
@@ -165,13 +169,13 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	public ResponseEntity<ConservationAgreementModel> findBy(ConservationAgreementModel item) throws Exception {
 		try {
 			Boolean state = item.getState();
-			if(state == true) {
+			if (state == true) {
 				item.setState(false);
-			}else {
+			} else {
 				item.setState(true);
 			}
 			List<ConservationAgreementModel> items = _repository.findBy(this._dataSource, item);
@@ -182,7 +186,7 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity saveGeometry(BaseGeometryEntity item, FileEntity itemFile) throws Exception {
 		try {
@@ -196,45 +200,46 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	protected BaseGeometryEntity coordinateProcessing(FileEntity itemFile, int srid) throws Exception {
-		Reader reader= null;
+		Reader reader = null;
 		try {
-			switch(itemFile.getExtension()){
+			switch (itemFile.getExtension()) {
 				case ".zip":
-					reader= new ShapeFileReader(itemFile.getContentStream(),this.getPathTemporal(), 4326);
+					reader = new ShapeFileReader(itemFile.getContentStream(), this.getPathTemporal(), 4326);
 					break;
 				case ".xlsx":
-					reader =  null;//new SpreadSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
+					reader = null;// new
+									// SpreadSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
 					break;
 				case ".txt":
-					reader = null;//new TextSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
+					reader = null;// new
+									// TextSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
 					break;
-					default:
-						throw new Exception("El tipo de archivo no es válido");
+				default:
+					throw new Exception("El tipo de archivo no es válido");
 			}
-			if(reader==null) return null;
+			if (reader == null)
+				return null;
 			BaseGeometryEntity item = new BaseGeometryEntity();
 			item.setGeometry(reader.getGeometry());
 			item.setSpatialReference(new SpatialReferenceEntity());
 			item.getSpatialReference().setId(reader.getSourceSrid());
 			return item;
-		}
-		catch(Exception ex){
+		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	protected String getPathTemporal() throws IOException {		
+
+	protected String getPathTemporal() throws IOException {
 		Path temp = Files.createTempFile("", ".tmp");
 		String absolutePath = temp.toString();
-        System.out.println("Temp file : " + absolutePath);
+		System.out.println("Temp file : " + absolutePath);
 
-        String separator = FileSystems.getDefault().getSeparator();
-        String tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(separator));		
+		String separator = FileSystems.getDefault().getSeparator();
+		String tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(separator));
 		return absolutePath;
 	}
-	
-	
+
 }
