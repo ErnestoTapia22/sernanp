@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { AlertService } from '../../_services/base/alert.service';
+
 import {
   HttpHeaders,
   HttpParams,
   HttpClient,
   HttpResponse,
 } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,11 @@ export class ApiBaseService {
   private token: any;
 
   private headers;
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
+  ) {
     if (JSON.parse(localStorage.getItem('token')) != null) {
       this.token = JSON.parse(localStorage.getItem('token')).access_token;
     }
@@ -33,7 +40,7 @@ export class ApiBaseService {
 
   post(url: string, body: object = {}): Observable<any> {
     return this.http
-      .post(url, body)
+      .post(url, body, { headers: this.getHttpHeaders() })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
@@ -57,13 +64,17 @@ export class ApiBaseService {
   delete(url: string): Observable<any> {
     return this.http
       .delete<any>(url, { headers: this.headers })
-      .pipe(catchError(this.formatError))
+      .pipe(catchError(catchError(this.formatError)))
       .pipe(map((res: HttpResponse<any>) => res));
   }
   private getHttpHeaders(type?: string): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
     switch (type) {
       case 'formdata':
+        // httpOptions.headers = httpOptions.headers.set(
+        //   'Content-Type',
+        //   'multipart/form-data'
+        // );
         break;
       default:
         httpOptions.headers = httpOptions.headers.set(
@@ -93,5 +104,14 @@ export class ApiBaseService {
       fieldsError: fields,
     };
   }
-  private formatError = (error) => throwError(this.getErrorProperties(error));
+  private formatError = (error) =>
+    throwError(() => {
+      const errorProperties = JSON.stringify(this.getErrorProperties(error));
+      this.spinner.hide();
+      this.alertService.error(
+        'error en el api service: ' + errorProperties,
+        'error'
+      );
+      new Error(errorProperties);
+    });
 }
