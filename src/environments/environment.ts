@@ -6,6 +6,29 @@ export const environment = {
   production: false,
   apiUrl: 'http://100.122.8.47:8050/simrac/api',
   webUrl: 'http://localhost:8050/simrac/api/',
+  authUrl: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token',
+  authCredentials: 'dj-sernanp-app:@re34n@tur4l',
+  externalServices: [
+    {
+      agreement: [
+        {
+          name: 'Servicio Rest ANP + ZR',
+          url: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll',
+          disabled: false,
+        },
+        {
+          name: 'Servicio Rest ACR',
+          url: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll',
+          disabled: true,
+        },
+        {
+          name: 'Servicio Rest ACP',
+          url: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll',
+          disabled: true,
+        },
+      ],
+    },
+  ],
   initialLayers: [
     {
       id: 1,

@@ -1,7 +1,9 @@
 export const environment = {
   production: true,
   apiUrl: 'http://100.122.8.47:8050/simrac/api',
-  webUrl: 'web-url',
+  webUrl: 'http://localhost:8050/simrac/api/',
+  authUrl: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token',
+  authCredentials: 'dj-sernanp-app:@re34n@tur4l',
   initialLayers: [
     {
       id: 1,

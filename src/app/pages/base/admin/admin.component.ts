@@ -70,6 +70,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       description: [''],
       state: [true],
     });
+    console.log(localStorage.getItem('auth'));
     this.listTables();
   }
   get f() {

@@ -10,6 +10,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { debug } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -25,22 +26,50 @@ export class ApiBaseService {
     private spinner: NgxSpinnerService,
     private alertService: AlertService
   ) {
-    if (JSON.parse(localStorage.getItem('token')) != null) {
-      this.token = JSON.parse(localStorage.getItem('token')).access_token;
+    if (
+      JSON.parse(localStorage.getItem('auth')) != null &&
+      JSON.parse(localStorage.getItem('auth')) != undefined
+    ) {
+      this.token = JSON.parse(localStorage.getItem('auth')).access_token;
     }
 
     this.headers = this.getHttpHeaders();
   }
-  get(url: string, params?: any): Observable<any> {
+  get(url: string, params?: any, auth?: boolean): Observable<any> {
+    debugger;
     return this.http
-      .get<any>(url, { params: params })
+      .get<any>(url, {
+        params: params,
+        headers: auth
+          ? this.getHttpHeaders(null, null, true)
+          : new HttpHeaders(),
+      })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
 
-  post(url: string, body: object = {}): Observable<any> {
+  post(
+    url: string,
+    body: object = {},
+    encodedCredentials?: string
+  ): Observable<any> {
+    let parsedBody;
+    let parsedHeaders;
+    if (
+      encodedCredentials !== undefined &&
+      encodedCredentials !== null &&
+      encodedCredentials !== ''
+    ) {
+      parsedHeaders = this.getHttpHeaders('auth', encodedCredentials);
+      parsedBody = 'grant_type=client_credentials';
+    } else {
+      this.headers = this.getHttpHeaders();
+      parsedBody = body;
+      parsedHeaders = this.getHttpHeaders();
+    }
+
     return this.http
-      .post(url, body, { headers: this.getHttpHeaders() })
+      .post(url, parsedBody, { headers: parsedHeaders })
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
@@ -67,16 +96,15 @@ export class ApiBaseService {
       .pipe(catchError(catchError(this.formatError)))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  private getHttpHeaders(type?: string): HttpHeaders {
+  private getHttpHeaders(
+    type?: string,
+    encodedCredentials?: string,
+    requireAuth?: boolean
+  ): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
+    debugger;
     switch (type) {
       case 'formdata':
-        // httpOptions.headers = httpOptions.headers.set(
-        //   'Content-Type',
-        //   'multipart/form-data'
-        // );
-        break;
-      default:
         httpOptions.headers = httpOptions.headers.set(
           'Content-Type',
           'application/json'
@@ -86,13 +114,37 @@ export class ApiBaseService {
           'application/json'
         );
         break;
+      case 'auth':
+        httpOptions.headers = httpOptions.headers.set(
+          'Content-Type',
+          'application/x-www-form-urlencoded'
+        );
+        httpOptions.headers = httpOptions.headers.set(
+          'Authorization',
+          `Basic ${encodedCredentials}`
+        );
+        break;
+      case '':
+        httpOptions.headers = httpOptions.headers.set(
+          'Content-Type',
+          'application/json'
+        );
+        httpOptions.headers = httpOptions.headers.set(
+          'Accept',
+          'application/json'
+        );
+
+        break;
     }
-    if (this.token) {
-      httpOptions.headers = httpOptions.headers.set(
-        'Authorization',
-        `Bearer ${this.token}`
-      );
+    if (requireAuth) {
+      if (this.token) {
+        httpOptions.headers = httpOptions.headers.set(
+          'Authorization',
+          `Bearer ${this.token}`
+        );
+      }
     }
+
     return httpOptions.headers;
   }
   private getErrorProperties(error) {

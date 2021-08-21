@@ -38,7 +38,7 @@
           <div class="card-header">
             <label class="mb-0 fw-bold">General</label>
           </div>
-          <div class="card-body">
+          <div class="card-body" id="parent">
             <div class="row g-3">
               <div class="col-md-3">
                 <label for="txtCode" class="form-label">Código (*)</label>
@@ -51,12 +51,22 @@
               </div>
               <div class="col-md-3">
                 <label for="ddAnp" class="form-label">ANP (*)</label>
-                <select id="ddAnp" class="form-select">
+                <!-- <select id="ddAnp" class="form-select">
                   <option selected>SELECCIONE</option>
                   <option>ANP 1</option>
                   <option>ANP 2</option>
                   <option>ANP 3</option>
-                </select>
+                </select> -->
+                <ng-select
+                  [items]="anp"
+                  bindLabel="anpNomb"
+                  bindValue="anpId"
+                  [(ngModel)]="selectedAnp"
+                  [searchable]="true"
+                  [ngModelOptions]="{ standalone: true }"
+                  [virtualScroll]="true"
+                >
+                </ng-select>
               </div>
               <div class="col-md-3">
                 <label for="txtaGoal" class="form-label"

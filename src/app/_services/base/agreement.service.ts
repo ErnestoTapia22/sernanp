@@ -17,4 +17,7 @@ export class AgreementService {
       fd
     );
   }
+  getServices(url: string): Observable<any> {
+    return this.apiService.get(url, null, true);
+  }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,6 +36,11 @@ import { DetailComponent } from './pages/base/monitoring/detail/detail.component
 import { TestComponent } from './pages/base/test/test.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminComponent } from './pages/base/admin/admin.component';
+import { initAppFactory } from './_factory/init.factory';
+import { AlertService } from './_services/base/alert.service';
+import { ApiBaseService } from './_services/base/api-base.service';
+import { InitService } from './_services/init-service/init.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -75,8 +80,19 @@ import { AdminComponent } from './pages/base/admin/admin.component';
     DragDropModule,
     TreeviewModule.forRoot(),
     NgxPaginationModule,
+    NgSelectModule,
   ],
-  providers: [EsriMapService, LayerService, BaseService],
+  providers: [
+    EsriMapService,
+    LayerService,
+    BaseService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initAppFactory,
+      deps: [InitService, AlertService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [BaseWidgetComponent, DragDropModule, AlertComponent],
 })

@@ -8,9 +8,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./agreement.component.css'],
 })
 export class AgreementComponent implements OnInit {
+  selectedAnp: number = 0;
+  anp: Object[] = [];
   constructor(private agreementService: AgreementService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fillSelects();
+  }
   async readURL(event) {}
 
   async readFile(file) {
@@ -23,5 +27,22 @@ export class AgreementComponent implements OnInit {
     });
 
     return arrayBuffer;
+  }
+  fillSelects() {
+    try {
+      if (
+        environment.externalServices[0].agreement[0].url !== undefined &&
+        environment.externalServices[0].agreement[0].url !== null
+      ) {
+        this.agreementService
+          .getServices(`${environment.externalServices[0].agreement[0].url}`)
+          .subscribe((response) => {
+            console.log(response);
+            if (response) {
+              this.anp = response;
+            }
+          });
+      }
+    } catch (error) {}
   }
 }
