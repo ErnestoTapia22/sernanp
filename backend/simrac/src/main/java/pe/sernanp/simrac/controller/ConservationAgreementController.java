@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.model.EconomicActivityModel;
+import pe.sernanp.simrac.model.EcosystemTypeModel;
 import pe.sernanp.simrac.service.ConservationAgreementService;
 
 @CrossOrigin(origins = {"*"})
@@ -55,6 +58,16 @@ public class ConservationAgreementController extends BaseController<Conservation
 		}
 	}
 	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<?> save(@RequestBody ConservationAgreementModel item) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.save(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 
 	/*@RequestMapping(value = "/search2")
 	@ResponseBody
@@ -128,4 +141,26 @@ public class ConservationAgreementController extends BaseController<Conservation
 		item.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
 		return item;
 	}
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.delete(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ConservationAgreementModel> detail(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = this._service.detail(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
 }
