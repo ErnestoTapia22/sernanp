@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
-import pe.sernanp.simrac.model.EconomicActivityModel;
-import pe.sernanp.simrac.model.EcosystemTypeModel;
 import pe.sernanp.simrac.service.ConservationAgreementService;
 
 @CrossOrigin(origins = {"*"})
