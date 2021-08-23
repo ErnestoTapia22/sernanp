@@ -1,8 +1,8 @@
 package pe.sernanp.simrac.model;
 
-import org.springframework.stereotype.Service;
+import javax.persistence.Entity;
 
-@Service
+@Entity
 public class ArticulateModel extends BaseModel {
 	
 	

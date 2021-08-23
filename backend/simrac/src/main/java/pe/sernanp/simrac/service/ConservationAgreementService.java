@@ -153,11 +153,11 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity saveGeometry(ConservationAgreementModel item, FileEntity itemFile) throws Exception {
 		try {
-			BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
-			item.setGeometry(itemGeometry.getGeometry());
-			item.setSpatialReference(itemGeometry.getSpatialReference());
+			//BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
+			//item.setGeometry(itemGeometry.getGeometry());
+			//item.setSpatialReference(itemGeometry.getSpatialReference());
 			ResponseEntity<BaseGeometryEntity> response = new ResponseEntity<BaseGeometryEntity>();
-			response.setItem(item);
+			//response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

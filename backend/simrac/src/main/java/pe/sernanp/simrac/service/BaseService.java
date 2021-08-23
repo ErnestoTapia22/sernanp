@@ -86,7 +86,6 @@ public class BaseService<TEntity extends BaseModel> implements IBaseService {
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
-
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
 			action.accept(null);

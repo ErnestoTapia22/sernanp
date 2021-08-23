@@ -1,12 +1,14 @@
 package pe.sernanp.simrac.repository;
 
 import java.util.Map;
-
 import javax.sql.DataSource;
+
+import org.springframework.stereotype.Repository;
+
 import pe.sernanp.simrac.mapper.AlliedCommitmentMapper;
 import pe.sernanp.simrac.model.AlliedCommitmentModel;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
 
+@Repository
 public class AlliedCommitmentRepository extends BaseRepository<AlliedCommitmentModel>{
 	
 	

@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 
 @Entity
-public class ConservationAgreementModel extends BaseGeometryEntity {
+public class ConservationAgreementModel extends BaseModel {
 
 	private AgreementStateModel _agreementState;
 	private int _vigency;

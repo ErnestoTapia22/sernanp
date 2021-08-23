@@ -18,9 +18,9 @@ import pe.sernanp.simrac.service.AlliedCommitmentService;
 @RequestMapping(value = "/api/alliedconmmitment/")
 public class AlliedCommitmentController extends BaseController<AlliedCommitmentModel, AlliedCommitmentService> {
 	
-	@Autowired (required = true)
+	@Autowired
 	private AlliedCommitmentService _service;
-			
+		
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	@ResponseBody()
 	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {

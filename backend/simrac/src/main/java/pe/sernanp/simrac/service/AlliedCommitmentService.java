@@ -1,6 +1,9 @@
 package pe.sernanp.simrac.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +12,11 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AlliedCommitmentModel;
 import pe.sernanp.simrac.repository.AlliedCommitmentRepository;
 
+@Service
 public class AlliedCommitmentService extends BaseService<AlliedCommitmentModel> {
 	
 	@Autowired
-	private AlliedCommitmentRepository _repository;
-	
+	private AlliedCommitmentRepository _repository;	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
