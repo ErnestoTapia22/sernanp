@@ -17,8 +17,8 @@ public class AlliedRepository extends BaseRepository<AlliedModel > {
 		 parameters.put("pregistrationdate", item.getRegistrationDate());
 		 parameters.put("pstate", item.getState());
 		
-		 parameters.put("pagreementid", item.getId());
-		 parameters.put("palliedcategoryid", item.getId());
+		 parameters.put("pagreementid", item.getConservationAgreement().getId());
+		 parameters.put("palliedcategoryid", item.getAlliedCategory().getId());
 	}
 	
 	@Override

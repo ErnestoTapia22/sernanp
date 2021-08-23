@@ -2,6 +2,8 @@ package pe.sernanp.simrac.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import pe.gisriv.extension.ResultSetExtension;
 import pe.sernanp.simrac.model.AlliedCategoryModel;
 import pe.sernanp.simrac.model.AlliedModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
@@ -15,7 +17,6 @@ public class AlliedMapper extends BaseMapper<AlliedModel>{
 		super.mapRowWithTable(rs, item.getAlliedCategory(), "alliedcategory");
 		item.setConservationAgreement(new ConservationAgreementModel());
 		super.mapRowWithTable(rs, item.getConservationAgreement(), "agreement");
-		
 		return item;
 		
 	}

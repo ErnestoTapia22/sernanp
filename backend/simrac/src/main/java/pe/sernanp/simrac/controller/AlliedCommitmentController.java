@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AlliedCommitmentModel;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.service.AlliedCommitmentService;
 
 @CrossOrigin(origins = {"*"})
@@ -19,7 +18,7 @@ import pe.sernanp.simrac.service.AlliedCommitmentService;
 @RequestMapping(value = "/api/alliedconmmitment/")
 public class AlliedCommitmentController extends BaseController<AlliedCommitmentModel, AlliedCommitmentService> {
 	
-	/* @Autowired (required = true)
+	@Autowired (required = true)
 	private AlliedCommitmentService _service;
 			
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -54,5 +53,5 @@ public class AlliedCommitmentController extends BaseController<AlliedCommitmentM
 			return super.getJSON(ex);
 		}
 	}
-	*/
+	
 }

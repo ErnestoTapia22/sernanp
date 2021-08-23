@@ -10,7 +10,7 @@ import pe.sernanp.simrac.model.ConservationAgreementModel;
 public class AlliedCommitmentRepository extends BaseRepository<AlliedCommitmentModel>{
 	
 	
-
+	@Override
 	public AlliedCommitmentModel detail(DataSource ds, int id) throws Exception {
 		return super.detail2(ds, "simrac.fn_detalle_compromisoaliado", id, new AlliedCommitmentMapper());
 	}

@@ -7,12 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AlliedCommitmentModel;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.repository.AlliedCommitmentRepository;
 
 public class AlliedCommitmentService extends BaseService<AlliedCommitmentModel> {
 	
-	/* @Autowired
+	@Autowired
 	private AlliedCommitmentRepository _repository;
 	
 	
@@ -70,14 +69,6 @@ public class AlliedCommitmentService extends BaseService<AlliedCommitmentModel> 
 		}
 	}
 		
-
-	
-	
-	
-	
-	
-	
-	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
@@ -102,6 +93,5 @@ public class AlliedCommitmentService extends BaseService<AlliedCommitmentModel> 
 			throw new Exception(ex.getMessage());
 		}
 	}
-	*/
-	
+		
 }
