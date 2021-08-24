@@ -36,7 +36,6 @@ export class ApiBaseService {
     this.headers = this.getHttpHeaders();
   }
   get(url: string, params?: any, auth?: boolean): Observable<any> {
-    debugger;
     return this.http
       .get<any>(url, {
         params: params,
@@ -102,7 +101,7 @@ export class ApiBaseService {
     requireAuth?: boolean
   ): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
-    debugger;
+
     switch (type) {
       case 'formdata':
         httpOptions.headers = httpOptions.headers.set(

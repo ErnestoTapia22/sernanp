@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AgreementService } from '../../../_services/base/agreement.service';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-agreement',
@@ -9,10 +11,23 @@ import { environment } from 'src/environments/environment';
 })
 export class AgreementComponent implements OnInit {
   selectedAnp: number = 0;
+  obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
-  constructor(private agreementService: AgreementService) {}
+  form: FormGroup;
+
+  constructor(
+    private agreementService: AgreementService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    this.buildForm();
+    let item = {
+      name: '',
+    };
+    this.obsQuery.next({
+      item: JSON.stringify(item),
+    });
     this.fillSelects();
   }
   async readURL(event) {}
@@ -27,6 +42,9 @@ export class AgreementComponent implements OnInit {
     });
 
     return arrayBuffer;
+  }
+  get f() {
+    return this.form.controls;
   }
   fillSelects() {
     try {
@@ -44,5 +62,12 @@ export class AgreementComponent implements OnInit {
           });
       }
     } catch (error) {}
+  }
+  buildForm() {
+    this.form = this.fb.group({
+      code: new FormControl(),
+      anp: new FormControl(),
+      goal: new FormControl(),
+    });
   }
 }

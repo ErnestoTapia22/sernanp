@@ -33,7 +33,7 @@
   <!-- ============================================================== -->
   <div class="row">
     <div class="col-12">
-      <form action="#">
+      <form action="#" [formGroup]="form" novalidate>
         <div class="card">
           <div class="card-header">
             <label class="mb-0 fw-bold">General</label>
@@ -47,6 +47,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Código"
+                  formControlName="code"
                 />
               </div>
               <div class="col-md-3">
@@ -61,10 +62,9 @@
                   [items]="anp"
                   bindLabel="anpNomb"
                   bindValue="anpId"
-                  [(ngModel)]="selectedAnp"
                   [searchable]="true"
-                  [ngModelOptions]="{ standalone: true }"
-                  [virtualScroll]="true"
+                  formControlName="anp"
+                  placeholder="SELECCIONE"
                 >
                 </ng-select>
               </div>
@@ -76,6 +76,7 @@
                   id="txtaGoal"
                   class="form-control"
                   rows="1"
+                  formControlName="goal"
                 ></textarea>
               </div>
               <div class="col-md-3">
