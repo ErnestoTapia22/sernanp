@@ -283,11 +283,10 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 			String parameterName, RowMapper<TEntity2> mapper) throws Exception {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put(parameterName, value);
-		return this.search2(ds, storedProcedure, parameters, mapper);
+		return this.search23(ds, storedProcedure, parameters, mapper);
 	}
 
-	protected <TEntity2 extends BaseModel> List<TEntity2> search2(DataSource ds, String storedProcedure,
-			Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {
+	protected <TEntity2 extends BaseModel> List<TEntity2> search2(DataSource ds, String storedProcedure, Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
@@ -298,10 +297,39 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 		@SuppressWarnings("unchecked")
 		List<TEntity2> items = (List<TEntity2>) results.get("list");
 		return items;
+	}	
+	
+	protected <TEntity2 extends BaseModel> List<TEntity2> search23(DataSource ds, String storedProcedure, Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {
+		Connection conn = ds.getConnection();
+		conn.setAutoCommit(false);
+		String parametersCount = " (";
+		for (int k = 0; k<parameters.size(); k++) {
+			parametersCount += "?" +  (( k + 1 == parameters.size()) ? "":",");
+	    }
+		parametersCount += ")";
+		String functionName = "{? = call " + storedProcedure + parametersCount + "  }";
+		CallableStatement proc = conn.prepareCall(functionName);
+		proc.registerOutParameter(1, Types.OTHER);
+		int i = 2; 
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			proc.setObject(i, entry.getValue());
+	        i++;
+	    }		
+		proc.execute();
+		ResultSet results = (ResultSet) proc.getObject(1);
+		List<TEntity2> items = new ArrayList<TEntity2>();
+		while (results.next())
+		{						
+			TEntity2 item2 = mapper.mapRow(results, 0);
+			items.add(item2);
+		}
+		results.close();
+		proc.close();
+		conn.close();
+		return items;
 	}
 
-	protected <TEntity3> List<TEntity3> search3(DataSource ds, String storedProcedure,
-			Map<String, Object> parameters, RowMapper<TEntity3> mapper) throws Exception {
+	protected <TEntity3> List<TEntity3> search3(DataSource ds, String storedProcedure,	Map<String, Object> parameters, RowMapper<TEntity3> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
