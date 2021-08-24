@@ -859,6 +859,129 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Allied",
+			"item": [
+				{
+					"name": "AlliedDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/detail/3"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/delete/5"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"17\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"317\"\r\n    },\r\n    \"name\": \"csdd\",\r\n    \"description\": \"444444\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AlliedCommitment",
+			"item": [
+				{
+					"name": "AlliedCommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"conservationAgreement\": {\r\n    \"id\": \"317\"\r\n    },\r\n    \"name\": \"csaaaaaaadd\",\r\n    \"description\": \"bbbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commitment Copy",
+			"item": [
+				{
+					"name": "CommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"317\"\r\n    },\r\n    \"name\": \"aaaaa\",\r\n    \"description\": \"bbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-10\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

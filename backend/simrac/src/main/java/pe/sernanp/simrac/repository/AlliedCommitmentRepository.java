@@ -22,8 +22,9 @@ public class AlliedCommitmentRepository extends BaseRepository<AlliedCommitmentM
 		return super.insert(ds, "simrac.fn_insertar_compromisoaliado", item);
 	}
 	
-	public int deleteDocument(DataSource ds, int id) throws Exception {
-		return super.delete(ds, "simrac.fn_insertar_compromisoaliado", id);
+	@Override
+	public int delete(DataSource ds, int id) throws Exception {
+		return super.delete(ds, "simrac.fn_eliminar_compromisoaliado", id);
 	}
 	
 	@Override

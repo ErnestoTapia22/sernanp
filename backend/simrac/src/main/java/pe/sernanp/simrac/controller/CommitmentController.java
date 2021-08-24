@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.AlliedCommitmentModel;
-import pe.sernanp.simrac.service.AlliedCommitmentService;
+import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.service.CommitmentService;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping(value = "/api/alliedcommitment/")
-public class AlliedCommitmentController extends BaseController<AlliedCommitmentModel, AlliedCommitmentService> {
+@RequestMapping(value = "/api/commitment/")
+public class CommitmentController extends BaseController<CommitmentModel, CommitmentService> {
+
 	
 	@Autowired
-	private AlliedCommitmentService _service;
+	private CommitmentService _service;
 		
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	@ResponseBody()
@@ -34,9 +35,9 @@ public class AlliedCommitmentController extends BaseController<AlliedCommitmentM
 	
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<AlliedCommitmentModel> detail(@PathVariable("id") int id) throws IOException {
+	public ResponseEntity<CommitmentModel> detail(@PathVariable("id") int id) throws IOException {
 		try {
-			ResponseEntity<AlliedCommitmentModel> response = this._service.detail(id);
+			ResponseEntity<CommitmentModel> response = this._service.detail(id);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
@@ -45,7 +46,7 @@ public class AlliedCommitmentController extends BaseController<AlliedCommitmentM
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<?> save(@RequestBody AlliedCommitmentModel item) throws IOException {
+	public ResponseEntity<?> save(@RequestBody CommitmentModel item) throws IOException {
 		try {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
