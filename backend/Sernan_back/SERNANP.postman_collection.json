@@ -1,10 +1,89 @@
 {
 	"info": {
-		"_postman_id": "36dc8730-65f4-4d9a-b51d-8cf7c0eaeaf9",
+		"_postman_id": "d028c1c8-4559-46bd-afca-0bfee1562983",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "SimracAuth",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"password": "@re34n@tur4l",
+								"username": "dj-sernanp-app"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ANP + ZR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "ConservationAgreement",
 			"item": [
