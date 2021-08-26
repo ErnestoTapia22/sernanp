@@ -1,0 +1,158 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">ANP</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ANP</li>
+          </ol>
+        </nav>
+
+        <button type="button" class="btn ms-3 btn-primary">
+          <i class="bi bi-plus-circle fs-lg"></i>
+          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">Búsqueda</label>
+          <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary mx-2"
+              (click)="search(form.value)"
+            >
+              <i class="bi bi-search"></i>
+              Buscar
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-brush"></i>
+              Limpiar
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label">Código</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="code"
+                />
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                />
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Campo</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody">
+                  <ngx-spinner
+                    [fullScreen]="false"
+                    type="ball-clip-rotate"
+                    size="medium"
+                  >
+                  </ngx-spinner>
+
+                  <ng-container *ngIf="!isLoading">
+                    <tr
+                      *ngFor="
+                        let item of anpList
+                          | paginate
+                            : {
+                                id: 'anpPag',
+                                itemsPerPage: pageSize,
+                                currentPage: page,
+                                totalItems: total
+                              };
+                        index as idx
+                      "
+                    >
+                      <td>{{ item.code }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.field }}</td>
+
+                      <td>
+                        <div class="text-nowrap">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-info border-0"
+                            routerLink="/masterplan"
+                          >
+                            <i class="bi bi-eye fs-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <select
+                class="form-select custom-select"
+                formControlName="pageSize"
+                (change)="onChangePageSize($event)"
+              >
+                <option [value]="5">5/PÁGINA</option>
+                <option [value]="10">10/PÁGINA</option>
+                <option [value]="20">20/PÁGINA</option>
+                <option [value]="30">30/PÁGINA</option>
+              </select>
+              <pagination-controls
+                (pageChange)="getPage($event)"
+                id="anpPag"
+                class="pagination justify-content-end"
+              ></pagination-controls>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
