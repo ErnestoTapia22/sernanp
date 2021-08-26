@@ -1,5 +1,7 @@
 package pe.sernanp.simrac.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
@@ -98,5 +100,21 @@ public class AlliedService extends BaseService<AlliedModel> {
 			throw new Exception(ex.getMessage());
 		}
 	}
-
+	
+	public ResponseEntity<AlliedModel> buscar(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
+			List<AlliedModel> item = this._repository.buscar(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 }

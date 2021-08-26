@@ -1,9 +1,14 @@
 package pe.sernanp.simrac.repository;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.stereotype.Repository;
+
+import pe.sernanp.simrac.mapper.AlliedMapper;
 import pe.sernanp.simrac.mapper.CommitmentMapper;
+import pe.sernanp.simrac.model.AlliedModel;
 import pe.sernanp.simrac.model.CommitmentModel;
 
 @Repository
@@ -33,6 +38,14 @@ public class CommitmentRepository extends BaseRepository<CommitmentModel> {
 		 parameters.put("pregistrationdate", item.getRegistrationDate());
 		 parameters.put("pstate", item.getState());
 		 
+	}
+	
+	public List<CommitmentModel> buscar(DataSource ds, int id) throws Exception {
+		System.out.println(ds);
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("pacuerdoid",id);
+		return super.search23(ds,"simrac.fn_buscar_compromisoporacuerdo",parameters, new CommitmentMapper());
+		
 	}
 	
 }

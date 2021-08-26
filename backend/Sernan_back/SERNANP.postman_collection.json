@@ -1,89 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d028c1c8-4559-46bd-afca-0bfee1562983",
+		"_postman_id": "36dc8730-65f4-4d9a-b51d-8cf7c0eaeaf9",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "auth",
-			"item": [
-				{
-					"name": "SimracAuth",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {}
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": {
-								"password": "@re34n@tur4l",
-								"username": "dj-sernanp-app"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "grant_type",
-									"value": "client_credentials",
-									"type": "text"
-								}
-							]
-						},
-						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token"
-					},
-					"response": []
-				},
-				{
-					"name": "Servicio Rest ANP + ZR",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll"
-					},
-					"response": []
-				},
-				{
-					"name": "Servicio Rest ACR",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll"
-					},
-					"response": []
-				},
-				{
-					"name": "Servicio Rest ACP",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "ConservationAgreement",
 			"item": [
@@ -101,7 +22,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/315"
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/316"
 					},
 					"response": []
 				},
@@ -947,7 +868,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/allied/detail/3"
+						"url": "http://localhost:8050/simrac/api/allied/detail/16"
 					},
 					"response": []
 				},
@@ -967,7 +888,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"17\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"317\"\r\n    },\r\n    \"name\": \"csdd\",\r\n    \"description\": \"444444\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"17\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"name\": \"csdd\",\r\n    \"description\": \"444444\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -975,6 +896,27 @@
 							}
 						},
 						"url": "http://localhost:8050/simrac/api/allied/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedBuscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/buscar/317"
 					},
 					"response": []
 				}
@@ -1022,7 +964,7 @@
 			]
 		},
 		{
-			"name": "Commitment Copy",
+			"name": "Commitment",
 			"item": [
 				{
 					"name": "CommitmentDetail",
@@ -1049,6 +991,68 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"description\": \"prueba1\",\r\n    \"state\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentBuscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/buscar/316"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CommitmentEca",
+			"item": [
+				{
+					"name": "CommitmentEcaDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentEcaDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentEcaInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"317\"\r\n    },\r\n    \"name\": \"aaaaa\",\r\n    \"description\": \"bbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-10\"\r\n\r\n}",
 							"options": {
 								"raw": {
@@ -1057,6 +1061,85 @@
 							}
 						},
 						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "SimracAuth",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"password": "@re34n@tur4l",
+								"username": "dj-sernanp-app"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ANP + ZR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
 					},
 					"response": []
 				}

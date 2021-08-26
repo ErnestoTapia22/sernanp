@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gisriv.entity.ResponseEntity;
+import pe.sernanp.simrac.model.AlliedModel;
 import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.service.CommitmentService;
 
@@ -55,4 +56,14 @@ public class CommitmentController extends BaseController<CommitmentModel, Commit
 		}
 	}
 	
+	@RequestMapping(value = "/buscar/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<CommitmentModel> buscar(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<CommitmentModel> response = this._service.buscar(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

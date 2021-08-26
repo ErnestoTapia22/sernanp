@@ -56,5 +56,15 @@ public class AlliedController extends BaseController<AlliedModel, AlliedService>
 		}
 	}
 	
+	@RequestMapping(value = "/buscar/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<AlliedModel> buscar(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<AlliedModel> response = this._service.buscar(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 	
 }

@@ -63,8 +63,8 @@ public class CommitmentEcaService extends BaseService<CommitmentEcaModel> {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentEcaModel>();
-			CommitmentModel item = this._repository.detail(this._dataSource, id);
+			ResponseEntity<CommitmentEcaModel> response = new ResponseEntity<CommitmentEcaModel>();
+			CommitmentEcaModel item = this._repository.detail(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
