@@ -1,0 +1,194 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Crear plan maestro</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end">
+            <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
+            <li class="breadcrumb-item"><a routerLink="/anp">ANP</a></li>
+            <li class="breadcrumb-item text-nowrap active">Plan maestro</li>
+          </ol>
+        </nav>
+
+        <button type="button" class="btn btn-primary ms-3">
+          <i class="bi bi-plus-circle fs-lg"></i>
+          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <form action="#" [formGroup]="form" novalidate>
+        <div class="card">
+          <div class="card-body" id="parent">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre </label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Agregar objetivos </label>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary d-flex"
+                  placement="top"
+                  data-bs-toggle="modal"
+                  data-bs-target="#createObjetive"
+                  ngbTooltip="Agregar"
+                >
+                  <i class="bi bi-plus-lg"></i>
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Opcion</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ADC2021SUP</td>
+                    <td>Objetivo 1</td>
+                    <td>
+                      <div class="text-nowrap">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-success border-0"
+                          data-bs-target="#createLineAction"
+                          data-bs-toggle="modal"
+                        >
+                          <i class="bi bi-plus-square fs-lg"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-light">
+                <i class="fas fa-brush"></i>
+                Limpiar</button
+              >&nbsp;
+              <button type="button" class="btn btn-secondary">
+                <i class="fas fa-times-circle"></i>
+                Cancelar</button
+              >&nbsp;
+              <button type="button" class="btn btn-success">
+                <i class="fas fa-save"></i>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<div
+  class="modal fade"
+  id="createObjetive"
+  tabindex="-1"
+  aria-labelledby="createObjetiveLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">Crear objetivos</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Codigo</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="createLineAction"
+  tabindex="-1"
+  aria-labelledby="createLineActionLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">
+          Crear linea de accion
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->

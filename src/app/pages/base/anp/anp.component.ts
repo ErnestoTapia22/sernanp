@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormGroup } from '@angular/forms';
 import { AnpService } from '../../../_services/base/anp.service';
 
 @Component({
@@ -11,10 +12,40 @@ export class AnpComponent implements OnInit {
   page: Number = 0;
   total: Number = 0;
   anpList: any[];
-  constructor(private anpService: AnpService) {}
+  form: FormGroup;
+  isLoading: Boolean = false;
+  constructor(private anpService: AnpService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.listAnp();
+    this.buildForm();
+    this.anpList = [
+      {
+        code: 'ANP-20218976',
+        name: 'sfsfsd',
+        field: 'Campo',
+      },
+      {
+        code: 'ANP-20218976',
+        name: 'sfsfsd',
+        field: 'Campo',
+      },
+      {
+        code: 'ANP-20218976',
+        name: 'sfsfsd',
+        field: 'Campo',
+      },
+      {
+        code: 'ANP-20218976',
+        name: 'sfsfsd',
+        field: 'Campo',
+      },
+      {
+        code: 'ANP-20218976',
+        name: 'sfsfsd',
+        field: 'Campo',
+      },
+    ];
+    // this.listAnp();
   }
   getPage(e) {}
   onChangePageSize(e) {}
@@ -22,5 +53,16 @@ export class AnpComponent implements OnInit {
     this.anpService.agreementList().subscribe((response) => {
       this.anpList = response;
     });
+  }
+  search() {}
+  buildForm() {
+    this.form = this.fb.group({
+      code: [''],
+      name: [''],
+      pageSize: [5],
+    });
+  }
+  get f() {
+    return this.form.controls;
   }
 }

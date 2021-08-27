@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
@@ -14,6 +14,8 @@ import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
 import { TestComponent } from './pages/base/test/test.component';
 import { AdminComponent } from './pages/base/admin/admin.component';
+import { AnpComponent } from './pages/base/anp/anp.component';
+import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -83,6 +85,15 @@ const routes: Routes = [
         path: 'index',
         component: AdminComponent,
       },
+    ],
+  },
+  {
+    path: 'anp',
+    component: FullLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'index', pathMatch: 'full' },
+      { path: 'index', component: AnpComponent },
+      { path: 'masterplan', component: MasterPlanComponent },
     ],
   },
 ];
