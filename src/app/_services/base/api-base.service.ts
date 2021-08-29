@@ -36,7 +36,6 @@ export class ApiBaseService {
     this.headers = this.getHttpHeaders();
   }
   get(url: string, params?: any, auth?: boolean): Observable<any> {
-    debugger;
     return this.http
       .get<any>(url, {
         params: params,
@@ -79,12 +78,18 @@ export class ApiBaseService {
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }
-  postFormData(url: string, body: object = {}): Observable<any> {
-    const formdata = new FormData();
+  postFormData(
+    url: string,
+    body: object = {},
+    auth?: boolean
+  ): Observable<any> {
+    let formdata = new FormData();
     const headers: any = this.getHttpHeaders('formdata');
-    for (const key in body) {
+
+    for (let key of Object.keys(body)) {
       formdata.append(key, body[key]);
     }
+    console.log(formdata.get('item'));
     return this.http
       .post(url, formdata, { headers: headers })
       .pipe(catchError(this.formatError))
@@ -102,7 +107,7 @@ export class ApiBaseService {
     requireAuth?: boolean
   ): HttpHeaders {
     const httpOptions = { headers: new HttpHeaders() };
-    debugger;
+
     switch (type) {
       case 'formdata':
         httpOptions.headers = httpOptions.headers.set(
