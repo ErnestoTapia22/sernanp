@@ -1,53 +1,27 @@
 package pe.sernanp.simrac.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import pe.gisriv.entity.PaginatorEntity;
+import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.VerificationMeanModel;
-import pe.sernanp.simrac.repository.VerificationMeanRepository;
+import pe.sernanp.simrac.model.AlliedModel;
+import pe.sernanp.simrac.repository.AlliedRepository;
 
 @Service
-public class VerificationMeanService extends BaseService<VerificationMeanModel> {
+public class AlliedService extends BaseService<AlliedModel> {
 	
 	@Autowired
-	private VerificationMeanRepository _repository;
-	
-	@Override
-	public ResponseEntity<VerificationMeanModel> list() throws Exception{
-		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = this._repository.list(this._dataSource);
-			response.setItems(items);
-			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	public ResponseEntity<VerificationMeanModel> search(VerificationMeanModel item, PaginatorEntity paginator) throws Exception{
-		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = this._repository.search(this._dataSource, item, paginator);
-			response.setItems(items);
-			response.setPaginator(paginator);
-			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
+	private AlliedRepository _repository;
+		
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(VerificationMeanModel item) throws Exception {		
+	public ResponseEntity save(AlliedModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -85,6 +59,8 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 		}
 	}
 	
+		
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
 	public ResponseEntity delete(int id) throws Exception {
@@ -96,6 +72,7 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 			Integer rowsAffected = this._repository.delete(this._dataSource, id);
 			this.transactionManager.commit(status);
 			ResponseEntity response = new ResponseEntity();
+
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);
 			return response;
@@ -108,14 +85,14 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 		}
 	}
 	
-	public ResponseEntity<VerificationMeanModel> detail(int id) throws Exception {
+	public ResponseEntity<AlliedModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			VerificationMeanModel item = this._repository.detail(this._dataSource, id);
+			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
+			AlliedModel item = this._repository.detail(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
@@ -123,4 +100,21 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 			throw new Exception(ex.getMessage());
 		}
 	}
+	
+	public ResponseEntity<AlliedModel> buscar(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
+			List<AlliedModel> item = this._repository.buscar(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 }

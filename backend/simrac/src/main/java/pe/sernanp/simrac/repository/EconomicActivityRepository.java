@@ -18,6 +18,7 @@ public class EconomicActivityRepository extends BaseRepository<EconomicActivityM
 		return super.list2(ds, "simrac.fn_listar_actividadeconomica", new EconomicActivityMapper());
 	}
 	
+	@Override
 	public EconomicActivityModel detail(DataSource ds, int id) throws Exception {
 		return super.detail2(ds, "simrac.fn_detalle_actividadeconomica", id, new EconomicActivityMapper());
 	}

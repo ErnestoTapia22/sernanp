@@ -22,7 +22,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/315"
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/316"
 					},
 					"response": []
 				},
@@ -507,7 +507,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/alliedcategory/detail/1"
+						"url": "http://localhost:8050/simrac/api/alliedcategory/detail/17"
 					},
 					"response": []
 				},
@@ -855,6 +855,319 @@
 							}
 						},
 						"url": "http://localhost:8050/simrac/api/ecosystemtype/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Allied",
+			"item": [
+				{
+					"name": "AlliedDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/detail/16"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/delete/5"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"17\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"name\": \"csdd\",\r\n    \"description\": \"444444\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedBuscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/buscar/317"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AlliedCommitment",
+			"item": [
+				{
+					"name": "AlliedCommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"conservationAgreement\": {\r\n    \"id\": \"317\"\r\n    },\r\n    \"name\": \"csaaaaaaadd\",\r\n    \"description\": \"bbbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commitment",
+			"item": [
+				{
+					"name": "CommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"description\": \"prueba1\",\r\n    \"state\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentBuscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/buscar/316"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CommitmentEca",
+			"item": [
+				{
+					"name": "CommitmentEcaDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentEcaDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentEcaInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"317\"\r\n    },\r\n    \"name\": \"aaaaa\",\r\n    \"description\": \"bbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-10\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "SimracAuth",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"password": "@re34n@tur4l",
+								"username": "dj-sernanp-app"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ANP + ZR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UserDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/user/validar/ycoyla"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module",
+			"item": [
+				{
+					"name": "ModuleBuscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/module/buscar/27/1374"
 					},
 					"response": []
 				}

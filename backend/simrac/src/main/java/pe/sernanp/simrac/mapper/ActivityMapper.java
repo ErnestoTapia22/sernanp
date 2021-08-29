@@ -1,17 +1,15 @@
 package pe.sernanp.simrac.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import pe.gisriv.extension.ResultSetExtension;
-import pe.sernanp.simrac.model.AgreementStateModel;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.model.ActivityModel;
 
-public class ConservationAgreementMapper extends BaseMapper<ConservationAgreementModel> {
+public class ActivityMapper extends BaseMapper<ActivityModel> {
 	@Override
-	public ConservationAgreementModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public ActivityModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		ConservationAgreementModel item = super.mapRowBase(rs, new ConservationAgreementModel());
-		item.setAgreementState(new AgreementStateModel());
+		ActivityModel item = super.mapRowBase(rs, new ActivityModel());
+		/*item.setAgreementState(new AgreementStateModel());
 		super.mapRowWithTable(rs, item.getAgreementState(), "agreementstate");
 		
 		item.setFirm(ResultSetExtension.getDate2(rs, "firm"));
@@ -26,7 +24,7 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setAreaAmbitc(ResultSetExtension.getDouble2(rs, "areambitc"));
 		item.setProducedArea(ResultSetExtension.getDouble2(rs, "producedarea"));
 		item.setDetalleProduction(ResultSetExtension.getString2(rs, "detalleproduction"));
-	
+		 */
 		
 		return item;
 	}

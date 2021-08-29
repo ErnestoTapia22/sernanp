@@ -1,53 +1,27 @@
 package pe.sernanp.simrac.service;
 
-import java.util.List;
+import javax.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.VerificationMeanModel;
-import pe.sernanp.simrac.repository.VerificationMeanRepository;
+import pe.sernanp.simrac.model.CommitmentEcaModel;
+import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.repository.CommitmentEcaRepository;
+import pe.sernanp.simrac.repository.CommitmentRepository;
 
 @Service
-public class VerificationMeanService extends BaseService<VerificationMeanModel> {
+public class CommitmentEcaService extends BaseService<CommitmentEcaModel> {
 	
 	@Autowired
-	private VerificationMeanRepository _repository;
-	
-	@Override
-	public ResponseEntity<VerificationMeanModel> list() throws Exception{
-		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = this._repository.list(this._dataSource);
-			response.setItems(items);
-			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	public ResponseEntity<VerificationMeanModel> search(VerificationMeanModel item, PaginatorEntity paginator) throws Exception{
-		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = this._repository.search(this._dataSource, item, paginator);
-			response.setItems(items);
-			response.setPaginator(paginator);
-			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
+	private CommitmentEcaRepository _repository;	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(VerificationMeanModel item) throws Exception {		
+	public ResponseEntity save(CommitmentEcaModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -62,11 +36,8 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
-			} else {
-				id = this._repository.update(this._dataSource, item);
-				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
 			}
+			
 			this.transactionManager.commit(status);
 			ResponseEntity respuesta = new ResponseEntity();
 			respuesta.setExtra(id.toString());
@@ -85,6 +56,24 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 		}
 	}
 	
+	
+	public ResponseEntity<CommitmentEcaModel> detail(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<CommitmentEcaModel> response = new ResponseEntity<CommitmentEcaModel>();
+			CommitmentEcaModel item = this._repository.detail(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItem(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+		
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
 	public ResponseEntity delete(int id) throws Exception {
@@ -96,6 +85,7 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 			Integer rowsAffected = this._repository.delete(this._dataSource, id);
 			this.transactionManager.commit(status);
 			ResponseEntity response = new ResponseEntity();
+
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);
 			return response;
@@ -107,20 +97,5 @@ public class VerificationMeanService extends BaseService<VerificationMeanModel> 
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	public ResponseEntity<VerificationMeanModel> detail(int id) throws Exception {
-		try {
-			if (id == 0) {
-				throw new Exception("No existe el elemento");
-			}
-			boolean success = true;
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			VerificationMeanModel item = this._repository.detail(this._dataSource, id);
-			response.setSuccess(success);
-			response.setItem(item);
-			return response;
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
+		
 }
