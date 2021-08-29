@@ -10,7 +10,7 @@ import pe.sernanp.simrac.mapper.ConservationAgreementMapper;
 import pe.sernanp.simrac.model.AlliedModel;
 
 @Repository
-public class AlliedRepository extends BaseRepository<AlliedModel > {
+public class AlliedRepository extends BaseRepository<AlliedModel> {
 	
 	@Override
 	protected void setParameters(Map<String, Object> parameters, AlliedModel item) throws Exception {

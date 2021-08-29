@@ -507,7 +507,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/alliedcategory/detail/1"
+						"url": "http://localhost:8050/simrac/api/alliedcategory/detail/17"
 					},
 					"response": []
 				},
@@ -1140,6 +1140,34 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UserDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/user/validar/ycoyla"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module",
+			"item": [
+				{
+					"name": "ModuleBuscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/module/buscar/27/1374"
 					},
 					"response": []
 				}
