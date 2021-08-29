@@ -41,6 +41,8 @@ import { AlertService } from './_services/base/alert.service';
 import { ApiBaseService } from './_services/base/api-base.service';
 import { InitService } from './_services/init-service/init.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AnpComponent } from './pages/base/anp/anp.component';
+import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DetailComponent,
     TestComponent,
     AdminComponent,
+    AnpComponent,
+    MasterPlanComponent,
   ],
   imports: [
     BrowserModule,
