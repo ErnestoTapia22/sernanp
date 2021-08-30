@@ -33,12 +33,36 @@
         <div class="card">
           <div class="card-body" id="parent">
             <div class="row g-3">
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
+                <label class="form-label">Nombre</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-7">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Plan maestro Nº 1"
+                />
+              </div>
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
+                <label class="form-label">Version</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="1"
+                />
+              </div>
+            </div>
+            <div class="row g-3">
               <!-- <div class="col-md-6">
                 <label class="form-label">Nombre </label>
                 <input type="text" class="form-control" />
               </div> -->
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <label class="form-label">Agregar objetivos </label>
+              </div>
+              <div class="col-md-12">                
                 <button
                   type="button"
                   class="btn btn-sm btn-primary d-flex"
@@ -56,28 +80,46 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <td>Nº</td>
+                    <td>Componente</td>
                     <td>Código</td>
-                    <td>Nombre</td>
+                    <td>Descripción</td>
                     <td>Opcion</td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>ADC2021SUP</td>
-                    <td>Objetivo 1</td>
-                    <td>
-                      <div class="text-nowrap">
-                        <button
+                  <ngx-spinner
+                    [fullScreen]="false"
+                    type="ball-clip-rotate"
+                    size="medium"
+                  >
+                  </ngx-spinner>
+
+                  <ng-container *ngIf="!isLoading">
+                    <tr
+                      *ngFor="
+                        let item of commitments ;
+                        index as idx
+                      "
+                    >                    
+                      <td>{{ item.index }}</td>
+                      <td>{{ item.component }}</td>
+                      <td>{{ item.code }}</td>
+                      <td>{{ item.description }}</td>
+                      <td>
+                        <div class="text-nowrap">
+                          <button
                           type="button"
                           class="btn btn-sm btn-outline-success border-0"
                           data-bs-target="#createLineAction"
                           data-bs-toggle="modal"
                         >
-                          <i class="bi bi-plus-square fs-lg"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                            <i class="bi bi-plus-square fs-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
                 </tbody>
               </table>
             </div>
@@ -127,12 +169,22 @@
       <div class="modal-body">
         <div class="row g-3">
           <div class="col-md-6">
+            <label class="form-label">Componente</label>
+            <select class="form-select">
+              <option value="">SELECCIONE</option>
+              <option value="1">Ambiental</option>
+              <option value="2">Económico</option>
+              <option value="3">Social</option>
+              <option value="4">SocioCultural</option>
+            </select>
+          </div>
+          <div class="col-md-6">
             <label class="form-label">Codigo</label>
             <input type="text" class="form-control" />
           </div>
-          <div class="col-md-6">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" />
+          <div class="col-md-12">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="2"></textarea>
           </div>
         </div>
       </div>
@@ -140,7 +192,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
       </div>
     </div>
   </div>
