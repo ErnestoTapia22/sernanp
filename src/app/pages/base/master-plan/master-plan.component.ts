@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MasterPlanComponent implements OnInit {
   form: FormGroup;
+  commitments: any[];
+  isLoading: Boolean = false;
   constructor(private fb: FormBuilder) {}
   get f() {
     return this.form.controls;
@@ -15,6 +17,20 @@ export class MasterPlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this.commitments = [
+      {
+        index: '1',
+        code: 'OB 1',
+        description: 'Mantener la cobertura vegetal del Parque Nacional',
+        component: 'Ambiental'
+      },
+      {
+        index: '2',
+        code: 'OB 2',
+        description: 'Mantener poblaciones de especies de interés para la gestion del Parque Nacional',    
+        component: 'Ambiental'
+      }
+    ];
   }
   buildForm() {
     this.form = this.fb.group({
