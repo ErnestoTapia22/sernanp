@@ -1,26 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { AgreementService } from '../../../_services/base/agreement.service';
+import { AgreementService } from '../../../../_services/base/agreement.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-agreement',
-  templateUrl: './agreement.component.html',
-  styleUrls: ['./agreement.component.css'],
+  selector: 'app-agreement-new',
+  templateUrl: './agreement-new.component.html',
+  styleUrls: ['./agreement-new.component.css'],
 })
-export class AgreementComponent implements OnInit {
+export class AgreementNewComponent implements OnInit {
   selectedAnp: number = 0;
   obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
   form: FormGroup;
-
+  mapProperties: any;
+  mapViewProperties: any;
+  fieldArray: Array<any> = [];
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.mapProperties = {
+      basemap: 'hybrid',
+      ground: 'world-elevation',
+    };
+    this.mapViewProperties = {
+      center: [-75.744, -8.9212],
+      zoom: 9,
+    };
     this.buildForm();
     let item = {
       name: '',
@@ -28,7 +38,6 @@ export class AgreementComponent implements OnInit {
     this.obsQuery.next({
       item: JSON.stringify(item),
     });
-    this.fillSelects();
   }
   async readURL(event) {}
 
@@ -43,6 +52,7 @@ export class AgreementComponent implements OnInit {
 
     return arrayBuffer;
   }
+  onMapInit({ map, view }) {}
   get f() {
     return this.form.controls;
   }

@@ -8,8 +8,8 @@ export function initAppFactory(
 ) {
   return async () => {
     try {
-      const result = await lastValueFrom(initService.getAuthorization());
-      localStorage.setItem('auth', JSON.stringify(result));
+      // const result = await lastValueFrom(initService.getAuthorization());
+      // localStorage.setItem('auth', JSON.stringify(result));
     } catch (err) {
       localStorage.setItem('auth', JSON.stringify({}));
       alertService.error('Error en la autenticación: ' + err, 'Error');

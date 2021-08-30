@@ -7,7 +7,8 @@ import { EmptyLayoutComponent } from './pages/base/layout/empty-layout/empty-lay
 import { FullLayoutComponent } from './pages/base/layout/full-layout/full-layout.component';
 import { BaseMapComponent } from './pages/geometry/base-map/base-map.component';
 import { IndexComponent } from './pages/base/index/index.component';
-import { AgreementComponent } from './pages/base/agreement/agreement.component';
+import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
+import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { ReportsComponent } from './pages/base/reports/reports.component';
@@ -43,8 +44,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: AgreementComponent },
       {
-        path: 'test',
-        component: TestComponent,
+        path: 'new',
+        component: AgreementNewComponent,
       },
     ],
   },

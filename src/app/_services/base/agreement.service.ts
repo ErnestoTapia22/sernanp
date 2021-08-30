@@ -3,12 +3,21 @@ import { ApiBaseService } from '../base/api-base.service';
 import { environment } from '../../../environments/environment';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
 import { AlertService } from '../base/alert.service';
+import {
+  HttpHeaders,
+  HttpParams,
+  HttpClient,
+  HttpResponse,
+} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgreementService {
-  constructor(private apiService: ApiBaseService) {}
+  private segmentSearch;
+  constructor(private apiService: ApiBaseService, private http: HttpClient) {
+    this.segmentSearch = '/conservationagreement/search';
+  }
   uploadShape(file: File) {
     const fd = new FormData();
     fd.append('file', file, file.name);
@@ -19,5 +28,11 @@ export class AgreementService {
   }
   getServices(url: string): Observable<any> {
     return this.apiService.get(url, null, true);
+  }
+  agreementSearch(item): Observable<any> {
+    return this.apiService.postFormData(
+      `${environment.apiUrl}${this.segmentSearch}`,
+      item
+    );
   }
 }

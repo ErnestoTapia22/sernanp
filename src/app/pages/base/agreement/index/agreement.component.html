@@ -7,16 +7,25 @@
   <!-- ============================================================== -->
   <div class="row page-titles">
     <div class="col-auto align-self-center">
-      <h4 class="text-nowrap">ANP</h4>
+      <h4 class="text-nowrap">Acuerdos</h4>
     </div>
     <div class="col">
       <div class="d-flex justify-content-end align-items-center text-end">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ANP</li>
+            <li class="breadcrumb-item active" aria-current="page">Acuerdos</li>
           </ol>
         </nav>
+
+        <button
+          type="button"
+          class="btn ms-3 btn-primary"
+          routerLink="/agreement/new"
+        >
+          <i class="bi bi-plus-circle fs-lg"></i>
+          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
+        </button>
       </div>
     </div>
   </div>
@@ -35,7 +44,7 @@
             <button
               type="button"
               class="btn btn-sm btn-outline-primary mx-2"
-              (click)="search()"
+              (click)="search(form.value)"
             >
               <i class="bi bi-search"></i>
               Buscar
@@ -58,12 +67,33 @@
                 />
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label class="form-label">Nombre</label>
+                <label class="form-label">Fecha de suscripción</label>
                 <input
-                  type="text"
+                  type="date"
                   class="form-control"
-                  formControlName="name"
+                  formControlName="firm"
                 />
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="inputState" class="form-label">Categoria </label>
+                <select class="form-select" formControlName="category">
+                  <option value="">SELECCIONE</option>
+                  <option value="1">Bosque de protección</option>
+                  <option value="2">Parque nacional</option>
+                  <option value="3">Reserva nacional</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="inputState" class="form-label"
+                  >Estado del acuerdo
+                </label>
+                <select class="form-select" formControlName="state">
+                  <option value="">SELECCIONE</option>
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                  <option value="3">Por renovar</option>
+                  <option value="4">Vigente</option>
+                </select>
               </div>
             </div>
 
@@ -74,8 +104,11 @@
                 <thead>
                   <tr>
                     <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Campo</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                    <th>Suscriptores</th>
+                    <th>Vigencia</th>
+                    <th>Fecha Suscr.</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -86,14 +119,25 @@
                     size="medium"
                   >
                   </ngx-spinner>
-
+                  <!-- <tr *ngIf="isLoading">
+                    <td colspan="7">
+                      <div class="card" style="min-height: 400px">
+                        <ngx-spinner
+                          [fullScreen]="false"
+                          type="ball-clip-rotate"
+                          size="medium"
+                        >
+                        </ngx-spinner>
+                      </div>
+                    </td>
+                  </tr> -->
                   <ng-container *ngIf="!isLoading">
                     <tr
                       *ngFor="
-                        let item of anpList
+                        let item of agreementList
                           | paginate
                             : {
-                                id: 'anpPag',
+                                id: 'agreementMonitoring',
                                 itemsPerPage: pageSize,
                                 currentPage: page,
                                 totalItems: total
@@ -102,17 +146,33 @@
                       "
                     >
                       <td>{{ item.code }}</td>
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.field }}</td>
-
+                      <td>{{ item.category }}</td>
+                      <td>{{ item.agreementState.name }}</td>
+                      <td>
+                        {{ item.name }}
+                      </td>
+                      <td>{{ item.validity }}</td>
+                      <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
                       <td>
                         <div class="text-nowrap">
                           <button
                             type="button"
                             class="btn btn-sm btn-outline-info border-0"
-                            routerLink="/anp/masterplan"
+                            [routerLink]="['/monitoring/detail', item.id]"
                           >
-                            <i class="bi bi-plus-square fs-lg"></i>
+                            <i class="bi bi-eye fs-lg"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-success border-0"
+                          >
+                            <i class="bi bi-pencil fs-lg"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-danger border-0"
+                          >
+                            <i class="bi bi-trash fs-lg"></i>
                           </button>
                         </div>
                       </td>
@@ -135,7 +195,7 @@
               </select>
               <pagination-controls
                 (pageChange)="getPage($event)"
-                id="anpPag"
+                id="agreementMonitoring"
                 class="pagination justify-content-end"
               ></pagination-controls>
             </div>

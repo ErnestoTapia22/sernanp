@@ -84,14 +84,14 @@ export class ApiBaseService {
     auth?: boolean
   ): Observable<any> {
     let formdata = new FormData();
-    const headers: any = this.getHttpHeaders('formdata');
+    const headers: HttpHeaders = this.getHttpHeaders('formdata');
 
     for (let key of Object.keys(body)) {
       formdata.append(key, body[key]);
     }
-    console.log(formdata.get('item'));
+
     return this.http
-      .post(url, formdata, { headers: headers })
+      .post(url, formdata)
       .pipe(catchError(this.formatError))
       .pipe(map((res: HttpResponse<any>) => res));
   }

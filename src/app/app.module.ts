@@ -25,7 +25,7 @@ import { CustomWidgetComponent } from './pages/geometry/widgets/custom-widget/cu
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TreeviewModule } from 'ngx-treeview';
 import { LayerService } from './_services/geometry/layer.service';
-import { AgreementComponent } from './pages/base/agreement/agreement.component';
+import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
 import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
 import { AlertComponent } from './pages/_directives/alert/alert.component';
 import { BaseService } from './_services/base/base.service';
@@ -43,6 +43,7 @@ import { InitService } from './_services/init-service/init.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AnpComponent } from './pages/base/anp/anp.component';
 import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { MasterPlanComponent } from './pages/base/master-plan/master-plan.compon
     AdminComponent,
     AnpComponent,
     MasterPlanComponent,
+    AgreementNewComponent,
   ],
   imports: [
     BrowserModule,
