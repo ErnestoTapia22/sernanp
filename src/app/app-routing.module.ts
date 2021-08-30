@@ -9,6 +9,7 @@ import { BaseMapComponent } from './pages/geometry/base-map/base-map.component';
 import { IndexComponent } from './pages/base/index/index.component';
 import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
+import { AgreementDetailComponent } from './pages/base/agreement/agreement-detail/agreement-detail.component';
 import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { ReportsComponent } from './pages/base/reports/reports.component';
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'new',
         component: AgreementNewComponent,
+      },
+      {
+        path: 'detail/:id',
+        component: AgreementDetailComponent,
       },
     ],
   },

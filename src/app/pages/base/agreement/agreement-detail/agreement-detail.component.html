@@ -7,7 +7,7 @@
   <!-- ============================================================== -->
   <div class="row page-titles">
     <div class="col-auto align-self-center">
-      <h4 class="text-nowrap">Crear Acuerdo</h4>
+      <h4 class="text-nowrap">Detalle del acuerdo</h4>
     </div>
     <div class="col">
       <div class="d-flex justify-content-end align-items-center text-end">
@@ -17,14 +17,14 @@
             <li class="breadcrumb-item">
               <a routerLink="/agreement">Acuerdos</a>
             </li>
-            <li class="breadcrumb-item text-nowrap active">Nuevo acuerdo</li>
+            <li class="breadcrumb-item text-nowrap active">Detalle</li>
           </ol>
         </nav>
 
         <!-- <button type="button" class="btn btn-primary ms-3">
-          <i class="bi bi-plus-circle fs-lg"></i>
-          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
-        </button> -->
+            <i class="bi bi-plus-circle fs-lg"></i>
+            <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
+          </button> -->
       </div>
     </div>
   </div>
@@ -56,11 +56,11 @@
               <div class="col-md-3">
                 <label for="ddAnp" class="form-label">ANP (*)</label>
                 <!-- <select id="ddAnp" class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>ANP 1</option>
-                    <option>ANP 2</option>
-                    <option>ANP 3</option>
-                  </select> -->
+                      <option selected>SELECCIONE</option>
+                      <option>ANP 1</option>
+                      <option>ANP 2</option>
+                      <option>ANP 3</option>
+                    </select> -->
                 <ng-select
                   [items]="anp"
                   bindLabel="anpNomb"
@@ -128,23 +128,23 @@
                 <form action="#" [formGroup]="form" novalidate>
                   <div class="card">
                     <div class="card-body" id="parent">
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label"
-                            >Agregar Susbscriptores</label
-                          >
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-primary d-flex"
-                            placement="top"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createSusbcribers"
-                            ngbTooltip="Agregar"
-                          >
-                            <i class="bi bi-plus-lg"></i>
-                          </button>
-                        </div>
-                      </div>
+                      <!-- <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >Agregar Susbscriptores</label
+                            >
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-primary d-flex"
+                              placement="top"
+                              data-bs-toggle="modal"
+                              data-bs-target="#createSusbcribers"
+                              ngbTooltip="Agregar"
+                            >
+                              <i class="bi bi-plus-lg"></i>
+                            </button>
+                          </div>
+                        </div> -->
                       <hr />
                       <div class="table-responsive">
                         <table class="table">
@@ -167,6 +167,7 @@
                                       btn btn-sm btn-outline-danger
                                       border-0
                                     "
+                                    disabled
                                   >
                                     <i class="bi bi-trash fs-lg"></i>
                                   </button>
@@ -440,7 +441,12 @@
                       <label for="formFile" class="form-label"
                         >Área del ámbito</label
                       >
-                      <input class="form-control" type="file" id="formFile" />
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="formFile"
+                        disabled
+                      />
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -448,7 +454,12 @@
                       <label for="formFile" class="form-label"
                         >Área de vigilancia</label
                       >
-                      <input class="form-control" type="file" id="formFile" />
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="formFile"
+                        disabled
+                      />
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -456,7 +467,12 @@
                       <label for="formFile" class="form-label"
                         >Área de restauración</label
                       >
-                      <input class="form-control" type="file" id="formFile" />
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="formFile"
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -667,61 +683,7 @@
             <label class="mb-0 fw-bold">Plan de trabajo</label>
           </div>
           <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-                <form action="#" [formGroup]="form" novalidate>
-                  <div class="card">
-                    <div class="card-body" id="parent">
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Agregar compromisos</label>
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-primary d-flex"
-                            placement="top"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createObjetive"
-                            ngbTooltip="Agregar"
-                          >
-                            <i class="bi bi-plus-lg"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <hr />
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead class="fw-bold">
-                            <tr>
-                              <td>Código</td>
-                              <td>Nombre</td>
-                              <td>Opciones</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>ADC2021SUP</td>
-                              <td>Compromiso 1</td>
-                              <td>
-                                <div class="text-nowrap">
-                                  <button
-                                    type="button"
-                                    class="btn btn-sm btn-outline-info border-0"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#createActivity"
-                                  >
-                                    <i class="bi bi-eye fs-lg"></i>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
+            <div class="row"></div>
           </div>
         </div>
         <div class="card">
@@ -740,18 +702,18 @@
                 <textarea id="txtaObs" class="form-control" rows="1"></textarea>
               </div>
               <!-- <div class="col-md-4">
-                  <div class="avatar-img float-right">
-                    <input
-                      type="file"
-                      id="shpUpload"
-                      #file
-                      (change)="readURL($event)"
-                    />
-                  </div>
-                   <div *ngIf="validateSize" class="invalid">
-                    <div>Tamaño de archivo supera los 50KB</div>
-                  </div> 
-                </div> -->
+                    <div class="avatar-img float-right">
+                      <input
+                        type="file"
+                        id="shpUpload"
+                        #file
+                        (change)="readURL($event)"
+                      />
+                    </div>
+                     <div *ngIf="validateSize" class="invalid">
+                      <div>Tamaño de archivo supera los 50KB</div>
+                    </div> 
+                  </div> -->
 
               <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-light">

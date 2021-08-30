@@ -44,6 +44,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AnpComponent } from './pages/base/anp/anp.component';
 import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
+import { AgreementDetailComponent } from './pages/base/agreement/agreement-detail/agreement-detail.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agre
     AnpComponent,
     MasterPlanComponent,
     AgreementNewComponent,
+    AgreementDetailComponent,
   ],
   imports: [
     BrowserModule,
