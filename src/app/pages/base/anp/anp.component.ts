@@ -20,30 +20,40 @@ export class AnpComponent implements OnInit {
     this.buildForm();
     this.anpList = [
       {
-        code: 'ANP-20218976',
-        name: 'sfsfsd',
-        field: 'Campo',
+        index: '1',
+        code: 'SN06',
+        name: 'Megantoni',
+        department: 'Cusco',
+        category: "Santuario Nacional"
       },
       {
-        code: 'ANP-20218976',
-        name: 'sfsfsd',
-        field: 'Campo',
+        index: '2',
+        code: 'RC03',
+        name: 'Amarakaeri',
+        department: 'Madre de Dios',        
+        category: 'Reserva Comunal'
       },
       {
-        code: 'ANP-20218976',
-        name: 'sfsfsd',
-        field: 'Campo',
+        index: '3',
+        code: 'RVS03',
+        name: 'Bosques Nublados de Udima',
+        department: 'Cajamarca',        
+        category: 'Refugio de Vida Silvestre'
       },
       {
-        code: 'ANP-20218976',
-        name: 'sfsfsd',
-        field: 'Campo',
+        index: '4',
+        code: 'RVS01',
+        name: 'Laquipampa',
+        department: 'Lambayeque',        
+        category: 'Refugio de Vida Silvestre'
       },
       {
-        code: 'ANP-20218976',
-        name: 'sfsfsd',
-        field: 'Campo',
-      },
+        index: '5',
+        code: 'RVS02',
+        name: 'Los Pantanos de Villa',
+        department: 'Lima',        
+        category: 'Refugio de Vida Silvestre'
+      }
     ];
     // this.listAnp();
   }

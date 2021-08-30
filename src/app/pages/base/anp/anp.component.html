@@ -49,16 +49,20 @@
         <div class="card-body">
           <form novalidate [formGroup]="form">
             <div class="row g-3">
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
                 <label class="form-label">Código</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-5">
                 <input
                   type="text"
                   class="form-control"
                   formControlName="code"
                 />
               </div>
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
                 <label class="form-label">Nombre</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-5">
                 <input
                   type="text"
                   class="form-control"
@@ -73,9 +77,11 @@
               <table class="table">
                 <thead>
                   <tr>
+                    <th>Nº</th>
+                    <th>Categoria</th>
                     <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Campo</th>
+                    <th>Nombre</th>                   
+                    <th>Departamento</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
@@ -101,10 +107,12 @@
                         index as idx
                       "
                     >
+                    
+                      <td>{{ item.index }}</td>
+                      <td>{{ item.category }}</td>
                       <td>{{ item.code }}</td>
                       <td>{{ item.name }}</td>
-                      <td>{{ item.field }}</td>
-
+                      <td>{{ item.department }}</td>
                       <td>
                         <div class="text-nowrap">
                           <button
