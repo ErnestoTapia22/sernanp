@@ -67,21 +67,12 @@
                 />
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label class="form-label">Fecha de suscripción</label>
+                <label class="form-label">Nombre</label>
                 <input
-                  type="date"
+                  type="text"
                   class="form-control"
-                  formControlName="firm"
+                  formControlName="code"
                 />
-              </div>
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label">Categoria </label>
-                <select class="form-select" formControlName="category">
-                  <option value="">SELECCIONE</option>
-                  <option value="1">Bosque de protección</option>
-                  <option value="2">Parque nacional</option>
-                  <option value="3">Reserva nacional</option>
-                </select>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label for="inputState" class="form-label"
@@ -89,10 +80,20 @@
                 </label>
                 <select class="form-select" formControlName="state">
                   <option value="">SELECCIONE</option>
-                  <option value="1">Activo</option>
-                  <option value="2">Inactivo</option>
-                  <option value="3">Por renovar</option>
-                  <option value="4">Vigente</option>
+                  <option value="1">En envaluación</option>
+                  <option value="2">En diseño</option>
+                  <option value="3">Firmado</option>
+                  <option value="4">En implementación</option>
+                </select>
+              </div>              
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="inputState" class="form-label">Fuente de financiamiento </label>
+                <select class="form-select" formControlName="category">
+                  <option value="">SELECCIONE</option>
+                  <option value="1">Público</option>
+                  <option value="2">Privado</option>
+                  <option value="3">Cooperación</option>
+                  <option value="4">Otro</option>
                 </select>
               </div>
             </div>
@@ -104,10 +105,9 @@
                 <thead>
                   <tr>
                     <th>Código</th>
-                    <th>Categoría</th>
+                    <th>Nombre</th>
                     <th>Estado</th>
-                    <th>Suscriptores</th>
-                    <th>Vigencia</th>
+                    <th>Años de Vigencia</th>
                     <th>Fecha Suscr.</th>
                     <th>Opciones</th>
                   </tr>
@@ -146,12 +146,9 @@
                       "
                     >
                       <td>{{ item.code }}</td>
-                      <td>{{ item.category }}</td>
+                      <td>{{ item.description }} </td>                      
                       <td>{{ item.agreementState.name }}</td>
-                      <td>
-                        {{ item.name }}
-                      </td>
-                      <td>{{ item.validity }}</td>
+                      <td>{{ item.vigency }}</td>                                           
                       <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
                       <td>
                         <div class="text-nowrap">

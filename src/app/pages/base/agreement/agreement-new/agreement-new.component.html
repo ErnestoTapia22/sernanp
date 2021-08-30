@@ -120,7 +120,7 @@
         </div>
         <div class="card">
           <div class="card-header">
-            <label class="mb-0 fw-bold">Susbscriptores</label>
+            <label class="mb-0 fw-bold">Suscriptores</label>
           </div>
           <div class="card-body" id="subscribers">
             <div class="row g-3">
@@ -131,7 +131,7 @@
                       <div class="row g-3">
                         <div class="col-md-6">
                           <label class="form-label"
-                            >Agregar Susbscriptores</label
+                            >Agregar Suscriptores</label
                           >
                           <button
                             type="button"
@@ -150,15 +150,32 @@
                         <table class="table">
                           <thead class="fw-bold">
                             <tr>
-                              <td>Susbcriptor</td>
-                              <td>Campo 1</td>
+                              <td>Nombre</td>
+                              <td>Categoria</td>
                               <td>Opciones</td>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>SERNANP</td>
-                              <td>Campo 1</td>
+                              <td>Jefatura</td>
+                              <td>
+                                <div class="text-nowrap">
+                                  <button
+                                    type="button"
+                                    class="
+                                      btn btn-sm btn-outline-danger
+                                      border-0
+                                    "
+                                  >
+                                    <i class="bi bi-trash fs-lg"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Oxaleckuer</td>
+                              <td>Empresas</td>
                               <td>
                                 <div class="text-nowrap">
                                   <button
@@ -873,7 +890,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">Crear Subscriptores</h5>
+        <h5 class="modal-title" id="createPerfilLabel">Crear Suscriptores</h5>
         <button
           type="button"
           class="btn-close"
@@ -888,8 +905,14 @@
             <input type="text" class="form-control" />
           </div>
           <div class="col-md-6">
-            <label class="form-label">Campo 1</label>
-            <input type="text" class="form-control" />
+            <label class="form-label">Categoria</label>
+            <select class="form-select">
+              <option value="">SELECCIONE</option>
+              <option value="1">Asociaciones Productoras</option>
+              <option value="2">Empresas</option>
+              <option value="3">Comunidades</option>
+              <option value="4">Jefatura</option>
+            </select>
           </div>
         </div>
       </div>
