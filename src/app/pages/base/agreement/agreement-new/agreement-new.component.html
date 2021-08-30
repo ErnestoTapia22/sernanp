@@ -680,7 +680,7 @@
                             class="btn btn-sm btn-primary d-flex"
                             placement="top"
                             data-bs-toggle="modal"
-                            data-bs-target="#createObjetive"
+                            data-bs-target="#createCommitments"
                             ngbTooltip="Agregar"
                           >
                             <i class="bi bi-plus-lg"></i>
@@ -694,13 +694,15 @@
                             <tr>
                               <td>Código</td>
                               <td>Nombre</td>
-                              <td>Opciones</td>
+                              <td>Subscriptor</td>
+                              <td>Actividades</td>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>ADC2021SUP</td>
                               <td>Compromiso 1</td>
+                              <td>Sernanp</td>
                               <td>
                                 <div class="text-nowrap">
                                   <button
@@ -816,7 +818,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let field of fieldArray; let i = index">
-                <td>{{ i }}</td>
+                <td>{{ i + 1 }}</td>
                 <td>
                   <input
                     class="form-control"
@@ -840,12 +842,56 @@
                 </td>
                 <td>
                   <button
-                    class="btn btn-default"
+                    class="btn btn-sm btn-outline-danger border-0"
                     type="button"
                     (click)="deleteFieldValue(i)"
                   >
-                    Eliminar
+                    <i class="bi bi-dash-square fs-lg"></i>
                   </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" disabled />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeCode"
+                    [(ngModel)]="newAttribute.activity"
+                    name="newAttributeActivity"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeName"
+                    [(ngModel)]="newAttribute.indicator"
+                    name="newAttributeIndicator"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributePrice"
+                    [(ngModel)]="newAttribute.goal"
+                    name="newAttributeGoal"
+                  />
+                </td>
+
+                <td>
+                  <div class="text-nowrap">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-success border-0"
+                      (click)="addFieldValue()"
+                    >
+                      <i class="bi bi-plus-square fs-lg"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -890,6 +936,55 @@
           <div class="col-md-6">
             <label class="form-label">Campo 1</label>
             <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="createCommitments"
+  tabindex="-1"
+  aria-labelledby="createCommitmentsLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">Crear Compromisos</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Campo 1</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Perteneciente a</label>
+            <select class="form-select">
+              <option>Sernanp 1</option>
+              <option>Susbcriptor 2</option>
+              <option>Susbcriptor 3</option>
+            </select>
           </div>
         </div>
       </div>

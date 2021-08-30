@@ -17,6 +17,7 @@ export class AgreementNewComponent implements OnInit {
   mapProperties: any;
   mapViewProperties: any;
   fieldArray: Array<any> = [];
+  newAttribute: any = {};
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder
@@ -79,5 +80,12 @@ export class AgreementNewComponent implements OnInit {
       anp: new FormControl(),
       goal: new FormControl(),
     });
+  }
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute);
+    this.newAttribute = {};
+  }
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
   }
 }
