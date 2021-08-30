@@ -13,7 +13,7 @@ public class ActivityRepository extends BaseRepository<ActivityModel> {
 
 	public ActivityModel detail(DataSource ds, int id) throws Exception {
 		return super.detail2(ds, "simrac.fn_detalle_actividad", id, new ActivityMapper());
-	}	
+	}
 	
 	@Override
 	public int insert(DataSource ds, ActivityModel item) throws Exception {
@@ -37,7 +37,7 @@ public class ActivityRepository extends BaseRepository<ActivityModel> {
 		 parameters.put("pgoal", item.getGoal());
 		 parameters.put("pvalue", item.getValue());
 		 parameters.put("pindicator", item.getIndicator());
-	}	
+	}
 	
 	@Override
 	public int delete(DataSource ds, int id) throws Exception {

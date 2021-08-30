@@ -21,15 +21,15 @@ public class PlanMasterModel extends BaseModel {
 		return _version;
 	}
 
-	public void setVersion(int _version) {
-		this._version = _version;
+	public void setVersion(int version) {
+		this._version = version;
 	}
 
 	public boolean getActive() {
 		return _active;
 	}
 
-	public void setActive(boolean _active) {
-		this._active = _active;
+	public void setActive(boolean active) {
+		this._active = active;
 	}
 }
