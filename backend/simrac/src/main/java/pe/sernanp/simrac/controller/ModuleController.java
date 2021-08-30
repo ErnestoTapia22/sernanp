@@ -21,11 +21,11 @@ public class ModuleController extends BaseController<ModuleModel, ModuleService>
 	@Autowired
 	private ModuleService _service;
 	
-	@RequestMapping(value = "/buscar/{id}/{id2}", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/{id}/{id2}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<ModuleModel> buscar(@PathVariable("id") int id,@PathVariable("id2") int id2) throws IOException {
+	public ResponseEntity<ModuleModel> search(@PathVariable("id") int id,@PathVariable("id2") int id2) throws IOException {
 		try {
-			ResponseEntity<ModuleModel> response = this._service.buscar(id,id2);
+			ResponseEntity<ModuleModel> response = this._service.search(id,id2);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);

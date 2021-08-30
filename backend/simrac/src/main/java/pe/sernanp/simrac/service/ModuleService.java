@@ -14,12 +14,12 @@ public class ModuleService extends BaseService<ModuleModel> {
 	@Autowired
 	private ModuleRepository _repository;
 		
-	public ResponseEntity<ModuleModel> buscar(int id, int id2) throws Exception {
+	public ResponseEntity<ModuleModel> search(int id, int id2) throws Exception {
 		try {
 		
 			boolean success = true;
 			ResponseEntity<ModuleModel> response = new ResponseEntity<ModuleModel>();
-			List <ModuleModel>  item  = this._repository.buscar(this._dataSource, id, id2);
+			List <ModuleModel>  item  = this._repository.search(this._dataSource, id, id2);
 			response.setSuccess(success);
 			response.setItems(item);
 			return response;

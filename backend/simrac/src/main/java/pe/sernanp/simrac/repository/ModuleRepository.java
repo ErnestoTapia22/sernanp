@@ -11,11 +11,11 @@ import pe.sernanp.simrac.model.ModuleModel;
 @Repository
 public class ModuleRepository extends BaseRepository<ModuleModel> {
 	
-		public List<ModuleModel> buscar(DataSource ds, int id, int id2) throws Exception {
+		public List<ModuleModel> search(DataSource ds, int id, int id2) throws Exception {
 				System.out.println(ds);
 				Map<String, Object> parameters = new HashMap<>();
-				parameters.put("pidsistema", id);
-				parameters.put("pidusuario", id2);
+				parameters.put("psystem", id);
+				parameters.put("puserid", id2);
 				return super.search23(ds,"simrac.fn_buscar_moduloporusuariosistema",parameters, new ModuleMapper());
 				
 		}

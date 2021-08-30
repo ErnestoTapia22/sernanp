@@ -900,7 +900,7 @@
 					"response": []
 				},
 				{
-					"name": "AlliedBuscar",
+					"name": "AlliedSearch",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1003,7 +1003,7 @@
 					"response": []
 				},
 				{
-					"name": "CommitmentBuscar",
+					"name": "CommitmentSearch",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1019,7 +1019,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/commitment/buscar/316"
+						"url": "http://localhost:8050/simrac/api/commitment/search/316"
 					},
 					"response": []
 				}
@@ -1149,11 +1149,11 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "UserDetail",
+					"name": "UserValidate",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/user/validar/ycoyla"
+						"url": "http://localhost:8050/simrac/api/user/validate/ycoyla"
 					},
 					"response": []
 				}
@@ -1163,11 +1163,25 @@
 			"name": "Module",
 			"item": [
 				{
-					"name": "ModuleBuscar",
+					"name": "ModuleSsearch",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/module/buscar/27/1374"
+						"url": "http://localhost:8050/simrac/api/module/search/27/1374"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "RoleSsearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/role/search/27"
 					},
 					"response": []
 				}

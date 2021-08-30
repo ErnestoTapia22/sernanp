@@ -101,14 +101,14 @@ public class AlliedService extends BaseService<AlliedModel> {
 		}
 	}
 	
-	public ResponseEntity<AlliedModel> buscar(int id) throws Exception {
+	public ResponseEntity<AlliedModel> searchByAgreement(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
 			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
-			List<AlliedModel> item = this._repository.buscar(this._dataSource, id);
+			List<AlliedModel> item = this._repository.searchByAgreement(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItems(item);
 			return response;

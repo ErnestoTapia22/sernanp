@@ -40,10 +40,10 @@ public class CommitmentRepository extends BaseRepository<CommitmentModel> {
 		 
 	}
 	
-	public List<CommitmentModel> buscar(DataSource ds, int id) throws Exception {
+	public List<CommitmentModel> search(DataSource ds, int id) throws Exception {
 		System.out.println(ds);
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("pacuerdoid",id);
+		parameters.put("pagreementid",id);
 		return super.search23(ds,"simrac.fn_buscar_compromisoporacuerdo",parameters, new CommitmentMapper());
 		
 	}

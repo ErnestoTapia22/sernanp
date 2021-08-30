@@ -13,12 +13,12 @@ public class UserService extends BaseService<UserModel> {
 	private UserRepository _repository;
 	
 	
-	public ResponseEntity<UserModel> validar(String id) throws Exception {
+	public ResponseEntity<UserModel> validate(String id) throws Exception {
 		try {
 		
 			boolean success = true;
 			ResponseEntity<UserModel> response = new ResponseEntity<UserModel>();
-			UserModel item = this._repository.validar(this._dataSource, id).get(0);
+			UserModel item = this._repository.validate(this._dataSource, id).get(0);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;

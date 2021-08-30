@@ -44,10 +44,10 @@ public class AlliedRepository extends BaseRepository<AlliedModel> {
 	}
 	
 	
-	public List<AlliedModel> buscar(DataSource ds, int id) throws Exception {
+	public List<AlliedModel> searchByAgreement(DataSource ds, int id) throws Exception {
 		System.out.println(ds);
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("pacuerdoid",id);
+		parameters.put("pagreementid",id);
 		return super.search23(ds,"simrac.fn_buscar_aliadoporacuerdo",parameters, new AlliedMapper());
 		
 	}

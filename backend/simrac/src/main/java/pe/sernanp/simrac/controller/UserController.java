@@ -23,11 +23,11 @@ public class UserController extends BaseController<UserModel, UserService> {
 	private UserService _service;
 	
 	
-	@RequestMapping(value = "/validar/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/validate/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<UserModel> detail(@PathVariable("id") String id) throws IOException {
+	public ResponseEntity<UserModel> validate(@PathVariable("id") String id) throws IOException {
 		try {
-			ResponseEntity<UserModel> response = this._service.validar(id);
+			ResponseEntity<UserModel> response = this._service.validate(id);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
