@@ -349,8 +349,7 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 		return this.detail(ds, storedProcedure, parameters, mapper);
 	}
 
-	protected TEntity detail(DataSource ds, String storedProcedure, Map<String, Object> parameters,
-			RowMapper<TEntity> mapper) throws Exception {
+	protected TEntity detail(DataSource ds, String storedProcedure, Map<String, Object> parameters,	RowMapper<TEntity> mapper) throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.setResultsMapCaseInsensitive(true);
 		SimpleJdbcCall jdbc = new SimpleJdbcCall(jdbcTemplate);
@@ -367,16 +366,38 @@ public abstract class BaseRepository<TEntity extends BaseModel> implements IRepo
 		return item;
 	}
 
-	protected <TEntity2 extends BaseModel> TEntity2 detail2(JdbcTemplate jdbcTemplate,String storedProcedure, Object id,
-			RowMapper<TEntity2> mapper) throws Exception {
-
+	protected <TEntity2 extends BaseModel> TEntity2 detail2(JdbcTemplate jdbcTemplate,String storedProcedure, Object id, RowMapper<TEntity2> mapper) throws Exception {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("pid", id);
 		return this.detail2(jdbcTemplate, storedProcedure, parameters, mapper);
 	}
 
-	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure,
-			int id, RowMapper<TEntity2> mapper) throws Exception {		
+	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure, Map<String, Object> parameters, RowMapper<TEntity2> mapper) throws Exception {		
+		Connection conn = ds.getConnection();
+		conn.setAutoCommit(false);
+		String functionName = "{? = call " + storedProcedure + "(?) }";
+		CallableStatement proc = conn.prepareCall(functionName);
+		proc.registerOutParameter(1, Types.OTHER);
+		int i = 2;
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			proc.setObject(i, entry.getValue());
+	        i++;
+	    }
+		proc.execute();
+		TEntity2 item = null;
+		proc.execute();
+		ResultSet results = (ResultSet) proc.getObject(1);
+		while (results.next())
+		{
+			item = mapper.mapRow(results, 0);
+		}	
+		results.close();
+		proc.close();
+		conn.close();
+		return item;
+	}
+	
+	protected <TEntity2 extends BaseModel> TEntity2 detail2(DataSource ds, String storedProcedure, int id, RowMapper<TEntity2> mapper) throws Exception {		
 		Connection conn = ds.getConnection();
 		conn.setAutoCommit(false);
 		String functionName = "{? = call " + storedProcedure + "(?) }";

@@ -1,27 +1,46 @@
 package pe.sernanp.simrac.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import pe.gisriv.entity.FileEntity;
+
+import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.AlliedModel;
-import pe.sernanp.simrac.repository.AlliedRepository;
+import pe.sernanp.simrac.model.AlliedCommitmentModel;
+import pe.sernanp.simrac.model.RoleModel;
+import pe.sernanp.simrac.repository.RoleRepository;
 
 @Service
-public class AlliedService extends BaseService<AlliedModel> {
+public class RoleService extends BaseService<RoleModel> {
 	
 	@Autowired
-	private AlliedRepository _repository;
-		
+	private RoleRepository _repository;
+	
+	
+	public ResponseEntity<RoleModel> search(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<RoleModel> response = new ResponseEntity<RoleModel>();
+			List<RoleModel> item = this._repository.search(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(AlliedModel item) throws Exception {		
+	public ResponseEntity save(RoleModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -36,11 +55,8 @@ public class AlliedService extends BaseService<AlliedModel> {
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
-			} else {
-				id = this._repository.update(this._dataSource, item);
-				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
 			}
+			
 			this.transactionManager.commit(status);
 			ResponseEntity respuesta = new ResponseEntity();
 			respuesta.setExtra(id.toString());
@@ -59,7 +75,8 @@ public class AlliedService extends BaseService<AlliedModel> {
 		}
 	}
 	
-		
+	
+	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
@@ -84,37 +101,4 @@ public class AlliedService extends BaseService<AlliedModel> {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	public ResponseEntity<AlliedModel> detail(int id) throws Exception {
-		try {
-			if (id == 0) {
-				throw new Exception("No existe el elemento");
-			}
-			boolean success = true;
-			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
-			AlliedModel item = this._repository.detail(this._dataSource, id);
-			response.setSuccess(success);
-			response.setItem(item);
-			return response;
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	public ResponseEntity<AlliedModel> searchByAgreement(int id) throws Exception {
-		try {
-			if (id == 0) {
-				throw new Exception("No existe el elemento");
-			}
-			boolean success = true;
-			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
-			List<AlliedModel> item = this._repository.searchByAgreement(this._dataSource, id);
-			response.setSuccess(success);
-			response.setItems(item);
-			return response;
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
 }

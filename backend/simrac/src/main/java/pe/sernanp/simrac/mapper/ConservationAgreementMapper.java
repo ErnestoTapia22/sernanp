@@ -1,7 +1,6 @@
 package pe.sernanp.simrac.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import pe.gisriv.extension.ResultSetExtension;
 import pe.sernanp.simrac.model.AgreementStateModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;

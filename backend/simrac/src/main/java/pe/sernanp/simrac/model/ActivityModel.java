@@ -25,6 +25,14 @@ public class ActivityModel extends BaseModel {
 
 	public void setCommitment(CommitmentModel commitment) {
 		this._commitment = commitment;
+	}	
+
+	public int getGoal() {
+		return _goal;
+	}
+
+	public void setGoal(int goal) {
+		this._goal = goal;
 	}
 	
 	public int getValue() {
@@ -41,13 +49,5 @@ public class ActivityModel extends BaseModel {
 
 	public void setIndicator(String indicator) {
 		this._indicator = indicator;
-	}
-	
-	public int getGoal() {
-		return _goal;
-	}
-
-	public void setGoal(int goal) {
-		this._goal = goal;
 	}
 }

@@ -99,14 +99,14 @@ public class CommitmentService extends BaseService<CommitmentModel> {
 	}
 		
 	
-	public ResponseEntity<CommitmentModel> buscar(int id) throws Exception {
+	public ResponseEntity<CommitmentModel> search(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
 			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentModel>();
-			List<CommitmentModel> item = this._repository.buscar(this._dataSource, id);
+			List<CommitmentModel> item = this._repository.search(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItems(item);
 			return response;

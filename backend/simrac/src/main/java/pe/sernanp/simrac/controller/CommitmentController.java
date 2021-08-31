@@ -56,11 +56,11 @@ public class CommitmentController extends BaseController<CommitmentModel, Commit
 		}
 	}
 	
-	@RequestMapping(value = "/buscar/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<CommitmentModel> buscar(@PathVariable("id") int id) throws IOException {
+	public ResponseEntity<CommitmentModel> search(@PathVariable("id") int id) throws IOException {
 		try {
-			ResponseEntity<CommitmentModel> response = this._service.buscar(id);
+			ResponseEntity<CommitmentModel> response = this._service.search(id);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);

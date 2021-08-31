@@ -20,11 +20,11 @@ public class UserRepository extends BaseRepository<UserModel>{
 	}	
 		
 	
-	public List<UserModel> validar(DataSource ds, String id) throws Exception {
+	public UserModel validate(DataSource ds, String id) throws Exception {
 			System.out.println(ds);
 			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("pmodule", id);
-			return super.search23(ds,"simrac.fn_validar_usuario",parameters, new UserMapper());
+			parameters.put("puser", id);
+			return super.detail2(ds,"simrac.fn_validar_usuario", parameters, new UserMapper());
 			
 	}
 	
