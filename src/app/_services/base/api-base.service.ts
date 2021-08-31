@@ -64,7 +64,7 @@ export class ApiBaseService {
     } else {
       this.headers = this.getHttpHeaders();
       parsedBody = body;
-      parsedHeaders = this.getHttpHeaders();
+      parsedHeaders = this.getHttpHeaders('');
     }
 
     return this.http
