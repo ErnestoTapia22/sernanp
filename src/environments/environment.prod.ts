@@ -6,35 +6,46 @@ export const environment = {
   authCredentials: 'dj-sernanp-app:@re34n@tur4l',
   initialLayers: [
     {
-      id: 1,
-      url: 'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_GEOLOGIA_100K/MapServer',
+      id: 5,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
+      disabled: false,
+      name: 'Áreas de Administración Nacional'
+    },    
+    {
+      id: 6,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
       disabled: true,
-      name: 'Geología 100k',
+      name: 'Áreas de Administración Regional'
+    },
+    {
+      id: 7,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
+      disabled: true,
+      name: 'Áreas de Administración Privada'
+    },
+    {
+      id: 1,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000501/MapServer',
+      disabled: true,
+      name: 'Límite Departamental'
     },
     {
       id: 2,
-      url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/SCADA/MapServer',
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000502/MapServer',
       disabled: true,
-      name: 'SCADA',
+      name: 'Límite Provincial'
     },
     {
       id: 3,
-      url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/TDGN/MapServer',
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000503/MapServer',
       disabled: true,
-      name: 'TDGN',
+      name: 'Límite Distrital'
     },
     {
       id: 4,
-      url: 'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer',
-      disabled: false,
-      name: 'Catastro Minero',
-    },
-
-    {
-      id: 5,
-      url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/DSGN/ADMGSP/MapServer',
-      disabled: false,
-      name: 'Infraestructura',
-    },
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000504/MapServer',
+      disabled: true,
+      name: 'Capitales'
+    }
   ],
 };
