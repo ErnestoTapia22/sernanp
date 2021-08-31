@@ -20,11 +20,15 @@
             <li class="breadcrumb-item active" aria-current="page">Detalle</li>
           </ol>
         </nav>
-        <!-- 
-        <button type="button" class="btn btn-info ms-3">
-          <i class="fa fa-plus-circle"></i>
-          <span class="d-none d-sm-inline-block">Nuevo acuerdo</span>
-        </button> -->
+
+        <button
+          type="button"
+          class="btn btn-danger ms-3"
+          (click)="onDeleteModal(contentDelete)"
+        >
+          <i class="bi bi-x-circle me-2"></i>
+          <span class="d-none d-sm-inline-block">Cerrar Monitoreo</span>
+        </button>
       </div>
     </div>
   </div>
@@ -544,3 +548,35 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Cerrar Monitoreo</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="delete()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>
