@@ -20,6 +20,14 @@
             <li class="breadcrumb-item active" aria-current="page">Detalle</li>
           </ol>
         </nav>
+        <button
+          type="button"
+          class="btn btn-success ms-3"
+          (click)="onInitModal(contentInit)"
+        >
+          <i class="bi bi-x-circle me-2"></i>
+          <span class="d-none d-sm-inline-block">Iniciar monitoreo</span>
+        </button>
 
         <button
           type="button"
@@ -332,13 +340,13 @@
                 <div class="card bg-light mx-2">
                   <div class="card-body">
                     <div class="d-flex flex-row">
-                      <div class="round align-self-center round-success">
+                      <div class="round align-self-center round-danger">
                         <i class="bi bi-card-checklist fs-lg"></i>
                       </div>
                       <div class="m-l-10 align-self-center">
-                        <h3 class="m-b-0">7/10</h3>
+                        <h3 class="m-b-0">2/4</h3>
                         <h5 class="text-muted m-b-0">
-                          Actividades completadas
+                          Actividades < 50% avance
                         </h5>
                       </div>
                     </div>
@@ -351,8 +359,10 @@
                         <i class="bi bi-hand-index-thumb fs-lg"></i>
                       </div>
                       <div class="m-l-10 align-self-center">
-                        <h3 class="m-b-0">8/9</h3>
-                        <h5 class="text-muted m-b-0">Compromisos cumplidos</h5>
+                        <h3 class="m-b-0">1/4</h3>
+                        <h5 class="text-muted m-b-0">
+                          Actividades = 50% avance
+                        </h5>
                       </div>
                     </div>
                   </div>
@@ -360,180 +370,57 @@
                 <div class="card bg-light mx-2">
                   <div class="card-body">
                     <div class="d-flex flex-row">
-                      <div class="round align-self-center round-black">
+                      <div class="round align-self-center round-success">
                         <i class="bi bi-check-circle fs-lg"></i>
                       </div>
                       <div class="m-l-10 align-self-center">
-                        <h3 class="m-b-0">90%</h3>
-                        <h5 class="text-muted m-b-0">Objetivos alcanzados</h5>
+                        <h3 class="m-b-0">1/4</h3>
+                        <h5 class="text-muted m-b-0">
+                          Actividades > 60% avance
+                        </h5>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="row">
-                  <!-- Column -->
-                  <div class="col-lg-4 col-md-12">
-                    <div class="card bg-light">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Acuerdo completado</h5>
-                        <div
-                          id="morris-donut-chart"
-                          class="ecomm-donute"
-                          style="height: 317px; text-align: center"
-                        >
-                          <svg
-                            height="316.989"
-                            version="1.1"
-                            width="276.051"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            style="
-                              overflow: hidden;
-                              position: relative;
-                              left: -0.999994px;
-                              top: -0.937493px;
-                            "
-                          >
-                            <desc
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                              "
-                            >
-                              Created with Raphaël 2.2.0
-                            </desc>
-                            <defs
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                              "
-                            ></defs>
-                            <path
-                              fill="none"
-                              stroke="#fb9d13"
-                              d="M138.0255,243.84483333333333A85.35033333333332,85.35033333333332,0,0,0,140.53854354716117,73.18117154400092"
-                              stroke-width="2"
-                              opacity="1"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                                opacity: 1;
-                              "
-                            ></path>
-                            <path
-                              fill="#fb9d13"
-                              stroke="#ffffff"
-                              d="M138.0255,246.84483333333333A88.35033333333332,88.35033333333332,0,0,0,140.6268751370571,70.18247223759715L141.79506532074174,30.524507316001376A128.0255,128.0255,0,0,1,138.0255,286.52Z"
-                              stroke-width="3"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                              "
-                            ></path>
-                            <path
-                              fill="none"
-                              stroke="#01c0c8"
-                              d="M140.53854354716117,73.18117154400092A85.35033333333332,85.35033333333332,0,0,0,55.07326026020519,138.4045691324555"
-                              stroke-width="2"
-                              opacity="0"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                                opacity: 0;
-                              "
-                            ></path>
-                            <path
-                              fill="#01c0c8"
-                              stroke="#ffffff"
-                              d="M140.6268751370571,70.18247223759715A88.35033333333332,88.35033333333332,0,0,0,52.15755144571841,137.69842317790778L18.456655081119067,129.53651362292948A123.0255,123.0255,0,0,1,141.64784600424846,35.52233949334099Z"
-                              stroke-width="3"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                              "
-                            ></path>
-                            <path
-                              fill="none"
-                              stroke="#4f5467"
-                              d="M55.07326026020519,138.4045691324555A85.35033333333332,85.35033333333332,0,0,0,137.99868640242292,243.84482912146322"
-                              stroke-width="2"
-                              opacity="0"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                                opacity: 0;
-                              "
-                            ></path>
-                            <path
-                              fill="#4f5467"
-                              stroke="#ffffff"
-                              d="M52.15755144571841,137.69842317790778A88.35033333333332,88.35033333333332,0,0,0,137.99774392464235,246.84482897341917L137.98685039993535,281.5199939289349A123.0255,123.0255,0,0,1,18.456655081119067,129.53651362292948Z"
-                              stroke-width="3"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                              "
-                            ></path>
-                            <text
-                              x="138.0255"
-                              y="160.4945"
-                              text-anchor="middle"
-                              font-family='"Arial"'
-                              font-size="15px"
-                              stroke="none"
-                              fill="#000000"
-                              style="
-                                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                                text-anchor: middle;
-                                font-family: Arial;
-                                font-size: 15px;
-                                font-weight: 800;
-                              "
-                              font-weight="800"
-                              transform="matrix(2.0397,0,0,2.0397,-143.4678,-165.2698)"
-                              stroke-width="0.4902587765718549"
-                            >
-                              <tspan
-                                dy="5.908562499999988"
-                                style="
-                                  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                                "
-                              >
-                                90%
-                              </tspan>
-                            </text>
-                          </svg>
-                        </div>
+              <div class="d-flex flex-row justify-content-center">
+                <div class="card bg-light mx-2">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round align-self-center round-danger">
+                        <i class="bi bi-hand-index-thumb fs-lg"></i>
                       </div>
-                    </div>
-                  </div>
-                  <!-- Column -->
-                  <div class="col-lg-8 col-md-12">
-                    <div class="card bg-light">
-                      <div class="card-body">
-                        <textarea class="form-control" rows="5">
-                      R1 Se mantiene la cobertura vegetal de las ecorregiones presentes en el ANP que contribuirán a la conservación de la diversidad biológica
-                  </textarea
-                        >
-                        &nbsp;
-                        <textarea class="form-control" rows="5">
-                      R2. Se promueve el incremento de beneficios a la población local mediante el aprovechamiento de las oportunidades que ofrece el SNM.
-                  </textarea
-                        >
-                        &nbsp;
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckChecked"
-                            checked
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexCheckChecked"
-                          >
-                            Acuerdo finalizado
-                          </label>
-                        </div>
+                      <div class="m-l-10 align-self-center">
+                        <h3 class="m-b-0">No</h3>
+                        <h5 class="text-muted m-b-0">
+                          Suceptible a renovación
+                        </h5>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="d-flex flex-row justify-content-center">
+                <!-- Column -->
+
+                <!-- Column -->
+
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <textarea class="form-control" rows="5" cols="50">
+R1 Se mantiene la cobertura vegetal de las ecorregiones presentes en el ANP que contribuirán a la conservación de la diversidad biológica
+                  </textarea
+                    >
+
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
@@ -548,6 +435,38 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
+<ng-template #contentInit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Iniciar Monitoreo</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="initMonitoring()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>
 <ng-template #contentDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Cerrar Monitoreo</h4>
@@ -573,7 +492,7 @@
     <button
       type="button"
       ngbAutofocus
-      (click)="delete()"
+      (click)="deleteMonitoring()"
       class="btn btn-primary"
     >
       Aceptar

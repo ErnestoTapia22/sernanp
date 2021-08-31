@@ -38,4 +38,13 @@ export class DetailComponent implements OnInit {
       backdrop: 'static',
     });
   }
+  initMonitoring() {}
+  onInitModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+  }
+  deleteMonitoring() {}
 }
