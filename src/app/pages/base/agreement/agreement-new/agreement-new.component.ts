@@ -82,6 +82,7 @@ export class AgreementNewComponent implements OnInit {
     });
   }
   addFieldValue() {
+    console.log(this.newAttribute);
     this.fieldArray.push(this.newAttribute);
     this.newAttribute = {};
   }
