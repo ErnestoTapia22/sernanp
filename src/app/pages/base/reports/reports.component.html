@@ -112,37 +112,38 @@
               <div class="row g-3">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                   <label class="form-label">Código</label>
-                  <input type="text" class="form-control" />
+                  <input
+                    type="text"
+                    class="form-control"
+                  />
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <label class="form-label">Fecha de suscripción</label>
-                  <!-- <input type="text" class="form-control" placeholder="Last name" /> -->
-
-                  <input type="date" class="form-control" />
-                </div>
-                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <label class="form-label">Suscriptores del acuerdo</label>
-            <input type="text" class="form-control" />
-          </div> -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <label for="inputState" class="form-label">Categoria </label>
-                  <select class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>Bosque de protección</option>
-                    <option>Parque nacional</option>
-                    <option>Reserva nacional</option>
-                  </select>
+                  <label class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                  />
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                   <label for="inputState" class="form-label"
                     >Estado del acuerdo
                   </label>
+                  <select class="form-select" >
+                    <option value="">SELECCIONE</option>
+                    <option value="1">En envaluación</option>
+                    <option value="2">En diseño</option>
+                    <option value="3">Firmado</option>
+                    <option value="4">En implementación</option>
+                  </select>
+                </div>              
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <label for="inputState" class="form-label">Fuente de financiamiento </label>
                   <select class="form-select">
-                    <option selected>SELECCIONE</option>
-                    <option>Activo</option>
-                    <option>Inactivo</option>
-                    <option>Por renovar</option>
-                    <option>Vigente</option>
+                    <option value="">SELECCIONE</option>
+                    <option value="1">Público</option>
+                    <option value="2">Privado</option>
+                    <option value="3">Cooperación</option>
+                    <option value="4">Otro</option>
                   </select>
                 </div>
               </div>
