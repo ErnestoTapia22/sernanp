@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 public class RoleModel extends BaseModel {
 	
 	private int _system;
+	private String _flag;
 	
 	public int getSystem() {
 		return _system;
@@ -14,5 +15,13 @@ public class RoleModel extends BaseModel {
 	public void setSystem(int system) {
 		_system = system;
 	}
+	
+	public String getFlag() {
+		return _flag;
+	}
 
+	public void setFlag(String flag) {
+		_flag = flag;
+	}
+	
 }
