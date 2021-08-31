@@ -43,7 +43,7 @@
           </div>
           <div class="card-body" id="parent">
             <div class="row g-3">
-              <!--<div class="col-md-3">
+              <div class="col-md-3">
                 <label for="txtCode" class="form-label">Código (*)</label>
                 <input
                   id="txtCode"
@@ -52,25 +52,35 @@
                   placeholder="Código"
                   formControlName="code"
                 />
-              </div>-->
+              </div>
               <div class="col-md-3">
                 <label for="ddAnp" class="form-label">ANP (*)</label>
-                <select id="ddAnp" class="form-select">
+                <!-- <select id="ddAnp" class="form-select">
                     <option selected>SELECCIONE</option>
-                    <option>SN06	Megantoni</option>
-                    <option>RC03	Amarakaeri</option>
-                    <option>RVS03	Bosques Nublados de Udima</option>
-                    <option>RVS01	Laquipampa</option>
-                    <option>RVS02	Los Pantanos de Villa</option>
-                  </select>
-                <!-- <ng-select
+                    <option>ANP 1</option>
+                    <option>ANP 2</option>
+                    <option>ANP 3</option>
+                  </select> -->
+                <ng-select
                   [items]="anp"
                   bindLabel="anpNomb"
                   bindValue="anpId"
                   [searchable]="true"
                   formControlName="anp"
-                  placeholder="SELECCIONE">
-                </ng-select>-->
+                  placeholder="SELECCIONE"
+                >
+                </ng-select>
+              </div>
+              <div class="col-md-3">
+                <label for="txtaGoal" class="form-label"
+                  >Objetivo del ADC (*)</label
+                >
+                <textarea
+                  id="txtaGoal"
+                  class="form-control"
+                  rows="1"
+                  formControlName="goal"
+                ></textarea>
               </div>
               <div class="col-md-3">
                 <label for="ddState" class="form-label">Estado (*)</label>
@@ -79,12 +89,15 @@
                   <option>En envaluación</option>
                   <option>En diseño</option>
                   <option>Firmado</option>
-                  <option>En implementación</option>
+                  <option>
+                    En implementación: con plan de trabajo en implementación
+                  </option>
                 </select>
               </div>
               <div class="col-md-3">
                 <label for="txtSuscriptionDate" class="form-label"
-                  >Fecha de suscripción (*)</label>
+                  >Fecha de suscripción (*)</label
+                >
                 <input
                   type="date"
                   class="form-control"
@@ -101,24 +114,6 @@
                   class="form-control"
                   min="0"
                 />
-              </div>
-              <div class="col-md-6">
-                <label for="txtaGoal" class="form-label">Objetivo general</label>
-                <textarea
-                  id="txtaGoal"
-                  class="form-control"
-                  rows="2"
-                  formControlName="goal"
-                ></textarea>
-              </div>
-              <div class="col-md-6">
-                <label for="txtaObs" class="form-label">Observaciones </label>
-                <i
-                  class="bi bi-info-circle mx-1"
-                  placement="top"
-                  ngbTooltip="Observaciones/comentarios adicionales a considerar en relación al AdC"
-                ></i>
-                <textarea id="txtaObs" class="form-control" rows="2"></textarea>
               </div>
             </div>
           </div>
@@ -179,7 +174,7 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>Oxalecker</td>
+                              <td>Oxaleckuer</td>
                               <td>Empresas</td>
                               <td>
                                 <div class="text-nowrap">
@@ -207,114 +202,11 @@
         </div>
         <div class="card">
           <div class="card-header">
-            <label class="mb-0 fw-bold">Compromisos</label>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-6">
-                <form action="#" [formGroup]="form" novalidate>
-                  <div class="card">
-                    <div class="card-body" id="parent">
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Agregar compromisos</label>
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-primary d-flex"
-                            placement="top"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createCommitments"
-                            ngbTooltip="Agregar"
-                          >
-                            <i class="bi bi-plus-lg"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <hr />
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead class="fw-bold">
-                            <tr>
-                              <td>Objetivo</td>
-                              <td>Compromiso</td>
-                              <td>Suscriptor</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>OB 1 - Mantener la cobertura vegetal del Parque Nacional</td>
-                              <td>Fortalecer las capacidades de los integrantes de la Empresa, en el manejo de equipo básicos</td>
-                              <td>Sernanp</td>                              
-                            </tr>
-                            <tr>
-                              <td>OB 1 - Mantener la cobertura vegetal del Parque Nacional</td>
-                              <td>De igual forma fortalecer las capacidades a los integrantes de la empresa en temas de manejos de recursos naturales.</td>
-                              <td>Sernanp</td>                              
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-6">
-                <form action="#" [formGroup]="form" novalidate>
-                  <div class="card">
-                    <div class="card-body" id="parent">
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Agregar compromisos</label>
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-primary d-flex"
-                            placement="top"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createCommitments"
-                            ngbTooltip="Agregar"
-                          >
-                            <i class="bi bi-plus-lg"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <hr />
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead class="fw-bold">
-                            <tr>
-                              <td>Objetivo</td>
-                              <td>Compromiso</td>
-                              <td>Suscriptor</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>OB 2 - Mantener poblaciones de especies de interés para la gestion del Parque Nacional</td>
-                              <td>Participación en actividades de vigilancia desarrolladas por el equipo técnico de la Jefatura del ANP</td>
-                              <td>Oxalecker</td>                              
-                            </tr>
-                            <tr>
-                              <td>OB 2 - Mantener poblaciones de especies de interés para la gestion del Parque Nacional</td>
-                              <td>Participar en las actividades a ser realizadas en favor de la conservación del PNYCH</td>
-                              <td>Oxalecker</td>                              
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
             <label class="mb-0 fw-bold">Beneficiarios</label>
           </div>
           <div class="card-body">
             <div class="row g-3">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label class="form-label">Número de participantes </label
                 ><i
                   class="bi bi-info-circle mx-1"
@@ -346,7 +238,7 @@
                   />
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="txtaDetailB" class="form-label"
                   >Detalle del beneficiario</label
                 >
@@ -361,7 +253,7 @@
                   rows="1"
                 ></textarea>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="numbFamiliesBQ" class="form-label"
                   >Número de familias beneficiadas</label
                 >
@@ -377,7 +269,7 @@
                   id="numbFamiliesBQ"
                 />
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <label for="txtaDetailBF" class="form-label"
                   >Detalle del beneficiario familia</label
                 >
@@ -392,7 +284,7 @@
                   rows="1"
                 ></textarea>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <label for="txtaIndirectB" class="form-label"
                   >Beneficiarios indirectos</label
                 >
@@ -614,17 +506,15 @@
           <div class="card-body">
             <div class="row g-3">
               <div class="col-md-3">
-                <div class="form-check form-switch form-check-inline">
-                  <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="chkLocalD"
-                  value="option3"
-                />
                 <label for="ddMasterP" class="form-label"
                   >Plan maestro (*)</label
                 >
-                </div>
+                <select id="ddMasterP" class="form-select">
+                  <option selected>SELECCIONE</option>
+                  <option>Plan maestro 1</option>
+                  <option>Plan maestro 2</option>
+                  <option>Plan maestro 3</option>
+                </select>
               </div>
               <div class="col-md-3">
                 <label class="form-label"
@@ -729,7 +619,7 @@
           </div>
           <div class="card-body">
             <div class="row g-3">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-check form-switch form-check-inline mt-2">
                   <input
                     class="form-check-input"
@@ -747,7 +637,7 @@
                   ></i>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="numbFinanc" class="form-label"
                   >Financiamiento (Soles)</label
                 >
@@ -763,25 +653,19 @@
                   id="numbFinanc"
                 />
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="txtSourceF" class="form-label"
                   >Fuente de financiamiento</label
                 >
-                <select class="form-select">
-                  <option selected>SELECCIONE</option>
-                  <option>Público</option>
-                  <option>Privado</option>
-                  <option>Cooperación</option>
-                  <option>Otro</option>
-                </select>
+                <input type="text" class="form-control" id="txtSourceF" />
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <label for="txtModF" class="form-label"
                   >Modalidad de financiamiento</label
                 >
                 <input type="text" class="form-control" id="txtModF" />
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <label for="txtNameF" class="form-label"
                   >Nombre del fondo</label
                 >
@@ -795,14 +679,85 @@
             </div>
           </div>
         </div>
-        
+        <div class="card">
+          <div class="card-header">
+            <label class="mb-0 fw-bold">Plan de trabajo</label>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <form action="#" [formGroup]="form" novalidate>
+                  <div class="card">
+                    <div class="card-body" id="parent">
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">Agregar compromisos</label>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-primary d-flex"
+                            placement="top"
+                            data-bs-toggle="modal"
+                            data-bs-target="#createCommitments"
+                            ngbTooltip="Agregar"
+                          >
+                            <i class="bi bi-plus-lg"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead class="fw-bold">
+                            <tr>
+                              <td>Código</td>
+                              <td>Nombre</td>
+                              <td>Subscriptor</td>
+                              <td>Actividades</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>ADC2021SUP</td>
+                              <td>Compromiso 1</td>
+                              <td>Sernanp</td>
+                              <td>
+                                <div class="text-nowrap">
+                                  <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-info border-0"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#createActivity"
+                                  >
+                                    <i class="bi bi-eye fs-lg"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="card">
           <div class="card-header">
             <label class="mb-0 fw-bold"></label>
           </div>
           <div class="card-body">
             <div class="row g-3" action="#">
-              
+              <div class="col-md-3">
+                <label for="txtaObs" class="form-label">Observaciones </label>
+                <i
+                  class="bi bi-info-circle mx-1"
+                  placement="top"
+                  ngbTooltip="Observaciones/comentarios adicionales a considerar en relación al AdC"
+                ></i>
+                <textarea id="txtaObs" class="form-control" rows="1"></textarea>
+              </div>
               <!-- <div class="col-md-4">
                   <div class="avatar-img float-right">
                     <input
@@ -844,7 +799,131 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
+<div
+  class="modal fade"
+  id="createActivity"
+  tabindex="-1"
+  aria-labelledby="createActivityLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3"></div>
+        <hr />
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Nro.</td>
+                <td>Actividad</td>
+                <td>Indicador</td>
+                <td>Meta</td>
+                <td>Opción</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let field of fieldArray; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.activity"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.indicator"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.goal"
+                  />
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-danger border-0"
+                    type="button"
+                    (click)="deleteFieldValue(i)"
+                  >
+                    <i class="bi bi-dash-square fs-lg"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" disabled />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeCode"
+                    [(ngModel)]="newAttribute.activity"
+                    name="newAttributeActivity"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeName"
+                    [(ngModel)]="newAttribute.indicator"
+                    name="newAttributeIndicator"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributePrice"
+                    [(ngModel)]="newAttribute.goal"
+                    name="newAttributeGoal"
+                  />
+                </td>
 
+                <td>
+                  <div class="text-nowrap">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-success border-0"
+                      (click)="addFieldValue()"
+                    >
+                      <i class="bi bi-plus-square fs-lg"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div
   class="modal fade"
   id="createSusbcribers"
@@ -914,22 +993,20 @@
       </div>
       <div class="modal-body">
         <div class="row g-3">
-          <div class="col-md-12">
-            <label class="form-label">Compromiso</label>
-            <textarea class="form-control" rows="2"></textarea>
+          <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" />
           </div>
-          <div class="col-md-12">
-            <label class="form-label">Objetivo</label>
-            <select class="form-select">
-              <option>OB 1 - Mantener la cobertura vegetal del Parque Nacional</option>
-              <option>OB 2 - Mantener poblaciones de especies de interés para la gestion del Parque Nacional</option>
-            </select>
+          <div class="col-md-4">
+            <label class="form-label">Campo 1</label>
+            <input type="text" class="form-control" />
           </div>
-          <div class="col-md-12">
-            <label class="form-label">Suscriptor</label>
+          <div class="col-md-4">
+            <label class="form-label">Perteneciente a</label>
             <select class="form-select">
-              <option>SERNANP</option>
-              <option>Oxalecker</option>
+              <option>Sernanp 1</option>
+              <option>Susbcriptor 2</option>
+              <option>Susbcriptor 3</option>
             </select>
           </div>
         </div>
@@ -938,7 +1015,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary"data-bs-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>
