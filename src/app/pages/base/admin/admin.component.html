@@ -41,21 +41,19 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10">
-                      <h5 class="card-title">Actividad económica</h5>
+                      <h5 class="card-title">Categoría de Aliados</h5>
                     </div>
-
                     <div class="col-md-2 float-end">
                       <button
                         class="btn btn-sm btn-primary"
                         (click)="
-                          onRegisterModal(contentRegister, 'economicactivity')
+                          onRegisterModal(contentRegister, 'alliedcategory')
                         "
                       >
                         <i class="bi bi-plus-lg"></i>
                       </button>
                     </div>
                   </div>
-
                   <div class="table-responsive">
                     <table class="table mb-0">
                       <thead>
@@ -68,12 +66,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <!-- prettier-ignore -->
                         <tr
-                       
                           *ngFor="
-                            let item of modules['economicactivity'].items
-                              ;
+                            let item of modules['alliedcategory'].items;
                             index as idx
                           "
                         >
@@ -93,7 +88,7 @@
                                   onUpdateModal(
                                     contentUpdate,
                                     item.id,
-                                    'economicactivity'
+                                    'alliedcategory'
                                   )
                                 "
                               >
@@ -106,7 +101,7 @@
                                   onDeleteModal(
                                     contentDelete,
                                     item.id,
-                                    'economicactivity'
+                                    'alliedcategory'
                                   )
                                 "
                               >
@@ -120,15 +115,14 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>            
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10">
-                      <h5 class="card-title">Fuente</h5>
+                      <h5 class="card-title">Fuente de financiamiento</h5>
                     </div>
-
                     <div class="col-md-2 float-end">
                       <button
                         class="btn btn-sm btn-primary"
@@ -205,14 +199,13 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-10">
-                      <h5 class="card-title">Categoría aliado</h5>
+                      <h5 class="card-title">Estado de Acuerdo</h5>
                     </div>
-
                     <div class="col-md-2 float-end">
                       <button
                         class="btn btn-sm btn-primary"
                         (click)="
-                          onRegisterModal(contentRegister, 'alliedcategory')
+                          onRegisterModal(contentRegister, 'agreementstate')
                         "
                       >
                         <i class="bi bi-plus-lg"></i>
@@ -231,9 +224,12 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <!-- prettier-ignore -->
                         <tr
+                       
                           *ngFor="
-                            let item of modules['alliedcategory'].items;
+                            let item of modules['agreementstate'].items
+                              ;
                             index as idx
                           "
                         >
@@ -253,7 +249,7 @@
                                   onUpdateModal(
                                     contentUpdate,
                                     item.id,
-                                    'alliedcategory'
+                                    'agreementstate'
                                   )
                                 "
                               >
@@ -266,7 +262,7 @@
                                   onDeleteModal(
                                     contentDelete,
                                     item.id,
-                                    'alliedcategory'
+                                    'agreementstate'
                                   )
                                 "
                               >

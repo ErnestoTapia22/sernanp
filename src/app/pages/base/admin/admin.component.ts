@@ -26,10 +26,10 @@ export class AdminComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private changeDetection: ChangeDetectorRef
   ) {
-    this.modules = {
-      economicactivity: {
-        name: 'Actividad económica',
-        ownName: 'economicactivity',
+    this.modules = {      
+      agreementstate: {
+        name: 'Estado de Acuerdo',
+        ownName: 'agreementstate',
         id: 0,
         items: [],
         item: {},
