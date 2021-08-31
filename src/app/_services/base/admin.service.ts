@@ -32,7 +32,8 @@ export class AdminService {
   moduleRegister(segment, item): Observable<any> {
     return this.apiBaseService.post(
       `${environment.apiUrl}/${segment}${this.segmentInsert}`,
-      item
+      item,
+      null
     );
   }
   moduleDelete(segment, id): Observable<any> {
