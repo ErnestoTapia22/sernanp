@@ -18,6 +18,8 @@ import { TestComponent } from './pages/base/test/test.component';
 import { AdminComponent } from './pages/base/admin/admin.component';
 import { AnpComponent } from './pages/base/anp/anp.component';
 import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { AuthGuard } from './helpers/auth.guard';
+import { Role } from './_models/auth/role';
 
 const routes: Routes = [
   { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -92,6 +94,8 @@ const routes: Routes = [
         component: AdminComponent,
       },
     ],
+    // canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] },
   },
   {
     path: 'anp',
