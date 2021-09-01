@@ -22,7 +22,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/316"
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/115"
 					},
 					"response": []
 				},
@@ -450,7 +450,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"csdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Detallar los municipios del PDLC\",\r\n    \"description\": \"Descripcion5\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -547,7 +547,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"csdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Jefatura\",\r\n    \"description\": \"Description4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -644,7 +644,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"assd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Sistema de monitoreo\",\r\n    \"description\": \"Descripcion6\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -712,7 +712,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ffdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"otros\",\r\n    \"description\": \"Descripcion4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -916,7 +916,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/allied/buscar/317"
+						"url": "http://localhost:8050/simrac/api/allied/search/317"
 					},
 					"response": []
 				}
@@ -1177,7 +1177,34 @@
 			"name": "Role",
 			"item": [
 				{
-					"name": "RoleSsearch",
+					"name": "RoleDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/role/delete/125"
+					},
+					"response": []
+				},
+				{
+					"name": "RoleInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"conservationAgreement\": {\r\n    \"id\": \"317\"\r\n    },\r\n    \"name\": \"csaaaaaaadd\",\r\n    \"description\": \"bbbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "RoleSearch",
 					"request": {
 						"method": "GET",
 						"header": [],
