@@ -18,6 +18,7 @@ import { TestComponent } from './pages/base/test/test.component';
 import { AdminComponent } from './pages/base/admin/admin.component';
 import { AnpComponent } from './pages/base/anp/anp.component';
 import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './_models/auth/role';
 
@@ -106,6 +107,8 @@ const routes: Routes = [
       { path: 'masterplan', component: MasterPlanComponent },
     ],
   },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: 'not-found' },
 ];
 @NgModule({
   declarations: [],

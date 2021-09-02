@@ -50,6 +50,6 @@ export class AuthenticationService {
     localStorage.removeItem('dataUser');
     localStorage.removeItem('auth');
     this.userSubject.next(null);
-    this.router.navigate(['/map']);
+    this.router.navigate(['/authentication']);
   }
 }
