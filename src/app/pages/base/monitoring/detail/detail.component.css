@@ -30,3 +30,9 @@
 .round-success {
   background-color: #00a772;
 }
+.circle {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+}

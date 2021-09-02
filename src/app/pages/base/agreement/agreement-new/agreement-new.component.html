@@ -251,6 +251,15 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Compromisos</label>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary mx-2"
+                  >
+                    <i class="bi bi-cloud-arrow-down"></i>
+                    Exportar
+                  </button>
+                </div>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -532,11 +541,12 @@
                           min="0"
                           class="form-control"
                           id="numbScope"
+                          disabled
                         />
                       </div>
                       <div class="col-md-3">
                         <label for="numbProductiveA" class="form-label"
-                          >Superficie productiva (Ha)</label
+                          >Superficie de intervención (Ha)</label
                         >
                         <i
                           class="bi bi-info-circle mx-1"
@@ -550,10 +560,27 @@
                           id="numbProductiveA"
                         />
                       </div>
+                      <div class="col-md-3">
+                        <label for="numbProductiveA" class="form-label"
+                          >Ubicacion Superficie de intervención</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado "
+                        ></i>
+                        <input
+                          type="text"
+                          min="0"
+                          class="form-control"
+                          id="numbProductiveA"
+                          value="zona de amortiguamiento"
+                        />
+                      </div>
 
                       <div class="col-md-3">
                         <label for="txtaProductiveAD" class="form-label"
-                          >Detalle superficie productiva
+                          >Detalle superficie intervención
                         </label>
                         <i
                           class="bi bi-info-circle mx-1"
@@ -987,7 +1014,9 @@
                                   Parque Nacional
                                 </td>
                                 <td>
-                                  De igual forma fortalecer las capacidades a los integrantes de la empresa en temas de manejos de recursos naturales.
+                                  De igual forma fortalecer las capacidades a
+                                  los integrantes de la empresa en temas de
+                                  manejos de recursos naturales.
                                 </td>
                                 <td>Sernanp</td>
                                 <td>
@@ -1149,29 +1178,119 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-md-12">
-            <label class="form-label">Compromiso</label>
-            <textarea class="form-control" rows="2"></textarea>
+        <ul class="nav nav-tabs nav-tabs-flat" id="myComp" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="datos-tabMP"
+              data-bs-toggle="tab"
+              data-bs-target="#tabMP"
+              type="button"
+              role="tab"
+            >
+              Plan maestro
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="datos-tabOthers"
+              data-bs-toggle="tab"
+              data-bs-target="#tabO"
+              type="button"
+              role="tab"
+            >
+              Otros planes
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane pt-2 fade show active"
+            id="tabMP"
+            role="tabpanel"
+            aria-labelledby="datos-tabMP"
+          >
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label">Compromiso</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <select class="form-select">
+                  <option>
+                    OB 1 - Mantener la cobertura vegetal del Parque Nacional
+                  </option>
+                  <option>
+                    OB 2 - Mantener poblaciones de especies de interés para la
+                    gestion del Parque Nacional
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Suscriptor</label>
+                <select class="form-select">
+                  <option>SERNANP</option>
+                  <option>Oxalecker</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="col-md-12">
-            <label class="form-label">Objetivo</label>
-            <select class="form-select">
-              <option>
-                OB 1 - Mantener la cobertura vegetal del Parque Nacional
-              </option>
-              <option>
-                OB 2 - Mantener poblaciones de especies de interés para la
-                gestion del Parque Nacional
-              </option>
-            </select>
-          </div>
-          <div class="col-md-12">
-            <label class="form-label">Suscriptor</label>
-            <select class="form-select">
-              <option>SERNANP</option>
-              <option>Oxalecker</option>
-            </select>
+          <div
+            class="tab-pane pt-2"
+            id="tabO"
+            role="tabpanel"
+            aria-labelledby="datos-tabOthers"
+          >
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label">Compromiso</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo del:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Plan de desarrollo concertado"
+                />
+                <!-- <select class="form-select">
+                  <option selected>Plan maestro</option>
+                  <option>Plan de desarrollo concertado</option>
+                  <option>Plan de vida de las comunidades</option>
+                </select> -->
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <textarea class="form-control" rows="2">
+OB 1 - Mantener la cobertura vegetal del Parque Nacional
+                </textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Compromiso</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo del:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Plan de vida de las comunidades"
+                />
+                <!-- <select class="form-select">
+                  <option selected>Plan maestro</option>
+                  <option>Plan de desarrollo concertado</option>
+                  <option>Plan de vida de las comunidades</option>
+                </select> -->
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <textarea class="form-control" rows="2">
+ OB 3 - lorem ipsum
+                </textarea>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1215,9 +1334,10 @@
               <tr>
                 <td>Nro.</td>
                 <td>Actividad</td>
+                <td>Tipo indicador</td>
                 <td>Indicador</td>
                 <td>Meta</td>
-                <td>Trimestre</td>
+                <td>Semestre</td>
                 <td>Opción</td>
               </tr>
             </thead>
@@ -1231,6 +1351,14 @@
                     [value]="field.activity"
                   />
                 </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.indicatorType"
+                  />
+                </td>
+
                 <td>
                   <input
                     class="form-control"
@@ -1313,6 +1441,15 @@
                     [(ngModel)]="newAttribute.activity"
                     name="newAttributeActivity"
                   />
+                </td>
+                <td>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="newAttribute.indicatorType"
+                  >
+                    <option value="Acumulado">Acumulado</option>
+                    <option value="Promedio">Promedio</option>
+                  </select>
                 </td>
                 <td>
                   <input

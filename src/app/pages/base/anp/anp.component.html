@@ -80,9 +80,11 @@
                     <th>Nº</th>
                     <th>Categoria</th>
                     <th>Código</th>
-                    <th>Nombre</th>                   
+                    <th>Nombre</th>
                     <th>Departamento</th>
-                    <th>Opciones</th>
+                    <th>Plan maestro</th>
+                    <!-- <th>Plan de desarrollo c.</th>
+                    <th>Plan de vida</th> -->
                   </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -107,7 +109,6 @@
                         index as idx
                       "
                     >
-                    
                       <td>{{ item.index }}</td>
                       <td>{{ item.category }}</td>
                       <td>{{ item.code }}</td>
@@ -124,6 +125,28 @@
                           </button>
                         </div>
                       </td>
+                      <!-- <td>
+                        <div class="text-nowrap">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-success border-0"
+                            routerLink="/anp/masterplan"
+                          >
+                            <i class="bi bi-plus-square fs-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-primary border-0"
+                            routerLink="/anp/masterplan"
+                          >
+                            <i class="bi bi-plus-square fs-lg"></i>
+                          </button>
+                        </div>
+                      </td> -->
                     </tr>
                   </ng-container>
                 </tbody>
