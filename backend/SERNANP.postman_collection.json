@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36dc8730-65f4-4d9a-b51d-8cf7c0eaeaf9",
+		"_postman_id": "3a4cb118-6374-4c5e-a0d1-3a729aa66d5f",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -1209,6 +1209,244 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:8050/simrac/api/role/search/27"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ANP",
+			"item": [
+				{
+					"name": "AnpSearch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/search"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MasterPlan",
+			"item": [
+				{
+					"name": "Detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"c\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "SearchByANP",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"c\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/searchbyanp/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":1 },\r\n    \"name\":\"Plan Maestro 1\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/save"
+					},
+					"response": []
+				},
+				{
+					"name": "searchobjetives",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/searchobjetives/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Objetive",
+			"item": [
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"masterPlan\" : { \"id\":2 },\r\n    \"component\" : { \"id\":1 },\r\n    \"description\":\"Objetivo 1\",\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/objetive/save"
+					},
+					"response": []
+				},
+				{
+					"name": "searchactionlines",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/objetive/searchactionlines/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ActionLine",
+			"item": [
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"objetive\" : { \"id\":1 },\r\n    \"name\":\"Seguridad\",\r\n    \"description\":\"11111111111111111\",\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/actionline/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementSearch Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"c\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/search"
 					},
 					"response": []
 				}
