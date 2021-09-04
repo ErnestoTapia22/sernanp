@@ -47,7 +47,7 @@ public class ObjetiveRepository extends BaseRepository<ObjetiveModel> {
 	
 	public List<ActionLineModel> searchActionLines(DataSource ds, int id) throws Exception {		
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("pagreementid",id);
+		parameters.put("pobjetiveid",id);
 		return super.search23(ds,"simrac.fn_buscar_lineasaccionporobjetivo",parameters, new ActionLineMapper());		
 	}
 }

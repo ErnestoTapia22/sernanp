@@ -70,4 +70,15 @@ public class MasterPlanController extends BaseController<MasterPlanModel, Master
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/searchbyanp/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<MasterPlanModel> searchByANP(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<MasterPlanModel> response = this._service.searchByANP(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

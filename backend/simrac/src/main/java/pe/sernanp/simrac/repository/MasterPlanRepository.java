@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 import pe.sernanp.simrac.mapper.ActionLineMapper;
 import pe.sernanp.simrac.mapper.MasterPlanMapper;
 import pe.sernanp.simrac.mapper.ObjetiveMapper;
+import pe.sernanp.simrac.mapper.UserMapper;
 import pe.sernanp.simrac.model.ActionLineModel;
 import pe.sernanp.simrac.model.MasterPlanModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
+import pe.sernanp.simrac.model.UserModel;
 
 @Repository
 public class MasterPlanRepository extends BaseRepository<MasterPlanModel> {
@@ -49,7 +51,13 @@ public class MasterPlanRepository extends BaseRepository<MasterPlanModel> {
 	
 	public List<ObjetiveModel> searchObjetives(DataSource ds, int id) throws Exception {		
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("pagreementid",id);
+		parameters.put("pmasterplanid",id);
 		return super.search23(ds,"simrac.fn_buscar_objetivosporplanmaestro",parameters, new ObjetiveMapper());		
 	}
+	
+	public MasterPlanModel searchByANP(DataSource ds, int id) throws Exception {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("panpid", id);
+		return super.detail2(ds,"simrac.fn_buscar_planmaestroporanp", parameters, new MasterPlanMapper());			
+	}	
 }

@@ -8,8 +8,8 @@ public class MasterPlanMapper extends BaseMapper<MasterPlanModel> {
 	@Override
 	public MasterPlanModel mapRow(ResultSet rs, int rowNum) throws SQLException {		
 		MasterPlanModel item = super.mapRowBase(rs, new MasterPlanModel());
-		item.setVersion(ResultSetExtension.getInt2(rs, "vigency"));
-		item.setActive(ResultSetExtension.getBoolean2(rs, "partmen"));
+		item.setVersion(ResultSetExtension.getInt2(rs, "version"));
+		item.setActive(ResultSetExtension.getBoolean2(rs, "active"));
 		return item;
 	}
 }

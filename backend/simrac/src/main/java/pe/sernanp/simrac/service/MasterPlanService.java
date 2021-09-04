@@ -117,4 +117,19 @@ public class MasterPlanService extends BaseService<MasterPlanModel> {
 		}
 	}
 
+	public ResponseEntity<MasterPlanModel> searchByANP(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<MasterPlanModel> response = new ResponseEntity<MasterPlanModel>();
+			MasterPlanModel item = this._repository.searchByANP(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItem(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }
