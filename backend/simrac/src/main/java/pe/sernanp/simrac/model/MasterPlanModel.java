@@ -3,7 +3,7 @@ package pe.sernanp.simrac.model;
 import javax.persistence.Entity;
 
 @Entity
-public class PlanMasterModel extends BaseModel {
+public class MasterPlanModel extends BaseModel {
 
 	private AnpModel _anp;
 	private int _version;
