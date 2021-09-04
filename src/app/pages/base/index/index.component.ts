@@ -251,4 +251,14 @@ export class IndexComponent implements OnInit {
       }
     }
   }
+  test() {
+    // var layer = new MapImageLayer({
+    //   url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer',
+    //   sublayers: [
+    //     { id: 2, visible: false, popupTemplate: null },
+    //     { id: 1, visible: false, popupTemplate:  },
+    //     { id: 0, visible: false, popupTemplate: workOrderPopupTemplate },
+    //   ],
+    // });
+  }
 }
