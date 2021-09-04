@@ -15,8 +15,10 @@ import {
 })
 export class AgreementService {
   private segmentSearch;
+  private segmentDetail;
   constructor(private apiService: ApiBaseService, private http: HttpClient) {
     this.segmentSearch = '/conservationagreement/search';
+    this.segmentDetail = '/conservationagreement/detail';
   }
   uploadShape(file: File) {
     const fd = new FormData();
@@ -33,6 +35,11 @@ export class AgreementService {
     return this.apiService.postFormData(
       `${environment.apiUrl}${this.segmentSearch}`,
       item
+    );
+  }
+  agreementDetail(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentDetail}/${id}`
     );
   }
 }

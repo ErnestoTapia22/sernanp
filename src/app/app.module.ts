@@ -46,6 +46,7 @@ import { MasterPlanComponent } from './pages/base/master-plan/master-plan.compon
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 import { AgreementDetailComponent } from './pages/base/agreement/agreement-detail/agreement-detail.component';
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
+import { PublicComponent } from './pages/base/public/public.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { NotFoundComponent } from './pages/base/not-found/not-found.component';
     AgreementNewComponent,
     AgreementDetailComponent,
     NotFoundComponent,
+    PublicComponent,
   ],
   imports: [
     BrowserModule,

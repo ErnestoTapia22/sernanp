@@ -21,16 +21,21 @@ import { MasterPlanComponent } from './pages/base/master-plan/master-plan.compon
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './_models/auth/role';
+import { PublicComponent } from './pages/base/public/public.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'authentication', pathMatch: 'full' },
+  { path: '', redirectTo: 'default', pathMatch: 'full' },
   {
-    path: 'authentication',
+    path: 'default',
     component: BlankLayoutComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
     ],
+  },
+  {
+    path: 'authentication/:token',
+    component: PublicComponent,
   },
   {
     path: 'map',
