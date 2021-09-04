@@ -55,7 +55,7 @@ export class AuthenticationService {
   authenticate(token) {
     try {
       this.apiBaseService
-        .get(`${environment.apiUrl}${this.segmentUserValidate}/ycoyla`)
+        .get(`${environment.apiUrl}${this.segmentUserValidate}token`)
         .subscribe((response) => {
           console.log(response);
           if (response && response.item !== undefined) {
