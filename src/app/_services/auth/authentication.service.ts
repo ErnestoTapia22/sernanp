@@ -8,18 +8,25 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { HttpParams } from '@angular/common/http';
 import { User } from '../../_models/auth/user';
+import { ApiBaseService } from '@app/_services/base/api-base.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private userSubject: BehaviorSubject<User>;
+  private segmentUserValidate: string = '';
   public user: Observable<User>;
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private apiBaseService: ApiBaseService
+  ) {
     this.userSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('user'))
     );
     this.user = this.userSubject.asObservable();
+    this.segmentUserValidate = '/user/validate/';
   }
   public get userValue(): User {
     return this.userSubject.value;
@@ -45,11 +52,28 @@ export class AuthenticationService {
         })
       );
   }
+  authenticate(token) {
+    try {
+      this.apiBaseService
+        .get(`${environment.apiUrl}${this.segmentUserValidate}/ycoyla`)
+        .subscribe((response) => {
+          console.log(response);
+          if (response && response.item !== undefined) {
+            localStorage.setItem('user', JSON.stringify(response.item));
+            this.router.navigate(['/map/index']);
+          } else {
+            this.router.navigate(['/authenticate/']);
+          }
+        });
+    } catch (error) {
+      this.router.navigate(['/default/login']);
+    }
+  }
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('dataUser');
     localStorage.removeItem('auth');
     this.userSubject.next(null);
-    this.router.navigate(['/authentication']);
+    this.router.navigate(['/default/login']);
   }
 }

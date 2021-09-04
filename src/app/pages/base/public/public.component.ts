@@ -21,19 +21,16 @@ import { TreeModel } from '../../../_models/base/tree-model';
 import { CustomTreeItem } from '../../../helpers/custom-tree-item';
 //environment
 import { environment } from '../../../../environments/environment';
-//popup
-import PopupTemplate from '@arcgis/core/PopupTemplate';
-import Popup from '@arcgis/core/widgets/Popup';
+
 //auth
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css'],
+  selector: 'app-public',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.css'],
 })
-export class IndexComponent implements OnInit {
-  //variables
+export class PublicComponent implements OnInit {
   mapProperties: any;
   mapViewProperties: any;
   items: any[] = [];
@@ -46,11 +43,10 @@ export class IndexComponent implements OnInit {
   itemsArray: any[] = [];
   treeConfig: any;
   token: string = '';
-
   //change detector in dom
   @ViewChild(TreeviewComponent, { static: false })
   treeviewComponent: TreeviewComponent;
-  //constructor
+
   constructor(
     private baseService: BaseService,
     private layerService: LayerService,
@@ -67,8 +63,14 @@ export class IndexComponent implements OnInit {
       maxHeight: 800,
     };
   }
-  //index init
+
   ngOnInit(): void {
+    console.log(this.route.snapshot.paramMap.get('token'));
+    this.token = this.route.snapshot.paramMap.get('token');
+    if (this.token) {
+      this.login(this.token);
+    }
+
     this.mapProperties = {
       basemap: 'hybrid',
       ground: 'world-elevation',
@@ -79,7 +81,6 @@ export class IndexComponent implements OnInit {
     };
     this.getItems([]);
   }
-  //on map init
   onMapInit({ map, view }) {
     this.map = map;
     this.addWidget(map, view);
@@ -251,14 +252,45 @@ export class IndexComponent implements OnInit {
       }
     }
   }
-  test() {
-    // var layer = new MapImageLayer({
-    //   url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer',
-    //   sublayers: [
-    //     { id: 2, visible: false, popupTemplate: null },
-    //     { id: 1, visible: false, popupTemplate:  },
-    //     { id: 0, visible: false, popupTemplate: workOrderPopupTemplate },
-    //   ],
-    // });
+  login(token) {
+    this.authenticationService.authenticate(token);
+  }
+  clickAside(evt) {
+    // const sidebarnav = document.getElementById('sidebarnav');
+    // if (sidebarnav) {
+    //   let elmA = (evt.target as Element).closest('a');
+    //   if (!elmA) return;
+    //   let addressValue = elmA.getAttribute('href');
+    //   if (
+    //     '#' == addressValue ||
+    //     '' == addressValue ||
+    //     '/#' == addressValue ||
+    //     '#/' == addressValue ||
+    //     'javascript:void(0)' == addressValue
+    //   )
+    //     evt.preventDefault();
+    //   if (!elmA.classList.contains('active')) {
+    //     let elmUls = Array.from(sidebarnav.querySelectorAll('ul'));
+    //     let elmAs = Array.from(sidebarnav.querySelectorAll('a'));
+    //     let prevElem = null;
+    //     let nextElem = elmA.nextElementSibling;
+    //     if (!nextElem) nextElem = elmA.closest('ul');
+    //     if (nextElem) prevElem = nextElem.previousElementSibling;
+    //     elmUls.forEach((itemUl) => {
+    //       itemUl.classList.remove('in');
+    //     });
+    //     elmAs.forEach((itemA) => {
+    //       itemA.classList.remove('active');
+    //     });
+    //     if (nextElem) nextElem.classList.add('in');
+    //     if (prevElem) prevElem.classList.add('active');
+    //     elmA.classList.add('active');
+    //   } else if (elmA.classList.contains('active')) {
+    //     let nextElem = elmA.nextElementSibling;
+    //     if (!nextElem) nextElem = elmA.closest('ul');
+    //     if (nextElem) nextElem.classList.remove('in');
+    //     elmA.classList.remove('active');
+    //   }
+    // }
   }
 }

@@ -94,7 +94,7 @@
             aria-expanded="false"
           >
             <i class="bi bi-person-circle"></i>&nbsp;
-            <span class="hidden-md-down">Mark &nbsp;</span>
+            <span class="hidden-md-down">{{ user.name || "user" }} &nbsp;</span>
           </a>
           <div class="dropdown-menu dropdown-menu-end animated flipInY">
             <!-- text-->
@@ -118,7 +118,13 @@
             <!-- text-->
             <div class="dropdown-divider"></div>
             <!-- text-->
-            <a routerLink="/authentication/login" class="dropdown-item"
+            <a
+              *ngIf="!isLogedIn"
+              routerLink="/default/login"
+              class="dropdown-item"
+              ><i class="bi bi-power"></i> Login</a
+            >
+            <a *ngIf="isLogedIn" (click)="logout()" class="dropdown-item"
               ><i class="bi bi-power"></i> Logout</a
             >
             <!-- text-->

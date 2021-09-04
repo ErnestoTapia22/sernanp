@@ -34,7 +34,7 @@ export const environment = {
     {
       id: 5,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
-      disabled: false,
+      disabled: true,
       name: 'Áreas de Administración Nacional',
     },
     {

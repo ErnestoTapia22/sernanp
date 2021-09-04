@@ -38,6 +38,7 @@ export class LayerService {
     try {
       const layers$ = this.getInitialLayersJson(layer.url);
       const layers$$ = await lastValueFrom(layers$);
+      // console.log(layers$$);
       const legendLagers$ = this.getLegendLayersJson(layer.url);
       const legendLayers$$ = await lastValueFrom(legendLagers$);
       if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
@@ -96,8 +97,7 @@ export class LayerService {
   }
   async TestWFSLayer(): Promise<any> {
     const featureLayer = new FeatureLayer({
-      url:
-        'https://gisem.osinergmin.gob.pe/serverdc/rest/services/GasNatural/Produccion/FeatureServer',
+      url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/GasNatural/Produccion/FeatureServer',
       outFields: ['*'],
       popupEnabled: false,
       id: 'featureTest',
