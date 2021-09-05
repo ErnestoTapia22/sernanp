@@ -57,6 +57,9 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     };
     let item = {
       name: '',
+      agreementState:{id:1},
+      source:{id:0},
+      code:''
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
