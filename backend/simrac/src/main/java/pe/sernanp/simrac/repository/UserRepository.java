@@ -18,8 +18,8 @@ public class UserRepository extends BaseRepository<UserModel>{
 	}		
 	
 	public UserModel validate(DataSource ds, String id) throws Exception {
-			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("puser", id);
-			return super.detail2(ds,"simrac.fn_validar_usuario", parameters, new UserMapper());			
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("puser", id);
+		return super.detail2(ds,"simrac.fn_validar_usuario", parameters, new UserMapper());			
 	}	
 }
