@@ -58,8 +58,9 @@ export class ReportsComponent implements OnInit {
       item: JSON.stringify(item),
       paginator: JSON.stringify(paginator),
     });
-    this.onSearch();
+
     this.buildForm();
+    this.onSearch();
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 

@@ -35,12 +35,16 @@
             <button
               type="button"
               class="btn btn-sm btn-outline-primary mx-2"
-              (click)="search()"
+              (click)="search(form.value)"
             >
               <i class="bi bi-search"></i>
               Buscar
             </button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              (click)="cleanForm()"
+            >
               <i class="bi bi-brush"></i>
               Limpiar
             </button>
@@ -70,62 +74,65 @@
                 />
               </div>
             </div>
+          </form>
+          <hr />
 
-            <hr />
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nº</th>
 
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Nº</th>
-                    <th>Categoria</th>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Departamento</th>
-                    <th>Plan maestro</th>
-                    <!-- <th>Plan de desarrollo c.</th>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                  <th>Fecha de registro</th>
+                  <th>Plan maestro</th>
+                  <!-- <th>Plan de desarrollo c.</th>
                     <th>Plan de vida</th> -->
-                  </tr>
-                </thead>
-                <tbody id="tableBody">
-                  <ngx-spinner
-                    [fullScreen]="false"
-                    type="ball-clip-rotate"
-                    size="medium"
-                  >
-                  </ngx-spinner>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <ngx-spinner
+                  [fullScreen]="false"
+                  type="ball-clip-rotate"
+                  size="medium"
+                >
+                </ngx-spinner>
 
-                  <ng-container *ngIf="!isLoading">
-                    <tr
-                      *ngFor="
-                        let item of anpList
-                          | paginate
-                            : {
-                                id: 'anpPag',
-                                itemsPerPage: pageSize,
-                                currentPage: page,
-                                totalItems: total
-                              };
-                        index as idx
-                      "
-                    >
-                      <td>{{ item.index }}</td>
-                      <td>{{ item.category }}</td>
-                      <td>{{ item.code }}</td>
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.department }}</td>
-                      <td>
-                        <div class="text-nowrap">
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-outline-info border-0"
-                            routerLink="/anp/masterplan"
-                          >
-                            <i class="bi bi-plus-square fs-lg"></i>
-                          </button>
-                        </div>
-                      </td>
-                      <!-- <td>
+                <ng-container *ngIf="!isLoading">
+                  <tr
+                    *ngFor="
+                      let item of anpList
+                        | paginate
+                          : {
+                              id: 'anpPag',
+                              itemsPerPage: selectedPageSize,
+                              currentPage: page,
+                              totalItems: total
+                            };
+                      index as idx
+                    "
+                  >
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.stateName }}</td>
+                    <td>{{ item.registrationDate | date: "dd/MM/yyyy" }}</td>
+                    <td>
+                      <div class="text-nowrap">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info border-0"
+                          [routerLink]="'/anp/masterplan/' + item.id"
+                        >
+                          <i class="bi bi-plus-square fs-lg"></i>
+                        </button>
+                      </div>
+                    </td>
+                    <!-- <td>
                         <div class="text-nowrap">
                           <button
                             type="button"
@@ -147,30 +154,32 @@
                           </button>
                         </div>
                       </td> -->
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-            </div>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
 
-            <div class="d-flex justify-content-end">
-              <select
-                class="form-select custom-select"
-                formControlName="pageSize"
-                (change)="onChangePageSize($event)"
-              >
-                <option [value]="5">5/PÁGINA</option>
+          <div class="d-flex justify-content-end">
+            <select
+              class="form-select custom-select"
+              [(ngModel)]="selectedPageSize"
+              (change)="onChangePageSize($event)"
+            >
+              <option *ngFor="let option of pageSize" [value]="option.value">
+                {{ option.name }}
+              </option>
+              <!-- <option [value]="5" selected>5/PÁGINA</option>
                 <option [value]="10">10/PÁGINA</option>
                 <option [value]="20">20/PÁGINA</option>
-                <option [value]="30">30/PÁGINA</option>
-              </select>
-              <pagination-controls
-                (pageChange)="getPage($event)"
-                id="anpPag"
-                class="pagination justify-content-end"
-              ></pagination-controls>
-            </div>
-          </form>
+                <option [value]="30">30/PÁGINA</option> -->
+            </select>
+            <pagination-controls
+              (pageChange)="getPage($event)"
+              id="anpPag"
+              class="pagination justify-content-end"
+            ></pagination-controls>
+          </div>
         </div>
       </div>
     </div>

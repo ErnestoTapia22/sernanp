@@ -38,7 +38,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  value="Plan maestro Nº 1"
+                  formControlName="name"
                 />
               </div>
 
@@ -63,10 +63,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary d-flex"
-                  placement="top"
-                  data-bs-toggle="modal"
-                  data-bs-target="#createObjetive"
-                  ngbTooltip="Agregar"
+                  (click)="onRegisterModal(contentRegister)"
                 >
                   <i class="bi bi-plus-lg"></i>
                 </button>
@@ -93,9 +90,9 @@
                   </ngx-spinner> -->
 
                   <ng-container *ngIf="!isLoading">
-                    <tr *ngFor="let item of commitments; index as idx">
-                      <td>{{ item.index }}</td>
-                      <td>{{ item.component }}</td>
+                    <tr *ngFor="let item of goalsList; index as idx">
+                      <td>{{ idx + 1 }}</td>
+                      <td>{{ item.component.name }}</td>
                       <td>{{ item.code }}</td>
                       <td>{{ item.description }}</td>
                       <td>
@@ -103,8 +100,12 @@
                           <button
                             type="button"
                             class="btn btn-sm btn-outline-success border-0"
-                            data-bs-target="#createLineAction"
-                            data-bs-toggle="modal"
+                            (click)="
+                              onRegisterLineActionModal(
+                                contentRegisterActionLine,
+                                item.id
+                              )
+                            "
                           >
                             <i class="bi bi-plus-square fs-lg"></i>
                           </button>
@@ -138,142 +139,150 @@
   <!-- End PAge Content -->
   <!-- ============================================================== -->
 </div>
-<div
-  class="modal fade"
-  id="createObjetive"
-  tabindex="-1"
-  aria-labelledby="createObjetiveLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">Crear objetivos</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Componente</label>
-            <select class="form-select">
-              <option value="">SELECCIONE</option>
-              <option value="1">Ambiental</option>
-              <option value="2">Económico</option>
-              <option value="3">Social</option>
-              <option value="4">SocioCultural</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Codigo</label>
-            <input type="text" class="form-control" />
-          </div>
-          <div class="col-md-12">
-            <label class="form-label">Objetivo</label>
-            <textarea class="form-control" rows="2"></textarea>
-          </div>
+<ng-template #contentRegister let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createPerfilLabel">Crear objetivos</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <form [formGroup]="insertGoals" (ngSubmit)="saveGoals()" novalidate>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Componente</label>
+          <select
+            class="form-select"
+            formControlName="component"
+            [ngClass]="{
+              'input-invalid': submitted && g.component.errors?.required
+            }"
+          >
+            <option value="">SELECCIONE</option>
+            <option value="1">Ambiental</option>
+            <option value="2">Económico</option>
+            <option value="3">Social</option>
+            <option value="4">SocioCultural</option>
+          </select>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          Guardar
-        </button>
+        <div class="col-md-6">
+          <label class="form-label">Codigo</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="code"
+            [ngClass]="{
+              'input-invalid': submitted && g.code.errors?.required
+            }"
+          />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Objetivo</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="description"
+            [ngClass]="{
+              'input-invalid': submitted && g.description.errors?.required
+            }"
+          ></textarea>
+        </div>
       </div>
     </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #contentRegisterActionLine let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createPerfilLabel">Crear linea de acción</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
   </div>
-</div>
-<div
-  class="modal fade"
-  id="createLineAction"
-  tabindex="-1"
-  aria-labelledby="createLineActionLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">
-          Crear linea de acción
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <label class="form-label">Nombre</label>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <input type="text" class="form-control" />
-          </div>
-          <div class="col-md-2">
-            <button
-              class="btn btn-sm btn-primary"
-              placement="top"
-              ngbTooltip="Agregar"
-            >
-              <i class="bi bi-plus-lg"></i>
-            </button>
-          </div>
+  <form [formGroup]="insertLineAction" (ngSubmit)="saveLineAction()" novalidate>
+    <div class="modal-body">
+      <label class="form-label">Nombre</label>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'input-invalid': submitted && h.name.errors?.required
+            }"
+          />
         </div>
-        <hr />
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>Nombre</td>
-                <td>Acciones</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Seguridad</td>
-                <td>
-                  <div class="text-nowrap">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-success border-0"
-                    >
-                      <i class="bi bi-pencil fs-lg"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-danger border-0"
-                    >
-                      <i class="bi bi-trash fs-lg"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="col-md-2">
+          <button
+            type="submit"
+            class="btn btn-sm btn-primary"
+            placement="top"
+            ngbTooltip="Agregar"
+          >
+            <i class="bi bi-plus-lg"></i>
+          </button>
         </div>
       </div>
+      <hr />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Nombre</td>
+              <td>Acciones</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of actionLinesList; index as idx">
+              <td>{{ item.name }}</td>
+              <td>
+                <div class="text-nowrap">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger border-0"
+                    (click)="deleteActionLine(item.id)"
+                  >
+                    <i class="bi bi-trash fs-lg"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          Guardar
-        </button>
-      </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="modal.close()"
+      >
+        Cerrar
+      </button>
     </div>
-  </div>
-</div>
+  </form>
+</ng-template>
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->

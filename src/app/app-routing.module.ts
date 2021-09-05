@@ -109,7 +109,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: AnpComponent },
-      { path: 'masterplan', component: MasterPlanComponent },
+      { path: 'masterplan/:id', component: MasterPlanComponent },
     ],
   },
   { path: 'not-found', component: NotFoundComponent },

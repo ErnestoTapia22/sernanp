@@ -7,11 +7,14 @@ import { lastValueFrom, Observable, Subscription } from 'rxjs';
   providedIn: 'root',
 })
 export class AnpService {
-  segmentList: String = '';
-  constructor(private apiBaseService: ApiBaseService) {}
-  agreementList(): Observable<any> {
-    return this.apiBaseService.get(
-      `${environment.externalServices[0].agreement[0]}`
+  segmentSearch: String = '';
+  constructor(private apiBaseService: ApiBaseService) {
+    this.segmentSearch = '/anp/search';
+  }
+  anpSearch(item): Observable<any> {
+    return this.apiBaseService.postFormData(
+      `${environment.apiUrl}${this.segmentSearch}`,
+      item
     );
   }
 }

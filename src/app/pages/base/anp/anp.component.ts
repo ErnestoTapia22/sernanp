@@ -1,78 +1,142 @@
-import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AnpService } from '../../../_services/base/anp.service';
+import { AlertService } from '@app/_services/base/alert.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-anp',
   templateUrl: './anp.component.html',
   styleUrls: ['./anp.component.css'],
 })
-export class AnpComponent implements OnInit {
-  pageSize: Number = 0;
+export class AnpComponent implements OnInit, OnDestroy {
+  pageSize: any[] = [];
+  selectedPageSize: number = 5;
   page: Number = 0;
   total: Number = 0;
   anpList: any[];
   form: FormGroup;
   isLoading: Boolean = false;
-  constructor(private anpService: AnpService, private fb: FormBuilder) {}
+  queryObserver = new BehaviorSubject({
+    item: '',
+    paginator: '',
+  });
+  constructor(
+    private anpService: AnpService,
+    private fb: FormBuilder,
+    private alertsService: AlertService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.anpList = [
-      {
-        index: '1',
-        code: 'SN06',
-        name: 'Megantoni',
-        department: 'Cusco',
-        category: "Santuario Nacional"
-      },
-      {
-        index: '2',
-        code: 'RC03',
-        name: 'Amarakaeri',
-        department: 'Madre de Dios',        
-        category: 'Reserva Comunal'
-      },
-      {
-        index: '3',
-        code: 'RVS03',
-        name: 'Bosques Nublados de Udima',
-        department: 'Cajamarca',        
-        category: 'Refugio de Vida Silvestre'
-      },
-      {
-        index: '4',
-        code: 'RVS01',
-        name: 'Laquipampa',
-        department: 'Lambayeque',        
-        category: 'Refugio de Vida Silvestre'
-      },
-      {
-        index: '5',
-        code: 'RVS02',
-        name: 'Los Pantanos de Villa',
-        department: 'Lima',        
-        category: 'Refugio de Vida Silvestre'
-      }
+    this.pageSize = [
+      { name: '5/PÁGINA', value: 5 },
+      { name: '10/PÁGINA', value: 10 },
+      { name: '20/PÁGINA', value: 20 },
+      { name: '30/PÁGINA', value: 30 },
     ];
+
+    this.anpList = [];
+    this.initQuery();
+    this.onSearch();
+
     // this.listAnp();
   }
-  getPage(e) {}
-  onChangePageSize(e) {}
-  listAnp() {
-    this.anpService.agreementList().subscribe((response) => {
-      this.anpList = response;
-    });
+  getPage(page: number) {
+    this.parseData('paginator', 'offset', page);
+    this.onSearch();
   }
-  search() {}
+  onChangePageSize(e) {
+    // console.log();
+    this.parseData('paginator', 'limit', this.selectedPageSize);
+
+    this.onSearch();
+  }
+  onSearch() {
+    try {
+      this.spinner.show();
+      if (this.form.invalid) {
+        this.spinner.hide();
+        return;
+      }
+      this.anpService
+        .anpSearch(this.queryObserver.getValue())
+        .subscribe((response) => {
+          if (
+            response &&
+            response.items &&
+            response.items !== undefined &&
+            response.items !== null
+          ) {
+            this.anpList = response.items;
+            this.total = response.paginator.total;
+            this.page = response.paginator.offset;
+            // this.pageSize = response.paginator.limit;
+            this.spinner.hide();
+          }
+          this.spinner.hide();
+        });
+    } catch (error) {
+      this.spinner.hide();
+      this.alertsService.error('error :' + error, 'Error');
+    }
+  }
+  search(filters: any) {
+    const q = this.queryObserver.getValue();
+    q.item = JSON.stringify(filters);
+    this.queryObserver.next(q);
+    this.onSearch();
+  }
   buildForm() {
     this.form = this.fb.group({
-      code: [''],
+      code: ['', Validators.compose([Validators.maxLength(10)])],
       name: [''],
-      pageSize: [5],
     });
   }
   get f() {
     return this.form.controls;
+  }
+  parseData(parent, key, value) {
+    // debugger;
+    const item = this.queryObserver.getValue();
+
+    if (typeof item[parent] === 'string') {
+      let parsed = JSON.parse(item[parent]);
+      parsed[key] = value;
+      item[parent] = JSON.stringify(parsed);
+      this.queryObserver.next(item);
+    }
+  }
+  ngOnDestroy() {
+    this.queryObserver.unsubscribe();
+  }
+  setTableHeight(rows) {
+    if (rows !== undefined && rows !== null) {
+      const cm = document.getElementById('tableBody');
+      const height = 50.838 * parseInt(rows);
+      cm.setAttribute('style', `height:${height}px`);
+    }
+  }
+  cleanForm() {
+    this.form.reset();
+    this.initQuery();
+    this.onSearch();
+  }
+  initQuery() {
+    let paginator = {
+      limit: 5,
+      offset: '1',
+      sort: 'name',
+      order: 'asc',
+    };
+    let item = {
+      name: '',
+    };
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
   }
 }
