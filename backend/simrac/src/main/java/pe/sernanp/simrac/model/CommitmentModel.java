@@ -12,8 +12,7 @@ public class CommitmentModel extends BaseModel {
 	}
 		
 	public void setConservationAgreement (ConservationAgreementModel conservationagreement) {
-		_conservationagreement = conservationagreement;
-		
+		_conservationagreement = conservationagreement;		
 	}
 		
 }
