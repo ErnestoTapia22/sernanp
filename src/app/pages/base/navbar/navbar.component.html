@@ -94,30 +94,31 @@
             aria-expanded="false"
           >
             <i class="bi bi-person-circle"></i>&nbsp;
-            <span class="hidden-md-down">{{ user.name || "user" }} &nbsp;</span>
+            <span class="hidden-md-down"
+              >{{ user?.name || "user" }} &nbsp;</span
+            >
           </a>
           <div class="dropdown-menu dropdown-menu-end animated flipInY">
-            <!-- text-->
-            <a href="javascript:void(0)" class="dropdown-item"
+            <!-- <a href="javascript:void(0)" class="dropdown-item"
               ><i class="bi bi-person-circle"></i> My Profile</a
             >
-            <!-- text-->
+           
             <a href="javascript:void(0)" class="dropdown-item"
               ><i class="bi bi-wallet"></i> My Balance</a
             >
-            <!-- text-->
+           
             <a href="javascript:void(0)" class="dropdown-item"
               ><i class="bi bi-envelope"></i> Inbox</a
             >
-            <!-- text-->
+          
             <div class="dropdown-divider"></div>
-            <!-- text-->
+           
             <a href="javascript:void(0)" class="dropdown-item"
               ><i class="bi bi-gear-fill"></i> Account Setting</a
-            >
-            <!-- text-->
+            > -->
+
             <div class="dropdown-divider"></div>
-            <!-- text-->
+
             <a
               *ngIf="!isLogedIn"
               routerLink="/default/login"

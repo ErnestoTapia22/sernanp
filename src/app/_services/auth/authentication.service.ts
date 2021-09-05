@@ -55,14 +55,18 @@ export class AuthenticationService {
   authenticate(token) {
     try {
       this.apiBaseService
-        .get(`${environment.apiUrl}${this.segmentUserValidate}token`)
+        .get(`${environment.apiUrl}${this.segmentUserValidate}${token}`)
         .subscribe((response) => {
           console.log(response);
-          if (response && response.item !== undefined) {
+          if (
+            response &&
+            response.item !== undefined &&
+            response.item !== null
+          ) {
             localStorage.setItem('user', JSON.stringify(response.item));
             this.router.navigate(['/map/index']);
           } else {
-            this.router.navigate(['/authenticate/']);
+            this.router.navigate([`/authentication/ycoyla`]);
           }
         });
     } catch (error) {

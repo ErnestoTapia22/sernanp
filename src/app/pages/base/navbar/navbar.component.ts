@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.clickNav(null);
+
     if (
       localStorage.getItem('user') !== null &&
       localStorage.getItem('user') !== undefined

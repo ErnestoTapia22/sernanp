@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.spinner.hide();
-    this.authenticationService;
+    // this.authenticationService;
     // .login(this.f.user.value, this.f.password.value)
     // .pipe(first())
     // .subscribe(
@@ -83,6 +83,6 @@ export class LoginComponent implements OnInit {
     //       //this.router.navigateByUrl('/admin/usuario');
     //     }
     //   });
-    this.router.navigateByUrl('/authentication/');
+    this.router.navigateByUrl(`/authentication/${token}`);
   }
 }

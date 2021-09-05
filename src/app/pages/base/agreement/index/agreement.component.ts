@@ -57,7 +57,7 @@ export class AgreementComponent implements OnInit {
       order: 'asc',
     };
     let item = {
-      name: 'a',
+      name: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
