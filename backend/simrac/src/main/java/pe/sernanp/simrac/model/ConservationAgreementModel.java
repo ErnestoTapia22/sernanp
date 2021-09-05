@@ -20,14 +20,14 @@ public class ConservationAgreementModel extends BaseModel {
 	private double _areaambitc;
 	private double _producedarea;
 	private String _detalleproduction;
-	
+	private SourceModel _source;
 		
 	public AgreementStateModel getAgreementState() {
 		return _agreementState;
 	}
 
-	public void setAgreementState(AgreementStateModel Stateid) {
-		this._agreementState = Stateid;
+	public void setAgreementState(AgreementStateModel agreementState) {
+		this._agreementState = agreementState;
 	}
 
 	public int getVigency () {
@@ -73,6 +73,7 @@ public class ConservationAgreementModel extends BaseModel {
 	public String getBenIndirect () {
 		return _benindirect;
 	}
+	
 	public void setBenIndirect (String benindirect) {
 		_benindirect = benindirect;
 	}
@@ -88,6 +89,7 @@ public class ConservationAgreementModel extends BaseModel {
 	public String getBenFamily () {
 		return _benfamily;
 	}
+	
 	public void setBenFamily (String benfamily) {
 		_benfamily = benfamily;
 	}
@@ -103,6 +105,7 @@ public class ConservationAgreementModel extends BaseModel {
 	public Double getProducedArea () {
 		return _producedarea;
 	}
+	
 	public void setProducedArea (Double producedarea) {
 		_producedarea = producedarea;
 	}
@@ -110,7 +113,16 @@ public class ConservationAgreementModel extends BaseModel {
 	public String getDetalleProduction () {
 		return _detalleproduction;
 	}
+	
 	public void setDetalleProduction (String detalleproduction) {
 		_detalleproduction = detalleproduction;
+	}
+	
+	public SourceModel getSource() {
+		return _source;
+	}
+
+	public void setSource(SourceModel source) {
+		this._source = source;
 	}
 }

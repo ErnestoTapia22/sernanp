@@ -14,18 +14,12 @@ public class UserRepository extends BaseRepository<UserModel>{
 	
 	@Override
 	protected void setParameters(Map<String, Object> parameters, UserModel item) throws Exception {
-		
 		parameters.put("psystem", item.getSystem());
-		
-	}	
-		
+	}		
 	
 	public UserModel validate(DataSource ds, String id) throws Exception {
-			System.out.println(ds);
-			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("puser", id);
-			return super.detail2(ds,"simrac.fn_validar_usuario", parameters, new UserMapper());
-			
-	}
-	
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("puser", id);
+		return super.detail2(ds,"simrac.fn_validar_usuario", parameters, new UserMapper());			
+	}	
 }

@@ -5,14 +5,14 @@ import javax.persistence.Entity;
 @Entity
 public class ObjetiveModel extends BaseModel {
 	
-	private PlanMasterModel _planMaster;
+	private MasterPlanModel _planMaster;
 	private ComponentModel _component;
 	
-	public PlanMasterModel getPlanMaster() {
+	public MasterPlanModel getMasterPlan() {
 		return _planMaster;
 	}
 
-	public void setPlanMaster(PlanMasterModel planMaster) {
+	public void setMasterPlan(MasterPlanModel planMaster) {
 		this._planMaster = planMaster;
 	}
 	
