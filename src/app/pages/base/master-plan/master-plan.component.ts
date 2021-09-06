@@ -255,7 +255,10 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           this.submitted = false;
           if (response && response.success === true) {
+            this.alertService.success('Se guardo correctamente', 'Ok');
             this.getDetail();
+          } else {
+            this.alertService.info('Ya existe el plan maestro', 'Ok');
           }
         });
     } catch (error) {
