@@ -54,6 +54,7 @@
         <!-- ============================================================== -->
 
         <!-- <li class="nav-item dropdown u-pro">
+        <li class="nav-item dropdown u-pro d-none">
           <a
             class="dropdown-toggle nav-link"
             id="notification"
@@ -123,10 +124,10 @@
               *ngIf="!isLogedIn"
               routerLink="/default/login"
               class="dropdown-item"
-              ><i class="bi bi-power"></i> Login</a
+              ><i class="bi bi-power"></i> Iniciar Sesión</a
             >
             <a *ngIf="isLogedIn" (click)="logout()" class="dropdown-item"
-              ><i class="bi bi-power"></i> Logout</a
+              ><i class="bi bi-power"></i> Cerrar Sesión</a
             >
             <!-- text-->
           </div>

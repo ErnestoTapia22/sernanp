@@ -87,7 +87,6 @@
                   <th>Nombre</th>
                   <th>Descripción</th>
                   <th>Estado</th>
-                  <th>Fecha de registro</th>
                   <th>Plan maestro</th>
                   <!-- <th>Plan de desarrollo c.</th>
                     <th>Plan de vida</th> -->
@@ -118,9 +117,8 @@
                     <td>{{ idx + 1 }}</td>
                     <td>{{ item.code }}</td>
                     <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
+                    <td>{{ item.district }}</td>
                     <td>{{ item.stateName }}</td>
-                    <td>{{ item.registrationDate | date: "dd/MM/yyyy" }}</td>
                     <td>
                       <div class="text-nowrap">
                         <button
