@@ -15,7 +15,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   form: FormGroup;
   commitments: any[];
   isLoading: Boolean = false;
-  anpId;
+  anpId: number = 0;
   goalsList: any[] = [];
   insertGoals: FormGroup;
   insertLineAction: FormGroup;
@@ -43,31 +43,26 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
     return this.insertLineAction.controls;
   }
   ngOnInit(): void {
+    if (
+      this.route.snapshot.paramMap.get('id') !== undefined &&
+      this.route.snapshot.paramMap.get('id') !== null &&
+      this.route.snapshot.paramMap.get('id') !== ''
+    )
+      this.anpId = parseInt(this.route.snapshot.paramMap.get('id'));
+
     this.buildForms();
-    this.commitments = [
-      {
-        index: '1',
-        code: 'OB 1',
-        description: 'Mantener la cobertura vegetal del Parque Nacional',
-        component: 'Ambiental',
-      },
-      {
-        index: '2',
-        code: 'OB 2',
-        description:
-          'Mantener poblaciones de especies de interés para la gestion del Parque Nacional',
-        component: 'Ambiental',
-      },
-    ];
     this.getDetail();
   }
   buildForms() {
     this.form = this.fb.group({
       code: [''],
-      name: [''],
-      description: [''],
+      name: ['', Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])],
       id: [],
-      state: [],
+      state: [true],
+      anp: [{ id: this.anpId || 0 }],
+      active: [true],
+      version: [1],
     });
     this.insertGoals = this.fb.group({
       component: [1, Validators.compose([Validators.required])],
@@ -83,7 +78,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   }
   getDetail() {
     try {
-      this.anpId = this.route.snapshot.paramMap.get('id');
+      // this.anpId = this.route.snapshot.paramMap.get('id');
       if (this.anpId) {
         this.masterPlanService
           .masterPlanDetailByAnp(this.anpId)
@@ -99,6 +94,9 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
                 description: response.item.description,
                 state: response.item.state,
                 code: response.item.code,
+                anp: { id: this.anpId },
+                active: true,
+                version: 1,
               });
               this.getGoalsList();
             }
@@ -244,5 +242,29 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       this.submitted = false;
       this.alertService.error('error :' + error, 'Error');
     }
+  }
+  insertMasterPlan() {
+    try {
+      this.submitted = true;
+      if (this.form.invalid) {
+        return;
+      }
+
+      this.masterPlanService
+        .masterPlanInsert(JSON.stringify(this.form.value))
+        .subscribe((response) => {
+          this.submitted = false;
+          if (response && response.success === true) {
+            this.getDetail();
+          }
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.formReset();
+      this.alertService.error('error :' + error, 'Error');
+    }
+  }
+  formReset() {
+    this.form.reset();
   }
 }

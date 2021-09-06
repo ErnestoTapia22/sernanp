@@ -22,6 +22,7 @@ export class AnpComponent implements OnInit, OnDestroy {
     item: '',
     paginator: '',
   });
+
   constructor(
     private anpService: AnpService,
     private fb: FormBuilder,
@@ -133,6 +134,7 @@ export class AnpComponent implements OnInit, OnDestroy {
     };
     let item = {
       name: '',
+      code: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
