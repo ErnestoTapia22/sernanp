@@ -58,7 +58,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       code: [''],
       name: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
-      id: [],
+      id: [0, Validators.compose([Validators.required])],
       state: [true],
       anp: [{ id: this.anpId || 0 }],
       active: [true],
@@ -247,9 +247,6 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
     try {
       this.submitted = true;
       if (this.form.invalid) {
-        return;
-      }
-      if (this.form.value.id != null) {
         return;
       }
       this.masterPlanService
