@@ -1,0 +1,1625 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Crear Acuerdo</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end">
+            <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
+            <li class="breadcrumb-item">
+              <a routerLink="/agreement">Acuerdos</a>
+            </li>
+            <li class="breadcrumb-item text-nowrap active">Nuevo acuerdo</li>
+          </ol>
+        </nav>
+
+        <!-- <button type="button" class="btn btn-primary ms-3">
+          <i class="bi bi-plus-circle fs-lg"></i>
+          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
+        </button> -->
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="workPlan-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabWorkPlan"
+            type="button"
+            role="tab"
+          >
+            Datos Generales
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="results-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabResults"
+            type="button"
+            role="tab"
+          >
+            Plan de Trabajo
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane pt-2 fade show active"
+          id="tabWorkPlan"
+          role="tabpanel"
+          aria-labelledby="workPlan-tab"
+        >
+          <form action="#" [formGroup]="form" novalidate>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">General</label>
+              </div>
+              <div class="card-body" id="parent">
+                <div class="row g-3">
+                  <!--<div class="col-md-3">
+                  <label for="txtCode" class="form-label">Código (*)</label>
+                  <input
+                    id="txtCode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Código"
+                    formControlName="code"
+                  />
+                </div>-->
+                  <div class="col-md-3">
+                    <label for="ddAnp" class="form-label">ANP (*)</label>
+                    <select id="ddAnp" class="form-select">
+                      <option selected>SELECCIONE</option>
+                      <option>SN06 Megantoni</option>
+                      <option>RC03 Amarakaeri</option>
+                      <option>RVS03 Bosques Nublados de Udima</option>
+                      <option>RVS01 Laquipampa</option>
+                      <option>RVS02 Los Pantanos de Villa</option>
+                    </select>
+                    <!-- <ng-select
+                    [items]="anp"
+                    bindLabel="anpNomb"
+                    bindValue="anpId"
+                    [searchable]="true"
+                    formControlName="anp"
+                    placeholder="SELECCIONE">
+                  </ng-select>-->
+                  </div>
+                  <div class="col-md-3">
+                    <label for="ddState" class="form-label">Estado (*)</label>
+                    <select id="ddState" class="form-select">
+                      <option selected>SELECCIONE</option>
+                      <option>En envaluación</option>
+                      <option>En diseño</option>
+                      <option>Firmado</option>
+                      <option>En implementación</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="txtSuscriptionDate" class="form-label"
+                      >Fecha de suscripción (*)</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="txtSuscriptionDate"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="numbValidity"
+                      >Vigencia en años (*)</label
+                    >
+                    <input
+                      type="number"
+                      id="numbValidity"
+                      class="form-control"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtaGoal" class="form-label"
+                      >Objetivo general</label
+                    >
+                    <textarea
+                      id="txtaGoal"
+                      class="form-control"
+                      rows="2"
+                      formControlName="goal"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtaObs" class="form-label"
+                      >Observaciones
+                    </label>
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Observaciones/comentarios adicionales a considerar en relación al AdC"
+                    ></i>
+                    <textarea
+                      id="txtaObs"
+                      class="form-control"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Suscriptores</label>
+              </div>
+              <div class="card-body" id="subscribers">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <form action="#" [formGroup]="form" novalidate>
+                      <div class="card">
+                        <div class="card-body" id="parent">
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label"
+                                >Agregar Suscriptores</label
+                              >
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-primary d-flex"
+                                placement="top"
+                                data-bs-toggle="modal"
+                                data-bs-target="#createSusbcribers"
+                                ngbTooltip="Agregar"
+                              >
+                                <i class="bi bi-plus-lg"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead class="fw-bold">
+                                <tr>
+                                  <td>Nombre</td>
+                                  <td>Categoria</td>
+                                  <td>Opciones</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>SERNANP</td>
+                                  <td>Jefatura</td>
+                                  <td>
+                                    <div class="text-nowrap">
+                                      <button
+                                        type="button"
+                                        class="
+                                          btn btn-sm btn-outline-danger
+                                          border-0
+                                        "
+                                      >
+                                        <i class="bi bi-trash fs-lg"></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Oxalecker</td>
+                                  <td>Empresas</td>
+                                  <td>
+                                    <div class="text-nowrap">
+                                      <button
+                                        type="button"
+                                        class="
+                                          btn btn-sm btn-outline-danger
+                                          border-0
+                                        "
+                                      >
+                                        <i class="bi bi-trash fs-lg"></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Compromisos</label>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary mx-2"
+                  >
+                    <i class="bi bi-cloud-arrow-down"></i>
+                    Exportar
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <form action="#" [formGroup]="form" novalidate>
+                      <div class="card">
+                        <div class="card-body" id="parent">
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label"
+                                >Agregar compromisos</label
+                              >
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-primary d-flex"
+                                placement="top"
+                                data-bs-toggle="modal"
+                                data-bs-target="#createCommitments"
+                                ngbTooltip="Agregar"
+                              >
+                                <i class="bi bi-plus-lg"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead class="fw-bold">
+                                <tr>
+                                  <td>Objetivo</td>
+                                  <td>Compromiso</td>
+                                  <td>Suscriptor</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    OB 1 - Mantener la cobertura vegetal del
+                                    Parque Nacional
+                                  </td>
+                                  <td>
+                                    Fortalecer las capacidades de los
+                                    integrantes de la Empresa, en el manejo de
+                                    equipo básicos
+                                  </td>
+                                  <td>Sernanp</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    OB 1 - Mantener la cobertura vegetal del
+                                    Parque Nacional
+                                  </td>
+                                  <td>
+                                    De igual forma fortalecer las capacidades a
+                                    los integrantes de la empresa en temas de
+                                    manejos de recursos naturales.
+                                  </td>
+                                  <td>Sernanp</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-6">
+                    <form action="#" [formGroup]="form" novalidate>
+                      <div class="card">
+                        <div class="card-body" id="parent">
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label"
+                                >Agregar compromisos</label
+                              >
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-primary d-flex"
+                                placement="top"
+                                data-bs-toggle="modal"
+                                data-bs-target="#createCommitments"
+                                ngbTooltip="Agregar"
+                              >
+                                <i class="bi bi-plus-lg"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead class="fw-bold">
+                                <tr>
+                                  <td>Objetivo</td>
+                                  <td>Compromiso</td>
+                                  <td>Suscriptor</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    OB 2 - Mantener poblaciones de especies de
+                                    interés para la gestion del Parque Nacional
+                                  </td>
+                                  <td>
+                                    Participación en actividades de vigilancia
+                                    desarrolladas por el equipo técnico de la
+                                    Jefatura del ANP
+                                  </td>
+                                  <td>Oxalecker</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    OB 2 - Mantener poblaciones de especies de
+                                    interés para la gestion del Parque Nacional
+                                  </td>
+                                  <td>
+                                    Participar en las actividades a ser
+                                    realizadas en favor de la conservación del
+                                    PNYCH
+                                  </td>
+                                  <td>Oxalecker</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Beneficiarios</label>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label">Número de participantes </label
+                    ><i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Número de personas  participando del AdC"
+                    ></i>
+                    <div class="input-group">
+                      <span class="input-group-text">H</span>
+                      <input
+                        type="number"
+                        min="0"
+                        id="numbMenQ"
+                        class="form-control"
+                      />
+                      <span class="input-group-text">M</span>
+                      <input
+                        type="number"
+                        min="0"
+                        id="numbWomanQ"
+                        class="form-control"
+                      />
+                      <span class="input-group-text">Total</span>
+                      <input
+                        type="number"
+                        min="0"
+                        id="numbTotal"
+                        class="form-control"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="txtaDetailB" class="form-label"
+                      >Detalle del beneficiario</label
+                    >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Detalle del beneficiario (a nivel de personas)"
+                    ></i>
+                    <textarea
+                      id="txtaDetailB"
+                      class="form-control"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="numbFamiliesBQ" class="form-label"
+                      >Número de familias beneficiadas</label
+                    >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Número de familias beneficiadas (según el AdC firmado)"
+                    ></i>
+                    <input
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      id="numbFamiliesBQ"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtaDetailBF" class="form-label"
+                      >Detalle del beneficiario familia</label
+                    >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Detalle del beneficiario (a nivel de familia)"
+                    ></i>
+                    <textarea
+                      id="txtaDetailBF"
+                      class="form-control"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtaIndirectB" class="form-label"
+                      >Beneficiarios indirectos</label
+                    >
+                    <textarea
+                      id="txtaIndirectB"
+                      class="form-control"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Ámbito</label>
+              </div>
+              <div class="card-body">
+                <ul
+                  class="nav nav-tabs nav-tabs-flat"
+                  id="myTab"
+                  role="tablist"
+                >
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="datos-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#tabDatos"
+                      type="button"
+                      role="tab"
+                    >
+                      Datos
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="mapa-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#tabMapa"
+                      type="button"
+                      role="tab"
+                    >
+                      Previsualización
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div
+                    class="tab-pane pt-2 fade show active"
+                    id="tabDatos"
+                    role="tabpanel"
+                    aria-labelledby="datos-tab"
+                  >
+                    <div class="row g-3">
+                      <div class="col-md-3">
+                        <label for="numbScope" class="form-label"
+                          >Ámbito del ADC (Ha)</label
+                        >
+                        <input
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          id="numbScope"
+                          disabled
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="numbProductiveA" class="form-label"
+                          >Superficie de intervención (Ha)</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Superficie bajo manejo productivo "
+                        ></i>
+                        <input
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          id="numbProductiveA"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="numbProductiveA" class="form-label"
+                          >Ubicacion Superficie de intervención</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado "
+                        ></i>
+                        <input
+                          type="text"
+                          min="0"
+                          class="form-control"
+                          id="numbProductiveA"
+                          value="zona de amortiguamiento"
+                        />
+                      </div>
+
+                      <div class="col-md-3">
+                        <label for="txtaProductiveAD" class="form-label"
+                          >Detalle superficie intervención
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Detalle del ámbito bajo manejo productivo, actividad económica sostenible asociada al AdC"
+                        ></i>
+                        <textarea
+                          id="txtaProductiveAD"
+                          class="form-control"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="numbAreaR" class="form-label"
+                          >Superficie bajo restauración (Ha)</label
+                        >
+                        <input
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          id="numbAreaR"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="txtaIndirectB" class="form-label"
+                          >Detalle ámbito bajo restauración</label
+                        >
+                        <textarea
+                          id="txtaDetailAR"
+                          class="form-control"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="txtaSectorVC" class="form-label"
+                          >Nombre(s) del(os) sector(es) de V y C
+                        </label>
+                        <textarea
+                          id="txtaSectorVC"
+                          class="form-control"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="numbAreaVC" class="form-label"
+                          >Superficie del(os) sector(es) de V y C (Ha)</label
+                        >
+                        <input
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          id="numbAreaVC"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="txtaDetailSVC" class="form-label"
+                          >Detalle del(os) sector(es) de V y C
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Detalle del sector de VyC (tanto dentro como en el paisaje asociado del ANP)"
+                        ></i>
+                        <textarea
+                          id="txtaDetailSVC"
+                          class="form-control"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="txtaModeAdc" class="form-label"
+                          >Modalidad de gestión del territorio en el ADC
+                          <i
+                            class="bi bi-info-circle mx-1"
+                            placement="top"
+                            ngbTooltip="Señale algún otro tipo de modalidad de gestión del territorio comprometida en el AdC "
+                          ></i>
+                        </label>
+
+                        <textarea
+                          id="txtaModeAdc"
+                          class="form-control"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3 d-none">
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label"
+                            >Área del ámbito</label
+                          >
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="formFile"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 d-none">
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label"
+                            >Área de vigilancia</label
+                          >
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="formFile"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3 d-none">
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label"
+                            >Área de restauración</label
+                          >
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="formFile"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane pt-2 fade"
+                    id="tabMapa"
+                    role="tabpanel"
+                    aria-labelledby="mapa-tab"
+                  >
+                    <div class="card">
+                      <div class="card-body">
+                        <app-base-map
+                          [mapProperties]="mapProperties"
+                          [mapViewProperties]="mapViewProperties"
+                          [maxHeight]="400"
+                          (mapInit)="onMapInit($event)"
+                        >
+                        </app-base-map>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Articulaciones</label>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="chkLocalD"
+                        value="option3"
+                      />
+                      <label for="ddMasterP" class="form-label"
+                        >Plan maestro (*)</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label"
+                      >Plan de vida de las comunidades</label
+                    >
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="yes"
+                      />
+                      <label class="form-check-label" for="yes">Sí</label>
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="not"
+                      />
+                      <label class="form-check-label" for="not">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="ecaNotApply"
+                      />
+                      <label class="form-check-label" for="ecaNotApply"
+                        >No aplica</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label"
+                      >Plan de vida institucional (ECA)</label
+                    >
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaYes"
+                      />
+                      <label class="form-check-label" for="ecaYes">Sí</label>
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaNot"
+                      />
+                      <label class="form-check-label" for="ecaNot">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="notApply"
+                      />
+                      <label class="form-check-label" for="notApply"
+                        >No aplica</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="chkLocalD"
+                        value="option3"
+                      />
+                      <label class="form-check-label" for="chkLocalD"
+                        >Plan de desarrollo local</label
+                      >
+                    </div>
+                    <div class="">
+                      <label for="detalle" class="form-label"
+                        >Detalle del/los municipios del ADC</label
+                      >
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control"
+                        id="detalle"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Financiamiento</label>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="form-check form-switch form-check-inline mt-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="chkComunityL"
+                        value="option1"
+                      />
+                      <label class="form-check-label" for="chkComunityL"
+                        >Se ha apalancado financiamiento
+                      </label>
+                      <i
+                        class="bi bi-info-circle mx-1"
+                        placement="top"
+                        ngbTooltip="¿Se ha apalancado financiamiento en el marco del AdC?"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="numbFinanc" class="form-label"
+                      >Financiamiento (Soles)</label
+                    >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="¿A cuánto asciende el financiamiento? "
+                    ></i>
+                    <input
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      id="numbFinanc"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="txtSourceF" class="form-label"
+                      >Fuente de financiamiento</label
+                    >
+                    <select class="form-select">
+                      <option selected>SELECCIONE</option>
+                      <option>Público</option>
+                      <option>Privado</option>
+                      <option>Cooperación</option>
+                      <option>Otro</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtModF" class="form-label"
+                      >Modalidad de financiamiento</label
+                    >
+                    <input type="text" class="form-control" id="txtModF" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtNameF" class="form-label"
+                      >Nombre del fondo</label
+                    >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Si aplica "
+                    ></i>
+                    <input type="text" class="form-control" id="txtNameF" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold"></label>
+              </div>
+              <div class="card-body">
+                <div class="row g-3" action="#">
+                  <!-- <div class="col-md-4">
+                    <div class="avatar-img float-right">
+                      <input
+                        type="file"
+                        id="shpUpload"
+                        #file
+                        (change)="readURL($event)"
+                      />
+                    </div>
+                     <div *ngIf="validateSize" class="invalid">
+                      <div>Tamaño de archivo supera los 50KB</div>
+                    </div> 
+                  </div> -->
+
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-light">
+                      <i class="fas fa-brush"></i>
+                      Limpiar</button
+                    >&nbsp;
+                    <button type="button" class="btn btn-secondary">
+                      <i class="fas fa-times-circle"></i>
+                      Cancelar</button
+                    >&nbsp;
+                    <button type="button" class="btn btn-success">
+                      <i class="fas fa-save"></i>
+                      Guardar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div
+          class="tab-pane pt-2 fade"
+          id="tabResults"
+          role="tabpanel"
+          aria-labelledby="mapa-tab"
+        >
+          <div class="card">
+            <div class="card-header">
+              <label class="mb-0 fw-bold">Plan de trabajo</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <form action="#" [formGroup]="form" novalidate>
+                    <div class="card">
+                      <div class="card-body" id="parent">
+                        <hr />
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead class="fw-bold">
+                              <tr>
+                                <td>Objetivo</td>
+                                <td>Compromiso</td>
+                                <td>Suscriptor</td>
+                                <td>Actividades</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  OB 1 - Mantener la cobertura vegetal del
+                                  Parque Nacional
+                                </td>
+                                <td>
+                                  Fortalecer las capacidades de los integrantes
+                                  de la Empresa, en el manejo de equipo básicos
+                                </td>
+                                <td>Sernanp</td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-info
+                                        border-0
+                                      "
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#createActivity"
+                                    >
+                                      <i class="bi bi-eye fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  OB 1 - Mantener la cobertura vegetal del
+                                  Parque Nacional
+                                </td>
+                                <td>
+                                  De igual forma fortalecer las capacidades a
+                                  los integrantes de la empresa en temas de
+                                  manejos de recursos naturales.
+                                </td>
+                                <td>Sernanp</td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-info
+                                        border-0
+                                      "
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#createActivity"
+                                    >
+                                      <i class="bi bi-eye fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  OB 2 - Mantener poblaciones de especies de
+                                  interés para la gestion del Parque Nacional
+                                </td>
+                                <td>
+                                  Participación en actividades de vigilancia
+                                  desarrolladas por el equipo técnico de la
+                                  Jefatura del ANP
+                                </td>
+                                <td>Oxalecker</td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-info
+                                        border-0
+                                      "
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#createActivity"
+                                    >
+                                      <i class="bi bi-eye fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  OB 2 - Mantener poblaciones de especies de
+                                  interés para la gestion del Parque Nacional
+                                </td>
+                                <td>
+                                  Participar en las actividades a ser realizadas
+                                  en favor de la conservación del PNYCH
+                                </td>
+                                <td>Oxalecker</td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-info
+                                        border-0
+                                      "
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#createActivity"
+                                    >
+                                      <i class="bi bi-eye fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+
+<div
+  class="modal fade"
+  id="createSusbcribers"
+  tabindex="-1"
+  aria-labelledby="createSusbcribersLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">Crear Suscriptores</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoria</label>
+            <select class="form-select">
+              <option value="">SELECCIONE</option>
+              <option value="1">Asociaciones Productoras</option>
+              <option value="2">Empresas</option>
+              <option value="3">Comunidades</option>
+              <option value="4">Jefatura</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="createCommitments"
+  tabindex="-1"
+  aria-labelledby="createCommitmentsLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">Crear Compromisos</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs nav-tabs-flat" id="myComp" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="datos-tabMP"
+              data-bs-toggle="tab"
+              data-bs-target="#tabMP"
+              type="button"
+              role="tab"
+            >
+              Plan maestro
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="datos-tabOthers"
+              data-bs-toggle="tab"
+              data-bs-target="#tabO"
+              type="button"
+              role="tab"
+            >
+              Otros planes
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane pt-2 fade show active"
+            id="tabMP"
+            role="tabpanel"
+            aria-labelledby="datos-tabMP"
+          >
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label">Compromiso</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <select class="form-select">
+                  <option>
+                    OB 1 - Mantener la cobertura vegetal del Parque Nacional
+                  </option>
+                  <option>
+                    OB 2 - Mantener poblaciones de especies de interés para la
+                    gestion del Parque Nacional
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Alineado a</label>
+                <select class="form-select">
+                  <option>Linea de acción 1</option>
+                  <option>Linea de acción 2</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Suscriptor</label>
+                <select class="form-select">
+                  <option>SERNANP</option>
+                  <option>Oxalecker</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane pt-2"
+            id="tabO"
+            role="tabpanel"
+            aria-labelledby="datos-tabOthers"
+          >
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label">Compromiso 1</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo del:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Plan de desarrollo concertado"
+                />
+                <!-- <select class="form-select">
+                  <option selected>Plan maestro</option>
+                  <option>Plan de desarrollo concertado</option>
+                  <option>Plan de vida de las comunidades</option>
+                </select> -->
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <textarea class="form-control" rows="2">
+OB 1 - Mantener la cobertura vegetal del Parque Nacional
+                </textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Alineado a</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Linea de acción 1"
+                />
+                &nbsp;
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Linea de acción 2"
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Compromiso 2</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo del:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Plan de vida de las comunidades"
+                />
+                <!-- <select class="form-select">
+                  <option selected>Plan maestro</option>
+                  <option>Plan de desarrollo concertado</option>
+                  <option>Plan de vida de las comunidades</option>
+                </select> -->
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Objetivo</label>
+                <textarea class="form-control" rows="2">
+ OB 3 - lorem ipsum
+                </textarea>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Alineado a</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Linea de acción 1"
+                />
+                &nbsp;
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Linea de acción 2"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="createActivity"
+  tabindex="-1"
+  aria-labelledby="createActivityLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3"></div>
+        <hr />
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Nro.</td>
+                <td>Actividad</td>
+                <td>Tipo indicador</td>
+                <td>Indicador</td>
+                <td>Meta</td>
+                <td>Semestre</td>
+                <td>Opción</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let field of fieldArray; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.activity"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.indicatorType"
+                  />
+                </td>
+
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.indicator"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    [value]="field.goal"
+                  />
+                </td>
+                <td>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      [checked]="field.trim1"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox1"
+                      >1</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      [checked]="field.trim2"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox2"
+                      >2</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox3"
+                      [checked]="field.trim3"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox3"
+                      >3</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox4"
+                      [checked]="field.trim4"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox4"
+                      >4</label
+                    >
+                  </div>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-danger border-0"
+                    type="button"
+                    (click)="deleteFieldValue(i)"
+                  >
+                    <i class="bi bi-dash-square fs-lg"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" disabled />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeCode"
+                    [(ngModel)]="newAttribute.activity"
+                    name="newAttributeActivity"
+                  />
+                </td>
+                <td>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="newAttribute.indicatorType"
+                  >
+                    <option value="Acumulado">Acumulado</option>
+                    <option value="Promedio">Promedio</option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributeName"
+                    [(ngModel)]="newAttribute.indicator"
+                    name="newAttributeIndicator"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="newAttributePrice"
+                    [(ngModel)]="newAttribute.goal"
+                    name="newAttributeGoal"
+                  />
+                </td>
+                <td>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox11"
+                      [(ngModel)]="newAttribute.trim1"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox11"
+                      >1</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox12"
+                      [(ngModel)]="newAttribute.trim2"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox12"
+                      >2</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox13"
+                      [(ngModel)]="newAttribute.trim3"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox13"
+                      >3</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox14"
+                      [(ngModel)]="newAttribute.trim4"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox14"
+                      >4</label
+                    >
+                  </div>
+                </td>
+
+                <td>
+                  <div class="text-nowrap">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-success border-0"
+                      (click)="addFieldValue()"
+                    >
+                      <i class="bi bi-plus-square fs-lg"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="mainWindow">
+  <div>
+    <div style="padding-left: 4px">
+      <p>Carga de shapefile del área del ámbito del acuerdo de conservación</p>
+      <form enctype="multipart/form-data" method="post" id="uploadForm">
+        <div class="field">
+          <label class="file-upload">
+            <span><strong>Agregar shapefile</strong></span>
+            <input type="file" name="file" id="inFile" />
+          </label>
+        </div>
+      </form>
+      <span
+        class="file-upload-status"
+        style="opacity: 1"
+        id="upload-status"
+      ></span>
+      <div id="fileInfo"></div>
+    </div>
+  </div>
+</div>
+<div id="mainWindow2">
+  <div>
+    <div style="padding-left: 4px">
+      <p>
+        Carga de shapefile del área de vigilancia del acuerdo de conservación
+      </p>
+      <form enctype="multipart/form-data" method="post" id="uploadForm2">
+        <div class="field">
+          <label class="file-upload">
+            <span><strong>Agregar shapefile</strong></span>
+            <input type="file" name="file" id="inFile2" />
+          </label>
+        </div>
+      </form>
+      <span
+        class="file-upload-status"
+        style="opacity: 1"
+        id="upload-status2"
+      ></span>
+      <div id="fileInfo2"></div>
+    </div>
+  </div>
+</div>

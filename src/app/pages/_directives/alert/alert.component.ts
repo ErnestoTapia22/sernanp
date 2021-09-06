@@ -20,7 +20,7 @@ import { AlertService } from '../../../_services/base/alert.service';
 })
 export class AlertComponent implements OnInit, OnDestroy {
   @Input() id = 'default-alert';
-  @Input() fade = true;
+  @Input() fade = false;
   @Output() hasAlerts = new EventEmitter<number>();
 
   alerts: Alert[] = [];

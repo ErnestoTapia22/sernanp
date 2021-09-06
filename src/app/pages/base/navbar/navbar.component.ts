@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../../_services/base/alert.service';
+import { AuthenticationService } from '@app/_services/auth/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +11,23 @@ export class NavbarComponent implements OnInit {
   public sidebarOpened = false;
   dataUser: any;
   hasAlerts: number = 0;
-  constructor(private alertService: AlertService) {}
+  user: any = {};
+  isLogedIn: boolean = false;
+  constructor(
+    private alertService: AlertService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     this.clickNav(null);
+
+    if (
+      localStorage.getItem('user') !== null &&
+      localStorage.getItem('user') !== undefined
+    ) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.isLogedIn = true;
+    }
   }
 
   toggleOffcanvas() {
@@ -65,4 +79,8 @@ export class NavbarComponent implements OnInit {
         elmPageWrapper.setAttribute('style', 'min-height:' + height + 'px'); //style.minHeight = (height) + "px";
     }
   };
+  logout() {
+    this.authenticationService.logout();
+    this.isLogedIn = false;
+  }
 }

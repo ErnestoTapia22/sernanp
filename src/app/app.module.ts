@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +25,7 @@ import { CustomWidgetComponent } from './pages/geometry/widgets/custom-widget/cu
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TreeviewModule } from 'ngx-treeview';
 import { LayerService } from './_services/geometry/layer.service';
-import { AgreementComponent } from './pages/base/agreement/agreement.component';
+import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
 import { ResizeMapDirective } from './pages/_directives/resize-map.directive';
 import { AlertComponent } from './pages/_directives/alert/alert.component';
 import { BaseService } from './_services/base/base.service';
@@ -35,6 +35,18 @@ import { UserComponent } from './pages/base/user/user.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { TestComponent } from './pages/base/test/test.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminComponent } from './pages/base/admin/admin.component';
+import { initAppFactory } from './_factory/init.factory';
+import { AlertService } from './_services/base/alert.service';
+import { ApiBaseService } from './_services/base/api-base.service';
+import { InitService } from './_services/init-service/init.service';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AnpComponent } from './pages/base/anp/anp.component';
+import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
+import { AgreementDetailComponent } from './pages/base/agreement/agreement-detail/agreement-detail.component';
+import { NotFoundComponent } from './pages/base/not-found/not-found.component';
+import { PublicComponent } from './pages/base/public/public.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +70,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserComponent,
     DetailComponent,
     TestComponent,
+    AdminComponent,
+    AnpComponent,
+    MasterPlanComponent,
+    AgreementNewComponent,
+    AgreementDetailComponent,
+    NotFoundComponent,
+    PublicComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,8 +92,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DragDropModule,
     TreeviewModule.forRoot(),
     NgxPaginationModule,
+    NgSelectModule,
   ],
-  providers: [EsriMapService, LayerService, BaseService],
+  providers: [
+    EsriMapService,
+    LayerService,
+    BaseService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initAppFactory,
+      deps: [InitService, AlertService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [BaseWidgetComponent, DragDropModule, AlertComponent],
 })

@@ -18,10 +18,10 @@
           </ol>
         </nav>
 
-        <button type="button" class="btn ms-3 btn-primary">
+        <!-- <button type="button" class="btn ms-3 btn-primary">
           <i class="bi bi-plus-circle fs-lg"></i>
           <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -33,292 +33,204 @@
   <!-- ============================================================== -->
   <div class="row">
     <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <label class="mb-0 fw-bold">Búsqueda</label>
-          <div>
-            <button type="button" class="btn btn-sm btn-outline-primary mx-2">
-              <i class="bi bi-search"></i>
-              Buscar
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">
-              <i class="bi bi-brush"></i>
-              Limpiar
-            </button>
+      <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="datos-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabGeneral"
+            type="button"
+            role="tab"
+          >
+            General
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="mapa-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabEspecific"
+            type="button"
+            role="tab"
+          >
+            Específico
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane pt-2 fade show active"
+          id="tabGeneral"
+          role="tabpanel"
+          aria-labelledby="general-tab"
+        >
+          <div class="card">
+            <div class="card-header"></div>
+            <div class="card-body">
+              <!-- [src]="urlSafe" -->
+              <iframe
+                width="100%"
+                height="900"
+                frameBorder="0"
+                src="./assets/images/reporttest.PNG"
+              ></iframe>
+              <!-- <a href="https://ibb.co/wsQrJCw"
+                ><img
+                  src="https://i.ibb.co/fvNG8tn/Whats-App-Image-2021-08-30-at-6-31-19-PM.jpg"
+                  alt="Whats-App-Image-2021-08-30-at-6-31-19-PM"
+                  border="0"
+              /></a> -->
+            </div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label class="form-label">Código</label>
-              <input type="text" class="form-control" />
+        <div
+          class="tab-pane pt-2 fade"
+          id="tabEspecific"
+          role="tabpanel"
+          aria-labelledby="Especific-tab"
+        >
+          <div class="card">
+            <div class="card-header">
+              <label class="mb-0 fw-bold">Búsqueda</label>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary mx-2"
+                  (click)="search(form.value)"
+                >
+                  <i class="bi bi-search"></i>
+                  Buscar
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-brush"></i>
+                  Limpiar
+                </button>
+              </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label class="form-label">Fecha de suscripción</label>
-              <!-- <input type="text" class="form-control" placeholder="Last name" /> -->
+            <div class="card-body">
+              <form novalidate [formGroup]="form">
+                <div class="row g-3">
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label class="form-label">Código</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="code"
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label class="form-label">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="code"
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label for="inputState" class="form-label"
+                      >Estado del acuerdo
+                    </label>
+                    <select class="form-select" formControlName="state">
+                      <option value="">SELECCIONE</option>
+                      <option value="1">En envaluación</option>
+                      <option value="2">En diseño</option>
+                      <option value="3">Firmado</option>
+                      <option value="4">En implementación</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label for="inputState" class="form-label"
+                      >Fuente de financiamiento
+                    </label>
+                    <select class="form-select" formControlName="category">
+                      <option value="">SELECCIONE</option>
+                      <option value="1">Público</option>
+                      <option value="2">Privado</option>
+                      <option value="3">Cooperación</option>
+                      <option value="4">Otro</option>
+                    </select>
+                  </div>
+                </div>
 
-              <input type="date" class="form-control" />
-            </div>
-            <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label class="form-label">Suscriptores del acuerdo</label>
-                <input type="text" class="form-control" />
-              </div> -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label for="inputState" class="form-label">Categoria </label>
-              <select class="form-select">
-                <option selected>SELECCIONE</option>
-                <option>Bosque de protección</option>
-                <option>Parque nacional</option>
-                <option>Reserva nacional</option>
-              </select>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <label for="inputState" class="form-label"
-                >Estado del acuerdo
-              </label>
-              <select class="form-select">
-                <option selected>SELECCIONE</option>
-                <option>Activo</option>
-                <option>Inactivo</option>
-                <option>Por renovar</option>
-                <option>Vigente</option>
-              </select>
+                <hr />
+
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Años de Vigencia</th>
+                        <th>Fecha Suscr.</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                      <ngx-spinner
+                        [fullScreen]="false"
+                        type="ball-clip-rotate"
+                        size="medium"
+                      >
+                      </ngx-spinner>
+                      <ng-container *ngIf="!isLoading">
+                        <tr
+                          *ngFor="
+                            let item of agreementList
+                              | paginate
+                                : {
+                                    id: 'agreementMonitoring',
+                                    itemsPerPage: pageSize,
+                                    currentPage: page,
+                                    totalItems: total
+                                  };
+                            index as idx
+                          "
+                        >
+                          <td>{{ item.code }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.agreementState.name }}</td>
+                          <td>{{ item.vigency }}</td>
+                          <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
+                          <td>
+                            <div class="text-nowrap">
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-outline-info border-0"
+                                (click)="downloadPdf(item.id)"
+                              >
+                                <i class="bi bi-cloud-download-fill"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <select
+                    class="form-select custom-select"
+                    formControlName="pageSize"
+                    (change)="onChangePageSize($event)"
+                  >
+                    <option [value]="5">5/PÁGINA</option>
+                    <option [value]="10">10/PÁGINA</option>
+                    <option [value]="20">20/PÁGINA</option>
+                    <option [value]="30">30/PÁGINA</option>
+                  </select>
+                  <pagination-controls
+                    (pageChange)="getPage($event)"
+                    id="agreementMonitoring"
+                    class="pagination justify-content-end"
+                  ></pagination-controls>
+                </div>
+              </form>
             </div>
           </div>
-
-          <hr />
-
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Código</th>
-                  <th>Categoría</th>
-                  <th>Estado</th>
-                  <th>Suscriptores</th>
-                  <th>Vigencia</th>
-                  <th>Fecha Suscr.</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>AC20210801</td>
-                  <td>Reserva nacional</td>
-                  <td>Vigente</td>
-                  <td>
-                    SERNANP - Reserva nacional Tambopata - Asoc. pamicultores
-                    San Juan
-                  </td>
-                  <td>5 años</td>
-                  <td>12/09/2020</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>AC20190702</td>
-                  <td>Reserva nacional</td>
-                  <td>Vigente</td>
-                  <td>
-                    RNTAMB - Cooperativa agraria de servicios múltiples
-                    Tambopata Candamo
-                  </td>
-                  <td>3 años</td>
-                  <td>20/10/2019</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>AC20180201</td>
-                  <td>Reserva nacional</td>
-                  <td>Vigente</td>
-                  <td>
-                    RNTAMB - Asociación de castañeros de la RNTAMB los Pioneros
-                  </td>
-                  <td>5 Años</td>
-                  <td>23/04/2019</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>AC20210801</td>
-                  <td>Reserva nacional</td>
-                  <td>Vigente</td>
-                  <td>DIS - Fruta Tambopata E.I.R.L.</td>
-                  <td>5 años</td>
-                  <td>22/04/2019</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>AC20210801</td>
-                  <td>Parque nacional</td>
-                  <td>Vigente</td>
-                  <td>JPNCAZ - SERNANP-CC.NN. - Mushuck Llacta de Chipaota.</td>
-                  <td>2 años</td>
-                  <td>12/12/2019</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>AC20210801</td>
-                  <td>Parque nacional</td>
-                  <td>Vigente</td>
-                  <td>JPNCAZ/SERNANP - COOPAIN - CIMA.</td>
-                  <td>3 años</td>
-                  <td>11/07/2019</td>
-                  <td>
-                    <div class="text-nowrap">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-info border-0"
-                        [routerLink]="['/monitoring/detail', 'asddqee2331']"
-                      >
-                        <i class="bi bi-eye fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success border-0"
-                      >
-                        <i class="bi bi-pencil fs-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger border-0"
-                      >
-                        <i class="bi bi-trash fs-lg"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#">Previous</a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
     </div>
@@ -330,3 +242,43 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
+<div
+  class="modal fade"
+  id="report"
+  tabindex="-1"
+  aria-labelledby="reportLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPerfilLabel">Reporte</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <iframe
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          src="./assets/files/Resumen.pdf"
+        ></iframe>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -41,7 +41,7 @@ public class EcosystemTypeRepository extends BaseRepository<EcosystemTypeModel>{
 	
 	@Override
 	public int delete(DataSource ds, int id) throws Exception {
-		return super.delete(ds, "mc.miningconcession_delete", id);
+		return super.delete(ds, "simrac.fn_eliminar_tipoecosistema", id);
 	}
 		
 }

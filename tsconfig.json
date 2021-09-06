@@ -14,7 +14,10 @@
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "jsxFactory": "tsx",
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "@app/*": ["./src/app/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false

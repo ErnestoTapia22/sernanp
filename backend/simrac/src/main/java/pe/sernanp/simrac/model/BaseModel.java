@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,7 +11,9 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 
 @Entity
-public class BaseModel {
+public class BaseModel implements Serializable {
+	
+	private static final long serialVersionUID = -7788619177798333712L;
 
 	@NotNull
 	@Id

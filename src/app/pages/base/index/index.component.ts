@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LayerService } from '../../../_services/geometry/layer.service';
 import { AlertService } from '../../../_services/base/alert.service';
 import { BaseService } from '../../../_services/base/base.service';
+import { AuthenticationService } from '@app/_services/auth/authentication.service';
+
 //widgets
 import BookMarks from '@arcgis/core/widgets/Bookmarks';
 import Home from '@arcgis/core/widgets/Home';
@@ -22,6 +24,8 @@ import { environment } from '../../../../environments/environment';
 //popup
 import PopupTemplate from '@arcgis/core/PopupTemplate';
 import Popup from '@arcgis/core/widgets/Popup';
+//auth
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -41,6 +45,7 @@ export class IndexComponent implements OnInit {
   parentLayer: MapImageLayer;
   itemsArray: any[] = [];
   treeConfig: any;
+  token: string = '';
 
   //change detector in dom
   @ViewChild(TreeviewComponent, { static: false })
@@ -49,7 +54,10 @@ export class IndexComponent implements OnInit {
   constructor(
     private baseService: BaseService,
     private layerService: LayerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {
     this.treeConfig = {
       hasAllCheckBox: false,
@@ -159,7 +167,8 @@ export class IndexComponent implements OnInit {
                         .createFeatureLayer()
                         .then((featureLayer) => featureLayer.load())
                         .then((featureLayer) => {
-                          sublayer.popupTemplate = featureLayer.createPopupTemplate();
+                          sublayer.popupTemplate =
+                            featureLayer.createPopupTemplate();
                         });
                     });
 
@@ -241,5 +250,15 @@ export class IndexComponent implements OnInit {
         element.classList.add('bi-plus-lg');
       }
     }
+  }
+  test() {
+    // var layer = new MapImageLayer({
+    //   url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer',
+    //   sublayers: [
+    //     { id: 2, visible: false, popupTemplate: null },
+    //     { id: 1, visible: false, popupTemplate:  },
+    //     { id: 0, visible: false, popupTemplate: workOrderPopupTemplate },
+    //   ],
+    // });
   }
 }

@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
       user: ['', Validators.compose([Validators.required])],
       password: ['', Validators.required],
     });
-    this.authenticationService.logout();
+    // console.log(this.route.snapshot.paramMap.get('token'));
+    // this.authenticationService.logout();
   }
   get f() {
     return this.loginForm.controls;
@@ -47,7 +48,8 @@ export class LoginComponent implements OnInit {
       this.spinner.hide();
       return;
     }
-    this.authenticationService;
+    this.spinner.hide();
+    // this.authenticationService;
     // .login(this.f.user.value, this.f.password.value)
     // .pipe(first())
     // .subscribe(
@@ -81,6 +83,6 @@ export class LoginComponent implements OnInit {
     //       //this.router.navigateByUrl('/admin/usuario');
     //     }
     //   });
-    this.router.navigateByUrl('/map/index');
+    this.router.navigateByUrl(`/authentication/${token}`);
   }
 }

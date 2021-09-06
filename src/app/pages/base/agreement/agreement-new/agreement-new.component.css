@@ -1,0 +1,21 @@
+.breadcrumb-item + .breadcrumb-item::before {
+  content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+);
+}
+#mainWindow {
+  padding: 0.5em;
+  background-color: #fff;
+}
+#mainWindow p,
+#uploadForm {
+  display: block;
+  padding: 0.1em;
+}
+#mainWindow2 {
+  padding: 0.5em;
+  background-color: #fff;
+}
+#mainWindow2 p,
+#uploadForm2 {
+  display: block;
+  padding: 0.1em;
+}

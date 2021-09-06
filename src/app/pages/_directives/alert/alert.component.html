@@ -3,9 +3,9 @@
   class="{{ cssClass(alert) }}"
   style="display: flex; text-align: center; width: 50%; margin: 0 auto"
 > -->
-<li *ngFor="let alert of alerts" class="dropdown-item">
-  <!-- <div class="message-div"><span [innerHTML]="alert.message"></span></div> -->
-  <div
+<!-- <li *ngFor="let alert of alerts" class="dropdown-item"> -->
+<!-- <div class="message-div"><span [innerHTML]="alert.message"></span></div> -->
+<!-- <div
     [ngClass]="'card mb-3 border-' + cssClass(alert)"
     style="max-width: 18rem"
   >
@@ -13,8 +13,34 @@
       <h5 class="card-title">{{ alert.tittle }}</h5>
       <p class="justify-text">{{ alert.message }}</p>
     </div>
-  </div>
-  <!-- <div class="close-div">
+  </div> -->
+<!-- <div class="close-div">
     <a class="close" (click)="removeAlert(alert)">&times;</a>
   </div> -->
-</li>
+<!-- </li> -->
+<div class="toast-container position-absolute top-0 end-0 p-3">
+  <div
+    *ngFor="let alert of alerts"
+    class="toast show"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-bs-animation="true"
+  >
+    <div class="toast-header" [ngClass]="'bg-' + cssClass(alert)">
+      <!-- <img src="..." class="rounded me-2" alt="..." /> -->
+      <strong class="me-auto text-white">{{ alert.tittle }}</strong>
+      <!-- <small class="text-muted">just now</small> -->
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+        (click)="removeAlert(alert)"
+      ></button>
+    </div>
+    <div class="toast-body">
+      {{ alert.message }}
+    </div>
+  </div>
+</div>

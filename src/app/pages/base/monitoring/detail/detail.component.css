@@ -22,5 +22,17 @@
   background-color: rgb(79, 84, 103);
 }
 .round-yellow {
-  background-color: rgb(251, 157, 19);
+  background-color: #ffc107;
+}
+.round-danger {
+  background-color: #ef4355;
+}
+.round-success {
+  background-color: #00a772;
+}
+.circle {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
 }

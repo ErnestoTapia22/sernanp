@@ -2,6 +2,7 @@ package pe.sernanp.simrac.controller;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,12 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.VerificationMeanModel;
 import pe.sernanp.simrac.service.VerificationMeanService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping(value = "/api/verificationmean")
 public class VerificationMeanController extends BaseController<VerificationMeanModel, VerificationMeanService> {
 
-	/*@Autowired
+	@Autowired
 	private VerificationMeanService _service;
 	
 	@RequestMapping(value = "/list")
@@ -78,6 +80,6 @@ public class VerificationMeanController extends BaseController<VerificationMeanM
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
-	}*/
+	}
 	
 }

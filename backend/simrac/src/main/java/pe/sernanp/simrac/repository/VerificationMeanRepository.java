@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.stereotype.Repository;
 
 import pe.gisriv.entity.PaginatorEntity;
 import pe.sernanp.simrac.mapper.VerificationMeanMapper;
 import pe.sernanp.simrac.model.VerificationMeanModel;
 
+@Repository
 public class VerificationMeanRepository extends BaseRepository<VerificationMeanModel> {		
 	
 	@Override

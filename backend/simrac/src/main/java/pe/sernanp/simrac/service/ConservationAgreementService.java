@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import pe.gisriv.entity.FileEntity;
@@ -19,6 +20,7 @@ import pe.gisriv.extension.spatial.Reader;
 import pe.gisriv.extension.spatial.ShapeFileReader;
 import pe.sernanp.simrac.model.BaseGeometryEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.model.EconomicActivityModel;
 import pe.sernanp.simrac.model.SpatialReferenceEntity;
 import pe.sernanp.simrac.repository.ConservationAgreementRepository;
 
@@ -70,11 +72,8 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	}	
 
 	@SuppressWarnings({ "rawtypes", "unused" })
-	// @Transactional
-	public ResponseEntity save(ConservationAgreementModel item) throws Exception {
-		String workspace = "";// ConfigManager.getAppSettings().get("workspace");
-		String baseSourcePath = String.format("%s/%s/%s/", BaseService._basePath, "wwwroot", "data");
-		String baseTargetPath = String.format("%s/%s/", workspace, "files");
+	@Transactional
+	public ResponseEntity save(ConservationAgreementModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -82,50 +81,18 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-			//if(item.getRRPP().getId2()==0)
-			//	item.getRRPP().setId(null);
-			//if(item.getUEA().getId2() == 0)
-			//	item.getUEA().setId(null);
-			//if(item.getHolder().getId2()==0)
-			//	item.getHolder().setId(null);
-			//if(item.getSituationalStatus().getId2() ==0)
-			//	item.getSituationalStatus().setId(null);
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
 			if (id == 0) {
-				id = _repository.insert(this._dataSource, item);
+				id = this._repository.insert(this._dataSource, item);
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			} else {
-				id = _repository.update(this._dataSource, item);
+				id = this._repository.update(this._dataSource, item);
 				message += "Se actualizaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
 			}
-			//if (item.getDocuments() != null && item.getDocuments().size() > 0) {
-			//	List<DocumentModel> itemsDocumentDeleted = item.getDocuments().stream().filter(t->t.getId2()>0).collect(Collectors.toList());
-			//	for (int i = 0; i < itemsDocumentDeleted.size(); i++) {
-			//		DocumentModel t = itemsDocumentDeleted.get(i);
-			//		this._repositoryDocument.delete(this._dataSource, t.getId2());
-			//	};
-			//	List<DocumentModel> itemsDocumentNew = item.getDocuments().stream().filter(t->t.getId2()==0).collect(Collectors.toList());
-			//	  for (int i = 0; i < itemsDocumentNew.size(); i++) {
-			//			DocumentModel t = itemsDocumentNew.get(i);
-			//			String fileName =  System.getProperty("java.io.tmpdir") + t.getGUID() + t.getExtension();
-			//			File file = new File(fileName);
-			//			FileEntity itemFile = FileEntity.fromFile(file);
-			//			t.setContent(itemFile.getContent());
-			//			t.setPhysicalLocation(baseTargetPath);
-			//			t.setDocument(new DocumentModel());
-			//			t.setGUID(t.getGUID());
-			//			t.setName(itemFile.getName());
-			//			t.setOriginalName(t.getOriginalName());
-			//			t.setContentType(itemFile.getContentType());
-			//			t.setExtension(itemFile.getExtension());
-			//			Integer documentId = this._serviceDocument.save(this._dataSource, t);
-			//			this._repository.insertDocument(this._dataSource, id, documentId);
-			//	};
-			//}
 			this.transactionManager.commit(status);
 			ResponseEntity respuesta = new ResponseEntity();
 			respuesta.setExtra(id.toString());
@@ -186,11 +153,11 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity saveGeometry(ConservationAgreementModel item, FileEntity itemFile) throws Exception {
 		try {
-			BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
-			item.setGeometry(itemGeometry.getGeometry());
-			item.setSpatialReference(itemGeometry.getSpatialReference());
+			//BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
+			//item.setGeometry(itemGeometry.getGeometry());
+			//item.setSpatialReference(itemGeometry.getSpatialReference());
 			ResponseEntity<BaseGeometryEntity> response = new ResponseEntity<BaseGeometryEntity>();
-			response.setItem(item);
+			//response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
@@ -236,5 +203,45 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 		return "D:\\shape";
 	}
 	
+
+	@SuppressWarnings({ "rawtypes", "unused" })
+	@Transactional
+	public ResponseEntity delete(int id) throws Exception {
+		TransactionDefinition definition = null;
+		TransactionStatus status = null;
+		try {
+			definition = new DefaultTransactionDefinition();
+			status = this.transactionManager.getTransaction(definition);			
+			Integer rowsAffected = this._repository.delete(this._dataSource, id);
+			this.transactionManager.commit(status);
+			ResponseEntity response = new ResponseEntity();
+
+			response.setMessage("Se ha eliminado correctamente");
+			response.setSuccess(true);
+			return response;
+		} catch (Exception ex) {
+			if (this.transactionManager != null) {
+				if (status != null)
+					this.transactionManager.rollback(status);
+			}
+			throw new Exception(ex.getMessage());
+		}
+	}
 	
+	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			ConservationAgreementModel item = this._repository.detail(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItem(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+		
 }

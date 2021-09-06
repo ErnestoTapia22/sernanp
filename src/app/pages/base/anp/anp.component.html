@@ -1,0 +1,191 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">ANP</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ANP</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">Búsqueda</label>
+          <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary mx-2"
+              (click)="search(form.value)"
+            >
+              <i class="bi bi-search"></i>
+              Buscar
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              (click)="cleanForm()"
+            >
+              <i class="bi bi-brush"></i>
+              Limpiar
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
+                <label class="form-label">Código</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-5">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="code"
+                />
+              </div>
+              <div class="col-12 col-sm-6 col-md-2 col-lg-1">
+                <label class="form-label">Nombre</label>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-5">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                />
+              </div>
+            </div>
+          </form>
+          <hr />
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nº</th>
+
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                  <th>Plan maestro</th>
+                  <!-- <th>Plan de desarrollo c.</th>
+                    <th>Plan de vida</th> -->
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <ngx-spinner
+                  [fullScreen]="false"
+                  type="ball-clip-rotate"
+                  size="medium"
+                >
+                </ngx-spinner>
+
+                <ng-container *ngIf="!isLoading">
+                  <tr
+                    *ngFor="
+                      let item of anpList
+                        | paginate
+                          : {
+                              id: 'anpPag',
+                              itemsPerPage: selectedPageSize,
+                              currentPage: page,
+                              totalItems: total
+                            };
+                      index as idx
+                    "
+                  >
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.district }}</td>
+                    <td>{{ item.stateName }}</td>
+                    <td>
+                      <div class="text-nowrap">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info border-0"
+                          [routerLink]="'/anp/masterplan/' + item.id"
+                        >
+                          <i class="bi bi-plus-square fs-lg"></i>
+                        </button>
+                      </div>
+                    </td>
+                    <!-- <td>
+                        <div class="text-nowrap">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-success border-0"
+                            routerLink="/anp/masterplan"
+                          >
+                            <i class="bi bi-plus-square fs-lg"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-primary border-0"
+                            routerLink="/anp/masterplan"
+                          >
+                            <i class="bi bi-plus-square fs-lg"></i>
+                          </button>
+                        </div>
+                      </td> -->
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <select
+              class="form-select custom-select"
+              [(ngModel)]="selectedPageSize"
+              (change)="onChangePageSize($event)"
+            >
+              <option *ngFor="let option of pageSize" [value]="option.value">
+                {{ option.name }}
+              </option>
+              <!-- <option [value]="5" selected>5/PÁGINA</option>
+                <option [value]="10">10/PÁGINA</option>
+                <option [value]="20">20/PÁGINA</option>
+                <option [value]="30">30/PÁGINA</option> -->
+            </select>
+            <pagination-controls
+              (pageChange)="getPage($event)"
+              id="anpPag"
+              class="pagination justify-content-end"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->

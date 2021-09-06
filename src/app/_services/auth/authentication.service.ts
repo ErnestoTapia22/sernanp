@@ -1,16 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 //import { Http, RequestOptions, Headers } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { HttpParams } from '@angular/common/http';
+import { User } from '../../_models/auth/user';
+import { ApiBaseService } from '@app/_services/base/api-base.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private http: HttpClient) {}
+  private userSubject: BehaviorSubject<User>;
+  private segmentUserValidate: string = '';
+  public user: Observable<User>;
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private apiBaseService: ApiBaseService
+  ) {
+    this.userSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('user'))
+    );
+    this.user = this.userSubject.asObservable();
+    this.segmentUserValidate = '/user/validate/';
+  }
+  public get userValue(): User {
+    return this.userSubject.value;
+  }
   login(user: string, password: string) {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
@@ -23,16 +43,41 @@ export class AuthenticationService {
     return this.http
       .post(`${environment.apiUrl}/Auth/token`, body, { headers: headers })
       .pipe(
-        map((token) => {
-          if (token) {
-            localStorage.setItem('token', JSON.stringify(token));
+        map((user) => {
+          if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user as User);
           }
-          return token;
+          return user;
         })
       );
   }
+  authenticate(token) {
+    try {
+      this.apiBaseService
+        .get(`${environment.apiUrl}${this.segmentUserValidate}${token}`)
+        .subscribe((response) => {
+          console.log(response);
+          if (
+            response &&
+            response.item !== undefined &&
+            response.item !== null
+          ) {
+            localStorage.setItem('user', JSON.stringify(response.item));
+            this.router.navigate(['/map/index']);
+          } else {
+            this.router.navigate([`/authentication/ycoyla`]);
+          }
+        });
+    } catch (error) {
+      this.router.navigate(['/default/login']);
+    }
+  }
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     localStorage.removeItem('dataUser');
+    localStorage.removeItem('auth');
+    this.userSubject.next(null);
+    this.router.navigate(['/default/login']);
   }
 }
