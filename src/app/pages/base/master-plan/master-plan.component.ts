@@ -249,7 +249,9 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       if (this.form.invalid) {
         return;
       }
-
+      if (this.form.value.id != null) {
+        return;
+      }
       this.masterPlanService
         .masterPlanInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {

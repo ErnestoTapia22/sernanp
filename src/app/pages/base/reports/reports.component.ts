@@ -52,7 +52,10 @@ export class ReportsComponent implements OnInit {
       order: 'asc',
     };
     let item = {
-      name: 'a',
+      name: '',
+      agreementState: { id: 0 },
+      source: { id: 0 },
+      code: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),

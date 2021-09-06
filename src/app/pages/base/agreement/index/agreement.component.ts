@@ -58,7 +58,7 @@ export class AgreementComponent implements OnInit {
     };
     let item = {
       name: '',
-      agreementState: { id: 1 },
+      agreementState: { id: 0 },
       source: { id: 0 },
       code: '',
     };
