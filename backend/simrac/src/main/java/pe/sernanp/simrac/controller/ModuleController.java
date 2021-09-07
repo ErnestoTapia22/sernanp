@@ -44,15 +44,4 @@ public class ModuleController extends BaseController<ModuleModel, ModuleService>
 			return super.getJSON(ex);
 		}
 	}
-	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	@ResponseBody()
-	public ResponseEntity<?> save(@RequestBody ModuleModel item) throws IOException {
-		try {
-			ResponseEntity<?> response = this._service.save(item);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}
-	}
 }

@@ -1185,24 +1185,6 @@
 						"url": "http://localhost:8050/simrac/api/module/searchbysystem/27"
 					},
 					"response": []
-				},
-				{
-					"name": "Save",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 447,\r\n    \"role\": {\r\n        \"id\": 126\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8050/simrac/api/module/save"
-					},
-					"response": []
 				}
 			]
 		},
@@ -1242,6 +1224,24 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:8050/simrac/api/role/search/27"
+					},
+					"response": []
+				},
+				{
+					"name": "Save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":126,\r\n    \"modules\":[{\"id\": 447},{\"id\": 448}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/role/save2"
 					},
 					"response": []
 				}

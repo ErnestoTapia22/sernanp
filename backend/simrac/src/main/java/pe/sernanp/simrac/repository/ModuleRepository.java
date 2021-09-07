@@ -26,15 +26,4 @@ public class ModuleRepository extends BaseRepository<ModuleModel> {
 		return super.search23(ds,"simrac.fn_buscar_moduloporsistema",parameters, new ModuleMapper());			
 	}	
 	
-	@Override
-	public int insert(DataSource ds, ModuleModel item) throws Exception {
-		return super.insert(ds, "simrac.fn_insertar_rolmodulo", item);
-	}
-	
-	@Override
-	protected void setParameters(Map<String, Object> parameters, ModuleModel item) throws Exception {
-		 parameters.put("pmoduleid", item.getId2());
-		 parameters.put("pid", item.getRole().getId2());
-		 parameters.put("pregistrationdate", item.getRegistrationDate());
-	}
 }

@@ -25,43 +25,52 @@ public class RoleController extends BaseController<RoleModel, RoleService> {
 	 @Autowired
 	 private RoleService _service;
 	 
-	 	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
-		@ResponseBody()
-		public ResponseEntity<RoleModel> search(@PathVariable("id") int id) throws IOException {
-			try {
-				ResponseEntity<RoleModel> response = this._service.search(id);
-				return response;
-			} catch (Exception ex) {
-				return super.getJSON(ex);
-			}
+ 	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<RoleModel> search(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<RoleModel> response = this._service.search(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-	 
-	 	 
+	}
+ 
+ 	 
+
+ 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.delete(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+ 
+ 
 	
-	 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-		@ResponseBody()
-		public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
-			try {
-				ResponseEntity<?> response = this._service.delete(id);
-				return response;
-			} catch (Exception ex) {
-				return super.getJSON(ex);
-			}
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<?> save(@RequestBody RoleModel item) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.save(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-	 
-	 
-		
-		@RequestMapping(value = "/save", method = RequestMethod.POST)
-		@ResponseBody()
-		public ResponseEntity<?> save(@RequestBody RoleModel item) throws IOException {
-			try {
-				ResponseEntity<?> response = this._service.save(item);
-				return response;
-			} catch (Exception ex) {
-				return super.getJSON(ex);
-			}
+	}
+ 
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<?> save2(@RequestBody RoleModel item) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.save2(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
 		}
-	 
-	 
+	}	 
 	 
 }
