@@ -26,6 +26,7 @@ public class UserRepository extends BaseRepository<UserModel>{
 	@Override
 	public List<UserModel> search(DataSource ds, UserModel item, PaginatorEntity paginator) throws Exception {
 		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("psystem", item.getSystem());
 		parameters.put("pusername", item.getUserName());
 		parameters.put("pname", item.getName());
 		parameters.put("plastname", item.getLastName());
