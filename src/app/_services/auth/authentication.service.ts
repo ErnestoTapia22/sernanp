@@ -66,7 +66,7 @@ export class AuthenticationService {
             localStorage.setItem('user', JSON.stringify(response.item));
             this.router.navigate(['/map/index']);
           } else {
-            this.router.navigate([`/authentication/ycoyla`]);
+            this.router.navigate([`/authentication/${token}`]);
           }
         });
     } catch (error) {
