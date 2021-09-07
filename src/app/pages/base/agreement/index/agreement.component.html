@@ -49,7 +49,11 @@
               <i class="bi bi-search"></i>
               Buscar
             </button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              (click)="clearForm()"
+            >
               <i class="bi bi-brush"></i>
               Limpiar
             </button>
@@ -71,30 +75,42 @@
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="code"
+                  formControlName="name"
                 />
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label"
-                  >Estado del acuerdo
-                </label>
-                <select class="form-select" formControlName="state">
-                  <option value="">SELECCIONE</option>
-                  <option value="1">En envaluación</option>
-                  <option value="2">En diseño</option>
-                  <option value="3">Firmado</option>
-                  <option value="4">En implementación</option>
-                </select>
-              </div>              
+                <div formGroupName="agreementState">
+                  <label for="inputState" class="form-label"
+                    >Estado del acuerdo
+                  </label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+
+                    <option
+                      *ngFor="let item of agreementStateList"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label">Fuente de financiamiento </label>
-                <select class="form-select" formControlName="category">
-                  <option value="">SELECCIONE</option>
-                  <option value="1">Público</option>
-                  <option value="2">Privado</option>
-                  <option value="3">Cooperación</option>
-                  <option value="4">Otro</option>
-                </select>
+                <div formGroupName="source">
+                  <label for="inputState" class="form-label"
+                    >Fuente de financiamiento
+                  </label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+
+                    <option
+                      *ngFor="let item of agreementSourceList"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -146,9 +162,9 @@
                       "
                     >
                       <td>{{ item.code }}</td>
-                      <td>{{ item.name }} </td>                      
+                      <td>{{ item.name }}</td>
                       <td>{{ item.agreementState.name }}</td>
-                      <td>{{ item.vigency }}</td>                                           
+                      <td>{{ item.vigency }}</td>
                       <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
                       <td>
                         <div class="text-nowrap">

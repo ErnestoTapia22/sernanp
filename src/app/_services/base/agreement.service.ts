@@ -16,9 +16,16 @@ import {
 export class AgreementService {
   private segmentSearch;
   private segmentDetail;
+  private segmentAgreementStateList;
+  private segmentAgreementSourceList;
+  private segmentAgreementInsert;
+
   constructor(private apiService: ApiBaseService, private http: HttpClient) {
     this.segmentSearch = '/conservationagreement/search';
     this.segmentDetail = '/conservationagreement/detail';
+    this.segmentAgreementStateList = '/agreementstate/list';
+    this.segmentAgreementSourceList = '/source/list';
+    this.segmentAgreementInsert = '/conservationagreement/save';
   }
   uploadShape(file: File) {
     const fd = new FormData();
@@ -40,6 +47,23 @@ export class AgreementService {
   agreementDetail(id): Observable<any> {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentDetail}/${id}`
+    );
+  }
+  agreementStateList(): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentAgreementStateList}`
+    );
+  }
+  agreementSourceList(): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentAgreementSourceList}`
+    );
+  }
+  agreementInsert(item): Observable<any> {
+    return this.apiService.post(
+      `${environment.apiUrl}${this.segmentAgreementInsert}`,
+      item,
+      null
     );
   }
 }

@@ -12,7 +12,8 @@ import Field from '@arcgis/core/layers/support/Field';
 import Graphic from '@arcgis/core/Graphic';
 import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
-
+//services
+import { AlertService } from '@app/_services/base/alert.service';
 @Component({
   selector: 'app-agreement-new',
   templateUrl: './agreement-new.component.html',
@@ -32,9 +33,13 @@ export class AgreementNewComponent implements OnInit {
   view: MapView;
   map: Map;
   request: Request;
+  agreementExist: boolean = false;
+  agreementStateList: any[] = [];
+  submitted: boolean = false;
   constructor(
     private agreementService: AgreementService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +58,7 @@ export class AgreementNewComponent implements OnInit {
     this.obsQuery.next({
       item: JSON.stringify(item),
     });
+    this.fillSelects();
   }
   async readURL(event) {}
 
@@ -224,20 +230,24 @@ export class AgreementNewComponent implements OnInit {
   }
   fillSelects() {
     try {
-      if (
-        environment.externalServices[0].agreement[0].url !== undefined &&
-        environment.externalServices[0].agreement[0].url !== null
-      ) {
-        this.agreementService
-          .getServices(`${environment.externalServices[0].agreement[0].url}`)
-          .subscribe((response) => {
-            console.log(response);
-            if (response) {
-              this.anp = response;
-            }
-          });
-      }
-    } catch (error) {}
+      this.agreementService.agreementStateList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          console.log(response);
+          this.agreementStateList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer la lista de estados del acuerdo',
+        'error',
+        { autoClose: true }
+      );
+    }
   }
   addShapefileToMap(featureCollection) {
     // add the shapefile to the map and zoom to the feature collection extent
@@ -311,9 +321,31 @@ export class AgreementNewComponent implements OnInit {
   }
   buildForm() {
     this.form = this.fb.group({
-      code: new FormControl(),
-      anp: new FormControl(),
-      goal: new FormControl(),
+      id: [0],
+      name: [''],
+      description: [''],
+      state: [true],
+      registrationDate: [''],
+      code: [''],
+      vigency: [0],
+      firm: [''],
+      partMen: [0],
+      partWomen: [0],
+      benPerson: [''],
+      benIndirect: [''],
+      numFamily: [0],
+      benFamily: [''],
+      areaAmbitC: [0],
+      producedArea: [0],
+      detalleProduction: [''],
+
+      agreementState: this.fb.group({
+        id: 0,
+      }),
+      anp: this.fb.group({
+        id: 0,
+      }),
+      areaAmbitc: [{ value: 0, disabled: true }],
     });
   }
   addFieldValue() {
@@ -323,5 +355,41 @@ export class AgreementNewComponent implements OnInit {
   }
   deleteFieldValue(index) {
     this.fieldArray.splice(index, 1);
+  }
+  insertAgreement() {
+    try {
+      this.submitted = true;
+      console.log(this.form.value);
+
+      if (this.form.invalid) {
+        console.log(this.form.invalid);
+        return;
+      }
+      this.agreementService
+        .agreementInsert(JSON.stringify(this.form.value))
+        .subscribe((response) => {
+          if (response && response.success === true) {
+            this.submitted = false;
+            this.agreementExist = true;
+            this.getWorkPlan(response.extra);
+            this.alertService.success(
+              'Se registro correctamenteel acuerdo',
+              'Ok',
+              { autoClose: true }
+            );
+          } else {
+            this.alertService.error('error: ' + response.message, 'error', {
+              autoClose: true,
+            });
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al guardar el acuerdo', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  getWorkPlan(id) {
+    console.log(id);
   }
 }

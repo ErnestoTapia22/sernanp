@@ -12,6 +12,7 @@ import {
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { query } from '@angular/animations';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-agreement',
@@ -30,6 +31,8 @@ export class AgreementComponent implements OnInit {
     paginator: '',
   });
   parsed: any;
+  agreementStateList: any[] = [];
+  agreementSourceList: any[] = [];
 
   constructor(
     private agreementService: AgreementService,
@@ -42,30 +45,15 @@ export class AgreementComponent implements OnInit {
     this.page = 1;
     this.total = 0;
     this.pageSize = 5;
-    this.builForm();
+    this.buildForm();
     // this.spinner.show();
     // setTimeout(() => {
     //   this.spinner.hide();
     // }, 5000);
     //this.spinner.show();
     // this.getItems();
-
-    let paginator = {
-      limit: this.pageSize,
-      offset: '1',
-      sort: 'name',
-      order: 'asc',
-    };
-    let item = {
-      name: '',
-      agreementState: { id: 0 },
-      source: { id: 0 },
-      code: '',
-    };
-    this.queryObserver.next({
-      item: JSON.stringify(item),
-      paginator: JSON.stringify(paginator),
-    });
+    this.fillSelects();
+    this.initQuery();
     this.onSearch();
     // this.fillSelects();
   }
@@ -127,15 +115,14 @@ export class AgreementComponent implements OnInit {
     // this.queryObserver.next({item:this.f.})
   }
   search(filters: any): void {
-    // const q = this.queryObserver.getValue();
-    // q.item = JSON.stringify(filters);
-    // this.queryObserver.next(q);
-    // console.log(this.queryObserver.getValue());
+    const q = this.queryObserver.getValue();
+    q.item = JSON.stringify(filters);
+    this.queryObserver.next(q);
 
     this.onSearch();
   }
 
-  builForm(): void {
+  buildForm(): void {
     this.form = this.fb.group({
       code: ['', Validators.compose([Validators.maxLength(10)])],
       firm: [
@@ -146,9 +133,16 @@ export class AgreementComponent implements OnInit {
           ),
         ]),
       ],
-      category: ['', Validators.compose([])],
-      state: ['', Validators.compose([])],
-      pageSize: ['5', Validators.compose([])],
+      category: [''],
+      state: [''],
+      pageSize: ['5'],
+      name: [''],
+      agreementState: this.fb.group({
+        id: [0],
+      }),
+      source: this.fb.group({
+        id: [0],
+      }),
     });
   }
   ngOnDestroy() {
@@ -160,5 +154,61 @@ export class AgreementComponent implements OnInit {
       const height = 50.838 * parseInt(rows);
       cm.setAttribute('style', `height:${height}px`);
     }
+  }
+  fillSelects() {
+    try {
+      this.agreementService.agreementStateList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.agreementStateList = response.items;
+        }
+      });
+      this.agreementService.agreementSourceList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.agreementSourceList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer la lista de estados del acuerdo o la lista de fuente de financiamiento',
+        'error',
+        { autoClose: true }
+      );
+    }
+  }
+  clearForm() {
+    this.form.reset({
+      agreementState: { id: 0 },
+      source: { id: 0 },
+    });
+    this.initQuery();
+    this.onSearch();
+  }
+  initQuery() {
+    let paginator = {
+      limit: this.pageSize,
+      offset: '1',
+      sort: 'name',
+      order: 'asc',
+    };
+    let item = {
+      name: '',
+      agreementState: { id: 0 },
+      source: { id: 0 },
+      code: '',
+    };
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
   }
 }

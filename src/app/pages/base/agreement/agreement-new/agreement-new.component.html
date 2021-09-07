@@ -20,11 +20,6 @@
             <li class="breadcrumb-item text-nowrap active">Nuevo acuerdo</li>
           </ol>
         </nav>
-
-        <!-- <button type="button" class="btn btn-primary ms-3">
-          <i class="bi bi-plus-circle fs-lg"></i>
-          <span class="d-none d-sm-inline-block mx-1">Nuevo acuerdo</span>
-        </button> -->
       </div>
     </div>
   </div>
@@ -42,7 +37,7 @@
             class="nav-link active"
             id="workPlan-tab"
             data-bs-toggle="tab"
-            data-bs-target="#tabWorkPlan"
+            data-bs-target="#tabAgreement"
             type="button"
             role="tab"
           >
@@ -50,13 +45,16 @@
           </button>
         </li>
         <li class="nav-item" role="presentation">
+          <!-- prettier-ignore -->
           <button
             class="nav-link"
             id="results-tab"
             data-bs-toggle="tab"
-            data-bs-target="#tabResults"
+            data-bs-target="#tabWorkPlan"
             type="button"
             role="tab"
+            [ngClass]="{ 'disabled': !agreementExist }"
+            [disabled]="!agreementExist"
           >
             Plan de Trabajo
           </button>
@@ -66,11 +64,11 @@
       <div class="tab-content" id="myTabContent">
         <div
           class="tab-pane pt-2 fade show active"
-          id="tabWorkPlan"
+          id="tabAgreement"
           role="tabpanel"
-          aria-labelledby="workPlan-tab"
+          aria-labelledby="agreement-tab"
         >
-          <form action="#" [formGroup]="form" novalidate>
+          <form action="#" [formGroup]="form" (ngSubmit)="insertAgreement()" novalidate>
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">General</label>
@@ -107,14 +105,22 @@
                   </ng-select>-->
                   </div>
                   <div class="col-md-3">
-                    <label for="ddState" class="form-label">Estado (*)</label>
-                    <select id="ddState" class="form-select">
-                      <option selected>SELECCIONE</option>
-                      <option>En envaluación</option>
-                      <option>En diseño</option>
-                      <option>Firmado</option>
-                      <option>En implementación</option>
-                    </select>
+                    <div formGroupName="agreementState">
+                      <label for="ddState" class="form-label">Estado (*)</label>
+                      <select
+                        id="ddState"
+                        class="form-select"
+                        formControlName="id"
+                      >
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of agreementStateList"
+                          [value]="item.id"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <div class="col-md-3">
                     <label for="txtSuscriptionDate" class="form-label"
@@ -124,6 +130,7 @@
                       type="date"
                       class="form-control"
                       id="txtSuscriptionDate"
+                      formControlName="firm"
                     />
                   </div>
                   <div class="col-md-3">
@@ -135,6 +142,7 @@
                       id="numbValidity"
                       class="form-control"
                       min="0"
+                      formControlName="vigency"
                     />
                   </div>
                   <div class="col-md-6">
@@ -145,7 +153,6 @@
                       id="txtaGoal"
                       class="form-control"
                       rows="2"
-                      formControlName="goal"
                     ></textarea>
                   </div>
                   <div class="col-md-6">
@@ -161,6 +168,7 @@
                       id="txtaObs"
                       class="form-control"
                       rows="2"
+                      formControlName="description"
                     ></textarea>
                   </div>
                 </div>
@@ -412,6 +420,7 @@
                         min="0"
                         id="numbMenQ"
                         class="form-control"
+                        formControlName="partMen"
                       />
                       <span class="input-group-text">M</span>
                       <input
@@ -419,6 +428,7 @@
                         min="0"
                         id="numbWomanQ"
                         class="form-control"
+                        formControlName="partWomen"
                       />
                       <span class="input-group-text">Total</span>
                       <input
@@ -443,6 +453,7 @@
                       id="txtaDetailB"
                       class="form-control"
                       rows="1"
+                      formControlName="benPerson"
                     ></textarea>
                   </div>
                   <div class="col-md-4">
@@ -459,6 +470,7 @@
                       min="0"
                       class="form-control"
                       id="numbFamiliesBQ"
+                      formControlName="numFamily"
                     />
                   </div>
                   <div class="col-md-6">
@@ -474,6 +486,7 @@
                       id="txtaDetailBF"
                       class="form-control"
                       rows="1"
+                      formControlName="benFamily"
                     ></textarea>
                   </div>
                   <div class="col-md-6">
@@ -484,6 +497,7 @@
                       id="txtaIndirectB"
                       class="form-control"
                       rows="1"
+                      formControlName="benIndirect"
                     ></textarea>
                   </div>
                 </div>
@@ -541,7 +555,7 @@
                           min="0"
                           class="form-control"
                           id="numbScope"
-                          disabled
+                          formControlName="areaAmbitc"
                         />
                       </div>
                       <div class="col-md-3">
@@ -558,10 +572,11 @@
                           min="0"
                           class="form-control"
                           id="numbProductiveA"
+                          formControlName="producedArea"
                         />
                       </div>
                       <div class="col-md-3">
-                        <label for="numbProductiveA" class="form-label"
+                        <label for="numbInterventionA" class="form-label"
                           >Ubicacion Superficie de intervención</label
                         >
                         <i
@@ -573,7 +588,7 @@
                           type="text"
                           min="0"
                           class="form-control"
-                          id="numbProductiveA"
+                          id="numbInterventionA"
                           value="zona de amortiguamiento"
                         />
                       </div>
@@ -591,6 +606,7 @@
                           id="txtaProductiveAD"
                           class="form-control"
                           rows="1"
+                          formControlName="detalleProduction"
                         ></textarea>
                       </div>
                       <div class="col-md-3">
@@ -668,25 +684,25 @@
                       </div>
                       <div class="col-md-3 d-none">
                         <div class="mb-3">
-                          <label for="formFile" class="form-label"
+                          <label for="fileEnviromentArea" class="form-label"
                             >Área del ámbito</label
                           >
                           <input
                             class="form-control"
                             type="file"
-                            id="formFile"
+                            id="fileEnviromentArea"
                           />
                         </div>
                       </div>
                       <div class="col-md-3 d-none">
                         <div class="mb-3">
-                          <label for="formFile" class="form-label"
+                          <label for="fileSurveillanceArea" class="form-label"
                             >Área de vigilancia</label
                           >
                           <input
                             class="form-control"
                             type="file"
-                            id="formFile"
+                            id="fileSurveillanceArea"
                           />
                         </div>
                       </div>
@@ -736,10 +752,10 @@
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        id="chkLocalD"
+                        id="chkArticulated"
                         value="option3"
                       />
-                      <label for="ddMasterP" class="form-label"
+                      <label for="chkArticulated" class="form-label"
                         >Plan maestro (*)</label
                       >
                     </div>
@@ -819,10 +835,10 @@
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        id="chkLocalD"
+                        id="chkLocalDevelopment"
                         value="option3"
                       />
-                      <label class="form-check-label" for="chkLocalD"
+                      <label class="form-check-label" for="chkLocalDevelopment"
                         >Plan de desarrollo local</label
                       >
                     </div>
@@ -939,11 +955,7 @@
                       <i class="fas fa-brush"></i>
                       Limpiar</button
                     >&nbsp;
-                    <button type="button" class="btn btn-secondary">
-                      <i class="fas fa-times-circle"></i>
-                      Cancelar</button
-                    >&nbsp;
-                    <button type="button" class="btn btn-success">
+                    <button type="submit" class="btn btn-success">
                       <i class="fas fa-save"></i>
                       Guardar
                     </button>
@@ -956,9 +968,9 @@
 
         <div
           class="tab-pane pt-2 fade"
-          id="tabResults"
+          id="tabWorkPlan"
           role="tabpanel"
-          aria-labelledby="mapa-tab"
+          aria-labelledby="workPlan-tab"
         >
           <div class="card">
             <div class="card-header">
