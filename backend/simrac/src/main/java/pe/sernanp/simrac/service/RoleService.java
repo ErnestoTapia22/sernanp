@@ -75,7 +75,49 @@ public class RoleService extends BaseService<RoleModel> {
 		}
 	}
 	
-	
+	@SuppressWarnings({ "rawtypes", "unused" })
+	@Transactional
+	public ResponseEntity save2(RoleModel item) throws Exception {		
+		TransactionDefinition definition = null;
+		TransactionStatus status = null;
+		try {
+			Integer id = item.getId2();
+			String message = "";
+			boolean success = false;
+			int rowsAffected = 0;
+			definition = new DefaultTransactionDefinition();
+			status = this.transactionManager.getTransaction(definition);
+			this._repository.deleteModule(this._dataSource, item.getId2());
+			item.getModules().forEach( (module) -> {				
+				try {
+					this._repository.insert2(this._dataSource, item.getId2(), module.getId2(), item.getRegistrationDate());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					//throw new Exception("El código ingresado ya se encuentra registrado.");
+					e.printStackTrace();					
+				}
+			});
+			
+			message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
+					: " Se guardaron sus datos de manera correcta";
+			success = (id == 0) ? false : true;
+			this.transactionManager.commit(status);
+			ResponseEntity respuesta = new ResponseEntity();
+			respuesta.setExtra(id.toString());
+			respuesta.setMessage(message);
+			respuesta.setSuccess(success);
+			return respuesta;
+		} catch (Exception ex) {
+			if (this.transactionManager != null) {
+				if (status != null)
+					this.transactionManager.rollback(status);
+			}
+			if (ex instanceof org.springframework.dao.DuplicateKeyException)
+				throw new Exception("Error al guardar los datos");
+			else
+				throw new Exception(ex.getMessage());
+		}
+	}
 	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })

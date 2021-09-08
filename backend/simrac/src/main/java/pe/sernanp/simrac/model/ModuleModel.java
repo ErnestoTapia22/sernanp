@@ -10,8 +10,7 @@ public class ModuleModel extends BaseModel {
 	private int _order;
 	private int _flag;
 	private String _path;
-	
-	
+	private RoleModel _role;
 	
 	public int getLevel () {
 		return _level;
@@ -53,4 +52,11 @@ public class ModuleModel extends BaseModel {
 		_path = value;
 	}
 
+	public RoleModel getRole () {
+		return _role;
+	}
+	
+	public void setRole (RoleModel role) {
+		_role = role;
+	}
 }

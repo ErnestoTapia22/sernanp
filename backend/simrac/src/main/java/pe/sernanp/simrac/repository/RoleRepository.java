@@ -1,15 +1,14 @@
 package pe.sernanp.simrac.repository;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.stereotype.Repository;
 import pe.sernanp.simrac.mapper.RoleMapper;
-import pe.sernanp.simrac.model.AlliedCommitmentModel;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.model.RoleModel;
-import pe.sernanp.simrac.model.VerificationMeanModel;
 
 @Repository
 public class RoleRepository extends BaseRepository<RoleModel>{
@@ -26,7 +25,6 @@ public class RoleRepository extends BaseRepository<RoleModel>{
 	
 	
 	public List<RoleModel> search(DataSource ds, int id) throws Exception {
-		System.out.println(ds);
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("psystem",id);
 		return super.search23(ds,"simrac.fn_buscar_rol",parameters, new RoleMapper());
@@ -44,4 +42,17 @@ public class RoleRepository extends BaseRepository<RoleModel>{
 		return super.delete(ds, "simrac.fn_eliminar_rol", id);
 	}
 	
+	
+	public int insert2(DataSource ds, int roleId, int moduleId, Date registrationDate) throws Exception {
+		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("pmoduleid", moduleId);
+		parameters.put("pid", roleId);
+		parameters.put("pregistrationdate", registrationDate);		
+		return super.insert(ds, "simrac.fn_insertar_rolmodulo", parameters);
+	}
+	
+	
+	public int deleteModule(DataSource ds, int id) throws Exception {
+		return super.delete(ds, "simrac.fn_eliminar_rolmodulo", id);
+	}
 }

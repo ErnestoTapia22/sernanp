@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3a4cb118-6374-4c5e-a0d1-3a729aa66d5f",
+		"_postman_id": "9ee83a45-42fd-4c5c-bea7-c6ba9070278d",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -1115,6 +1115,62 @@
 						"url": "http://localhost:8050/simrac/api/user/validate/ycoyla"
 					},
 					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"system\":\"27\",\"name\":\"\",\"userName\":\"\",\"lastName\":\"\",\"role\":{\"id\":0}}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/user/search"
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2456,\r\n    \"role\": {\r\n        \"id\": 124\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/user/save"
+					},
+					"response": []
+				},
+				{
+					"name": "SearchWithoutLogin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/user/searchwithoutlogin/41252200/27"
+					},
+					"response": []
 				}
 			]
 		},
@@ -1122,11 +1178,11 @@
 			"name": "Module",
 			"item": [
 				{
-					"name": "ModuleSsearch",
+					"name": "SearchBySystem",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/module/search/27/1374"
+						"url": "http://localhost:8050/simrac/api/module/searchbysystem/27"
 					},
 					"response": []
 				}
@@ -1151,14 +1207,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"0\",\r\n    \"conservationAgreement\": {\r\n    \"id\": \"317\"\r\n    },\r\n    \"name\": \"csaaaaaaadd\",\r\n    \"description\": \"bbbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"name\": \"Admin 2\",\r\n    \"flag\": \"1\",\r\n    \"system\": 27\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/alliedcommitment/save"
+						"url": "http://localhost:8050/simrac/api/role/save"
 					},
 					"response": []
 				},
@@ -1168,6 +1224,24 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:8050/simrac/api/role/search/27"
+					},
+					"response": []
+				},
+				{
+					"name": "Save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":126,\r\n    \"modules\":[{\"id\": 447},{\"id\": 448}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/role/save2"
 					},
 					"response": []
 				}
