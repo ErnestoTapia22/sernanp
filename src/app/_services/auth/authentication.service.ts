@@ -64,6 +64,8 @@ export class AuthenticationService {
             response.item !== null
           ) {
             localStorage.setItem('user', JSON.stringify(response.item));
+            this.userSubject.next(response.item as User);
+            console.log(this.userSubject.value);
             this.router.navigate(['/map/index']);
           } else {
             this.router.navigate([`/authentication/${token}`]);
@@ -73,6 +75,7 @@ export class AuthenticationService {
       this.router.navigate(['/default/login']);
     }
   }
+
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('dataUser');
