@@ -48,4 +48,18 @@ public class ModuleService extends BaseService<ModuleModel> {
 		}
 	}
 	
+	public ResponseEntity<ModuleModel> searchByRole(int roleId) throws Exception {
+		try {
+		
+			boolean success = true;
+			ResponseEntity<ModuleModel> response = new ResponseEntity<ModuleModel>();
+			List <ModuleModel>  item  = this._repository.searchByRole(this._dataSource, roleId);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 }

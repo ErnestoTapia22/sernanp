@@ -26,4 +26,9 @@ public class ModuleRepository extends BaseRepository<ModuleModel> {
 		return super.search23(ds,"simrac.fn_buscar_moduloporsistema",parameters, new ModuleMapper());			
 	}	
 	
+	public List<ModuleModel> searchByRole(DataSource ds, int roleId) throws Exception {
+		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("prol", roleId);
+		return super.search23(ds,"simrac.fn_buscar_moduloporrol",parameters, new ModuleMapper());			
+	}
 }

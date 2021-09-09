@@ -44,4 +44,15 @@ public class ModuleController extends BaseController<ModuleModel, ModuleService>
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/searchbyrole/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ModuleModel> searchByRole(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ModuleModel> response = this._service.searchByRole(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }
