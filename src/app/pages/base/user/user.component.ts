@@ -1,7 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from '@app/_services/base/admin.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AlertService } from '../../../_services/base/alert.service';
 import { UserService } from '@app/_services/auth/user.service';
 import { Observable, Subscription } from 'rxjs';
@@ -18,6 +24,7 @@ export class UserComponent implements OnInit, OnDestroy {
   moduleList: any[] = [];
   modalRef: NgbModalRef;
   insertForm: FormGroup;
+  formInsertRoleModule: FormGroup;
   closeRegisterObserver: Subscription;
   submitted: boolean = false;
   user: User;
@@ -40,7 +47,14 @@ export class UserComponent implements OnInit, OnDestroy {
   get f() {
     return this.insertForm.controls;
   }
-  ngOnDestroy() {}
+  get g() {
+    return this.formInsertRoleModule.controls;
+  }
+  ngOnDestroy() {
+    if (this.closeRegisterObserver !== undefined) {
+      this.closeRegisterObserver.unsubscribe();
+    }
+  }
   onCreateModuleModal(content) {
     this.modalRef = this.modalService.open(content, {
       centered: true,
@@ -48,7 +62,6 @@ export class UserComponent implements OnInit, OnDestroy {
       backdrop: 'static',
     });
 
-    // this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {});
     this.getModuleList();
     this.listRoles();
   }
@@ -74,8 +87,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   getProfileList() {
     try {
-      this.userService.moduleList(27).subscribe((response) => {
-        console.log(response);
+      this.userService.moduleList(this.user.system).subscribe((response) => {
         if (response && response.items !== null && response.items.length > 0) {
           this.moduleList = response.items;
         }
@@ -88,10 +100,10 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   getModuleList() {
     try {
-      this.userService.moduleList(27).subscribe((response) => {
-        console.log(response);
+      this.userService.moduleList(this.user.system).subscribe((response) => {
         if (response && response.items !== null && response.items.length > 0) {
           this.moduleList = response.items;
+          this.fillFormArray(this.moduleList);
         }
       });
     } catch (error) {
@@ -99,6 +111,12 @@ export class UserComponent implements OnInit, OnDestroy {
         autoClose: true,
       });
     }
+  }
+  fillFormArray(items) {
+    this.selectedModules.clear();
+    items.forEach((element) => {
+      this.selectedModules.push(new FormControl(false));
+    });
   }
   roleInsert() {
     this.submitted = true;
@@ -134,6 +152,13 @@ export class UserComponent implements OnInit, OnDestroy {
       name: ['', Validators.compose([Validators.required])],
       flag: ['1'],
       system: [this.user.system],
+    });
+    this.formInsertRoleModule = this.formBuilder.group({
+      id: [
+        0,
+        Validators.compose([Validators.required, Validators.pattern('[^0]+')]),
+      ],
+      modules: new FormArray([]),
     });
   }
   listRoles() {
@@ -172,5 +197,85 @@ export class UserComponent implements OnInit, OnDestroy {
         autoClose: true,
       });
     }
+  }
+  moduleSearchByRol(id) {
+    try {
+      this.userService.moduleSearchByRol(id).subscribe((response) => {
+        if (response && response.items !== null && response.items.length > 0) {
+          this.moduleChecked(response.items);
+        } else {
+          this.getModuleList();
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al buscar módulos por rol', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  moduleChecked(items) {
+    if (this.moduleList.length > 0) {
+      this.moduleList.forEach((element, index) => {
+        element['checked'] = false;
+        items.forEach((item) => {
+          if (item.id === element.id) {
+            element['checked'] = true;
+            let langArr = <FormArray>(
+              this.formInsertRoleModule.controls['modules']
+            );
+            langArr.controls[index].patchValue(true);
+          }
+        });
+      });
+    }
+  }
+  onChangeProfile(id) {
+    this.submitted = false;
+    if (parseInt(id) > 0) {
+      this.moduleSearchByRol(id);
+      // this.moduleList.forEach((item, i) => {
+      //   this.formInsertRoleModule.value.modules[i] = item.checked;
+      // });
+    } else {
+      this.getModuleList();
+    }
+  }
+  onCheckChange(event) {}
+  insertRoleModule() {
+    this.submitted = true;
+    if (this.formInsertRoleModule.invalid) {
+      return;
+    }
+
+    this.formInsertRoleModule.value.modules =
+      this.formInsertRoleModule.value.modules
+        .map((checked, i) => (checked ? { id: this.moduleList[i].id } : null))
+        .filter((v) => v !== null);
+
+    try {
+      this.userService
+        .rolModuleInsert(JSON.stringify(this.formInsertRoleModule.value))
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se guardaron correctamente los datos',
+              'Ok',
+              { autoClose: true }
+            );
+
+            this.formInsertRoleModule.reset();
+
+            this.modalRef.close();
+          }
+          this.submitted = false;
+        });
+    } catch (error) {
+      this.alertService.error('Error al insertar módulos por rol', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  get selectedModules() {
+    return this.formInsertRoleModule.controls.modules as FormArray;
   }
 }
