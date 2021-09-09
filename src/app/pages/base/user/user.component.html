@@ -48,8 +48,7 @@
             <button
               type="button"
               class="btn btn-sm btn-outline-info mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#createPerfil"
+              (click)="onCreateProfileModal(contentCreateProfile)"
             >
               <i class="bi bi-plus-square"></i>
               Crear perfil
@@ -179,184 +178,151 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
-<div
-  class="modal fade"
-  id="createPerfil"
-  tabindex="-1"
-  aria-labelledby="createPerfilLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">Crear perfil</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <label class="form-label">Nombre perfil</label>
-        <form [formGroup]="insertForm" (ngSubmit)="roleInsert()" novalidate>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="name"
-                [ngClass]="{
-                  'input-invalid': submitted && f.name.errors?.required
-                }"
-              />
-            </div>
-            <div class="col-md-2">
-              <button
-                class="btn btn-sm btn-primary"
-                placement="top"
-                ngbTooltip="Agregar"
-                type="submit"
-              >
-                <i class="bi bi-plus-lg"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-        <hr />
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>Nº</td>
-                <td>Nombre</td>
-                <td>Acciones</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Administrador</td>
-                <td>
-                  <div class="text-nowrap">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-success border-0"
-                    >
-                      <i class="bi bi-pencil fs-lg"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-danger border-0"
-                    >
-                      <i class="bi bi-trash fs-lg"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<ng-template #contentCreateProfile let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createPerfilLabel">Crear perfil</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body">
+    <label class="form-label">Nombre perfil</label>
+    <form [formGroup]="insertForm" (ngSubmit)="roleInsert()" novalidate>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'input-invalid': submitted && f.name.errors?.required
+            }"
+          />
+        </div>
+        <div class="col-md-2">
+          <button
+            class="btn btn-sm btn-primary"
+            placement="top"
+            ngbTooltip="Agregar"
+            type="submit"
+          >
+            <i class="bi bi-plus-lg"></i>
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Cerrar</button>
-      </div>
+    </form>
+    <hr />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Nº</td>
+            <td>Nombre</td>
+            <td>Acciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of profileList; index as idx">
+            <td>{{ idx + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>
+              <div class="text-nowrap">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger border-0"
+                  (click)="onDeleteModal(contentDelete, item.id)"
+                >
+                  <i class="bi bi-trash fs-lg"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
-<div
-  class="modal fade"
-  id="createUser"
-  tabindex="-1"
-  aria-labelledby="createUserLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">
+      Cerrar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #contentCreateUser let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <label class="form-label">DNI</label>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input type="text" class="form-control" />
       </div>
-      <div class="modal-body">
-        <label class="form-label">DNI</label>
-        <div class="row g-3">
-          <div class="col-md-4">
-            <input type="text" class="form-control" />
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-sm btn-primary">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
-          <div class="col-md-4">
-            <div class="form-check form-switch form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="chkInstitutionL"
-                value="option2"
-              />
-              <label class="form-check-label" for="chkInstitutionL"
-                >Activo</label
-              >
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>DNI</td>
-                <td>Nombre</td>
-                <td>Apellidos</td>
-                <td>Usuario</td>
-                <td>Seleccionar</td>
-                <td>Perfil</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>12345678</td>
-                <td>Juan</td>
-                <td>Perez</td>
-                <td>Jperez</td>
-                <td>
-                  <div class="text-nowrap">
-                    <input type="checkbox" class="form-check-input" />
-                  </div>
-                </td>
-                <td>
-                  <select class="form-select">
-                    <option>Seleccione</option>
-                    <option>Administrador</option>
-                    <option>Visualizador</option>
-                    <option>Supervisor</option>
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
+      <div class="col-md-2">
+        <button class="btn btn-sm btn-primary">
+          <i class="bi bi-search"></i>
         </button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check form-switch form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="chkInstitutionL"
+            value="option2"
+          />
+          <label class="form-check-label" for="chkInstitutionL">Activo</label>
+        </div>
       </div>
     </div>
+    <hr />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>DNI</td>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>Usuario</td>
+            <td>Seleccionar</td>
+            <td>Perfil</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345678</td>
+            <td>Juan</td>
+            <td>Perez</td>
+            <td>Jperez</td>
+            <td>
+              <div class="text-nowrap">
+                <input type="checkbox" class="form-check-input" />
+              </div>
+            </td>
+            <td>
+              <select class="form-select">
+                <option>Seleccione</option>
+                <option>Administrador</option>
+                <option>Visualizador</option>
+                <option>Supervisor</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary">Guardar</button>
+  </div>
+</ng-template>
 <ng-template #contentCreateModule let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="createModuleLabel">Asignar módulos</h5>
@@ -405,5 +371,37 @@
       Cancelar
     </button>
     <button type="button" class="btn btn-primary">Guardar</button>
+  </div>
+</ng-template>
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar rol</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="roleDelete()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
   </div>
 </ng-template>

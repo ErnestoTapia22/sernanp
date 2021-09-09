@@ -13,6 +13,7 @@ export class UserService {
   private segmentModuleList;
   private segmentRoleInsert;
   private segmentRoleList;
+  private segmentRoleDelete;
   constructor(
     private http: HttpClient,
     private apiBaseService: ApiBaseService
@@ -20,6 +21,7 @@ export class UserService {
     this.segmentModuleList = '/module/searchbysystem/';
     this.segmentRoleInsert = '/role/save';
     this.segmentRoleList = '/role/search/';
+    this.segmentRoleDelete = '/role/delete/';
   }
   getUserData(token: string) {
     //let headers = new HttpHeaders();
@@ -49,6 +51,11 @@ export class UserService {
   rolesList(id): Observable<any> {
     return this.apiBaseService.get(
       `${environment.apiUrl}${this.segmentRoleList}${id}`
+    );
+  }
+  roleDelete(id): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}${this.segmentRoleDelete}${id}`
     );
   }
 }

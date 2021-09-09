@@ -21,8 +21,10 @@ export class UserComponent implements OnInit, OnDestroy {
   closeRegisterObserver: Subscription;
   submitted: boolean = false;
   user: User;
+  rolId: any;
   constructor(
     private modalService: NgbModal,
+    private modalDeleteService: NgbModal,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -48,6 +50,26 @@ export class UserComponent implements OnInit, OnDestroy {
 
     // this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {});
     this.getModuleList();
+    this.listRoles();
+  }
+  onDeleteModal(content, id) {
+    this.modalRef = this.modalDeleteService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+      backdropClass: 'custom-backdrop',
+    });
+    this.rolId = id;
+  }
+  onCreateProfileModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+
+    // this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {});
+
     this.listRoles();
   }
   getProfileList() {
@@ -123,6 +145,30 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     } catch (error) {
       this.alertService.error('Error al listar los roles', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  roleDelete() {
+    try {
+      this.userService.roleDelete(this.rolId).subscribe((response) => {
+        if (response.success == true) {
+          this.alertService.success('Se la eliminado con éxito', 'Ok', {
+            autoClose: true,
+          });
+        }
+        this.modalRef.close();
+      });
+    } catch (error) {
+      this.alertService.error('Error al eliminar el role', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  moduleInsert() {
+    try {
+    } catch (error) {
+      this.alertService.error('Error al asignar modulos', 'Error', {
         autoClose: true,
       });
     }

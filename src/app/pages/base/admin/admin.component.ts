@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private changeDetection: ChangeDetectorRef
   ) {
-    this.modules = {      
+    this.modules = {
       agreementstate: {
         name: 'Estado de Acuerdo',
         ownName: 'agreementstate',
@@ -233,9 +233,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         .moduleDelete(this.moduleContext.ownName, this.moduleContext.id)
         .subscribe((response) => {
           if (response.success == true) {
-            console.log(response);
             this.listTables();
-            console.log(this.modules);
             this.modalRef.close();
           } else {
             this.modalRef.close();
