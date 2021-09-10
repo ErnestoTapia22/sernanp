@@ -64,8 +64,7 @@
             <button
               type="button"
               class="btn btn-sm btn-outline-success mx-1"
-              data-bs-toggle="modal"
-              data-bs-target="#createUser"
+              (click)="onCreateUserModal(contentCreateUser)"
             >
               <i class="bi bi-person-plus"></i>
               Crear usuario
@@ -249,78 +248,98 @@
 <ng-template #contentCreateUser let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-    ></button>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
   </div>
   <div class="modal-body">
     <label class="form-label">DNI</label>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <input type="text" class="form-control" />
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-sm btn-primary">
-          <i class="bi bi-search"></i>
-        </button>
-      </div>
-      <div class="col-md-4">
-        <div class="form-check form-switch form-check-inline">
+    <form [formGroup]="formSearchUser" (ngSubmit)="onSearchUser()" novalidate>
+      <div class="row g-3">
+        <div class="col-md-4">
           <input
-            class="form-check-input"
-            type="checkbox"
-            id="chkInstitutionL"
-            value="option2"
+            type="text"
+            class="form-control"
+            formControlName="documentNumber"
+            [ngClass]="{
+              'input-invalid': submitted && h.documentNumber.errors?.required
+            }"
           />
-          <label class="form-check-label" for="chkInstitutionL">Activo</label>
         </div>
+        <div class="col-md-2">
+          <button
+            class="btn btn-sm btn-primary"
+            type="submit"
+            [disabled]="submitted"
+          >
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+        <!-- <div class="col-md-4">
+          <div class="form-check form-switch form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="userActive"
+              formControlName="state"
+            />
+            <label class="form-check-label" for="userActive">Activo</label>
+          </div>
+        </div> -->
       </div>
-    </div>
+    </form>
     <hr />
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <td>DNI</td>
-            <td>Nombre</td>
-            <td>Apellidos</td>
-            <td>Usuario</td>
-            <td>Seleccionar</td>
-            <td>Perfil</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12345678</td>
-            <td>Juan</td>
-            <td>Perez</td>
-            <td>Jperez</td>
-            <td>
-              <div class="text-nowrap">
-                <input type="checkbox" class="form-check-input" />
-              </div>
-            </td>
-            <td>
-              <select class="form-select">
-                <option>Seleccione</option>
-                <option>Administrador</option>
-                <option>Visualizador</option>
-                <option>Supervisor</option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <form [formGroup]="formAddRole" novalidate>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>DNI</td>
+              <td>Nombre</td>
+              <td>Apellidos</td>
+              <td>Usuario</td>
+
+              <td>Perfil</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of userList; index as idx">
+              <td>{{ item.documentNumber }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.userName }}</td>
+              <td formGroupName="role">
+                <select
+                  class="form-select"
+                  formControlName="id"
+                  (change)="onChangeRol(item.id)"
+                  [ngClass]="{
+                    'input-invalid':
+                      (submitted &&
+                        formAddRole.get('role.id').errors?.required) ||
+                      (submitted && formAddRole.get('role.id').errors?.pattern)
+                  }"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    *ngFor="let item of profileList; index as idx"
+                    [value]="item.id"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
       Cancelar
     </button>
-    <button type="button" class="btn btn-primary">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="addRole()">
+      Guardar
+    </button>
   </div>
 </ng-template>
 <ng-template #contentCreateModule let-modal>
@@ -362,7 +381,6 @@
         </div>
         <div class="col-md-6 col-sm-12">
           <label class="form-label">Asigne módulos</label>
-          <!--  -->
           <div
             formArrayName="modules"
             *ngFor="let item of selectedModules.controls; let i = index"

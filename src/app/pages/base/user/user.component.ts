@@ -27,8 +27,11 @@ export class UserComponent implements OnInit, OnDestroy {
   formInsertRoleModule: FormGroup;
   closeRegisterObserver: Subscription;
   submitted: boolean = false;
+  formSearchUser: FormGroup;
   user: User;
   rolId: any;
+  userList: any[] = [];
+  formAddRole: FormGroup;
   constructor(
     private modalService: NgbModal,
     private modalDeleteService: NgbModal,
@@ -49,6 +52,12 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   get g() {
     return this.formInsertRoleModule.controls;
+  }
+  get h() {
+    return this.formSearchUser.controls;
+  }
+  get j() {
+    return this.formAddRole.controls;
   }
   ngOnDestroy() {
     if (this.closeRegisterObserver !== undefined) {
@@ -83,6 +92,14 @@ export class UserComponent implements OnInit, OnDestroy {
 
     // this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {});
 
+    this.listRoles();
+  }
+  onCreateUserModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
     this.listRoles();
   }
   getProfileList() {
@@ -160,6 +177,15 @@ export class UserComponent implements OnInit, OnDestroy {
       ],
       modules: new FormArray([]),
     });
+    this.formSearchUser = this.formBuilder.group({
+      documentNumber: ['', Validators.required],
+    });
+    this.formAddRole = this.formBuilder.group({
+      id: [0, Validators.required],
+      role: this.formBuilder.group({
+        id: [0, [Validators.required, Validators.pattern('[^0]+')]],
+      }),
+    });
   }
   listRoles() {
     try {
@@ -190,14 +216,7 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     }
   }
-  moduleInsert() {
-    try {
-    } catch (error) {
-      this.alertService.error('Error al asignar modulos', 'Error', {
-        autoClose: true,
-      });
-    }
-  }
+
   moduleSearchByRol(id) {
     try {
       this.userService.moduleSearchByRol(id).subscribe((response) => {
@@ -277,5 +296,65 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   get selectedModules() {
     return this.formInsertRoleModule.controls.modules as FormArray;
+  }
+  onSearchUser() {
+    this.submitted = true;
+    try {
+      if (this.formSearchUser.invalid) {
+        return;
+      }
+
+      this.userService
+        .userSearch(
+          this.formSearchUser.get('documentNumber').value,
+          this.user.system
+        )
+        .subscribe((response) => {
+          console.log(response);
+          if (response && response.items.length > 0) {
+            this.userList = response.items;
+          }
+          this.submitted = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.alertService.error('Error al buscar usuarios', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  addRole() {
+    this.submitted = true;
+    console.log(this.formAddRole.value);
+    if (this.formAddRole.invalid) {
+      return;
+    }
+
+    try {
+      this.userService
+        .userSave(JSON.stringify(this.formAddRole.value))
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se registro correctamente al usuario',
+              'Ok',
+              { autoClose: true }
+            );
+            this.formAddRole.reset();
+            this.modalRef.close();
+          }
+          this.submitted = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.alertService.error('Error al guardar datos', 'Ok', {
+        autoClose: true,
+      });
+    }
+  }
+  onChangeRol(id) {
+    this.formAddRole.patchValue({
+      id: id,
+    });
   }
 }
