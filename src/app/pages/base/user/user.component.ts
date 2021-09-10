@@ -10,9 +10,10 @@ import {
 } from '@angular/forms';
 import { AlertService } from '../../../_services/base/alert.service';
 import { UserService } from '@app/_services/auth/user.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from '@app/_services/auth/authentication.service';
 import { User } from '@app/_models/auth/user';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user',
@@ -32,6 +33,16 @@ export class UserComponent implements OnInit, OnDestroy {
   rolId: any;
   userList: any[] = [];
   formAddRole: FormGroup;
+  formUserSearchPrimary: FormGroup;
+  userListPrimary: any[] = [];
+  queryObserver = new BehaviorSubject({
+    item: '',
+    paginator: '',
+  });
+  total: number;
+
+  pageSize: any;
+  page: Number;
   constructor(
     private modalService: NgbModal,
     private modalDeleteService: NgbModal,
@@ -40,12 +51,16 @@ export class UserComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private changeDetection: ChangeDetectorRef,
     private userService: UserService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
     this.user = this.authenticationService.userValue;
     this.buildForms();
+    this.initQuery();
+    this.listRoles();
+    this.onSearchUserPrimary();
   }
   get f() {
     return this.insertForm.controls;
@@ -59,9 +74,13 @@ export class UserComponent implements OnInit, OnDestroy {
   get j() {
     return this.formAddRole.controls;
   }
+  get k() {
+    return this.formUserSearchPrimary.controls;
+  }
   ngOnDestroy() {
     if (this.closeRegisterObserver !== undefined) {
       this.closeRegisterObserver.unsubscribe();
+      this.queryObserver.unsubscribe();
     }
   }
   onCreateModuleModal(content) {
@@ -72,7 +91,7 @@ export class UserComponent implements OnInit, OnDestroy {
     });
 
     this.getModuleList();
-    this.listRoles();
+    // this.listRoles();
   }
   onDeleteModal(content, id) {
     this.modalRef = this.modalDeleteService.open(content, {
@@ -92,7 +111,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     // this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {});
 
-    this.listRoles();
+    // this.listRoles();
   }
   onCreateUserModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -100,7 +119,7 @@ export class UserComponent implements OnInit, OnDestroy {
       size: 'lg',
       backdrop: 'static',
     });
-    this.listRoles();
+    // this.listRoles();
   }
   getProfileList() {
     try {
@@ -184,6 +203,23 @@ export class UserComponent implements OnInit, OnDestroy {
       id: [0, Validators.required],
       role: this.formBuilder.group({
         id: [0, [Validators.required, Validators.pattern('[^0]+')]],
+      }),
+    });
+    this.formUserSearchPrimary = this.formBuilder.group({
+      item: this.formBuilder.group({
+        system: [this.user.system, Validators.required],
+        name: [''],
+        lastName: [''],
+        userName: [''],
+        role: this.formBuilder.group({
+          id: [0],
+        }),
+      }),
+      paginator: this.formBuilder.group({
+        offset: [1],
+        limit: [5],
+        sort: [''],
+        order: ['asc'],
       }),
     });
   }
@@ -313,6 +349,9 @@ export class UserComponent implements OnInit, OnDestroy {
           console.log(response);
           if (response && response.items.length > 0) {
             this.userList = response.items;
+            this.formAddRole.patchValue({
+              role: { id: response.items[0].role.id || 0 },
+            });
           }
           this.submitted = false;
         });
@@ -341,13 +380,14 @@ export class UserComponent implements OnInit, OnDestroy {
               { autoClose: true }
             );
             this.formAddRole.reset();
+            this.formSearchUser.reset();
             this.modalRef.close();
           }
           this.submitted = false;
         });
     } catch (error) {
       this.submitted = false;
-      this.alertService.error('Error al guardar datos', 'Ok', {
+      this.alertService.error('Error al guardar datos', 'Error', {
         autoClose: true,
       });
     }
@@ -356,5 +396,97 @@ export class UserComponent implements OnInit, OnDestroy {
     this.formAddRole.patchValue({
       id: id,
     });
+  }
+  onSearchUserPrimary() {
+    this.submitted = true;
+    this.spinner.show();
+    this.userListPrimary = [];
+    try {
+      this.userService
+        .userSearchPrimary(this.queryObserver.getValue())
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.userListPrimary = response.items;
+            this.total = response.total;
+            this.page = response.paginator.offset;
+            this.pageSize = response.paginator.limit;
+          }
+
+          this.spinner.hide();
+          this.submitted = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.alertService.error('Error al buscar usuario', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  onDeleteUserPrimary(id) {
+    console.log(id);
+  }
+  getPage(page: number) {
+    this.parseData('paginator', 'offset', page);
+    this.onSearchUserPrimary();
+  }
+  onChangePageSize(event) {
+    // const q = this.queryObserver.getValue();
+    // q.paginator['limit'] = this.f.pageSizes.value;
+    this.parseData(
+      'paginator',
+      'limit',
+      parseInt(this.formUserSearchPrimary.get('paginator.limit').value)
+    );
+
+    // this.onSearch();
+    // this.queryObserver.next({item:this.f.})
+  }
+  parseData(parent, key, value) {
+    // debugger;
+    const item = this.queryObserver.getValue();
+
+    if (typeof item[parent] === 'string') {
+      let parsed = JSON.parse(item[parent]);
+      parsed[key] = value;
+      item[parent] = JSON.stringify(parsed);
+      this.queryObserver.next(item);
+    }
+  }
+
+  initQuery() {
+    let paginator = this.formUserSearchPrimary.get('paginator').value;
+    let item = this.formUserSearchPrimary.get('item').value;
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
+  }
+  searchUserPrimary(filters: any): void {
+    console.log(filters);
+
+    const q = this.queryObserver.getValue();
+    q.item = JSON.stringify(filters.item);
+    this.queryObserver.next(q);
+
+    this.onSearchUserPrimary();
+  }
+  clearForm() {
+    this.formUserSearchPrimary.reset({
+      item: {
+        system: this.user.system,
+        name: '',
+        lastName: '',
+        userName: '',
+        role: { id: 0 },
+      },
+      paginator: {
+        offset: 1,
+        limit: 5,
+        sort: '',
+        order: 'asc',
+      },
+    });
+    this.initQuery();
+    this.onSearchUserPrimary();
   }
 }

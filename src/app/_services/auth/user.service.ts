@@ -18,6 +18,7 @@ export class UserService {
   private segmentRolModuleInsert;
   private segmentSearchUser;
   private segmentUserSave;
+  private segmentUserSearchPrimary;
   constructor(
     private http: HttpClient,
     private apiBaseService: ApiBaseService
@@ -30,6 +31,7 @@ export class UserService {
     this.segmentRolModuleInsert = '/role/save2';
     this.segmentSearchUser = '/user/searchwithoutlogin/';
     this.segmentUserSave = '/user/save';
+    this.segmentUserSearchPrimary = '/user/search';
   }
   getUserData(token: string) {
     //let headers = new HttpHeaders();
@@ -88,6 +90,12 @@ export class UserService {
       `${environment.apiUrl}/${this.segmentUserSave}`,
       item,
       null
+    );
+  }
+  userSearchPrimary(item): Observable<any> {
+    return this.apiBaseService.postFormData(
+      `${environment.apiUrl}${this.segmentUserSearchPrimary}`,
+      item
     );
   }
 }
