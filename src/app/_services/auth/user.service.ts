@@ -19,6 +19,7 @@ export class UserService {
   private segmentSearchUser;
   private segmentUserSave;
   private segmentUserSearchPrimary;
+  private segmentUserDelete;
   constructor(
     private http: HttpClient,
     private apiBaseService: ApiBaseService
@@ -32,6 +33,7 @@ export class UserService {
     this.segmentSearchUser = '/user/searchwithoutlogin/';
     this.segmentUserSave = '/user/save';
     this.segmentUserSearchPrimary = '/user/search';
+    this.segmentUserDelete = '/user/delete/';
   }
   getUserData(token: string) {
     //let headers = new HttpHeaders();
@@ -96,6 +98,11 @@ export class UserService {
     return this.apiBaseService.postFormData(
       `${environment.apiUrl}${this.segmentUserSearchPrimary}`,
       item
+    );
+  }
+  userDelete(id): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}${this.segmentUserDelete}${id}`
     );
   }
 }

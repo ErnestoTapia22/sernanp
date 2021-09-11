@@ -7,21 +7,59 @@ import javax.persistence.Entity;
 
 @Entity
 public class ConservationAgreementModel extends BaseModel {
-
+	
+	private EcosystemTypeModel _ecosystemType;
+	private AnpModel _anp;
 	private AgreementStateModel _agreementState;
+	private SourceModel _source;
+	private String _districtid;
+	private String _districtname;
+	
 	private int _vigency;
 	private Date _firm;
 	private int _partmen;
 	private int _partwomen;
 	private String _benperson;
 	private String _benindirect;
-	private int _numfamily;
+	private Double _numfamily;
 	private String _benfamily;
 	private double _areaambitc;
 	private double _producedarea;
 	private String _detalleproduction;
-	private SourceModel _source;
-		
+	
+	private double _resthect;
+	private String _restdet;
+	private String _sectnom;
+	private double _secthect;
+	private String _sectdet;
+	private String _territorymod;
+	private boolean _finanapa;
+	private double _finannum;
+	private String _comtxt;
+	private String _genobj;
+	private String _finanmod;
+	private String _fondname;
+	private boolean _allied;
+	
+	
+	
+	public EcosystemTypeModel getEcosystemType () {
+		return _ecosystemType;
+	}
+	
+	public void setEcosystemType (EcosystemTypeModel ecosystemType) {
+		_ecosystemType = ecosystemType;
+	}
+	
+	
+	public AnpModel getAnp() {
+		return _anp;
+	}
+
+	public void setAnp(AnpModel anpid) {
+		_anp = anpid;
+	}
+	
 	public AgreementStateModel getAgreementState() {
 		return _agreementState;
 	}
@@ -30,6 +68,22 @@ public class ConservationAgreementModel extends BaseModel {
 		this._agreementState = agreementState;
 	}
 
+	public String getDistritoId () {
+		return _districtid;
+	}
+	
+	public void setDistritoId (String districtid) {
+		_districtid = districtid;
+	}
+	
+	public String getDistritName () {
+		return _districtname;
+	}
+	
+	public void setDistritName (String districtname) {
+		_districtname = districtname;
+	}
+	
 	public int getVigency () {
 		return _vigency;
 	}
@@ -78,11 +132,11 @@ public class ConservationAgreementModel extends BaseModel {
 		_benindirect = benindirect;
 	}
 	
-	public int getNumFamily () {
+	public Double getNumFamily () {
 		return _numfamily;
 	}
 		
-	public void setNumFamily (int numfamily) {
+	public void setNumFamily (Double numfamily) {
 		_numfamily = numfamily;
 	}
 	
@@ -125,4 +179,109 @@ public class ConservationAgreementModel extends BaseModel {
 	public void setSource(SourceModel source) {
 		this._source = source;
 	}
+	
+	public Double getRestHect () {
+		return _resthect;
+	}
+	
+	public void setRestHect (Double resthect) {
+		_resthect = resthect;
+	}
+	
+	public String getRestdet () {
+		return _restdet;
+	}
+	
+	public void setRestdet (String restdet) {
+		_restdet = restdet;
+	}
+	
+	public String getSectNom () {
+		return _sectnom;
+	}
+	
+	public void setSectNom (String sectnom) {
+		_sectnom = sectnom ;
+	}
+	
+	public Double getSectHect () {
+		return _secthect;
+	}
+	
+	public void setSectHect (Double secthect) {
+		_secthect = secthect;
+	}
+	
+	public String getSectDet () {
+		return _sectdet;
+	}
+	
+	public void setSectDet (String sectdet) {
+		_sectdet = sectdet ;
+	}
+		
+	public String getTerritoryMod () {
+		return _territorymod;
+	}
+	
+	public void setTerritoryMod (String territorymod) {
+		_territorymod = territorymod ;
+	}
+	
+	public Boolean getFinanApa () {
+		return _finanapa;
+	}
+	
+	public void setFinanApa (Boolean finanapa) {
+		_finanapa = finanapa ;
+	}
+	
+	public Double getFinanNum () {
+		return _finannum;
+	}
+	
+	public void setFinanNum (Double finannum) {
+		_finannum = finannum;
+	}	
+	
+	public String getComTxt () {
+		return _comtxt;
+	}
+	
+	public void setComTxt (String comtxt) {
+		_comtxt = comtxt ;
+	}
+	
+	public String getGenObj () {
+		return _genobj;
+	}
+	
+	public void setGenObj  (String genobj) {
+		_genobj = genobj ;
+	}
+	
+	public String getFinanMod () {
+		return _finanmod;
+	}
+	
+	public void setFinanMod (String finanmod) {
+		_finanmod = finanmod ;
+	}
+	
+	public String getFondName () {
+		return _fondname;
+	}
+	
+	public void setFondName (String fondname) {
+		_fondname = fondname;
+	}
+	
+	public Boolean getAllied () {
+		return _allied;
+	}
+	
+	public void setAllied (Boolean allied) {
+		_allied = allied ;
+	}
+	
 }

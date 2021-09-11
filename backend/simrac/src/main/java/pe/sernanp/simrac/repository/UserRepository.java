@@ -39,7 +39,7 @@ public class UserRepository extends BaseRepository<UserModel>{
 		parameters.put("pdni", dni);
 		parameters.put("psystem", system);
 		return super.search23(ds,"simrac.fn_buscar_usuariosinlogin",parameters, new UserMapper());			
-	}	
+	}
 	
 	@Override
 	public int insert(DataSource ds, UserModel item) throws Exception {
@@ -53,4 +53,8 @@ public class UserRepository extends BaseRepository<UserModel>{
 		 parameters.put("pid", item.getId2());
 	}
 	
+	@Override
+	public int delete(DataSource ds, int id) throws Exception {
+		return super.delete(ds, "simrac.fn_eliminar_usuariorol", id);
+	}
 }

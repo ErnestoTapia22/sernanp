@@ -46,6 +46,14 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 	@Override
 	protected void setParameters(Map<String, Object> parameters, ConservationAgreementModel item) throws Exception {
 		 parameters.put("pid", item.getId2());
+		 
+		 parameters.put("pecosystemtypeid", item.getEcosystemType().getId2());
+		 parameters.put("panpid", item.getAnp().getId2());
+		 parameters.put("pagreementstateid", item.getAgreementState().getId2());
+		 parameters.put("psourceid", item.getSource ().getId2());
+		 
+		 parameters.put("pdistrictid", item.getDistritoId() );
+		 
 		 parameters.put("pname", item.getName());
 		 parameters.put("pdescription", item.getDescription());
 		 parameters.put("pregistrationdate", item.getRegistrationDate());
@@ -62,6 +70,20 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		 parameters.put("pareaambitc", item.getAreaAmbitc());
 		 parameters.put("pproducedarea", item.getProducedArea());
 		 parameters.put("pdetalleproduction", item.getDetalleProduction());
+		 parameters.put("presthect", item.getRestHect());
+		 parameters.put("prestdet", item.getRestdet());
+		 parameters.put("psectnom", item.getSectNom());
+		 parameters.put("psecthect", item.getSectHect());
+		 parameters.put("psectdet", item.getSectDet());
+		 parameters.put("pterritorymod", item.getTerritoryMod());
+		 parameters.put("pfinanapa", item.getFinanApa());
+		 parameters.put("pfinannum", item.getFinanNum());
+		 parameters.put("pcomtxt", item.getComTxt());
+		 parameters.put("pgenobj", item.getGenObj());
+		 parameters.put("pfinanmod", item.getFinanMod());
+		 parameters.put("pfondname", item.getFondName());
+		 parameters.put("pallied", item.getAllied());
+		 		 
 	}
 	
 	public List<ConservationAgreementModel> find(DataSource ds) throws Exception{

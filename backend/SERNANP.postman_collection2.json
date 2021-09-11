@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "98e599fa-5bb1-409c-8244-ef0180024367",
+		"_postman_id": "9ee83a45-42fd-4c5c-bea7-c6ba9070278d",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -22,18 +22,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/105"
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/115"
 					},
 					"response": []
 				},
 				{
-					"name": "ConservationAgreementSave",
+					"name": "ConservationAgreementInsert",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 105,\r\n\r\n    \"ecosystemType\": { \"id\": \"17\" },\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"1\" },\r\n    \"source\": { \"id\": \"1\" },\r\n    \"distritoid\": 10,\r\n\r\n    \"name\": \"pppppp\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": \"prueba\",\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": \"123\",\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"csdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -79,6 +79,53 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:8050/simrac/api/conservationagreement/delete/318"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 319,\r\n    \"name\": \"csdd\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"00\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"zzzz\",\r\n    \"benIndirect\": \"zzzzz\",\r\n    \"numFamily\": 20,\r\n    \"benFamily\": \"zzzzz\",\r\n    \"areaAmbitc\": 20.5,\r\n    \"producedArea\": 20.5,\r\n    \"detalleProduction\": \"ZZZZ\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementSearch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/search"
 					},
 					"response": []
 				}
@@ -500,7 +547,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"prueba\",\r\n    \"description\": \"prueba\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Jefatura\",\r\n    \"description\": \"Description4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -821,7 +868,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/allied/detail/3"
+						"url": "http://localhost:8050/simrac/api/allied/detail/16"
 					},
 					"response": []
 				},
@@ -830,7 +877,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/allied/delete/4"
+						"url": "http://localhost:8050/simrac/api/allied/delete/5"
 					},
 					"response": []
 				},
@@ -841,7 +888,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"5\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"105\"\r\n    },\r\n    \"name\": \"prueba\",\r\n    \"description\": \"prueba\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"17\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"name\": \"csdd\",\r\n    \"description\": \"444444\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -869,7 +916,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/allied/search/105"
+						"url": "http://localhost:8050/simrac/api/allied/search/317"
 					},
 					"response": []
 				}
@@ -924,7 +971,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/commitment/detail/5"
+						"url": "http://localhost:8050/simrac/api/commitment/detail/1"
 					},
 					"response": []
 				},
@@ -933,7 +980,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/commitment/delete/4"
+						"url": "http://localhost:8050/simrac/api/commitment/delete/1"
 					},
 					"response": []
 				},
@@ -944,7 +991,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \"allied\": { \"id\": \"3\"  },\r\n    \"actionLine\": { \"id\":\"1\" },   \r\n\r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"SSS\",\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": {\r\n        \"id\": \"316\"\r\n    },\r\n    \"description\": \"prueba1\",\r\n    \"state\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -972,7 +1019,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/commitment/search/105"
+						"url": "http://localhost:8050/simrac/api/commitment/search/316"
 					},
 					"response": []
 				}

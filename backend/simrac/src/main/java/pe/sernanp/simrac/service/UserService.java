@@ -104,4 +104,27 @@ public class UserService extends BaseService<UserModel> {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unused" })
+	@Transactional
+	public ResponseEntity delete(int id) throws Exception {
+		TransactionDefinition definition = null;
+		TransactionStatus status = null;
+		try {
+			definition = new DefaultTransactionDefinition();
+			status = this.transactionManager.getTransaction(definition);			
+			Integer rowsAffected = this._repository.delete(this._dataSource, id);
+			this.transactionManager.commit(status);
+			ResponseEntity response = new ResponseEntity();
+
+			response.setMessage("Se ha eliminado correctamente");
+			response.setSuccess(true);
+			return response;
+		} catch (Exception ex) {
+			if (this.transactionManager != null) {
+				if (status != null)
+					this.transactionManager.rollback(status);
+			}
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

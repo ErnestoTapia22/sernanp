@@ -33,10 +33,15 @@ public class CommitmentRepository extends BaseRepository<CommitmentModel> {
 	@Override
 	protected void setParameters(Map<String, Object> parameters, CommitmentModel item) throws Exception {
 		 parameters.put("pid", item.getId2());
-		 parameters.put("pagreementid", item.getConservationAgreement () .getId());
+		 parameters.put("pagreementid", item.getConservationAgreement () .getId2());
+		 parameters.put("palliedid", item.getAllied() .getId2());
+		 parameters.put("pactionlineid", item.getActionLine() .getId2());
+		 
 		 parameters.put("pdescription", item.getDescription());
 		 parameters.put("pregistrationdate", item.getRegistrationDate());
 		 parameters.put("pstate", item.getState());
+		 parameters.put("pindicator", item.getIndicator());
+		 parameters.put("pactive", item.getActive());
 		 
 	}
 	

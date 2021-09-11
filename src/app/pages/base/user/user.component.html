@@ -93,18 +93,22 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                   <label class="form-label">Apellidos</label>
-                  <!-- <input type="text" class="form-control" placeholder="Last name" /> -->
-
                   <input
                     type="text"
                     class="form-control"
                     formControlName="lastName"
                   />
                 </div>
-                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label class="form-label">Suscriptores del acuerdo</label>
-                <input type="text" class="form-control" />
-              </div> -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <label for="inputState" class="form-label"
+                    >Nombre de usuario
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="userName"
+                  />
+                </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                   <div formGroupName="role">
                     <label for="inputState" class="form-label"
@@ -124,21 +128,10 @@
                       </option>
                     </select>
                   </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <label for="inputState" class="form-label"
-                    >Nombre de usuario
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="userName"
-                  />
-                </div>
+                </div>                
               </div>
             </div>
             <hr />
-
             <div class="table-responsive">
               <table class="table">
                 <thead>
@@ -293,7 +286,7 @@
 <ng-template #contentCreateUser let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="createUserLabel">Crear usuario</h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
+    <button type="button" class="btn-close" (click)="assignedUserClose()"></button>
   </div>
   <div class="modal-body">
     <label class="form-label">DNI</label>
@@ -341,7 +334,6 @@
               <td>Nombre</td>
               <td>Apellidos</td>
               <td>Usuario</td>
-
               <td>Perfil</td>
             </tr>
           </thead>
@@ -379,7 +371,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+    <button type="button" class="btn btn-secondary" (click)="assignedUserClose()">
       Cancelar
     </button>
     <button type="button" class="btn btn-primary" (click)="addRole()">
@@ -387,6 +379,7 @@
     </button>
   </div>
 </ng-template>
+
 <ng-template #contentCreateModule let-modal>
   <form
     [formGroup]="formInsertRoleModule"
@@ -462,6 +455,7 @@
     </div>
   </form>
 </ng-template>
+
 <ng-template #contentDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Eliminar rol</h4>
