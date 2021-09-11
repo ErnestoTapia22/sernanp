@@ -244,6 +244,7 @@ export class UserComponent implements OnInit, OnDestroy {
             autoClose: true,
           });
         }
+        this.listRoles();
         this.modalRef.close();
       });
     } catch (error) {
