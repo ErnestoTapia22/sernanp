@@ -101,7 +101,7 @@ const routes: Routes = [
       },
     ],
     // canActivate: [AuthGuard],
-    data: { roles: [Role.Admin] },
+    // data: { roles: [Role.Admin] },
   },
   {
     path: 'anp',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../../_services/base/alert.service';
 import { AuthenticationService } from '@app/_services/auth/authentication.service';
+import { User } from '@app/_models/auth/user';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ export class NavbarComponent implements OnInit {
   public sidebarOpened = false;
   dataUser: any;
   hasAlerts: number = 0;
-  user: any = {};
+  user: User;
   isLogedIn: boolean = false;
   constructor(
     private alertService: AlertService,
@@ -21,13 +22,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.clickNav(null);
 
-    if (
-      localStorage.getItem('user') !== null &&
-      localStorage.getItem('user') !== undefined
-    ) {
-      this.user = JSON.parse(localStorage.getItem('user'));
-      this.isLogedIn = true;
-    }
+    this.user = this.authenticationService.userValue;
   }
 
   toggleOffcanvas() {

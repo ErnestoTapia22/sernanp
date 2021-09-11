@@ -1,3 +1,93 @@
 .breadcrumb-item + .breadcrumb-item::before {
   content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+);
 }
+.custom-backdrop {
+  opacity: 0.5;
+}
+
+.custom-select {
+  display: inline-block;
+  width: auto;
+  height: calc(1.5em + 0.59rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  /* background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px; */
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* .pagination /deep/ .ngx-pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+.pagination /deep/ .ngx-pagination li span {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+} */
+
+.pagination /deep/ .ngx-pagination .current {
+  z-index: 3;
+  color: #fff;
+  background-color: #fb9d13;
+  border-color: #fb9d13;
+  padding: 0.3754rem 0;
+  border: 1px solid #cccc;
+}
+
+.pagination /deep/ .ngx-pagination li {
+  border: 1px solid #cccc;
+  margin-right: -1px;
+}
+
+.pagination /deep/ .ngx-pagination li:not(:first-child) a {
+  margin-left: -1px;
+}
+.pagination /deep/ .ngx-pagination li a,
+.current span:not(:first-child) {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination .disabled {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination .pagination-previous {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.pagination /deep/ .ngx-pagination .pagination-next {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.pagination /deep/ .ngx-pagination .current span:not(:first-child) {
+  padding: 0.375rem 0.75rem;
+  text-decoration: none;
+}
+.pagination /deep/ .ngx-pagination a::after {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination li::before {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination li::after {
+  display: none;
+}
+
+.pagination /deep/ .ngx-pagination a::before {
+  display: none;
+}
