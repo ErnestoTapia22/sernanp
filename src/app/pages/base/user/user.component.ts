@@ -154,8 +154,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.selectedModules.push(new FormControl(false));
     });
   }
-  roleInsert() {
-    this.submitted = true;
+  roleInsert() {    
     if (this.insertForm.invalid) {
       // this.submitted = false;
       return;
@@ -170,25 +169,26 @@ export class UserComponent implements OnInit, OnDestroy {
               'Ok',
               { autoClose: true }
             );
-            this.insertForm.reset();
+            this.resetFormRole();
             this.listRoles();
-          }
-          this.submitted = false;
+          }          
         });
-    } catch (error) {
-      this.submitted = false;
+    } catch (error) {      
       this.alertService.error('Error al guardar datos', 'Ok', {
         autoClose: true,
       });
     }
   }
-  buildForms() {
+  resetFormRole(){
     this.insertForm = this.formBuilder.group({
       id: [0],
       name: ['', Validators.compose([Validators.required])],
       flag: ['1'],
       system: [this.user.system],
     });
+  }
+  buildForms() {
+    this.resetFormRole();
     this.formInsertRoleModule = this.formBuilder.group({
       id: [
         0,
@@ -298,7 +298,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   onCheckChange(event) {}
   insertRoleModule() {
-    this.submitted = true;
+    //this.submitted = true;
     if (this.formInsertRoleModule.invalid) {
       return;
     }
@@ -323,7 +323,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
             this.modalRef.close();
           }
-          this.submitted = false;
+          //this.submitted = false;
         });
     } catch (error) {
       this.alertService.error('Error al insertar módulos por rol', 'Error', {
@@ -334,26 +334,30 @@ export class UserComponent implements OnInit, OnDestroy {
   get selectedModules() {
     return this.formInsertRoleModule.controls.modules as FormArray;
   }
-  onSearchUser() {
-    this.submitted = true;
+  onSearchUser() {    
     try {
       if (this.formSearchUser.invalid) {
+        this.alertService.error('Error al buscar el usuario', 'Error', {
+          autoClose: true,
+        });
         return;
-      }
-
+      }   
+      this.submitted = true;   
       this.userService
         .userSearch(
           this.formSearchUser.get('documentNumber').value,
           this.user.system
         )
         .subscribe((response) => {
-          console.log(response);
           if (response && response.items.length > 0) {
             this.userList = response.items;
             this.formAddRole.patchValue({
               role: { id: response.items[0].role.id || 0 },
             });
           }
+          else this.alertService.error('No se encontraron resultados para la búsqueda', 'Error', {
+            autoClose: true,
+          });
           this.submitted = false;
         });
     } catch (error) {
@@ -363,9 +367,13 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     }
   }
+  assignedUserClose(){
+    this.modalRef.close();
+    this.userList = [];
+    this.formAddRole.reset();
+    this.formSearchUser.reset();
+  }
   addRole() {
-    this.submitted = true;
-    console.log(this.formAddRole.value);
     if (this.formAddRole.invalid) {
       return;
     }
@@ -383,11 +391,12 @@ export class UserComponent implements OnInit, OnDestroy {
             this.formAddRole.reset();
             this.formSearchUser.reset();
             this.modalRef.close();
+            this.userList = [];
           }
-          this.submitted = false;
+          //this.submitted = false;
         });
     } catch (error) {
-      this.submitted = false;
+      //this.submitted = false;
       this.alertService.error('Error al guardar datos', 'Error', {
         autoClose: true,
       });
@@ -412,7 +421,9 @@ export class UserComponent implements OnInit, OnDestroy {
             this.page = response.paginator.offset;
             this.pageSize = response.paginator.limit;
           }
-
+          else this.alertService.error('No se encontraron resultados para la búsqueda', 'Error', {
+            autoClose: true,
+          });
           this.spinner.hide();
           this.submitted = false;
         });
@@ -424,18 +435,14 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
   onDeleteUserPrimary(id) {
-    
     try {
       this.userService.userDelete(id).subscribe((response) => {
-        console.log(response);
         if (response.success == true) {
           this.alertService.success('Se la eliminado con éxito', 'Ok', {
             autoClose: true,
           });
         }
-        //this.listRoles();
         this.onSearchUserPrimary();
-        //this.modalRef.close();
       });
     } catch (error) {
       this.alertService.error('Error al eliminar el role', 'Error', {
@@ -480,12 +487,9 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
   searchUserPrimary(filters: any): void {
-    console.log(filters);
-
     const q = this.queryObserver.getValue();
     q.item = JSON.stringify(filters.item);
     this.queryObserver.next(q);
-
     this.onSearchUserPrimary();
   }
   clearForm() {
