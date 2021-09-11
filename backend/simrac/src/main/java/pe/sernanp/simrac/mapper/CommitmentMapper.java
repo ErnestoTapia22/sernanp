@@ -26,6 +26,9 @@ public class CommitmentMapper extends BaseMapper <CommitmentModel> {
 		item.setActionLine(new ActionLineModel());
 		super.mapRowWithTable (rs, item.getActionLine(), "actionline");
 		
+		item.getActionLine().setObjetive(new ObjetiveModel());
+		super.mapRowWithTable (rs, item.getActionLine().getObjetive(), "objetive");
+	
 		
 		item.setIndicator(ResultSetExtension.getString2(rs, "indicator"));
 		item.setActive(ResultSetExtension.getBoolean2(rs, "active"));
