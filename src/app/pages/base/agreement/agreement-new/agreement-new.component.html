@@ -511,6 +511,17 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Ámbito</label>
+                <div>
+                  <!-- [disabled]="!agreementExist" -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-success mx-1"
+                    (click)="addFeatureToService()"
+                  >
+                    <i class="bi bi-stack"></i>
+                    Agregar Shapefiles
+                  </button>
+                </div>
               </div>
               <div class="card-body">
                 <ul
