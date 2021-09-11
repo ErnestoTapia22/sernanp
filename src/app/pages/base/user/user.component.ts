@@ -424,7 +424,24 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
   onDeleteUserPrimary(id) {
-    console.log(id);
+    
+    try {
+      this.userService.userDelete(id).subscribe((response) => {
+        console.log(response);
+        if (response.success == true) {
+          this.alertService.success('Se la eliminado con éxito', 'Ok', {
+            autoClose: true,
+          });
+        }
+        //this.listRoles();
+        this.onSearchUserPrimary();
+        //this.modalRef.close();
+      });
+    } catch (error) {
+      this.alertService.error('Error al eliminar el role', 'Error', {
+        autoClose: true,
+      });
+    }
   }
   getPage(page: number) {
     this.parseData('paginator', 'offset', page);
