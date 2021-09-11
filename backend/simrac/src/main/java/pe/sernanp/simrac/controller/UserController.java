@@ -76,4 +76,15 @@ public class UserController extends BaseController<UserModel, UserService> {
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<?> response = this._service.delete(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }
