@@ -392,6 +392,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.formSearchUser.reset();
             this.modalRef.close();
             this.userList = [];
+            this.onSearchUserPrimary();
           }
           //this.submitted = false;
         });
