@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseService } from '../base/api-base.service';
-import { environment } from '../../../environments/environment';
+import { ApiBaseService } from '../../base/api-base.service';
+import { environment } from '../../../../environments/environment';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class MasterPlanService {
   segmentDetail: string = '';
   segmentObjectiveList: string = '';
   segmentObjetiveInsert: string = '';
+  segmentObjetiveDelete: string = '';
   segmentActionLineList: string = '';
   segmentActionLineInsert: string = '';
   segmentActionLineDelete: string = '';
@@ -19,10 +20,18 @@ export class MasterPlanService {
     this.segmentDetail = '/masterplan/searchbyanp/';
     this.segmentObjectiveList = '/masterplan/searchobjetives/';
     this.segmentObjetiveInsert = '/objetive/save';
+    this.segmentObjetiveDelete = '/objetive/delete/';
     this.segmentActionLineList = '/objetive/searchactionlines/';
     this.segmentActionLineInsert = '/actionline/save';
     this.segmentActionLineDelete = '/actionline/delete/';
     this.segmentMasterPlanInsert = '/masterplan/save';
+  }  
+  masterPlanInsert(item): Observable<any> {
+    return this.apiBaseService.post(
+      `${environment.apiUrl}${this.segmentMasterPlanInsert}`,
+      item,
+      null
+    );
   }
   masterPlanDetailByAnp(id): Observable<any> {
     return this.apiBaseService.get(
@@ -41,6 +50,11 @@ export class MasterPlanService {
       null
     );
   }
+  commitmentDelete(id): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}${this.segmentObjetiveDelete}${id}`
+    );
+  }
   actionLineList(id): Observable<any> {
     return this.apiBaseService.get(
       `${environment.apiUrl}${this.segmentActionLineList}${id}`
@@ -56,13 +70,6 @@ export class MasterPlanService {
   actionLineDelete(id): Observable<any> {
     return this.apiBaseService.get(
       `${environment.apiUrl}${this.segmentActionLineDelete}${id}`
-    );
-  }
-  masterPlanInsert(item): Observable<any> {
-    return this.apiBaseService.post(
-      `${environment.apiUrl}${this.segmentMasterPlanInsert}`,
-      item,
-      null
     );
   }
 }

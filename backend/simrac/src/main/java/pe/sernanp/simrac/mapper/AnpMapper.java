@@ -11,6 +11,7 @@ public class AnpMapper extends BaseMapper<AnpModel> {
 		AnpModel item = super.mapRowBase(rs, new AnpModel());
 		item.setCategory(ResultSetExtension.getString2(rs, "category"));
 		item.setDistrict(ResultSetExtension.getString2(rs, "district"));
+		item.setWithMasterPlan(ResultSetExtension.getInt2(rs, "withmasterplan"));
 		return item;
 	}
 }

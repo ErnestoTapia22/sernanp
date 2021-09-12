@@ -16,8 +16,8 @@ import { ReportsComponent } from './pages/base/reports/reports.component';
 import { UserComponent } from './pages/base/user/user.component';
 import { TestComponent } from './pages/base/test/test.component';
 import { AdminComponent } from './pages/base/admin/admin.component';
-import { AnpComponent } from './pages/base/anp/anp.component';
-import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { AnpComponent } from './pages/masterplan/anp/anp.component';
+import { MasterPlanComponent } from './pages/masterplan/master-plan/master-plan.component';
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './_models/auth/role';
@@ -109,7 +109,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: AnpComponent },
-      { path: 'masterplan/:id', component: MasterPlanComponent },
+      { path: 'masterplan/:id/:withMasterPlan', component: MasterPlanComponent },
     ],
   },
   { path: 'not-found', component: NotFoundComponent },

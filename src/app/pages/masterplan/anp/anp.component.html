@@ -82,14 +82,11 @@
               <thead>
                 <tr>
                   <th>Nº</th>
-
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Descripción</th>
                   <th>Estado</th>
                   <th>Plan maestro</th>
-                  <!-- <th>Plan de desarrollo c.</th>
-                    <th>Plan de vida</th> -->
                 </tr>
               </thead>
               <tbody id="tableBody">
@@ -103,7 +100,7 @@
                 <ng-container *ngIf="!isLoading">
                   <tr
                     *ngFor="
-                      let item of anpList
+                      let item of items
                         | paginate
                           : {
                               id: 'anpPag',
@@ -124,10 +121,29 @@
                         <button
                           type="button"
                           class="btn btn-sm btn-outline-info border-0"
-                          [routerLink]="'/anp/masterplan/' + item.id"
+                          [routerLink]="'/anp/masterplan/' + item.id + '/' + item.withMasterPlan"
+                          *ngIf="!item.withMasterPlan"
                         >
-                          <i class="bi bi-plus-square fs-lg"></i>
+                          <i class="bi bi-pencil fs-lg"></i>
                         </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info border-0"
+                          [routerLink]="'/anp/masterplan/' + item.id + '/' + item.withMasterPlan"
+                          *ngIf="item.withMasterPlan"
+                        >
+                          <i class="bi bi-eye fs-lg"></i>
+                        </button>
+
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info border-0"
+                          [routerLink]="'/anp/masterplan/' + item.id + '/2'"
+                          *ngIf="item.withMasterPlan"
+                        >
+                          <i class="bi bi-eye fs-lg"></i>
+                        </button>
+                        
                       </div>
                     </td>
                     <!-- <td>
