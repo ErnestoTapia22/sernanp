@@ -58,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'detail/:id',
-        component: AgreementDetailComponent,
+        component: AgreementNewComponent,
       },
     ],
   },

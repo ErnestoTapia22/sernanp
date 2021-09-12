@@ -186,77 +186,57 @@
               <div class="card-body" id="subscribers">
                 <div class="row g-3">
                   <div class="col-12">
-                    <form action="#" [formGroup]="form" novalidate>
-                      <div class="card">
-                        <div class="card-body" id="parent">
-                          <div class="row g-3">
-                            <div class="col-md-6">
-                              <label class="form-label"
-                                >Agregar Suscriptores</label
-                              >
-                              <button
-                                type="button"
-                                class="btn btn-sm btn-primary d-flex"
-                                placement="top"
-                                data-bs-toggle="modal"
-                                data-bs-target="#createSusbcribers"
-                                ngbTooltip="Agregar"
-                              >
-                                <i class="bi bi-plus-lg"></i>
-                              </button>
-                            </div>
-                          </div>
-                          <hr />
-                          <div class="table-responsive">
-                            <table class="table">
-                              <thead class="fw-bold">
-                                <tr>
-                                  <td>Nombre</td>
-                                  <td>Categoria</td>
-                                  <td>Opciones</td>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>SERNANP</td>
-                                  <td>Jefatura</td>
-                                  <td>
-                                    <div class="text-nowrap">
-                                      <button
-                                        type="button"
-                                        class="
-                                          btn btn-sm btn-outline-danger
-                                          border-0
-                                        "
-                                      >
-                                        <i class="bi bi-trash fs-lg"></i>
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Oxalecker</td>
-                                  <td>Empresas</td>
-                                  <td>
-                                    <div class="text-nowrap">
-                                      <button
-                                        type="button"
-                                        class="
-                                          btn btn-sm btn-outline-danger
-                                          border-0
-                                        "
-                                      >
-                                        <i class="bi bi-trash fs-lg"></i>
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
+                    <div class="card">
+                      <div class="card-body" id="parent">
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >Agregar Suscriptores</label
+                            >
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-primary d-flex"
+                              placement="top"
+                              (click)="onAddAlliedModal(contentAddAllied)"
+                            >
+                              <i class="bi bi-plus-lg"></i>
+                            </button>
                           </div>
                         </div>
+                        <hr />
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead class="fw-bold">
+                              <tr>
+                                <td>Nombre</td>
+                                <td>Categoria</td>
+                                <td>Opciones</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of alliedList">
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.alliedCategory.name }}</td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-danger
+                                        border-0
+                                      "
+                                      (click)="onDeleteAllied(item.id)"
+                                    >
+                                      <i class="bi bi-trash fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -974,7 +954,7 @@
                     <button
                       type="submit"
                       class="btn btn-success"
-                      [disabled]="submitted"
+                      [disabled]="disabled"
                     >
                       <i class="fas fa-save"></i>
                       Guardar
@@ -1142,53 +1122,64 @@
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
 
-<div
-  class="modal fade"
-  id="createSusbcribers"
-  tabindex="-1"
-  aria-labelledby="createSusbcribersLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">Crear Suscriptores</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Categoria</label>
-            <select class="form-select">
-              <option value="">SELECCIONE</option>
-              <option value="1">Asociaciones Productoras</option>
-              <option value="2">Empresas</option>
-              <option value="3">Comunidades</option>
-              <option value="4">Jefatura</option>
-            </select>
-          </div>
+<ng-template #contentAddAllied let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createPerfilLabel">Crear Suscriptores</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <form [formGroup]="alliedForm" (ngSubmit)="insertAlliedCategory()">
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-3 col-lg-12">
+          <label class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'input-invalid': submitted && g.name.errors?.required
+            }"
+          />
+        </div>
+        <div class="col-md-3 col-lg-12">
+          <label class="form-label">Descripción</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="description"
+          />
+        </div>
+        <div class="col-md-3 col-lg-12" formGroupName="alliedCategory">
+          <label class="form-label">Categoria</label>
+          <select
+            class="form-select"
+            formControlName="id"
+            [ngClass]="{
+              'input-invalid':
+                (submitted &&
+                  alliedForm.get('alliedCategory.id').errors?.required) ||
+                (submitted &&
+                  alliedForm.get('alliedCategory.id').errors?.pattern)
+            }"
+          >
+            <option value="0">SELECCIONE</option>
+            <option *ngFor="let item of alliedCategoryList" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
     </div>
-  </div>
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="disabled">
+        Guardar
+      </button>
+    </div>
+  </form>
+</ng-template>
 <div
   class="modal fade"
   id="createCommitments"

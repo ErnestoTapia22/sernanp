@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AgreementService } from '../../../../_services/base/agreement.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 //esri
 import esriConfig from '@arcgis/core/config';
 import Expand from '@arcgis/core/widgets/Expand';
@@ -14,6 +21,8 @@ import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
 //services
 import { AlertService } from '@app/_services/base/alert.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-agreement-new',
   templateUrl: './agreement-new.component.html',
@@ -24,6 +33,7 @@ export class AgreementNewComponent implements OnInit {
   obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
   form: FormGroup;
+  alliedForm: FormGroup;
   mapProperties: any;
   mapViewProperties: any;
   fieldArray: Array<any> = [];
@@ -36,6 +46,7 @@ export class AgreementNewComponent implements OnInit {
   agreementExist: boolean = false;
   agreementStateList: any[] = [];
   submitted: boolean = false;
+  disabled: boolean = false;
   attributes: object = {
     // codigo: '',
     // nombre: '',
@@ -52,11 +63,18 @@ export class AgreementNewComponent implements OnInit {
   graphics: any[] = [];
   esriJsons: Graphic[] = [];
   featureLayer: FeatureLayer;
-
+  edit: boolean = false;
+  agreementId: string = '';
+  modalRef: NgbModalRef;
+  alliedCategoryList: any[] = [];
+  alliedList: any[] = [];
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -76,19 +94,32 @@ export class AgreementNewComponent implements OnInit {
       item: JSON.stringify(item),
     });
     this.fillSelects();
+    this.agreementId = this.route.snapshot.paramMap.get('id');
+    if (
+      this.route.snapshot.paramMap.get('id') !== undefined &&
+      this.route.snapshot.paramMap.get('id') !== null &&
+      this.route.snapshot.paramMap.get('id') !== ''
+    ) {
+      this.agreementId = this.route.snapshot.paramMap.get('id');
+      this.edit = true;
+      this.getDetail(this.agreementId);
+    }
+    this.searchAllied();
   }
-  async readURL(event) {}
-
-  async readFile(file) {
-    const arrayBuffer = await new Promise((resolve) => {
-      const reader = new FileReader();
-      // reader.onload = () => resolve(reader.result);
-
-      reader.onload = () => resolve(reader.result);
-      reader.readAsArrayBuffer(file);
+  get g() {
+    return this.alliedForm.controls;
+  }
+  onAddAlliedModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'md',
+      backdrop: 'static',
     });
 
-    return arrayBuffer;
+    this.listAlliedCategory();
+    this.alliedForm.patchValue({
+      conservationAgreement: { id: this.agreementId },
+    });
   }
   onMapInit({ map, view }) {
     this.map = map;
@@ -96,13 +127,6 @@ export class AgreementNewComponent implements OnInit {
 
     this.addExpand();
     this.eventListener();
-    // this.featureLayer = new FeatureLayer({
-    //   url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/GasNatural/Produccion/FeatureServer/1',
-    //   outFields: ['*'],
-    //   popupEnabled: true,
-    //   id: 'featureTest',
-    // });
-    // map.add(this.featureLayer);
   }
   eventListener() {
     document
@@ -227,7 +251,6 @@ export class AgreementNewComponent implements OnInit {
           response.items !== null &&
           response.items.length > 0
         ) {
-          console.log(response);
           this.agreementStateList = response.items;
         }
       });
@@ -284,6 +307,26 @@ export class AgreementNewComponent implements OnInit {
       { autoClose: true }
     );
   }
+  listAlliedCategory() {
+    try {
+      this.agreementService.alliedCategoryList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.alliedCategoryList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer la lista de categoría de suscriptores',
+        'error',
+        { autoClose: true }
+      );
+    }
+  }
 
   buildForm() {
     this.form = this.fb.group({
@@ -301,9 +344,21 @@ export class AgreementNewComponent implements OnInit {
       benIndirect: [''],
       numFamily: [0],
       benFamily: [''],
-      areaAmbitC: [0],
+
       producedArea: [0],
       detalleProduction: [''],
+      resthect: 'prueba',
+      restdet: 'prueba',
+      sectnom: 'prueba',
+      secthect: '123',
+      territorymod: 'prueba',
+      finanapa: '123',
+      finannum: '1234',
+      comtxt: 'prueba',
+      genobj: 'prueba',
+      finanmod: 'prueba',
+      fondname: 'prueba',
+      allied: true,
 
       agreementState: this.fb.group({
         id: 0,
@@ -312,23 +367,42 @@ export class AgreementNewComponent implements OnInit {
         id: 0,
       }),
       areaAmbitc: [{ value: 0, disabled: true }],
+      source: this.fb.group({
+        id: 0,
+      }),
+      ecosystemType: this.fb.group({
+        id: 0,
+      }),
+    });
+    this.alliedForm = this.fb.group({
+      id: [0],
+      alliedCategory: this.fb.group({
+        id: [
+          0,
+          Validators.compose([
+            Validators.required,
+            Validators.pattern('[^0]+'),
+          ]),
+        ],
+      }),
+      conservationAgreement: this.fb.group({
+        id: [0],
+      }),
+      name: ['', Validators.required],
+      description: [''],
+      state: [true],
+      registrationDate: [''],
     });
   }
-  addFieldValue() {
-    console.log(this.newAttribute);
-    this.fieldArray.push(this.newAttribute);
-    this.newAttribute = {};
-  }
-  deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-  }
+
   insertAgreement() {
     try {
       this.submitted = true;
+      this.disabled = true;
       console.log(this.form.value);
 
       if (this.form.invalid) {
-        console.log(this.form.invalid);
+        this.disabled = false;
         return;
       }
       this.agreementService
@@ -338,7 +412,6 @@ export class AgreementNewComponent implements OnInit {
             this.submitted = false;
             this.agreementExist = true;
             this.getWorkPlan(response.extra);
-            this.buildAttributes();
             this.alertService.success(
               'Se registro correctamenteel acuerdo',
               'Ok',
@@ -349,8 +422,10 @@ export class AgreementNewComponent implements OnInit {
               autoClose: true,
             });
           }
+          this.disabled = false;
         });
     } catch (error) {
+      this.disabled = false;
       this.alertService.error('Error al guardar el acuerdo', 'Error', {
         autoClose: true,
       });
@@ -394,9 +469,7 @@ export class AgreementNewComponent implements OnInit {
         console.log('error = ', error);
       });
   }
-  buildAttributes() {
-    // this.attributes
-  }
+
   buildEsriJson() {
     for (let i = 0; i < 4; i++) {
       if (this.graphics[i] === undefined || this.graphics[i] === null) {
@@ -410,5 +483,113 @@ export class AgreementNewComponent implements OnInit {
         })
       );
     }
+  }
+  getDetail(id) {
+    if (id === null && id === undefined && id === 0) {
+      this.alertService.error('No se encontro el id del acuerdo', 'Error', {
+        autoClose: true,
+      });
+      return;
+    }
+    try {
+      this.agreementService.agreementDetail(id).subscribe((response) => {
+        if (response && response.item !== null) {
+          console.log(response);
+          this.form.setValue({
+            id: response.item.id,
+            name: response.item.name,
+            description: response.item.description,
+            state: response.item.state,
+            registrationDate: response.item.registrationDate,
+            code: response.item.code,
+            vigency: response.item.vigency,
+            firm: response.item.firm,
+            partMen: response.item.partMen,
+            partWomen: response.item.partWomen,
+            benPerson: response.item.benPerson,
+            benIndirect: response.item.benIndirect,
+            numFamily: response.item.benIndirect,
+            benFamily: response.item.benFamily,
+            areaAmbitc: response.item.areaAmbitc,
+            producedArea: response.item.producedArea,
+            detalleProduction: response.item.detalleProduction,
+            agreementState: { id: response.item.agreementState.id || 0 },
+            anp: { id: 0 },
+          });
+        }
+      });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer el detalle del acuerdo',
+        'Error',
+        { autoClose: true }
+      );
+    }
+  }
+  addFieldValue() {
+    console.log(this.newAttribute);
+    this.fieldArray.push(this.newAttribute);
+    this.newAttribute = {};
+  }
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+  }
+  insertAlliedCategory() {
+    this.disabled = true;
+    this.submitted = true;
+
+    if (this.alliedForm.invalid) {
+      this.disabled = false;
+      return;
+    }
+    if (this.agreementExist === false || this.agreementId === null) {
+      this.alertService.warn('Guarde primero el acuerdo', 'Info', {
+        autoClose: true,
+      });
+      return;
+    }
+    try {
+      this.agreementService
+        .alliedCategoryInsert(JSON.stringify(this.alliedForm.value))
+        .subscribe((response) => {
+          if (response && response.success === true) {
+            this.alertService.success(
+              'Se registro correctamenteel el suscriptor',
+              'Ok',
+              { autoClose: true }
+            );
+          } else {
+            this.alertService.error('error: ' + response.message, 'error', {
+              autoClose: true,
+            });
+          }
+          this.submitted = false;
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.disabled = false;
+      this.alertService.error(
+        'Error al insertar un nuevo suscriptor',
+        'error',
+        { autoClose: true }
+      );
+    }
+  }
+  searchAllied() {
+    try {
+      this.agreementService.alliedSearch(105).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.alliedList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer los suscriptores', 'error', {
+        autoClose: true,
+      });
+    }
+  }
+  onDeleteAllied(id) {
+    console.log(id);
   }
 }
