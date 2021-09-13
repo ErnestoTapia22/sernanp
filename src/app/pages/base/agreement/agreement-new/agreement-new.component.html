@@ -1174,7 +1174,7 @@
             </div>
             <div class="col-md-12">
               <label class="form-label">Objetivo</label>
-              <select class="form-select">
+              <select class="form-select" (change)="searchActionLines($event)">
                 <option value="0">SELECCIONE</option>
                 <option *ngFor="let item of objectiveList" [value]="item.id">
                   {{ item.description }}
@@ -1185,12 +1185,18 @@
               <label class="form-label">Alineado a</label>
               <select class="form-select" formControlName="id">
                 <option value="0">SELECCIONE</option>
+                <option *ngFor="let item of actionLineList" [value]="item.id">
+                  {{ item.name }}
+                </option>
               </select>
             </div>
             <div class="col-md-12" formGroupName="allied">
               <label class="form-label">Suscriptor</label>
               <select class="form-select" formControlName="id">
                 <option value="0">SELECCIONE</option>
+                <option *ngFor="let item of alliedList" [value]="item.id">
+                  {{ item.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -1287,9 +1293,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       <button type="button" class="btn btn-secondary" (click)="modal.close()">
         Cancelar
       </button>
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-        Guardar
-      </button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </form>
 </ng-template>

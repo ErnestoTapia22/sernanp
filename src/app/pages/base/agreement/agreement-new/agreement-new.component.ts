@@ -74,6 +74,7 @@ export class AgreementNewComponent implements OnInit {
   objectiveList: any[] = [];
   anpList: any[] = [];
   anpForm: FormGroup;
+  actionLineList: any[] = [];
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -413,7 +414,7 @@ export class AgreementNewComponent implements OnInit {
       indicator: [''],
       active: [true],
       conservationAgreement: this.fb.group({
-        id: [0],
+        id: [1],
       }),
       allied: this.fb.group({
         id: [
@@ -655,7 +656,9 @@ export class AgreementNewComponent implements OnInit {
   insertCommitments() {
     this.submitted = true;
     this.disabled = true;
+    console.log(this.formCreateCommitments.value);
     if (this.formCreateCommitments.invalid) {
+      console.log('invalid');
       this.disabled = false;
       return;
     }
@@ -669,13 +672,14 @@ export class AgreementNewComponent implements OnInit {
               'Ok',
               { autoClose: true }
             );
-            this.formCreateCommitmentsReset();
+
             this.modalRef.close();
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
               autoClose: true,
             });
           }
+          this.formCreateCommitmentsReset();
           this.submitted = false;
           this.disabled = false;
         });
@@ -696,7 +700,7 @@ export class AgreementNewComponent implements OnInit {
       indicator: '',
       active: true,
       conservationAgreement: {
-        id: 0,
+        id: 1,
       },
       allied: {
         id: 0,
@@ -753,6 +757,24 @@ export class AgreementNewComponent implements OnInit {
       });
     } catch (error) {
       this.alertService.error('Error al traer la lista de anp', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchActionLines(event) {
+    const id = event.target.value;
+    if (id == 0) {
+      this.actionLineList = [];
+      return;
+    }
+    try {
+      this.masterPlanService.actionLineList(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.actionLineList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
         autoClose: true,
       });
     }
