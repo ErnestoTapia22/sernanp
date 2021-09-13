@@ -86,7 +86,7 @@
                   <th>Nombre</th>
                   <th>Descripción</th>
                   <th>Estado</th>
-                  <th>Plan maestro</th>
+                  <th>Opciones</th>
                 </tr>
               </thead>
               <tbody id="tableBody">
@@ -123,6 +123,8 @@
                           class="btn btn-sm btn-outline-info border-0"
                           [routerLink]="'/anp/masterplan/' + item.id + '/' + item.withMasterPlan"
                           *ngIf="!item.withMasterPlan"
+                          placement="top"
+                          ngbTooltip="Crear Plan Maestro"
                         >
                           <i class="bi bi-pencil fs-lg"></i>
                         </button>
@@ -131,6 +133,8 @@
                           class="btn btn-sm btn-outline-info border-0"
                           [routerLink]="'/anp/masterplan/' + item.id + '/' + item.withMasterPlan"
                           *ngIf="item.withMasterPlan"
+                          placement="top"
+                          ngbTooltip="Ver Plan Maestro"
                         >
                           <i class="bi bi-eye fs-lg"></i>
                         </button>
@@ -140,8 +144,10 @@
                           class="btn btn-sm btn-outline-info border-0"
                           [routerLink]="'/anp/masterplan/' + item.id + '/2'"
                           *ngIf="item.withMasterPlan"
+                          placement="top"
+                          ngbTooltip="Renovar Plan Maestro"
                         >
-                          <i class="bi bi-eye fs-lg"></i>
+                          <i class="bi bi-slash-square"></i>
                         </button>
                         
                       </div>
