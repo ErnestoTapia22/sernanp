@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AgreementService } from '../../../../_services/base/agreement.service';
+import { AgreementService } from '@app/_services/base/agreement.service';
+import { MasterPlanService } from '@app/_services/masterplan/masterplan/master-plan.service';
+import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import {
@@ -68,13 +70,19 @@ export class AgreementNewComponent implements OnInit {
   modalRef: NgbModalRef;
   alliedCategoryList: any[] = [];
   alliedList: any[] = [];
+  formCreateCommitments: FormGroup;
+  objectiveList: any[] = [];
+  anpList: any[] = [];
+  anpForm: FormGroup;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private masterPlanService: MasterPlanService,
+    private anpService: AnpService
   ) {}
 
   ngOnInit(): void {
@@ -108,6 +116,9 @@ export class AgreementNewComponent implements OnInit {
   }
   get g() {
     return this.alliedForm.controls;
+  }
+  get h() {
+    return this.formCreateCommitments.controls;
   }
   onAddAlliedModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -243,6 +254,7 @@ export class AgreementNewComponent implements OnInit {
     return this.form.controls;
   }
   fillSelects() {
+    this.searchAnp();
     try {
       this.agreementService.agreementStateList().subscribe((response) => {
         if (
@@ -361,17 +373,17 @@ export class AgreementNewComponent implements OnInit {
       allied: true,
 
       agreementState: this.fb.group({
-        id: 0,
+        id: [0],
       }),
       anp: this.fb.group({
-        id: 0,
+        id: [0],
       }),
       areaAmbitc: [{ value: 0, disabled: true }],
       source: this.fb.group({
-        id: 0,
+        id: [0],
       }),
       ecosystemType: this.fb.group({
-        id: 0,
+        id: [0],
       }),
     });
     this.alliedForm = this.fb.group({
@@ -392,6 +404,46 @@ export class AgreementNewComponent implements OnInit {
       description: [''],
       state: [true],
       registrationDate: [''],
+    });
+    this.formCreateCommitments = this.fb.group({
+      id: [0],
+      description: ['', Validators.required],
+      registrationDate: [''],
+      state: [true],
+      indicator: [''],
+      active: [true],
+      conservationAgreement: this.fb.group({
+        id: [0],
+      }),
+      allied: this.fb.group({
+        id: [
+          0,
+          Validators.compose([
+            Validators.required,
+            Validators.pattern('[^0]+'),
+          ]),
+        ],
+      }),
+      actionLine: this.fb.group({
+        id: [
+          0,
+          Validators.compose([
+            Validators.required,
+            Validators.pattern('[^0]+'),
+          ]),
+        ],
+      }),
+    });
+    this.anpForm = this.fb.group({
+      item: [JSON.stringify({ name: '', code: '' })],
+      paginator: [
+        JSON.stringify({
+          offset: '1',
+          limit: '10',
+          sort: 'name',
+          order: 'asc',
+        }),
+      ],
     });
   }
 
@@ -591,5 +643,118 @@ export class AgreementNewComponent implements OnInit {
   }
   onDeleteAllied(id) {
     console.log(id);
+  }
+  onContentCreateCommitmentsModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      size: 'sm',
+      backdrop: 'static',
+      centered: true,
+    });
+    this.masterPlanSearch();
+  }
+  insertCommitments() {
+    this.submitted = true;
+    this.disabled = true;
+    if (this.formCreateCommitments.invalid) {
+      this.disabled = false;
+      return;
+    }
+    try {
+      this.agreementService
+        .commitmentsInsert(JSON.stringify(this.formCreateCommitments.value))
+        .subscribe((response) => {
+          if (response && response.success === true) {
+            this.alertService.success(
+              'Se registro correctamente el compromiso',
+              'Ok',
+              { autoClose: true }
+            );
+            this.formCreateCommitmentsReset();
+            this.modalRef.close();
+          } else {
+            this.alertService.error('error: ' + response.message, 'error', {
+              autoClose: true,
+            });
+          }
+          this.submitted = false;
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.disabled = false;
+      this.alertService.error('Error al insertar los compromisos', 'error', {
+        autoClose: true,
+      });
+    }
+  }
+  formCreateCommitmentsReset() {
+    this.formCreateCommitments.setValue({
+      id: 0,
+      description: '',
+      registrationDate: '',
+      state: true,
+      indicator: '',
+      active: true,
+      conservationAgreement: {
+        id: 0,
+      },
+      allied: {
+        id: 0,
+      },
+      actionLine: {
+        id: 0,
+      },
+    });
+  }
+  masterPlanSearch() {
+    const id = this.form.get('anp').value.id;
+
+    if (!id || id == 0) {
+      return;
+    }
+
+    try {
+      this.masterPlanService.masterPlanDetailByAnp(id).subscribe((response) => {
+        if (response && response.item !== null && response.item !== {}) {
+          this.searchGoals(response.item.id);
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer el plan maestro', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchGoals(id) {
+    try {
+      this.masterPlanService
+        .masterPlanObjetiveList(id)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.objectiveList = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer la lista de objectivos',
+        'Error',
+        {
+          autoClose: true,
+        }
+      );
+    }
+  }
+  searchAnp() {
+    try {
+      this.anpService.anpSearch(this.anpForm.value).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.anpList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer la lista de anp', 'Error', {
+        autoClose: true,
+      });
+    }
   }
 }

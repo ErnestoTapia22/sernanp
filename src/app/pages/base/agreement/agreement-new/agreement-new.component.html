@@ -90,15 +90,13 @@
                     formControlName="code"
                   />
                 </div>-->
-                  <div class="col-md-3">
+                  <div class="col-md-3" formGroupName="anp">
                     <label for="ddAnp" class="form-label">ANP (*)</label>
-                    <select id="ddAnp" class="form-select">
-                      <option selected>SELECCIONE</option>
-                      <option>SN06 Megantoni</option>
-                      <option>RC03 Amarakaeri</option>
-                      <option>RVS03 Bosques Nublados de Udima</option>
-                      <option>RVS01 Laquipampa</option>
-                      <option>RVS02 Los Pantanos de Villa</option>
+                    <select id="ddAnp" class="form-select" formControlName="id">
+                      <option value="0">SELECCIONE</option>
+                      <option *ngFor="let item of anpList" [value]="item.id">
+                        {{ item.name }}
+                      </option>
                     </select>
                     <!-- <ng-select
                     [items]="anp"
@@ -256,7 +254,7 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-12">
                     <form action="#" [formGroup]="form" novalidate>
                       <div class="card">
                         <div class="card-body" id="parent">
@@ -268,10 +266,11 @@
                               <button
                                 type="button"
                                 class="btn btn-sm btn-primary d-flex"
-                                placement="top"
-                                data-bs-toggle="modal"
-                                data-bs-target="#createCommitments"
-                                ngbTooltip="Agregar"
+                                (click)="
+                                  onContentCreateCommitmentsModal(
+                                    contentCreateCommitments
+                                  )
+                                "
                               >
                                 <i class="bi bi-plus-lg"></i>
                               </button>
@@ -311,69 +310,6 @@
                                     manejos de recursos naturales.
                                   </td>
                                   <td>Sernanp</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-6">
-                    <form action="#" [formGroup]="form" novalidate>
-                      <div class="card">
-                        <div class="card-body" id="parent">
-                          <div class="row g-3">
-                            <div class="col-md-6">
-                              <label class="form-label"
-                                >Agregar compromisos</label
-                              >
-                              <button
-                                type="button"
-                                class="btn btn-sm btn-primary d-flex"
-                                placement="top"
-                                data-bs-toggle="modal"
-                                data-bs-target="#createCommitments"
-                                ngbTooltip="Agregar"
-                              >
-                                <i class="bi bi-plus-lg"></i>
-                              </button>
-                            </div>
-                          </div>
-                          <hr />
-                          <div class="table-responsive">
-                            <table class="table">
-                              <thead class="fw-bold">
-                                <tr>
-                                  <td>Objetivo</td>
-                                  <td>Compromiso</td>
-                                  <td>Suscriptor</td>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    OB 2 - Mantener poblaciones de especies de
-                                    interés para la gestion del Parque Nacional
-                                  </td>
-                                  <td>
-                                    Participación en actividades de vigilancia
-                                    desarrolladas por el equipo técnico de la
-                                    Jefatura del ANP
-                                  </td>
-                                  <td>Oxalecker</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    OB 2 - Mantener poblaciones de especies de
-                                    interés para la gestion del Parque Nacional
-                                  </td>
-                                  <td>
-                                    Participar en las actividades a ser
-                                    realizadas en favor de la conservación del
-                                    PNYCH
-                                  </td>
-                                  <td>Oxalecker</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -1180,190 +1116,183 @@
     </div>
   </form>
 </ng-template>
-<div
-  class="modal fade"
-  id="createCommitments"
-  tabindex="-1"
-  aria-labelledby="createCommitmentsLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createPerfilLabel">Crear Compromisos</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs nav-tabs-flat" id="myComp" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link active"
-              id="datos-tabMP"
-              data-bs-toggle="tab"
-              data-bs-target="#tabMP"
-              type="button"
-              role="tab"
-            >
-              Plan maestro
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              id="datos-tabOthers"
-              data-bs-toggle="tab"
-              data-bs-target="#tabO"
-              type="button"
-              role="tab"
-            >
-              Otros planes
-            </button>
-          </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <div
-            class="tab-pane pt-2 fade show active"
-            id="tabMP"
-            role="tabpanel"
-            aria-labelledby="datos-tabMP"
+<ng-template #contentCreateCommitments let-modal>
+  <form
+    [formGroup]="formCreateCommitments"
+    (ngSubmit)="insertCommitments()"
+    novalidate
+  >
+    <div class="modal-header">
+      <h5 class="modal-title" id="createPerfilLabel">Crear Compromisos</h5>
+      <button type="button" class="btn-close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <ul class="nav nav-tabs nav-tabs-flat" id="myComp" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="datos-tabMP"
+            data-bs-toggle="tab"
+            data-bs-target="#tabMP"
+            type="button"
+            role="tab"
           >
-            <div class="row g-3">
-              <div class="col-md-12">
-                <label class="form-label">Compromiso</label>
-                <textarea class="form-control" rows="2"></textarea>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Objetivo</label>
-                <select class="form-select">
-                  <option>
-                    OB 1 - Mantener la cobertura vegetal del Parque Nacional
-                  </option>
-                  <option>
-                    OB 2 - Mantener poblaciones de especies de interés para la
-                    gestion del Parque Nacional
-                  </option>
-                </select>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Alineado a</label>
-                <select class="form-select">
-                  <option>Linea de acción 1</option>
-                  <option>Linea de acción 2</option>
-                </select>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Suscriptor</label>
-                <select class="form-select">
-                  <option>SERNANP</option>
-                  <option>Oxalecker</option>
-                </select>
-              </div>
+            Plan maestro
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="datos-tabOthers"
+            data-bs-toggle="tab"
+            data-bs-target="#tabO"
+            type="button"
+            role="tab"
+          >
+            Otros planes
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane pt-2 fade show active"
+          id="tabMP"
+          role="tabpanel"
+          aria-labelledby="datos-tabMP"
+        >
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Compromiso</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                formControlName="description"
+                [ngClass]="{
+                  'input-invalid': submitted && h.description.errors?.required
+                }"
+              ></textarea>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Objetivo</label>
+              <select class="form-select">
+                <option value="0">SELECCIONE</option>
+                <option *ngFor="let item of objectiveList" [value]="item.id">
+                  {{ item.description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-12" formGroupName="actionLine">
+              <label class="form-label">Alineado a</label>
+              <select class="form-select" formControlName="id">
+                <option value="0">SELECCIONE</option>
+              </select>
+            </div>
+            <div class="col-md-12" formGroupName="allied">
+              <label class="form-label">Suscriptor</label>
+              <select class="form-select" formControlName="id">
+                <option value="0">SELECCIONE</option>
+              </select>
             </div>
           </div>
-          <div
-            class="tab-pane pt-2"
-            id="tabO"
-            role="tabpanel"
-            aria-labelledby="datos-tabOthers"
-          >
-            <div class="row g-3">
-              <div class="col-md-12">
-                <label class="form-label">Compromiso 1</label>
-                <textarea class="form-control" rows="2"></textarea>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Objetivo del:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Plan de desarrollo concertado"
-                />
-                <!-- <select class="form-select">
+        </div>
+        <div
+          class="tab-pane pt-2"
+          id="tabO"
+          role="tabpanel"
+          aria-labelledby="datos-tabOthers"
+        >
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Compromiso 1</label>
+              <textarea class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Objetivo del:</label>
+              <input
+                type="text"
+                class="form-control"
+                value="Plan de desarrollo concertado"
+              />
+              <!-- <select class="form-select">
                   <option selected>Plan maestro</option>
                   <option>Plan de desarrollo concertado</option>
                   <option>Plan de vida de las comunidades</option>
                 </select> -->
-              </div>
+            </div>
 
-              <div class="col-md-12">
-                <label class="form-label">Objetivo</label>
-                <textarea class="form-control" rows="2">
+            <div class="col-md-12">
+              <label class="form-label">Objetivo</label>
+              <textarea class="form-control" rows="2">
 OB 1 - Mantener la cobertura vegetal del Parque Nacional
-                </textarea>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Alineado a</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Linea de acción 1"
-                />
-                &nbsp;
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Linea de acción 2"
-                />
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Compromiso 2</label>
-                <textarea class="form-control" rows="2"></textarea>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Objetivo del:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Plan de vida de las comunidades"
-                />
-                <!-- <select class="form-select">
+                </textarea
+              >
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Alineado a</label>
+              <input
+                type="text"
+                class="form-control"
+                value="Linea de acción 1"
+              />
+              &nbsp;
+              <input
+                type="text"
+                class="form-control"
+                value="Linea de acción 2"
+              />
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Compromiso 2</label>
+              <textarea class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Objetivo del:</label>
+              <input
+                type="text"
+                class="form-control"
+                value="Plan de vida de las comunidades"
+              />
+              <!-- <select class="form-select">
                   <option selected>Plan maestro</option>
                   <option>Plan de desarrollo concertado</option>
                   <option>Plan de vida de las comunidades</option>
                 </select> -->
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Objetivo</label>
-                <textarea class="form-control" rows="2">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Objetivo</label>
+              <textarea class="form-control" rows="2">
  OB 3 - lorem ipsum
-                </textarea>
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Alineado a</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Linea de acción 1"
-                />
-                &nbsp;
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Linea de acción 2"
-                />
-              </div>
+                </textarea
+              >
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Alineado a</label>
+              <input
+                type="text"
+                class="form-control"
+                value="Linea de acción 1"
+              />
+              &nbsp;
+              <input
+                type="text"
+                class="form-control"
+                value="Linea de acción 2"
+              />
             </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          Guardar
-        </button>
-      </div>
     </div>
-  </div>
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+        Guardar
+      </button>
+    </div>
+  </form>
+</ng-template>
 <div
   class="modal fade"
   id="createActivity"
