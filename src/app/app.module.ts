@@ -44,7 +44,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AnpComponent } from './pages/base/anp/anp.component';
 import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
-import { AgreementDetailComponent } from './pages/base/agreement/agreement-detail/agreement-detail.component';
+
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { PublicComponent } from './pages/base/public/public.component';
 
@@ -74,7 +74,7 @@ import { PublicComponent } from './pages/base/public/public.component';
     AnpComponent,
     MasterPlanComponent,
     AgreementNewComponent,
-    AgreementDetailComponent,
+
     NotFoundComponent,
     PublicComponent,
   ],
