@@ -64,7 +64,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   }
   buildForms() {
     this.form = this.fb.group({
-      code: [''],
+      code: ['', Validators.compose([Validators.required])],
       name: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
       id: [0, Validators.compose([Validators.required])],
@@ -72,14 +72,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       anp: [{ id: this.anpId || 0 }],
       active: [true],
       version: [1]
-    });
-    this.insertGoals = this.fb.group({
-      component: [1, Validators.compose([Validators.required])],
-      code: [''],
-      description: ['', Validators.compose([Validators.required])],
-      masterPlan: [0],
-      state: [true]
-    });
+    });    
     this.resetActionLine();
   }  
   formReset() {
@@ -196,7 +189,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       });
     }
   }
-  deleteCommitment(id){
+  deleteObjetive(id){
     this.submitted = true;
     try {
       this.masterPlanService.commitmentDelete(id).subscribe((response) => {
@@ -221,7 +214,13 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       size: 'sm',
       backdrop: 'static',
     });
-
+    this.insertGoals = this.fb.group({
+      component: ['', Validators.compose([Validators.required])],
+      code: [''],
+      description: ['', Validators.compose([Validators.required])],
+      masterPlan: [0],
+      state: [true]
+    });
     this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
       this.insertGoals.reset({});
 

@@ -35,6 +35,7 @@ public class ObjetiveRepository extends BaseRepository<ObjetiveModel> {
 		 parameters.put("pid", item.getId2());
 		 parameters.put("pmasterplanid", item.getMasterPlan().getId2());
 		 parameters.put("pcomponentid", item.getComponent().getId2());
+		 parameters.put("pcode", item.getCode());
 		 parameters.put("pdescription", item.getDescription());
 		 parameters.put("pregistrationdate", item.getRegistrationDate());		 
 		 parameters.put("pstate", item.getState());
