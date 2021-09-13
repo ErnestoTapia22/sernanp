@@ -55,26 +55,31 @@
                   }"
                 />
               </div>
-
-              <!-- <div class="col-md-6">
-                <label class="form-label">Nombre </label>
-                <input type="text" class="form-control" />
-              </div> -->
-              <!-- <div class="col-md-12">
-               
-              </div> -->
-              <div class="col-md-12">
-                <label class="form-label">Agregar objetivos </label>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary d-flex"
-                  (click)="onRegisterModal(contentRegister)"
-                >
-                  <i class="bi bi-plus-lg"></i>
-                </button>
-              </div>
+              <br/>
+            </div>
+            <br/>
+            <div class="d-flex justify-content-end">              
+              <button
+                type="submit"
+                class="btn btn-success"
+                [disabled]="submitted"
+                *ngIf="!withMasterPlan"
+              >
+                <i class="fas fa-save"></i>
+                Guardar
+              </button>
             </div>
             <hr />
+            <div class="col-md-12">
+              <label class="form-label">Agregar objetivos </label>
+              <button
+                type="button"
+                class="btn btn-sm btn-primary d-flex"
+                (click)="onRegisterModal(contentRegister)"
+              >
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
             <div class="table-responsive">
               <table class="table">
                 <thead>
@@ -114,6 +119,12 @@
                           >
                             <i class="bi bi-plus-square fs-lg"></i>
                           </button>
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-outline-danger border-0"
+                            (click)="deleteCommitment(item.id)">
+                            <i class="bi bi-trash fs-lg"></i>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -122,22 +133,9 @@
               </table>
             </div>
             <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-light" (click)="formReset()">
-                <i class="fas fa-brush"></i>
-                Limpiar</button
-              >&nbsp;
-              <!-- <button type="button" class="btn btn-secondary">
-                <i class="fas fa-times-circle"></i>
-                Cancelar</button
-              >&nbsp; -->
-              <button
-                type="submit"
-                class="btn btn-success"
-                [disabled]="submitted"
-              >
-                <i class="fas fa-save"></i>
-                Guardar
-              </button>
+              <button type="button" class="btn btn-light">
+                <i class="fas fa-brush"><a routerLink="/anp"></a></i>
+                Limpiar</button>             
             </div>
           </div>
         </div>

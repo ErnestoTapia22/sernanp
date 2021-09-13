@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AnpService } from '../../../_services/base/anp.service';
+import { AnpService } from '../../../_services/masterplan/anp/anp.service';
 import { AlertService } from '@app/_services/base/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -11,11 +11,12 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
   styleUrls: ['./anp.component.css'],
 })
 export class AnpComponent implements OnInit, OnDestroy {
+  inboundClick = true;
   pageSize: any[] = [];
   selectedPageSize: number = 5;
   page: Number = 0;
   total: Number = 0;
-  anpList: any[];
+  items: any[];
   form: FormGroup;
   isLoading: Boolean = false;
   queryObserver = new BehaviorSubject({
@@ -39,7 +40,7 @@ export class AnpComponent implements OnInit, OnDestroy {
       { name: '30/PÁGINA', value: 30 },
     ];
 
-    this.anpList = [];
+    this.items = [];
     this.initQuery();
     this.onSearch();
 
@@ -71,7 +72,7 @@ export class AnpComponent implements OnInit, OnDestroy {
             response.items !== undefined &&
             response.items !== null
           ) {
-            this.anpList = response.items;
+            this.items = response.items;
             this.total = response.paginator.total;
             this.page = response.paginator.offset;
             // this.pageSize = response.paginator.limit;

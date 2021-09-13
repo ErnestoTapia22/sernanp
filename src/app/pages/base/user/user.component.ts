@@ -174,7 +174,7 @@ export class UserComponent implements OnInit, OnDestroy {
           }          
         });
     } catch (error) {      
-      this.alertService.error('Error al guardar datos', 'Ok', {
+      this.alertService.error('Error al guardar datos', 'Error', {
         autoClose: true,
       });
     }

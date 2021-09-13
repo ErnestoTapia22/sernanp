@@ -7,6 +7,7 @@ public class AnpModel extends BaseModel {
 
 	private String _category;
 	private String _district;
+	private int _withMasterPlan;
 	
 	public String getCategory() {
 		return _category;
@@ -22,6 +23,14 @@ public class AnpModel extends BaseModel {
 		
 	public void setDistrict(String district) {
 		_district = district;
+	}
+	
+	public int getwithMasterPlan() {
+		return _withMasterPlan;
+	}
+		
+	public void setWithMasterPlan(int withMasterPlan) {
+		_withMasterPlan = withMasterPlan;
 	}
 	
 }

@@ -41,8 +41,8 @@ import { AlertService } from './_services/base/alert.service';
 import { ApiBaseService } from './_services/base/api-base.service';
 import { InitService } from './_services/init-service/init.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AnpComponent } from './pages/base/anp/anp.component';
-import { MasterPlanComponent } from './pages/base/master-plan/master-plan.component';
+import { AnpComponent } from './pages/masterplan/anp/anp.component';
+import { MasterPlanComponent } from './pages/masterplan/master-plan/master-plan.component';
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';

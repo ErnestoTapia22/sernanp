@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseService } from '../base/api-base.service';
-import { environment } from '../../../environments/environment';
+import { ApiBaseService } from '../../base/api-base.service';
+import { environment } from '../../../../environments/environment';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
 
 @Injectable({
