@@ -25,6 +25,7 @@ export class AuthenticationService {
     this.userSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('user'))
     );
+
     this.user = this.userSubject.asObservable();
     this.segmentUserValidate = '/user/validate/';
   }
@@ -68,11 +69,11 @@ export class AuthenticationService {
             console.log(this.userSubject.value);
             this.router.navigate(['/map/index']);
           } else {
-            this.router.navigate([`/authentication/${token}`]);
+            this.logout();
           }
         });
     } catch (error) {
-      this.router.navigate(['/default/login']);
+      this.logout();
     }
   }
 
@@ -81,6 +82,10 @@ export class AuthenticationService {
     localStorage.removeItem('dataUser');
     localStorage.removeItem('auth');
     this.userSubject.next(null);
-    this.router.navigate(['/default/login']);
+    if (environment.production) {
+      window.location.href = environment.logOutUrl;
+    } else {
+      this.router.navigate([environment.logOutUrl]);
+    }
   }
 }

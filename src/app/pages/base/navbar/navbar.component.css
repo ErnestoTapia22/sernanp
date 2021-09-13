@@ -84,4 +84,7 @@
   .hidden-md-down {
     display: none;
   }
+  .pointer {
+    cursor: pointer !important;
+  }
 }

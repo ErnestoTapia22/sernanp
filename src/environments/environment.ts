@@ -9,6 +9,7 @@ export const environment = {
   apiUrl3: 'http://localhost:8050/simrac/api',
   webUrl: 'http://localhost:4200/',
   authUrl: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token',
+  logOutUrl: '/default/login',
   authCredentials: 'dj-sernanp-app:@re34n@tur4l',
   externalServices: [
     {

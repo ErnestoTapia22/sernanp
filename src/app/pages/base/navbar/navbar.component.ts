@@ -23,6 +23,9 @@ export class NavbarComponent implements OnInit {
     this.clickNav(null);
 
     this.user = this.authenticationService.userValue;
+    if (this.user) {
+      this.isLogedIn = true;
+    }
   }
 
   toggleOffcanvas() {
