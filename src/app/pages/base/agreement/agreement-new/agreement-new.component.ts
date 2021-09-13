@@ -367,18 +367,18 @@ export class AgreementNewComponent implements OnInit {
       producedArea: [0],
       detalleProduction: [''],
       restHect: [0],
-      restdet: 'prueba',
-      sectNom: 'prueba',
+      restdet: '',
+      sectNom: '',
       sectHect: [0],
-      territoryMod: 'prueba',
+      territoryMod: '',
       finanApa: false,
-      finanNum: '1234',
-      comTxt: 'prueba',
-      genObj: 'prueba',
-      finanMod: 'prueba',
-      fondName: 'prueba',
+      finanNum: [0],
+      comTxt: '',
+      genObj: '',
+      finanMod: '',
+      fondName: '',
       allied: true,
-
+      sectDet: '',
       agreementState: this.fb.group({
         id: [0],
       }),
@@ -467,15 +467,17 @@ export class AgreementNewComponent implements OnInit {
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {
+          console.log(response);
           if (response && response.success === true) {
             this.submitted = false;
             this.agreementExist = true;
             this.getWorkPlan(response.extra);
             this.alertService.success(
-              'Se registro correctamente el acuerdo',
+              response.message,
               'Ok',
               { autoClose: true }
             );
+            this.getDetail(response.extra);
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
               autoClose: true,
@@ -505,7 +507,7 @@ export class AgreementNewComponent implements OnInit {
     console.log(edits);
 
     this.featureLayer = new FeatureLayer({
-      url: 'http://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/1',
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/1',
       outFields: ['*'],
       popupEnabled: true,
       id: 'featureTest',
@@ -577,6 +579,7 @@ export class AgreementNewComponent implements OnInit {
             restdet: response.item.restdet,
             sectNom: response.item.sectNom,
             sectHect: response.item.sectHect,
+            sectDet: response.item.sectDet,
             territoryMod: response.item.territoryMod,
             finanApa: response.item.finanApa,
             finanNum: response.item.finanNum,

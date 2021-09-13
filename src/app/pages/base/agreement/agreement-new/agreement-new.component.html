@@ -289,31 +289,7 @@
                                   <td>Suscriptor</td>
                                 </tr>
                               </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    OB 1 - Mantener la cobertura vegetal del
-                                    Parque Nacional
-                                  </td>
-                                  <td>
-                                    Fortalecer las capacidades de los
-                                    integrantes de la Empresa, en el manejo de
-                                    equipo básicos
-                                  </td>
-                                  <td>Sernanp</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    OB 1 - Mantener la cobertura vegetal del
-                                    Parque Nacional
-                                  </td>
-                                  <td>
-                                    De igual forma fortalecer las capacidades a
-                                    los integrantes de la empresa en temas de
-                                    manejos de recursos naturales.
-                                  </td>
-                                  <td>Sernanp</td>
-                                </tr>
+                              <tbody>                                
                               </tbody>
                             </table>
                           </div>
@@ -429,16 +405,23 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Ámbito</label>
-                <div>
-                  <!-- [disabled]="!agreementExist" -->
+                <label class="mb-0 fw-bold">Ámbito</label>                
+                <div class="float-right">
                   <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="disabled"
+                    >
+                      <i class="fas fa-save"></i>
+                      Guardar
+                    </button>
+                    <button
                     type="button"
                     class="btn btn-sm btn-outline-success mx-1"
                     (click)="addFeatureToService()"
                   >
                     <i class="bi bi-stack"></i>
-                    Agregar Shapefiles
+                    Guardar Shapefiles
                   </button>
                 </div>
               </div>
@@ -524,7 +507,7 @@
                           min="0"
                           class="form-control"
                           id="numbInterventionA"
-                          value="zona de amortiguamiento"
+                          value=""
                         />
                       </div>
 
@@ -564,6 +547,7 @@
                           id="txtaDetailAR"
                           class="form-control"
                           rows="1"
+                          formControlName="restdet"
                         ></textarea>
                       </div>
                       <div class="col-md-3">
@@ -574,6 +558,7 @@
                           id="txtaSectorVC"
                           class="form-control"
                           rows="1"
+                          formControlName="sectNom"
                         ></textarea>
                       </div>
                       <div class="col-md-3">
@@ -585,6 +570,7 @@
                           min="0"
                           class="form-control"
                           id="numbAreaVC"
+                          formControlName="sectHect"
                         />
                       </div>
                       <div class="col-md-3">
@@ -600,6 +586,7 @@
                           id="txtaDetailSVC"
                           class="form-control"
                           rows="1"
+                          formControlName="sectDet"
                         ></textarea>
                       </div>
                       <div class="col-md-3">
@@ -616,6 +603,7 @@
                           id="txtaModeAdc"
                           class="form-control"
                           rows="1"
+                          formControlName="territoryMod"
                         ></textarea>
                       </div>
                       <div class="col-md-3 d-none">
@@ -680,6 +668,16 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Articulaciones</label>
+                <div class="float-right">
+                  <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="disabled"
+                    >
+                      <i class="fas fa-save"></i>
+                      Guardar
+                    </button>
+                </div>
               </div>
               <div class="card-body">
                 <div class="row g-3">
@@ -796,6 +794,16 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Financiamiento</label>
+                <div class="float-right">
+                  <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="disabled"
+                    >
+                      <i class="fas fa-save"></i>
+                      Guardar
+                    </button>
+                </div>
               </div>
               <div class="card-body">
                 <div class="row g-3">
@@ -806,6 +814,7 @@
                         type="checkbox"
                         id="chkComunityL"
                         value="option1"
+                        formControlName="finanApa"
                       />
                       <label class="form-check-label" for="chkComunityL"
                         >Se ha apalancado financiamiento
@@ -831,6 +840,7 @@
                       min="0"
                       class="form-control"
                       id="numbFinanc"
+                      formControlName="finanNum"
                     />
                   </div>
                   <div class="col-md-4">
@@ -855,7 +865,7 @@
                     <label for="txtModF" class="form-label"
                       >Modalidad de financiamiento</label
                     >
-                    <input type="text" class="form-control" id="txtModF" />
+                    <input type="text" class="form-control" id="txtModF" formControlName="finanMod"/>
                   </div>
                   <div class="col-md-6">
                     <label for="txtNameF" class="form-label"
@@ -866,7 +876,7 @@
                       placement="top"
                       ngbTooltip="Si aplica "
                     ></i>
-                    <input type="text" class="form-control" id="txtNameF" />
+                    <input type="text" class="form-control" id="txtNameF" formControlName="fondName" />
                   </div>
                 </div>
               </div>
@@ -877,34 +887,13 @@
                 <label class="mb-0 fw-bold"></label>
               </div>
               <div class="card-body">
-                <div class="row g-3" action="#">
-                  <!-- <div class="col-md-4">
-                    <div class="avatar-img float-right">
-                      <input
-                        type="file"
-                        id="shpUpload"
-                        #file
-                        (change)="readURL($event)"
-                      />
-                    </div>
-                     <div *ngIf="validateSize" class="invalid">
-                      <div>Tamaño de archivo supera los 50KB</div>
-                    </div> 
-                  </div> -->
+                <div class="row g-3" action="#">                 
 
                   <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-light">
                       <i class="fas fa-brush"></i>
-                      Limpiar</button
+                      Regresar</button
                     >&nbsp;
-                    <button
-                      type="submit"
-                      class="btn btn-success"
-                      [disabled]="disabled"
-                    >
-                      <i class="fas fa-save"></i>
-                      Guardar
-                    </button>
                   </div>
                 </div>
               </div>
