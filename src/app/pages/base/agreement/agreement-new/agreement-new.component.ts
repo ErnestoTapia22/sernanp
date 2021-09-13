@@ -71,6 +71,7 @@ export class AgreementNewComponent implements OnInit {
   anpList: any[] = [];
   anpForm: FormGroup;
   actionLineList: any[] = [];
+  layerId: number = 0;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -148,7 +149,7 @@ export class AgreementNewComponent implements OnInit {
           const htmlForm = document.getElementById(
             'uploadForm'
           ) as HTMLFormElement;
-          this.generateFeatureCollection(fileName, htmlStatus, htmlForm);
+          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
         } else {
           htmlStatus.innerHTML =
             '<p style="color:red">Add shapefile as .zip file</p>';
@@ -165,7 +166,7 @@ export class AgreementNewComponent implements OnInit {
           const htmlForm = document.getElementById(
             'uploadForm2'
           ) as HTMLFormElement;
-          this.generateFeatureCollection(fileName, htmlStatus, htmlForm);
+          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
         } else {
           htmlStatus.innerHTML =
             '<p style="color:red">Add shapefile as .zip file</p>';
@@ -198,7 +199,8 @@ export class AgreementNewComponent implements OnInit {
   generateFeatureCollection(
     fileName,
     htmlStatus?: HTMLElement,
-    hmtlForm?: HTMLFormElement
+    hmtlForm?: HTMLFormElement,
+    layerId?: number
   ) {
     let name = fileName.split('.');
     // Chrome adds c:\fakepath to the value - we need to remove it
@@ -243,7 +245,11 @@ export class AgreementNewComponent implements OnInit {
         const layerName =
           response.data.featureCollection.layers[0].layerDefinition.name;
         htmlStatus.innerHTML = '<b>Loaded: </b>' + layerName;
-        this.addShapefileToMap(response.data.featureCollection, htmlStatus);
+        this.addShapefileToMap(
+          response.data.featureCollection,
+          htmlStatus,
+          layerId
+        );
       })
       .catch(this.errorHandler);
   }
@@ -281,7 +287,11 @@ export class AgreementNewComponent implements OnInit {
       );
     }
   }
-  addShapefileToMap(featureCollection, htmlStatus?: HTMLElement) {
+  addShapefileToMap(
+    featureCollection,
+    htmlStatus?: HTMLElement,
+    layerId?: number
+  ) {
     // add the shapefile to the map and zoom to the feature collection extent
     // if you want to persist the feature collection when you reload browser, you could store the
     // collection in local storage by serializing the layer using featureLayer.toJson()
@@ -295,8 +305,9 @@ export class AgreementNewComponent implements OnInit {
       const geometry = layer.featureSet.features.map((feature) => {
         return feature.geometry;
       });
-      console.log(geometry);
+
       this.graphics.push(geometry);
+      this.layerId = layerId;
       sourceGraphics = sourceGraphics.concat(graphics);
       const featureLayer = new FeatureLayer({
         objectIdField: 'FID',
@@ -471,6 +482,8 @@ export class AgreementNewComponent implements OnInit {
             this.submitted = false;
             this.agreementExist = true;
             this.getWorkPlan(response.extra);
+            this.searchAllied();
+            this.agreementId = response.extra.toString();
             this.alertService.success(
               'Se registro correctamente el acuerdo',
               'Ok',
@@ -495,35 +508,44 @@ export class AgreementNewComponent implements OnInit {
   }
   addFeatureToService() {
     this.buildEsriJson();
-    console.log(this.esriJsons);
+
     if (this.esriJsons.length === 0) {
       return;
     }
     const edits = {
       addFeatures: this.esriJsons,
     };
-    console.log(edits);
 
     this.featureLayer = new FeatureLayer({
-      url: 'http://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/1',
+      url: environment.conservationAgreements[this.layerId].url,
       outFields: ['*'],
       popupEnabled: true,
       id: 'featureTest',
     });
+    let thiss = this;
+
     this.featureLayer
       .applyEdits(edits)
       .then(function (editsResult) {
         console.log(editsResult);
         if (editsResult.addFeatureResults.length > 0) {
+          thiss.alertService.success(
+            'Se subieron exitosamente los shapefiles',
+            'Ok',
+            { autoClose: true }
+          );
         }
       })
       .catch(function (error) {
-        console.log('===============================================');
-        console.error(
-          '[ applyEdits ] FAILURE: ',
-          error.code,
-          error.name,
-          error.message
+        thiss.alertService.error(
+          '[ applyEdits ] FAILURE: ' +
+            error.code +
+            ' | ' +
+            error.name +
+            ' | ' +
+            error.message,
+          'Ok',
+          { autoClose: true }
         );
         console.log('error = ', error);
       });
@@ -631,6 +653,7 @@ export class AgreementNewComponent implements OnInit {
               'Ok',
               { autoClose: true }
             );
+            this.searchAllied();
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
               autoClose: true,
@@ -650,12 +673,21 @@ export class AgreementNewComponent implements OnInit {
     }
   }
   searchAllied() {
+    if (
+      this.agreementId ||
+      this.agreementId === '' ||
+      this.agreementId === null
+    ) {
+      return;
+    }
     try {
-      this.agreementService.alliedSearch(105).subscribe((response) => {
-        if (response && response.items.length > 0) {
-          this.alliedList = response.items;
-        }
-      });
+      this.agreementService
+        .alliedSearch(parseInt(this.agreementId))
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.alliedList = response.items;
+          }
+        });
     } catch (error) {
       this.alertService.error('Error al traer los suscriptores', 'error', {
         autoClose: true,
