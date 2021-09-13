@@ -75,7 +75,7 @@ export class AgreementComponent implements OnInit {
             this.pageSize = data.paginator.limit;
             this.isLoading = false;
             this.spinner.hide();
-            this.setTableHeight(this.pageSize);
+            this.setTableHeight(this.pageSize, data.items.length);
           } else {
             this.isLoading = false;
             this.spinner.hide();
@@ -88,7 +88,6 @@ export class AgreementComponent implements OnInit {
     }
   }
   parseData(parent, key, value) {
-    
     const item = this.queryObserver.getValue();
 
     if (typeof item[parent] === 'string') {
@@ -148,11 +147,16 @@ export class AgreementComponent implements OnInit {
   ngOnDestroy() {
     this.queryObserver.unsubscribe();
   }
-  setTableHeight(rows) {
+  setTableHeight(rows, itemsLength?: number) {
     if (rows !== undefined && rows !== null) {
       const cm = document.getElementById('tableBody');
-      const height = 50.838 * parseInt(rows);
-      cm.setAttribute('style', `height:${height}px`);
+      if (itemsLength < rows) {
+        const height = 50.838 * itemsLength;
+        cm.setAttribute('style', `height:${height}px`);
+      } else {
+        const height = 50.838 * parseInt(rows);
+        cm.setAttribute('style', `height:${height}px`);
+      }
     }
   }
   fillSelects() {

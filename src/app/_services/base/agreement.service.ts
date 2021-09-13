@@ -21,8 +21,11 @@ export class AgreementService {
   private segmentAgreementInsert;
   private segmentAlliedCategoryList;
   private segmentAlliedCategoryInsert;
+  private segmentAlliedInsert;
   private segmentAlliedSearch;
+  private segmentAlliedDelete;
   private segmentCommitmentsInsert;
+  private segmentCommitmentsSearch;
 
   constructor(private apiService: ApiBaseService, private http: HttpClient) {
     this.segmentSearch = '/conservationagreement/search';
@@ -34,6 +37,9 @@ export class AgreementService {
     this.segmentAlliedCategoryInsert = '/alliedcategory/save';
     this.segmentAlliedSearch = '/allied/search/';
     this.segmentCommitmentsInsert = '/commitment/save';
+    this.segmentCommitmentsSearch = '/commitment/search/';
+    this.segmentAlliedInsert = '/allied/save';
+    this.segmentAlliedDelete = '/allied/delete/';
   }
   uploadShape(file: File) {
     const fd = new FormData();
@@ -81,7 +87,7 @@ export class AgreementService {
   }
   alliedCategoryInsert(item): Observable<any> {
     return this.apiService.post(
-      `${environment.apiUrl}${this.segmentAgreementInsert}`,
+      `${environment.apiUrl}${this.segmentAlliedInsert}`,
       item,
       null
     );
@@ -96,6 +102,16 @@ export class AgreementService {
       `${environment.apiUrl}${this.segmentCommitmentsInsert}`,
       item,
       null
+    );
+  }
+  commitmentsSearch(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentCommitmentsSearch}${id}`
+    );
+  }
+  alliedDelete(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentAlliedDelete}${id}`
     );
   }
 }

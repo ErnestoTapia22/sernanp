@@ -77,16 +77,15 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">General</label>
-                <div class="float-right">
-                  <button
-                      type="submit"
-                      class="btn btn-success"
-                      [disabled]="disabled"
-                    >
-                      <i class="fas fa-save"></i>
-                      Guardar
-                    </button>
-                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
               </div>
               <div class="card-body" id="parent">
                 <div class="row g-3">
@@ -120,9 +119,16 @@
                   <div class="col-md-3">
                     <div formGroupName="agreementState">
                       <label for="ddState" class="form-label">Estado (*)</label>
-                      <select id="ddState" class="form-select" formControlName="id">
+                      <select
+                        id="ddState"
+                        class="form-select"
+                        formControlName="id"
+                      >
                         <option selected value="0">SELECCIONE</option>
-                        <option *ngFor="let item of sourceList" [value]="item.id">
+                        <option
+                          *ngFor="let item of sourceList"
+                          [value]="item.id"
+                        >
                           {{ item.name }}
                         </option>
                       </select>
@@ -183,6 +189,14 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Suscriptores</label>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary mx-2"
+                  (click)="onAddAlliedModal(contentAddAllied)"
+                >
+                  <i class="bi bi-plus-lg"></i>
+                  Agregar Suscriptores
+                </button>
               </div>
               <div class="card-body" id="subscribers">
                 <div class="row g-3">
@@ -190,7 +204,7 @@
                     <div class="card">
                       <div class="card-body" id="parent">
                         <div class="row g-3">
-                          <div class="col-md-6">
+                          <!-- <div class="col-md-6">
                             <label class="form-label"
                               >Agregar Suscriptores</label
                             >
@@ -202,9 +216,9 @@
                             >
                               <i class="bi bi-plus-lg"></i>
                             </button>
-                          </div>
+                          </div> -->
                         </div>
-                        <hr />
+                        <!-- <hr /> -->
                         <div class="table-responsive">
                           <table class="table">
                             <thead class="fw-bold">
@@ -226,7 +240,12 @@
                                         btn btn-sm btn-outline-danger
                                         border-0
                                       "
-                                      (click)="onDeleteAllied(item.id)"
+                                      (click)="
+                                        onDeleteAlliedModal(
+                                          contentAlliedDelete,
+                                          item.id
+                                        )
+                                      "
                                     >
                                       <i class="bi bi-trash fs-lg"></i>
                                     </button>
@@ -249,6 +268,17 @@
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-primary mx-2"
+                    (click)="
+                      onContentCreateCommitmentsModal(contentCreateCommitments)
+                    "
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                    Agregar compromisos
+                  </button>
+                  &nbsp;
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary mx-2"
                   >
                     <i class="bi bi-cloud-arrow-down"></i>
                     Exportar
@@ -262,7 +292,7 @@
                       <div class="card">
                         <div class="card-body" id="parent">
                           <div class="row g-3">
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                               <label class="form-label"
                                 >Agregar compromisos</label
                               >
@@ -277,9 +307,9 @@
                               >
                                 <i class="bi bi-plus-lg"></i>
                               </button>
-                            </div>
+                            </div> -->
                           </div>
-                          <hr />
+                          <!-- <hr /> -->
                           <div class="table-responsive">
                             <table class="table">
                               <thead class="fw-bold">
@@ -289,7 +319,23 @@
                                   <td>Suscriptor</td>
                                 </tr>
                               </thead>
-                              <tbody>                                
+                              <tbody>
+                                <tr
+                                  *ngFor="
+                                    let item of commitmentsList;
+                                    index as idx
+                                  "
+                                >
+                                  <td>
+                                    {{ item.actionLine.objetive.description }}
+                                  </td>
+                                  <td>
+                                    {{ item.description }}
+                                  </td>
+                                  <td>
+                                    {{ item.allied.name }}
+                                  </td>
+                                </tr>
                               </tbody>
                             </table>
                           </div>
@@ -405,17 +451,17 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Ámbito</label>                
+                <label class="mb-0 fw-bold">Ámbito</label>
                 <div class="float-right">
                   <button
-                      type="submit"
-                      class="btn btn-success"
-                      [disabled]="disabled"
-                    >
-                      <i class="fas fa-save"></i>
-                      Guardar
-                    </button>
-                    <button
+                    type="submit"
+                    class="btn btn-sm btn-outline-success mx-2"
+                    [disabled]="disabled"
+                  >
+                    <i class="bi bi-save"></i>
+                    Guardar</button
+                  >&nbsp;
+                  <button
                     type="button"
                     class="btn btn-sm btn-outline-success mx-1"
                     (click)="addFeatureToService()"
@@ -668,16 +714,15 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Articulaciones</label>
-                <div class="float-right">
-                  <button
-                      type="submit"
-                      class="btn btn-success"
-                      [disabled]="disabled"
-                    >
-                      <i class="fas fa-save"></i>
-                      Guardar
-                    </button>
-                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
               </div>
               <div class="card-body">
                 <div class="row g-3">
@@ -794,16 +839,15 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Financiamiento</label>
-                <div class="float-right">
-                  <button
-                      type="submit"
-                      class="btn btn-success"
-                      [disabled]="disabled"
-                    >
-                      <i class="fas fa-save"></i>
-                      Guardar
-                    </button>
-                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
               </div>
               <div class="card-body">
                 <div class="row g-3">
@@ -845,7 +889,9 @@
                   </div>
                   <div class="col-md-4">
                     <div formGroupName="source">
-                      <label for="ddSource" class="form-label">Fuente de financiamiento (*)</label>
+                      <label for="ddSource" class="form-label"
+                        >Fuente de financiamiento (*)</label
+                      >
                       <select
                         id="ddSource"
                         class="form-select"
@@ -859,13 +905,18 @@
                           {{ item.name }}
                         </option>
                       </select>
-                    </div>                    
+                    </div>
                   </div>
                   <div class="col-md-6">
                     <label for="txtModF" class="form-label"
                       >Modalidad de financiamiento</label
                     >
-                    <input type="text" class="form-control" id="txtModF" formControlName="finanMod"/>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtModF"
+                      formControlName="finanMod"
+                    />
                   </div>
                   <div class="col-md-6">
                     <label for="txtNameF" class="form-label"
@@ -876,22 +927,27 @@
                       placement="top"
                       ngbTooltip="Si aplica "
                     ></i>
-                    <input type="text" class="form-control" id="txtNameF" formControlName="fondName" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtNameF"
+                      formControlName="fondName"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="card">
-              <div class="card-header">
-                <label class="mb-0 fw-bold"></label>
-              </div>
               <div class="card-body">
-                <div class="row g-3" action="#">                 
-
+                <div class="row g-3">
                   <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-light">
-                      <i class="fas fa-brush"></i>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      routerLink="/agreement"
+                    >
+                      <i class="bi bi-arrow-left"></i>
                       Regresar</button
                     >&nbsp;
                   </div>
@@ -1295,6 +1351,38 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </form>
+</ng-template>
+<ng-template #contentAlliedDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar suscriptor</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="onDeleteAllied()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
 </ng-template>
 <div
   class="modal fade"

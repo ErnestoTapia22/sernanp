@@ -72,6 +72,8 @@ export class AgreementNewComponent implements OnInit {
   anpForm: FormGroup;
   actionLineList: any[] = [];
   layerId: number = 0;
+  alliedId: number = 0;
+  commitmentsList: any[] = [];
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -93,14 +95,6 @@ export class AgreementNewComponent implements OnInit {
       zoom: 9,
     };
     this.buildForm();
-    let item = {
-      name: '',
-    };
-    this.obsQuery.next({
-      item: JSON.stringify(item),
-    });
-    this.fillSelects();
-    this.agreementId = this.route.snapshot.paramMap.get('id');
     if (
       this.route.snapshot.paramMap.get('id') !== undefined &&
       this.route.snapshot.paramMap.get('id') !== null &&
@@ -110,7 +104,17 @@ export class AgreementNewComponent implements OnInit {
       this.edit = true;
       this.getDetail(this.agreementId);
     }
+
+    let item = {
+      name: '',
+    };
+    this.obsQuery.next({
+      item: JSON.stringify(item),
+    });
+    this.fillSelects();
+
     this.searchAllied();
+    this.searchCommitments();
   }
   get g() {
     return this.alliedForm.controls;
@@ -129,6 +133,14 @@ export class AgreementNewComponent implements OnInit {
     this.alliedForm.patchValue({
       conservationAgreement: { id: this.agreementId },
     });
+  }
+  onDeleteAlliedModal(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+    this.alliedId = id;
   }
   onMapInit({ map, view }) {
     this.map = map;
@@ -416,7 +428,7 @@ export class AgreementNewComponent implements OnInit {
         ],
       }),
       conservationAgreement: this.fb.group({
-        id: [0],
+        id: [this.agreementId],
       }),
       name: ['', Validators.required],
       description: [''],
@@ -485,11 +497,9 @@ export class AgreementNewComponent implements OnInit {
             this.getWorkPlan(response.extra);
             this.searchAllied();
             this.agreementId = response.extra.toString();
-            this.alertService.success(
-              response.message,
-              'Ok',
-              { autoClose: true }
-            );
+            this.alertService.success(response.message, 'Ok', {
+              autoClose: true,
+            });
             this.getDetail(response.extra);
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
@@ -640,12 +650,23 @@ export class AgreementNewComponent implements OnInit {
       this.disabled = false;
       return;
     }
-    if (this.agreementExist === false || this.agreementId === null) {
-      this.alertService.warn('Guarde primero el acuerdo', 'Info', {
-        autoClose: true,
-      });
-      return;
+    if (this.edit === false) {
+      if (this.agreementExist === false) {
+        this.alertService.warn('Guarde primero el acuerdo', 'Info', {
+          autoClose: true,
+        });
+        return;
+      }
+    } else {
+      if (
+        this.agreementId === '' ||
+        this.agreementId === null ||
+        this.agreementId === '0'
+      ) {
+        return;
+      }
     }
+
     try {
       this.agreementService
         .alliedCategoryInsert(JSON.stringify(this.alliedForm.value))
@@ -656,7 +677,10 @@ export class AgreementNewComponent implements OnInit {
               'Ok',
               { autoClose: true }
             );
+            this.forAlliedReset();
+
             this.searchAllied();
+            this.modalRef.close();
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
               autoClose: true,
@@ -677,12 +701,15 @@ export class AgreementNewComponent implements OnInit {
   }
   searchAllied() {
     if (
-      this.agreementId ||
+      this.agreementId === '0' ||
       this.agreementId === '' ||
       this.agreementId === null
     ) {
+      console.log(this.agreementId);
       return;
     }
+
+    console.log(this.agreementId);
     try {
       this.agreementService
         .alliedSearch(parseInt(this.agreementId))
@@ -697,8 +724,25 @@ export class AgreementNewComponent implements OnInit {
       });
     }
   }
-  onDeleteAllied(id) {
-    console.log(id);
+  onDeleteAllied() {
+    try {
+      this.agreementService
+        .alliedDelete(this.alliedId)
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(response.message, 'Ok', {
+              autoClose: true,
+            });
+
+            this.searchAllied();
+          }
+          this.modalRef.close();
+        });
+    } catch (error) {
+      this.alertService.error('Error al eliminar el suscriptor', 'Error', {
+        autoClose: true,
+      });
+    }
   }
   onContentCreateCommitmentsModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -711,12 +755,32 @@ export class AgreementNewComponent implements OnInit {
   insertCommitments() {
     this.submitted = true;
     this.disabled = true;
-    console.log(this.formCreateCommitments.value);
+
     if (this.formCreateCommitments.invalid) {
-      console.log('invalid');
       this.disabled = false;
       return;
     }
+    if (this.edit === false) {
+      if (this.agreementExist === false) {
+        this.disabled = false;
+        this.alertService.warn('Guarde primero el acuerdo', 'Info', {
+          autoClose: true,
+        });
+        return;
+      }
+    } else {
+      if (
+        this.agreementId === '' ||
+        this.agreementId === null ||
+        this.agreementId === '0'
+      ) {
+        this.disabled = false;
+        return;
+      }
+    }
+    this.formCreateCommitments.patchValue({
+      conservationAgreement: { id: this.agreementId },
+    });
     try {
       this.agreementService
         .commitmentsInsert(JSON.stringify(this.formCreateCommitments.value))
@@ -727,7 +791,7 @@ export class AgreementNewComponent implements OnInit {
               'Ok',
               { autoClose: true }
             );
-
+            this.searchCommitments();
             this.modalRef.close();
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
@@ -741,6 +805,21 @@ export class AgreementNewComponent implements OnInit {
     } catch (error) {
       this.submitted = false;
       this.disabled = false;
+      this.alertService.error('Error al insertar los compromisos', 'error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchCommitments() {
+    try {
+      this.agreementService
+        .commitmentsSearch(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.commitmentsList = response.items;
+          }
+        });
+    } catch (error) {
       this.alertService.error('Error al insertar los compromisos', 'error', {
         autoClose: true,
       });
@@ -833,5 +912,20 @@ export class AgreementNewComponent implements OnInit {
         autoClose: true,
       });
     }
+  }
+  forAlliedReset() {
+    this.alliedForm.setValue({
+      id: 0,
+      alliedCategory: {
+        id: 0,
+      },
+      conservationAgreement: {
+        id: this.agreementId,
+      },
+      name: '',
+      description: '',
+      state: true,
+      registrationDate: '',
+    });
   }
 }
