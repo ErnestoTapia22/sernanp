@@ -458,12 +458,8 @@ export class UserComponent implements OnInit, OnDestroy {
   onChangePageSize(event) {
     // const q = this.queryObserver.getValue();
     // q.paginator['limit'] = this.f.pageSizes.value;
-    this.parseData(
-      'paginator',
-      'limit',
-      parseInt(this.formUserSearchPrimary.get('paginator.limit').value)
-    );
-
+    this.parseData('paginator','limit',parseInt(this.formUserSearchPrimary.get('paginator.limit').value));
+    this.parseData('paginator', 'offset', 1);
     // this.onSearch();
     // this.queryObserver.next({item:this.f.})
   }

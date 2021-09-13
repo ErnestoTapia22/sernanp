@@ -88,7 +88,7 @@ export class AgreementComponent implements OnInit {
     }
   }
   parseData(parent, key, value) {
-    // debugger;
+    
     const item = this.queryObserver.getValue();
 
     if (typeof item[parent] === 'string') {
@@ -110,7 +110,7 @@ export class AgreementComponent implements OnInit {
     // const q = this.queryObserver.getValue();
     // q.paginator['limit'] = this.f.pageSizes.value;
     this.parseData('paginator', 'limit', parseInt(this.f.pageSize.value));
-
+    this.parseData('paginator', 'offset', 1);
     this.onSearch();
     // this.queryObserver.next({item:this.f.})
   }

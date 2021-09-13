@@ -53,7 +53,7 @@ export class AnpComponent implements OnInit, OnDestroy {
   onChangePageSize(e) {
     // console.log();
     this.parseData('paginator', 'limit', this.selectedPageSize);
-
+    this.parseData('paginator', 'offset', 1);
     this.onSearch();
   }
   onSearch() {
