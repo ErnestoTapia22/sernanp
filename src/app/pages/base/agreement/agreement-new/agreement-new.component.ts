@@ -51,17 +51,12 @@ export class AgreementNewComponent implements OnInit {
   submitted: boolean = false;
   disabled: boolean = false;
   attributes: object = {
-    // codigo: '',
-    // nombre: '',
-    // areatotal: 0,
-    // comunidad: '',
-    // anexo: '',
-    // productor: '',
-    EMPRESA: 'prueba9112021',
-    NOMCAM: 'TEST',
-    UTMX: 20.3,
-    UTMY: 20.4,
-    USUARIOCREADOR: 'D',
+    codigo: '',
+    nombre: '',
+    areatotal: 0,
+    comunidad: '',
+    anexo: '',
+    productor: '',
   };
   graphics: any[] = [];
   esriJsons: Graphic[] = [];
@@ -510,7 +505,7 @@ export class AgreementNewComponent implements OnInit {
     console.log(edits);
 
     this.featureLayer = new FeatureLayer({
-      url: 'https://gisem.osinergmin.gob.pe/serverdc/rest/services/GasNatural/Produccion/FeatureServer/1',
+      url: 'http://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/1',
       outFields: ['*'],
       popupEnabled: true,
       id: 'featureTest',
