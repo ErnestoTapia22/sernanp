@@ -47,6 +47,7 @@ export class AgreementNewComponent implements OnInit {
   request: Request;
   agreementExist: boolean = false;
   agreementStateList: any[] = [];
+  sourceList: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
   attributes: object = {
@@ -267,6 +268,16 @@ export class AgreementNewComponent implements OnInit {
           this.agreementStateList = response.items;
         }
       });
+      this.agreementService.agreementSourceList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.sourceList = response.items;
+        }
+      });
     } catch (error) {
       this.alertService.error(
         'Error al traer la lista de estados del acuerdo',
@@ -466,7 +477,7 @@ export class AgreementNewComponent implements OnInit {
             this.agreementExist = true;
             this.getWorkPlan(response.extra);
             this.alertService.success(
-              'Se registro correctamenteel acuerdo',
+              'Se registro correctamente el acuerdo',
               'Ok',
               { autoClose: true }
             );
@@ -561,7 +572,7 @@ export class AgreementNewComponent implements OnInit {
             partWomen: response.item.partWomen,
             benPerson: response.item.benPerson,
             benIndirect: response.item.benIndirect,
-            numFamily: response.item.benIndirect,
+            numFamily: response.item.numFamily,
             benFamily: response.item.benFamily,
             areaAmbitc: response.item.areaAmbitc,
             producedArea: response.item.producedArea,
@@ -579,7 +590,7 @@ export class AgreementNewComponent implements OnInit {
             finanMod: response.item.finanMod,
             fondName: response.item.fondName,
             allied: response.item.allied,
-            anp: { id: 0 },
+            anp: { id: response.item.anp.id || 0 },
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
           });

@@ -47,10 +47,10 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 	protected void setParameters(Map<String, Object> parameters, ConservationAgreementModel item) throws Exception {
 		 parameters.put("pid", item.getId2());
 		 
-		 parameters.put("pecosystemtypeid", item.getEcosystemType().getId2());
-		 parameters.put("panpid", item.getAnp().getId2());
-		 parameters.put("pagreementstateid", item.getAgreementState().getId2());
-		 parameters.put("psourceid", item.getSource ().getId2());
+		 parameters.put("pecosystemtypeid", item.getEcosystemType().getId2() == 0 ? null : item.getEcosystemType().getId2());
+		 parameters.put("panpid", item.getAnp().getId2() == 0 ? null : item.getAnp().getId2());
+		 parameters.put("pagreementstateid", item.getAgreementState().getId2() == 0 ? null : item.getAgreementState().getId2());
+		 parameters.put("psourceid", item.getSource().getId2() == 0 ? null : item.getSource().getId2());
 		 
 		 parameters.put("pdistrictid", item.getDistritoId() );
 		 

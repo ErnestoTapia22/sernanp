@@ -44,7 +44,7 @@
             Datos Generales
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li class="nav-item d-none" role="presentation">
           <!-- prettier-ignore -->
           <button
             class="nav-link"
@@ -77,6 +77,16 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">General</label>
+                <div class="float-right">
+                  <button
+                      type="submit"
+                      class="btn btn-success"
+                      [disabled]="disabled"
+                    >
+                      <i class="fas fa-save"></i>
+                      Guardar
+                    </button>
+                </div>
               </div>
               <div class="card-body" id="parent">
                 <div class="row g-3">
@@ -110,16 +120,9 @@
                   <div class="col-md-3">
                     <div formGroupName="agreementState">
                       <label for="ddState" class="form-label">Estado (*)</label>
-                      <select
-                        id="ddState"
-                        class="form-select"
-                        formControlName="id"
-                      >
+                      <select id="ddState" class="form-select" formControlName="id">
                         <option selected value="0">SELECCIONE</option>
-                        <option
-                          *ngFor="let item of agreementStateList"
-                          [value]="item.id"
-                        >
+                        <option *ngFor="let item of sourceList" [value]="item.id">
                           {{ item.name }}
                         </option>
                       </select>
@@ -378,7 +381,7 @@
                     ></textarea>
                   </div>
                   <div class="col-md-4">
-                    <label for="numbFamiliesBQ" class="form-label"
+                    <label for="numFamily" class="form-label"
                       >Número de familias beneficiadas</label
                     >
                     <i
@@ -390,7 +393,7 @@
                       type="number"
                       min="0"
                       class="form-control"
-                      id="numbFamiliesBQ"
+                      id="numFamily"
                       formControlName="numFamily"
                     />
                   </div>
@@ -411,11 +414,11 @@
                     ></textarea>
                   </div>
                   <div class="col-md-6">
-                    <label for="txtaIndirectB" class="form-label"
+                    <label for="benIndirect" class="form-label"
                       >Beneficiarios indirectos</label
                     >
                     <textarea
-                      id="txtaIndirectB"
+                      id="benIndirect"
                       class="form-control"
                       rows="1"
                       formControlName="benIndirect"
@@ -831,16 +834,22 @@
                     />
                   </div>
                   <div class="col-md-4">
-                    <label for="txtSourceF" class="form-label"
-                      >Fuente de financiamiento</label
-                    >
-                    <select class="form-select">
-                      <option selected>SELECCIONE</option>
-                      <option>Público</option>
-                      <option>Privado</option>
-                      <option>Cooperación</option>
-                      <option>Otro</option>
-                    </select>
+                    <div formGroupName="source">
+                      <label for="ddSource" class="form-label">Fuente de financiamiento (*)</label>
+                      <select
+                        id="ddSource"
+                        class="form-select"
+                        formControlName="id"
+                      >
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of agreementStateList"
+                          [value]="item.id"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>                    
                   </div>
                   <div class="col-md-6">
                     <label for="txtModF" class="form-label"
@@ -1141,7 +1150,7 @@
             Plan maestro
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li class="nav-item d-none" role="presentation">
           <button
             class="nav-link"
             id="datos-tabOthers"
