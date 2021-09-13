@@ -71,4 +71,26 @@ export const environment = {
       name: 'Capitales',
     },
   ],
+  conservationAgreements: [
+    {
+      name: 'Ámbito de Acuerdo de Conservación',
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/0',
+      disabled: false,
+    },
+    {
+      name: 'Vigilancia y control',
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/1',
+      disabled: false,
+    },
+    {
+      name: 'Restauración',
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/2',
+      disabled: false,
+    },
+    {
+      name: 'Ámbito productivo',
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/3',
+      disabled: false,
+    },
+  ],
 };
