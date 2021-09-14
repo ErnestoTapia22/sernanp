@@ -97,6 +97,9 @@ body {
   font-size: 0.875em;
   color: #dc3545;
 }
+.label-invalid2 {
+  color: #dc3545;
+}
 .btn:focus,
 .btn:active {
   outline: none !important;

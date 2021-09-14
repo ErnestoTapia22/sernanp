@@ -165,7 +165,9 @@
                       <td>{{ item.name }}</td>
                       <td>{{ item.agreementState.name }}</td>
                       <td>{{ item.vigency }}</td>
-                      <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
+                      <td>
+                        {{ item.firm | date: "dd/MM/yyyy" || "Sin fecha" }}
+                      </td>
                       <td>
                         <div class="text-nowrap">
                           <button
@@ -177,7 +179,11 @@
                           </button>
                           <button
                             type="button"
-                            class="btn btn-sm btn-outline-success border-0 d-none"
+                            class="
+                              btn btn-sm btn-outline-success
+                              border-0
+                              d-none
+                            "
                           >
                             <i class="bi bi-pencil fs-lg"></i>
                           </button>

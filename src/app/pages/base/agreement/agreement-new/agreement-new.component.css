@@ -19,3 +19,12 @@
   display: block;
   padding: 0.1em;
 }
+#mainWindow3 {
+  padding: 0.5em;
+  background-color: #fff;
+}
+#mainWindow3 p,
+#uploadForm3 {
+  display: block;
+  padding: 0.1em;
+}

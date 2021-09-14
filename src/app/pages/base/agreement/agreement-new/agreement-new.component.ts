@@ -50,13 +50,14 @@ export class AgreementNewComponent implements OnInit {
   sourceList: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
-  attributes: object = {
+  attributes: any = {
     codigo: '',
     nombre: '',
     areatotal: 0,
     comunidad: '',
     anexo: '',
     productor: '',
+    type: 0,
   };
   graphics: any[] = [];
   esriJsons: Graphic[] = [];
@@ -74,6 +75,9 @@ export class AgreementNewComponent implements OnInit {
   layerId: number = 0;
   alliedId: number = 0;
   commitmentsList: any[] = [];
+  hasTotal: boolean = false;
+  hasVigilance: boolean = false;
+  hasRestauration: boolean = false;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -101,6 +105,7 @@ export class AgreementNewComponent implements OnInit {
       this.route.snapshot.paramMap.get('id') !== ''
     ) {
       this.agreementId = this.route.snapshot.paramMap.get('id');
+      this.agreementExist = true;
       this.edit = true;
       this.getDetail(this.agreementId);
     }
@@ -115,6 +120,7 @@ export class AgreementNewComponent implements OnInit {
 
     this.searchAllied();
     this.searchCommitments();
+    this.autocalculatedField();
   }
   get g() {
     return this.alliedForm.controls;
@@ -161,6 +167,7 @@ export class AgreementNewComponent implements OnInit {
           const htmlForm = document.getElementById(
             'uploadForm'
           ) as HTMLFormElement;
+          this.attributes.type = 1;
           this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
         } else {
           htmlStatus.innerHTML =
@@ -178,7 +185,26 @@ export class AgreementNewComponent implements OnInit {
           const htmlForm = document.getElementById(
             'uploadForm2'
           ) as HTMLFormElement;
+          this.attributes.type = 2;
           this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
+        } else {
+          htmlStatus.innerHTML =
+            '<p style="color:red">Add shapefile as .zip file</p>';
+        }
+      });
+    document
+      .getElementById('uploadForm3')
+      .addEventListener('change', (event) => {
+        const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+        const htmlStatus = document.getElementById('upload-status3');
+        if (fileName.indexOf('.zip') !== -1) {
+          //is file a zip - if not notify user
+
+          const htmlForm = document.getElementById(
+            'uploadForm3'
+          ) as HTMLFormElement;
+          this.attributes.type = 3;
+          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
         } else {
           htmlStatus.innerHTML =
             '<p style="color:red">Add shapefile as .zip file</p>';
@@ -204,8 +230,19 @@ export class AgreementNewComponent implements OnInit {
       group: 'fileform',
       id: 'fileform2',
     });
+    const fileForm3 = document.getElementById('mainWindow3');
+    const expand3 = new Expand({
+      expandIconClass: 'esri-icon-pan2',
+      view: this.view,
+      content: fileForm3,
+      expandTooltip: 'área de restauración',
+      group: 'fileform',
+      id: 'fileform3',
+    });
+
     this.view.ui.add(expand, 'top-right');
     this.view.ui.add(expand2, 'top-right');
+    this.view.ui.add(expand3, 'top-right');
   }
 
   generateFeatureCollection(
@@ -378,7 +415,10 @@ export class AgreementNewComponent implements OnInit {
       state: [true],
       registrationDate: [''],
       code: [''],
-      vigency: [0],
+      vigency: [
+        0,
+        Validators.compose([Validators.required, Validators.pattern('[^0]+')]),
+      ],
       firm: [''],
       partMen: [0],
       partWomen: [0],
@@ -390,23 +430,24 @@ export class AgreementNewComponent implements OnInit {
       producedArea: [0],
       detalleProduction: [''],
       restHect: [0],
-      restdet: '',
-      sectNom: '',
+      restdet: [''],
+      sectNom: [''],
       sectHect: [0],
-      territoryMod: '',
-      finanApa: false,
+      territoryMod: [''],
+      // finanApa: [false, Validators.requiredTrue],
+      finanApa: [false],
       finanNum: [0],
-      comTxt: '',
-      genObj: '',
-      finanMod: '',
-      fondName: '',
+      comTxt: [''],
+      genObj: [''],
+      finanMod: [''],
+      fondName: [''],
       allied: true,
-      sectDet: '',
+      sectDet: [''],
       agreementState: this.fb.group({
-        id: [0],
+        id: [0, Validators.pattern('[^0]+')],
       }),
       anp: this.fb.group({
-        id: [0],
+        id: [0, Validators.pattern('[^0]+')],
       }),
       areaAmbitc: [{ value: 0, disabled: true }],
       source: this.fb.group({
@@ -481,22 +522,24 @@ export class AgreementNewComponent implements OnInit {
     try {
       this.submitted = true;
       this.disabled = true;
-      console.log(this.form.value);
 
       if (this.form.invalid) {
         this.disabled = false;
+        console.log(this.form.value);
         return;
       }
+
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {
           console.log(response);
           if (response && response.success === true) {
-            this.submitted = false;
             this.agreementExist = true;
+
             this.getWorkPlan(response.extra);
             this.searchAllied();
             this.agreementId = response.extra.toString();
+
             this.alertService.success(response.message, 'Ok', {
               autoClose: true,
             });
@@ -506,10 +549,13 @@ export class AgreementNewComponent implements OnInit {
               autoClose: true,
             });
           }
+          this.submitted = false;
           this.disabled = false;
         });
     } catch (error) {
       this.disabled = false;
+      this.submitted = false;
+
       this.alertService.error('Error al guardar el acuerdo', 'Error', {
         autoClose: true,
       });
@@ -520,35 +566,40 @@ export class AgreementNewComponent implements OnInit {
   }
   addFeatureToService() {
     this.buildEsriJson();
-
+    console.log(this.attributes);
     if (this.esriJsons.length === 0) {
+      this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
       return;
     }
     const edits = {
       addFeatures: this.esriJsons,
     };
-
+    console.log(this.esriJsons);
     this.featureLayer = new FeatureLayer({
       url: environment.conservationAgreements[this.layerId].url,
       outFields: ['*'],
       popupEnabled: true,
       id: 'featureTest',
     });
-    let thiss = this;
 
+    let thiss = this;
+    this.disabled = true;
     this.featureLayer
       .applyEdits(edits)
       .then(function (editsResult) {
         console.log(editsResult);
         if (editsResult.addFeatureResults.length > 0) {
+          // thiss.blockExpand();
           thiss.alertService.success(
             'Se subieron exitosamente los shapefiles',
             'Ok',
             { autoClose: true }
           );
         }
+        thiss.disabled = false;
       })
       .catch(function (error) {
+        thiss.disabled = false;
         thiss.alertService.error(
           '[ applyEdits ] FAILURE: ' +
             error.code +
@@ -564,6 +615,16 @@ export class AgreementNewComponent implements OnInit {
   }
 
   buildEsriJson() {
+    // codigo: '',
+    // nombre: '',
+    // areatotal: 0,
+    // comunidad: '',
+    // anexo: '',
+    // productor: '',
+    this.attributes.areatotal = this.form.get('areaAmbitc').value;
+    this.attributes.codigo = this.form.get('code').value;
+    this.attributes.nombre = this.form.get('name').value;
+    console.log(this.attributes);
     for (let i = 0; i < 4; i++) {
       if (this.graphics[i] === undefined || this.graphics[i] === null) {
         continue;
@@ -811,6 +872,13 @@ export class AgreementNewComponent implements OnInit {
     }
   }
   searchCommitments() {
+    if (
+      this.agreementId === '' ||
+      this.agreementId === null ||
+      this.agreementId === '0'
+    ) {
+      return;
+    }
     try {
       this.agreementService
         .commitmentsSearch(this.agreementId)
@@ -927,5 +995,36 @@ export class AgreementNewComponent implements OnInit {
       state: true,
       registrationDate: '',
     });
+  }
+  autocalculatedField() {
+    this.form.valueChanges.subscribe((val) => {
+      const valueA =
+        parseFloat(val.producedArea) > 0 ? parseFloat(val.producedArea) : 0;
+      const valueB =
+        parseFloat(val.restHect) > 0 ? parseFloat(val.restHect) : 0;
+      const valueC =
+        parseFloat(val.sectHect) > 0 ? parseFloat(val.sectHect) : 0;
+
+      const newVal = valueA + valueB + valueC;
+      this.form.controls.areaAmbitc.patchValue(newVal.toFixed(5), {
+        emitEvent: false,
+      });
+      this.validateForm();
+    });
+  }
+  validateForm() {
+    Object.keys(this.form.controls).forEach((key) => {
+      this.form.controls[key].markAsTouched();
+      this.form.controls[key].updateValueAndValidity({ emitEvent: false });
+    });
+  }
+  blockExpand() {
+    if (this.attributes.type === 1) {
+      this.hasTotal === true;
+    } else if (this.attributes.type === 2) {
+      this.hasVigilance === true;
+    } else if (this.attributes.type === 3) {
+      this.hasRestauration === true;
+    }
   }
 }

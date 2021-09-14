@@ -101,7 +101,17 @@
                 </div>-->
                   <div class="col-md-3" formGroupName="anp">
                     <label for="ddAnp" class="form-label">ANP (*)</label>
-                    <select id="ddAnp" class="form-select" formControlName="id">
+                    <select
+                      id="ddAnp"
+                      class="form-select"
+                      formControlName="id"
+                      [ngClass]="{
+                        'input-invalid':
+                          submitted && form.get('anp.id').errors?.pattern
+                      }"
+                    >
+                      <!-- (submitted &&
+                          alliedForm.get('anp.id').errors?.pattern) -->
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
                         {{ item.name }}
@@ -123,6 +133,11 @@
                         id="ddState"
                         class="form-select"
                         formControlName="id"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted &&
+                            form.get('agreementState.id').errors?.pattern
+                        }"
                       >
                         <option selected value="0">SELECCIONE</option>
                         <option
@@ -155,6 +170,11 @@
                       class="form-control"
                       min="0"
                       formControlName="vigency"
+                      [ngClass]="{
+                        'input-invalid':
+                          (submitted && form.get('vigency').errors?.required) ||
+                          (submitted && form.get('vigency').errors?.pattern)
+                      }"
                     />
                   </div>
                   <div class="col-md-6">
@@ -193,6 +213,7 @@
                   type="button"
                   class="btn btn-sm btn-outline-primary mx-2"
                   (click)="onAddAlliedModal(contentAddAllied)"
+                  [disabled]="!agreementExist"
                 >
                   <i class="bi bi-plus-lg"></i>
                   Agregar Suscriptores
@@ -271,6 +292,7 @@
                     (click)="
                       onContentCreateCommitmentsModal(contentCreateCommitments)
                     "
+                    [disabled]="!agreementExist"
                   >
                     <i class="bi bi-plus-lg"></i>
                     Agregar compromisos
@@ -279,6 +301,7 @@
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-primary mx-2"
+                    [disabled]="!agreementExist"
                   >
                     <i class="bi bi-cloud-arrow-down"></i>
                     Exportar
@@ -465,6 +488,8 @@
                     type="button"
                     class="btn btn-sm btn-outline-success mx-1"
                     (click)="addFeatureToService()"
+                    [disabled]="!agreementExist"
+                    [disabled]="disabled"
                   >
                     <i class="bi bi-stack"></i>
                     Guardar Shapefiles
@@ -857,10 +882,21 @@
                         class="form-check-input"
                         type="checkbox"
                         id="chkComunityL"
-                        value="option1"
+                        value="0"
                         formControlName="finanApa"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted && form.get('finanApa').errors
+                        }"
                       />
-                      <label class="form-check-label" for="chkComunityL"
+                      &nbsp;
+                      <label
+                        class="form-check-label"
+                        for="chkComunityL"
+                        [ngClass]="{
+                          'label-invalid2':
+                            submitted && form.get('finanApa').errors
+                        }"
                         >Se ha apalancado financiamiento
                       </label>
                       <i
@@ -1624,13 +1660,13 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
 </div>
 <div id="mainWindow">
   <div>
-    <div style="padding-left: 4px">
+    <div style="padding-left: 4px" class="container">
       <p>Carga de shapefile del área del ámbito del acuerdo de conservación</p>
       <form enctype="multipart/form-data" method="post" id="uploadForm">
         <div class="field">
-          <label class="file-upload">
+          <label class="file-upload form-label">
             <span><strong>Agregar shapefile</strong></span>
-            <input type="file" name="file" id="inFile" />
+            <input type="file" name="file" id="inFile" [disabled]="hasTotal" />
           </label>
         </div>
       </form>
@@ -1645,15 +1681,20 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
 </div>
 <div id="mainWindow2">
   <div>
-    <div style="padding-left: 4px">
+    <div style="padding-left: 4px" class="container">
       <p>
         Carga de shapefile del área de vigilancia del acuerdo de conservación
       </p>
       <form enctype="multipart/form-data" method="post" id="uploadForm2">
         <div class="field">
-          <label class="file-upload">
+          <label class="file-upload form-label">
             <span><strong>Agregar shapefile</strong></span>
-            <input type="file" name="file" id="inFile2" />
+            <input
+              type="file"
+              name="file"
+              id="inFile2"
+              [disabled]="hasVigilance"
+            />
           </label>
         </div>
       </form>
@@ -1663,6 +1704,32 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
         id="upload-status2"
       ></span>
       <div id="fileInfo2"></div>
+    </div>
+  </div>
+</div>
+<div id="mainWindow3">
+  <div>
+    <div style="padding-left: 4px" class="container">
+      <p>Carga de shapefile del área de restauración</p>
+      <form enctype="multipart/form-data" method="post" id="uploadForm3">
+        <div class="field">
+          <label class="file-upload form-label">
+            <span><strong>Agregar shapefile</strong></span>
+            <input
+              type="file"
+              name="file"
+              id="inFile3"
+              [disabled]="hasRestauration"
+            />
+          </label>
+        </div>
+      </form>
+      <span
+        class="file-upload-status"
+        style="opacity: 1"
+        id="upload-status3"
+      ></span>
+      <div id="fileInfo3"></div>
     </div>
   </div>
 </div>
