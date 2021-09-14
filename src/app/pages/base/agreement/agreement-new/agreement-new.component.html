@@ -491,7 +491,13 @@
                     [disabled]="!agreementExist"
                     [disabled]="disabled"
                   >
-                    <i class="bi bi-stack"></i>
+                    <!-- <i class="bi bi-stack"></i> -->
+                    <span
+                      *ngIf="disabled"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
                     Guardar Shapefiles
                   </button>
                 </div>
@@ -1666,7 +1672,12 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
         <div class="field">
           <label class="file-upload form-label">
             <span><strong>Agregar shapefile</strong></span>
-            <input type="file" name="file" id="inFile" [disabled]="hasTotal" />
+            <input
+              type="file"
+              name="file"
+              id="inFile"
+              [disabled]="layersGraphic[0].attributes.sended"
+            />
           </label>
         </div>
       </form>
@@ -1693,7 +1704,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
               type="file"
               name="file"
               id="inFile2"
-              [disabled]="hasVigilance"
+              [disabled]="layersGraphic[1].attributes.sended"
             />
           </label>
         </div>
@@ -1719,7 +1730,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
               type="file"
               name="file"
               id="inFile3"
-              [disabled]="hasRestauration"
+              [disabled]="layersGraphic[2].attributes.sended"
             />
           </label>
         </div>

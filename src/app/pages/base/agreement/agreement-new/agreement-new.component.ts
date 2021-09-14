@@ -3,7 +3,7 @@ import { AgreementService } from '@app/_services/base/agreement.service';
 import { MasterPlanService } from '@app/_services/masterplan/masterplan/master-plan.service';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, zipWith } from 'rxjs';
 import {
   FormBuilder,
   FormControl,
@@ -60,8 +60,48 @@ export class AgreementNewComponent implements OnInit {
     type: 0,
   };
   graphics: any[] = [];
+  layersGraphic: any[] = [
+    {
+      attributes: {
+        codigo: '',
+        nombre: environment.conservationAgreements[0].name,
+        areatotal: 0,
+        comunidad: '',
+        anexo: '',
+        url: environment.conservationAgreements[0].url,
+        sended: false,
+        id: 'ambito',
+      },
+      geometry: {},
+    },
+    {
+      attributes: {
+        codigo: '',
+        nombre: environment.conservationAgreements[1].name,
+        areatotal: 0,
+        comunidad: '',
+        anexo: '',
+        url: environment.conservationAgreements[1].url,
+        sended: false,
+        id: 'vigilancia',
+      },
+      geometry: {},
+    },
+    {
+      attributes: {
+        codigo: '',
+        nombre: environment.conservationAgreements[2].name,
+        areatotal: 0,
+        productor: '',
+        url: environment.conservationAgreements[2].url,
+        sended: false,
+        id: 'restauracion',
+      },
+      geometry: {},
+    },
+  ];
   esriJsons: Graphic[] = [];
-  featureLayer: FeatureLayer;
+
   edit: boolean = false;
   agreementId: string = '';
   modalRef: NgbModalRef;
@@ -203,7 +243,7 @@ export class AgreementNewComponent implements OnInit {
           const htmlForm = document.getElementById(
             'uploadForm3'
           ) as HTMLFormElement;
-          this.attributes.type = 3;
+
           this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
         } else {
           htmlStatus.innerHTML =
@@ -290,7 +330,6 @@ export class AgreementNewComponent implements OnInit {
       responseType: 'json',
     })
       .then((response) => {
-        console.log(response);
         const layerName =
           response.data.featureCollection.layers[0].layerDefinition.name;
         htmlStatus.innerHTML = '<b>Loaded: </b>' + layerName;
@@ -355,8 +394,15 @@ export class AgreementNewComponent implements OnInit {
         return feature.geometry;
       });
 
-      this.graphics.push(geometry);
+      // this.graphics.push(geometry);
+      this.layersGraphic[layerId].geometry = geometry;
       this.layerId = layerId;
+      this.layersGraphic[layerId].attributes.areatotal =
+        this.form.get('areaAmbitc').value;
+      this.layersGraphic[layerId].attributes.codigo =
+        this.form.get('code').value;
+      this.layersGraphic[layerId].attributes.nombre =
+        this.form.get('name').value;
       sourceGraphics = sourceGraphics.concat(graphics);
       const featureLayer = new FeatureLayer({
         objectIdField: 'FID',
@@ -380,11 +426,12 @@ export class AgreementNewComponent implements OnInit {
   }
 
   errorHandler(error) {
-    this.alertService.error(
-      'Error al subir shapefile :' + error.message,
-      'Error',
-      { autoClose: true }
-    );
+    console.log(error);
+    // this.alertService.error(
+    //   'Error al subir shapefile :' + error.message,
+    //   'Error',
+    //   { autoClose: true }
+    // );
   }
   listAlliedCategory() {
     try {
@@ -539,11 +586,11 @@ export class AgreementNewComponent implements OnInit {
             this.getWorkPlan(response.extra);
             this.searchAllied();
             this.agreementId = response.extra.toString();
-
+            // this.getDetail(response.extra);
+            this.router.navigateByUrl(`/agreement/detail/${response.extra}`);
             this.alertService.success(response.message, 'Ok', {
               autoClose: true,
             });
-            this.getDetail(response.extra);
           } else {
             this.alertService.error('error: ' + response.message, 'error', {
               autoClose: true,
@@ -566,52 +613,79 @@ export class AgreementNewComponent implements OnInit {
   }
   addFeatureToService() {
     this.buildEsriJson();
-    console.log(this.attributes);
+
     if (this.esriJsons.length === 0) {
       this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
       return;
     }
-    const edits = {
-      addFeatures: this.esriJsons,
-    };
+    // const edits = {
+    //   addFeatures: this.esriJsons,
+    // };
     console.log(this.esriJsons);
-    this.featureLayer = new FeatureLayer({
-      url: environment.conservationAgreements[this.layerId].url,
-      outFields: ['*'],
-      popupEnabled: true,
-      id: 'featureTest',
-    });
+    // this.featureLayer = new FeatureLayer({
+    //   url: environment.conservationAgreements[this.layerId].url,
+    //   outFields: ['*'],
+    //   popupEnabled: true,
+    //   id: 'featureTest',
+    // });
 
-    let thiss = this;
     this.disabled = true;
-    this.featureLayer
-      .applyEdits(edits)
-      .then(function (editsResult) {
-        console.log(editsResult);
-        if (editsResult.addFeatureResults.length > 0) {
-          // thiss.blockExpand();
-          thiss.alertService.success(
-            'Se subieron exitosamente los shapefiles',
-            'Ok',
-            { autoClose: true }
-          );
-        }
-        thiss.disabled = false;
-      })
-      .catch(function (error) {
-        thiss.disabled = false;
-        thiss.alertService.error(
-          '[ applyEdits ] FAILURE: ' +
-            error.code +
-            ' | ' +
-            error.name +
-            ' | ' +
-            error.message,
-          'Ok',
-          { autoClose: true }
-        );
-        console.log('error = ', error);
+
+    this.esriJsons.forEach((graphic, index) => {
+      const edits = {
+        addFeatures: [graphic],
+      };
+      const featureLayer = new FeatureLayer({
+        url: graphic.attributes.url,
+        outFields: ['*'],
+        popupEnabled: true,
+        id: 'featureLayer',
       });
+
+      featureLayer
+        .applyEdits(edits)
+        .then((editsResult) => {
+          console.log(editsResult);
+          if (editsResult.addFeatureResults.length > 0) {
+            this.layersGraphic[index].attributes.sended = true;
+            if (index === 2) {
+              this.disabled = false;
+            }
+          }
+        })
+        .catch((error) => {
+          this.disabled = false;
+          console.log(error);
+        });
+    });
+    // this.featureLayer
+    //   .applyEdits(edits)
+    //   .then(function (editsResult) {
+    //     console.log(editsResult);
+    //     if (editsResult.addFeatureResults.length > 0) {
+    //       // thiss.blockExpand();
+    //       thiss.alertService.success(
+    //         'Se subieron exitosamente los shapefiles',
+    //         'Ok',
+    //         { autoClose: true }
+    //       );
+    //     }
+    //     thiss.disabled = false;
+    //   })
+    //   .catch(function (error) {
+    //     thiss.disabled = false;
+    //     thiss.alertService.error(
+    //       '[ applyEdits ] FAILURE: ' +
+    //         error.code +
+    //         ' | ' +
+    //         error.name +
+    //         ' | ' +
+    //         error.message,
+    //       'Ok',
+    //       { autoClose: true }
+    //     );
+    //     console.log('error = ', error);
+    //   });
   }
 
   buildEsriJson() {
@@ -621,22 +695,30 @@ export class AgreementNewComponent implements OnInit {
     // comunidad: '',
     // anexo: '',
     // productor: '',
-    this.attributes.areatotal = this.form.get('areaAmbitc').value;
-    this.attributes.codigo = this.form.get('code').value;
-    this.attributes.nombre = this.form.get('name').value;
-    console.log(this.attributes);
-    for (let i = 0; i < 4; i++) {
-      if (this.graphics[i] === undefined || this.graphics[i] === null) {
-        continue;
+
+    this.layersGraphic.forEach((layer) => {
+      if (layer.geometry !== {}) {
+        this.esriJsons.push(
+          Graphic.fromJSON({
+            attributes: layer.attributes,
+            geometry: layer.geometry[0],
+          })
+        );
       }
-      console.log(this.graphics[i][0]);
-      this.esriJsons.push(
-        Graphic.fromJSON({
-          attributes: this.attributes,
-          geometry: this.graphics[i][0],
-        })
-      );
-    }
+    });
+
+    // for (let i = 0; i < 4; i++) {
+    //   if (this.graphics[i] === undefined || this.graphics[i] === null) {
+    //     continue;
+    //   }
+    //   console.log(this.graphics[i][0]);
+    //   this.esriJsons.push(
+    //     Graphic.fromJSON({
+    //       attributes: this.attributes,
+    //       geometry: this.graphics[i][0],
+    //     })
+    //   );
+    // }
   }
   getDetail(id) {
     if (id === null && id === undefined && id === 0) {
@@ -685,6 +767,7 @@ export class AgreementNewComponent implements OnInit {
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
           });
+          this.addAgreementLayers();
         }
       });
     } catch (error) {
@@ -770,7 +853,6 @@ export class AgreementNewComponent implements OnInit {
       return;
     }
 
-    console.log(this.agreementId);
     try {
       this.agreementService
         .alliedSearch(parseInt(this.agreementId))
@@ -1026,5 +1108,43 @@ export class AgreementNewComponent implements OnInit {
     } else if (this.attributes.type === 3) {
       this.hasRestauration === true;
     }
+  }
+  addAgreementLayers() {
+    const agreementCode = this.form.get('code').value;
+    console.log(agreementCode);
+    if (
+      agreementCode === null ||
+      agreementCode === undefined ||
+      agreementCode === ''
+    ) {
+      return;
+    }
+    this.layersGraphic.forEach((layer, index) => {
+      const featureLayer = new FeatureLayer({
+        url: layer.attributes.url,
+        id: layer.attributes.id,
+        popupEnabled: true,
+        outFields: ['*'],
+        definitionExpression: `codigo = '${agreementCode}'`,
+      });
+      // this.addGraphics(featureLayer);
+
+      this.map.add(featureLayer);
+    });
+    // this.zoomToLayer;
+  }
+  addGraphics(layer: FeatureLayer) {
+    layer.queryFeatures().then((response) => {
+      console.log(response);
+      let graphic = null;
+      graphic = response.features.map((feature) => {
+        return Graphic.fromJSON(feature);
+      });
+      this.graphics.push(graphic);
+      console.log(this.graphics);
+    });
+  }
+  zoomToLayer() {
+    this.view.goTo(this.graphics);
   }
 }
