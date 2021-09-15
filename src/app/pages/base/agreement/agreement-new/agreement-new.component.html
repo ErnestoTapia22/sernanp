@@ -340,6 +340,7 @@
                                   <td>Objetivo</td>
                                   <td>Compromiso</td>
                                   <td>Suscriptor</td>
+                                  <td>Opciones</td>
                                 </tr>
                               </thead>
                               <tbody>
@@ -357,6 +358,25 @@
                                   </td>
                                   <td>
                                     {{ item.allied.name }}
+                                  </td>
+                                  <td>
+                                    <div class="text-nowrap">
+                                      <button
+                                        type="button"
+                                        class="
+                                          btn btn-sm btn-outline-danger
+                                          border-0
+                                        "
+                                        (click)="
+                                          onDeleteCommitmentsModal(
+                                            contentCommitmentsDelete,
+                                            item.id
+                                          )
+                                        "
+                                      >
+                                        <i class="bi bi-trash fs-lg"></i>
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               </tbody>
@@ -1420,6 +1440,38 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       type="button"
       ngbAutofocus
       (click)="onDeleteAllied()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>
+<ng-template #contentCommitmentsDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar compromiso</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="onDeleteCommitment()"
       class="btn btn-primary"
     >
       Aceptar

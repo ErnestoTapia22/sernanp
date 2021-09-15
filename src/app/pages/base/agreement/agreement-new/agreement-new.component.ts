@@ -118,6 +118,7 @@ export class AgreementNewComponent implements OnInit {
   hasTotal: boolean = false;
   hasVigilance: boolean = false;
   hasRestauration: boolean = false;
+  commitmentId: number = 0;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -187,6 +188,14 @@ export class AgreementNewComponent implements OnInit {
       backdrop: 'static',
     });
     this.alliedId = id;
+  }
+  onDeleteCommitmentsModal(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+    this.commitmentId = id;
   }
   onMapInit({ map, view }) {
     this.map = map;
@@ -1127,24 +1136,55 @@ export class AgreementNewComponent implements OnInit {
         outFields: ['*'],
         definitionExpression: `codigo = '${agreementCode}'`,
       });
-      // this.addGraphics(featureLayer);
-
+      featureLayer.when((loaded) => {
+        console.log(loaded);
+      });
       this.map.add(featureLayer);
+      if (index == 1) {
+        this.zoomToLayer(featureLayer);
+      }
+      // this.addGraphics(featureLayer);
     });
     // this.zoomToLayer;
   }
-  addGraphics(layer: FeatureLayer) {
-    layer.queryFeatures().then((response) => {
-      console.log(response);
-      let graphic = null;
-      graphic = response.features.map((feature) => {
-        return Graphic.fromJSON(feature);
+  zoomToLayer(layer: FeatureLayer) {
+    layer
+      .queryExtent()
+      .then((response) => {
+        this.view.goTo(response.extent);
+      })
+      .catch((error) => {
+        this.alertService.error('Error al traer el extent' + error, 'error', {
+          autoClose: false,
+        });
       });
-      this.graphics.push(graphic);
-      console.log(this.graphics);
-    });
   }
-  zoomToLayer() {
-    this.view.goTo(this.graphics);
+  onDeleteCommitment() {
+    try {
+      this.agreementService
+        .commitmentDelete(this.commitmentId)
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se elimino correctamente el compromiso',
+              'Ok',
+              {
+                autoClose: false,
+              }
+            );
+            this.commitmentsList = [];
+            this.searchCommitments();
+            this.modalRef.close();
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al eliminar el compromiso' + error,
+        'error',
+        {
+          autoClose: false,
+        }
+      );
+    }
   }
 }
