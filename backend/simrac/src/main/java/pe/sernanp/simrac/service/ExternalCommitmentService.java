@@ -1,5 +1,7 @@
 package pe.sernanp.simrac.service;
 
+import java.util.List;
+
 import javax.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,20 +10,20 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.CommitmentEcaModel;
+import pe.sernanp.simrac.model.ExternalCommitmentModel;
 import pe.sernanp.simrac.model.CommitmentModel;
-import pe.sernanp.simrac.repository.CommitmentEcaRepository;
+import pe.sernanp.simrac.repository.ExternalCommitmentRepository;
 import pe.sernanp.simrac.repository.CommitmentRepository;
 
 @Service
-public class CommitmentEcaService extends BaseService<CommitmentEcaModel> {
+public class ExternalCommitmentService extends BaseService<ExternalCommitmentModel> {
 	
 	@Autowired
-	private CommitmentEcaRepository _repository;	
+	private ExternalCommitmentRepository _repository;	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(CommitmentEcaModel item) throws Exception {		
+	public ResponseEntity save(ExternalCommitmentModel item) throws Exception {		
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -57,14 +59,14 @@ public class CommitmentEcaService extends BaseService<CommitmentEcaModel> {
 	}
 	
 	
-	public ResponseEntity<CommitmentEcaModel> detail(int id) throws Exception {
+	public ResponseEntity<ExternalCommitmentModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<CommitmentEcaModel> response = new ResponseEntity<CommitmentEcaModel>();
-			CommitmentEcaModel item = this._repository.detail(this._dataSource, id);
+			ResponseEntity<ExternalCommitmentModel> response = new ResponseEntity<ExternalCommitmentModel>();
+			ExternalCommitmentModel item = this._repository.detail(this._dataSource, id);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
@@ -98,4 +100,22 @@ public class CommitmentEcaService extends BaseService<CommitmentEcaModel> {
 		}
 	}
 		
+	
+	public ResponseEntity<ExternalCommitmentModel> search(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ExternalCommitmentModel> response = new ResponseEntity<ExternalCommitmentModel>();
+			List<ExternalCommitmentModel> item = this._repository.search(this._dataSource, id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	
 }

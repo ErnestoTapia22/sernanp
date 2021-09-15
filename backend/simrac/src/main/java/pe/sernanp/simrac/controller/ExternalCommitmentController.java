@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.gisriv.entity.ResponseEntity;
-import pe.sernanp.simrac.model.CommitmentEcaModel;
-import pe.sernanp.simrac.service.CommitmentEcaService;
+import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.model.ExternalCommitmentModel;
+import pe.sernanp.simrac.service.ExternalCommitmentService;
 
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping(value = "/api/commitmenteca/")
-public class CommitmentEcaController extends BaseController<CommitmentEcaModel, CommitmentEcaService> {
+@RequestMapping(value = "/api/externalcommitment/")
+public class ExternalCommitmentController extends BaseController<ExternalCommitmentModel, ExternalCommitmentService> {
 
 	@Autowired
-	private CommitmentEcaService _service;
+	private ExternalCommitmentService _service;
 		
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	@ResponseBody()
@@ -35,9 +36,9 @@ public class CommitmentEcaController extends BaseController<CommitmentEcaModel, 
 	
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<CommitmentEcaModel> detail(@PathVariable("id") int id) throws IOException {
+	public ResponseEntity<ExternalCommitmentModel> detail(@PathVariable("id") int id) throws IOException {
 		try {
-			ResponseEntity<CommitmentEcaModel> response = this._service.detail(id);
+			ResponseEntity<ExternalCommitmentModel> response = this._service.detail(id);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
@@ -46,7 +47,7 @@ public class CommitmentEcaController extends BaseController<CommitmentEcaModel, 
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<?> save(@RequestBody CommitmentEcaModel item) throws IOException {
+	public ResponseEntity<?> save(@RequestBody ExternalCommitmentModel item) throws IOException {
 		try {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
@@ -55,4 +56,14 @@ public class CommitmentEcaController extends BaseController<CommitmentEcaModel, 
 		}
 	}
 	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ExternalCommitmentModel> search(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ExternalCommitmentModel> response = this._service.search(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

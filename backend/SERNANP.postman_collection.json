@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "98e599fa-5bb1-409c-8244-ef0180024367",
+		"_postman_id": "f61b7539-119b-4da3-896c-5cc2acab012e",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -973,6 +973,68 @@
 							}
 						},
 						"url": "http://localhost:8050/simrac/api/commitment/search/105"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExternalCommitment",
+			"item": [
+				{
+					"name": "ExternalCommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/externalcommitment/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/externalcommitment/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"objetive\":\"SSS\",\r\n    \"actionLine\": \"AAAA\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/externalcommitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentSearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/externalcommitment/search/105"
 					},
 					"response": []
 				}
