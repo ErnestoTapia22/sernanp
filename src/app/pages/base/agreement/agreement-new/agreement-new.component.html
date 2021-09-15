@@ -89,16 +89,26 @@
               </div>
               <div class="card-body" id="parent">
                 <div class="row g-3">
-                  <!--<div class="col-md-3">
-                  <label for="txtCode" class="form-label">Código (*)</label>
-                  <input
-                    id="txtCode"
-                    type="text"
-                    class="form-control"
-                    placeholder="Código"
-                    formControlName="code"
-                  />
-                </div>-->
+                  <div class="col-md-6">
+                    <label for="txtCode" class="form-label">Código (*)</label>
+                    <input
+                      id="txtCode"
+                      type="text"
+                      class="form-control"
+                      placeholder="Código"
+                      formControlName="code"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="txtName" class="form-label">Nombre (*)</label>
+                    <input
+                      id="txtName"
+                      type="text"
+                      class="form-control"
+                      placeholder="Nombre"
+                      formControlName="name"
+                    />
+                  </div>
                   <div class="col-md-3" formGroupName="anp">
                     <label for="ddAnp" class="form-label">ANP (*)</label>
                     <select
@@ -202,6 +212,43 @@
                       rows="2"
                       formControlName="description"
                     ></textarea>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlDepartment" class="form-label">Departamento (*)</label>
+                      <select placeholder="SELECCIONE" id="ddlDepartment" class="form-select" (change)="searchProvinces($event)">
+                        <option selected value="0">SELECCIONE</option>
+                        <option *ngFor="let item of departments" [value]="item.code">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlProvince" class="form-label">Provincia (*)</label>
+                      <select id="ddlProvince" class="form-select" (change)="searchDistricts($event)">
+                        <option selected value="0">SELECCIONE</option>
+                        <option *ngFor="let item of provinces" [value]="item.code">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlProvince" class="form-label">Distrito (*)</label>
+                      <select id="ddlProvince" class="form-select" formControlName="distritoId">
+                        <option selected value="0">SELECCIONE</option>
+                        <option *ngFor="let item of districts" [value]="item.code">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="txtLocalization" class="form-label">Localización (*)</label>
+                    <input type="text" class="form-control" id="txtLocalization" formControlName="localization"/>
                   </div>
                 </div>
               </div>
@@ -372,6 +419,14 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Beneficiarios</label>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
               </div>
               <div class="card-body">
                 <div class="row g-3">
