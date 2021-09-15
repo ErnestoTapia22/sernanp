@@ -48,6 +48,9 @@ export class AgreementNewComponent implements OnInit {
   agreementExist: boolean = false;
   agreementStateList: any[] = [];
   sourceList: any[] = [];
+  departments: any[] = [];
+  provinces: any[] = [];
+  districts: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
   attributes: any = {
@@ -376,12 +379,54 @@ export class AgreementNewComponent implements OnInit {
           this.sourceList = response.items;
         }
       });
+      this.agreementService.departmentList().subscribe((response) => {
+        if ( response && response.items !== undefined && response.items !== null && response.items.length > 0 ) {
+          this.departments = response.items;
+        }
+      });
     } catch (error) {
       this.alertService.error(
         'Error al traer la lista de estados del acuerdo',
         'error',
         { autoClose: true }
       );
+    }
+  }
+  searchProvinces(event) {
+    const id = event.target.value;
+    if (id == 0) {
+      this.provinces = [];
+      this.districts = [];
+      return;
+    }
+    try {
+      this.agreementService.searchProvinces(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.provinces = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchDistricts(event) {
+    const id = event.target.value;
+    if (id == 0) {
+      this.districts = [];
+      return;
+    }
+    try {
+      this.agreementService.searchDistricts(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.districts = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+        autoClose: true,
+      });
     }
   }
   addShapefileToMap(
@@ -482,7 +527,7 @@ export class AgreementNewComponent implements OnInit {
       benIndirect: [''],
       numFamily: [0],
       benFamily: [''],
-
+      localization: [''],
       producedArea: [0],
       detalleProduction: [''],
       restHect: [0],
@@ -490,7 +535,6 @@ export class AgreementNewComponent implements OnInit {
       sectNom: [''],
       sectHect: [0],
       territoryMod: [''],
-      // finanApa: [false, Validators.requiredTrue],
       finanApa: [false],
       finanNum: [0],
       comTxt: [''],
@@ -512,6 +556,7 @@ export class AgreementNewComponent implements OnInit {
       ecosystemType: this.fb.group({
         id: [0],
       }),
+      distritoId: [0],
     });
     this.alliedForm = this.fb.group({
       id: [0],
@@ -775,6 +820,8 @@ export class AgreementNewComponent implements OnInit {
             anp: { id: response.item.anp.id || 0 },
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
+            localization: "",
+            distritoId : ""
           });
           this.addAgreementLayers();
         }

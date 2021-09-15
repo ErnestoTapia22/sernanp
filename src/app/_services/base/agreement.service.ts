@@ -75,6 +75,21 @@ export class AgreementService {
       `${environment.apiUrl}${this.segmentAgreementSourceList}`
     );
   }
+  departmentList(): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}/district/listdepartment`
+    );
+  }
+  searchProvinces(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}/district/searchbydepartment/${id}`
+    );
+  }
+  searchDistricts(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}/district/searchbyprovince/${id}`
+    );
+  }
   agreementInsert(item): Observable<any> {
     return this.apiService.post(
       `${environment.apiUrl}${this.segmentAgreementInsert}`,
