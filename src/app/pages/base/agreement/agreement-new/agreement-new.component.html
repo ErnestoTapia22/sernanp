@@ -118,7 +118,7 @@
                       formControlName="id"
                       [ngClass]="{
                         'input-invalid':
-                          submitted && form.get('anp.id').errors?.pattern
+                          submitted && form.get('anp.id').errors?.min
                       }"
                     >
                       <!-- (submitted &&
@@ -147,7 +147,7 @@
                         [ngClass]="{
                           'input-invalid':
                             submitted &&
-                            form.get('agreementState.id').errors?.pattern
+                            form.get('agreementState.id').errors?.min
                         }"
                       >
                         <option selected value="0">SELECCIONE</option>
@@ -184,7 +184,7 @@
                       [ngClass]="{
                         'input-invalid':
                           (submitted && form.get('vigency').errors?.required) ||
-                          (submitted && form.get('vigency').errors?.pattern)
+                          (submitted && form.get('vigency').errors?.min)
                       }"
                     />
                   </div>
@@ -223,7 +223,12 @@
                         placeholder="SELECCIONE"
                         id="ddlDepartment"
                         class="form-select"
-                        (change)="searchProvinces($event)"
+                        (change)="searchProvinces($event.target.value)"
+                        formControlName="department"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted && form.get('department').errors?.min
+                        }"
                       >
                         <option selected value="0">SELECCIONE</option>
                         <option
@@ -243,7 +248,12 @@
                       <select
                         id="ddlProvince"
                         class="form-select"
-                        (change)="searchDistricts($event)"
+                        (change)="searchDistricts($event.target.value)"
+                        formControlName="province"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted && form.get('province').errors?.min
+                        }"
                       >
                         <option selected value="0">SELECCIONE</option>
                         <option
@@ -263,7 +273,11 @@
                       <select
                         id="ddlProvince"
                         class="form-select"
-                        formControlName="distritoId"
+                        formControlName="district"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted && form.get('district').errors?.min
+                        }"
                       >
                         <option selected value="0">SELECCIONE</option>
                         <option
