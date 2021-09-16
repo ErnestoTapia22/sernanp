@@ -851,6 +851,7 @@ export class AgreementNewComponent implements OnInit {
           });
           this.addAgreementLayers();
           this.setLocalization(response.item.distritoId);
+          this.disableFields();
         }
       });
     } catch (error) {
@@ -860,6 +861,12 @@ export class AgreementNewComponent implements OnInit {
         { autoClose: true }
       );
     }
+  }
+  disableFields() {
+    this.form.get('department').disable();
+    this.form.get('province').disable();
+    this.form.get('district').disable();
+    this.form.get('code').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1272,8 +1279,5 @@ export class AgreementNewComponent implements OnInit {
       province: districId.substring(0, 4),
       district: districId,
     });
-    this.form.get('department').disable();
-    this.form.get('province').disable();
-    this.form.get('district').disable();
   }
 }
