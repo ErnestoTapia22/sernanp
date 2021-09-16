@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.PaginatorEntity;
@@ -243,5 +245,33 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-		
+	
+	public List<String> insert5(int id) throws IOException {
+		List<String> milist = new ArrayList<String>();
+		String dato1 = "";
+		String dato3 = "BB";
+		String dato2 = "CC";
+				
+		milist.add (dato1);
+		milist.add (dato2);
+		milist.add (dato3);
+
+		return milist;
+	}
+	
+	public List<ConservationAgreementModel> insert10 (int id) throws IOException {
+		List <ConservationAgreementModel> insert11 = new ArrayList<ConservationAgreementModel> ();
+		ConservationAgreementModel dato1 = new ConservationAgreementModel ();
+		dato1.setId(10);
+		dato1.setVigency(2020);
+		ConservationAgreementModel dato2 = new ConservationAgreementModel ();
+		dato2.setId(20);
+		dato2.setVigency(2040);
+
+			
+		insert11.add(dato1);
+		insert11.add(dato2);
+		return insert11;
+	}
+	
 }

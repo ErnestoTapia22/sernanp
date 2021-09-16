@@ -1,8 +1,9 @@
 package pe.sernanp.simrac.controller;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,5 +160,40 @@ public class ConservationAgreementController extends BaseController<Conservation
 			return super.getJSON(ex);
 		}
 	}
+
+	
+	@RequestMapping(value = "/insert2/{id}", method = RequestMethod.GET)	
+	public int insert2(@PathVariable("id") int id) throws IOException {		
+		int dato = 23;
+		int dato2 = dato;
+		return dato2;
+	}
+	@RequestMapping(value = "/insert5/{id}", method = RequestMethod.GET)	
+	public List<String> insert5(@PathVariable("id") int id) throws IOException {		
+		List<String> milist = new ArrayList<String>();		
+		milist = this._service.insert5(id);
+		return milist;
+	}
+	
+	@RequestMapping(value = "/insert33/{id}", method = RequestMethod.GET)	
+	public ConservationAgreementModel insert22(@PathVariable("id") int id) throws IOException {
+		ConservationAgreementModel insert3 = new ConservationAgreementModel();
+		insert3.setId(id);
+		insert3.setCode("xx");
+		insert3.setPartMen(id);
+		return insert3;
+	}
+		
+	
+	@RequestMapping(value = "/insert10/{id}", method = RequestMethod.GET)	
+	public List<ConservationAgreementModel> insert10(@PathVariable("id") int id) throws IOException {
+		List<ConservationAgreementModel> insert10 = new ArrayList<ConservationAgreementModel>();
+		insert10 =this._service.insert10(id);
+
+		return insert10;
+	}
+		
+	
+	
 	
 }
