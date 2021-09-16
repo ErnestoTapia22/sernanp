@@ -41,6 +41,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   anpForm: FormGroup;
   anpList: any[] = [];
   agreementStateList: any[] = [];
+  vigency: number = 0;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -69,6 +70,14 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
 
     // this.onSearch();
   }
+  onDeleteModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+  }
+  deleteMonitoring() {}
   getPage(page: number) {
     this.parseData('paginator', 'offset', page);
     // this.onSearch();
@@ -160,6 +169,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
           console.log(response);
+          this.vigency = response.item.vigency;
           this.form.setValue({
             name: response.item.name,
 
