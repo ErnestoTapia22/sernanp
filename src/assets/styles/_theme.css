@@ -59,6 +59,11 @@ a:hover {
   border-color: #fb9d13;
 }
 
+.form-check-input[type=checkbox]:indeterminate {
+  background-color: #fb9d13;
+  border-color: #fb9d13;
+}
+
 .form-material input:-webkit-autofill:hover,
 .form-material input:-webkit-autofill:focus,
 .form-material textarea:-webkit-autofill:hover,

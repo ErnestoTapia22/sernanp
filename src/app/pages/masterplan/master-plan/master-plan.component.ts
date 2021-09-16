@@ -51,7 +51,6 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       this.route.snapshot.paramMap.get('id') !== ''
     ){
       this.anpId = parseInt(this.route.snapshot.paramMap.get('id'));
-      console.log(this.route.snapshot.paramMap.get('withMasterPlan'));
       if (this.route.snapshot.paramMap.get('withMasterPlan')=="1")
         this.withMasterPlan = true;
       else
@@ -64,7 +63,6 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   }
   buildForms() {
     this.form = this.fb.group({
-      code: ['', Validators.compose([Validators.required])],
       name: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
       id: [0, Validators.compose([Validators.required])],
@@ -88,10 +86,13 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         .masterPlanInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {
           this.submitted = false;
-          if (response && response.success === true) {
+          if (response && response.success === true) {            
+            this.router.navigateByUrl(`/anp/masterplan/${this.form.value.anp.id}/1`);
             this.alertService.success('Se guardo correctamente', 'Ok', {
               autoClose: true,
             });
+            this.withMasterPlan = true;
+            this.isRew = false;
             this.getDetail();
           } else {
             this.alertService.info('Ya existe el plan maestro', 'Ok', {
@@ -113,17 +114,12 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         this.masterPlanService
           .masterPlanDetailByAnp(this.anpId)
           .subscribe((response) => {
-            if (
-              response &&
-              response.item !== null &&
-              response.item !== undefined
-            ) {
+            if (response && response.item !== null && response.item !== undefined) {
               this.form.setValue({
                 id: response.item.id,
                 name: response.item.name,
                 description: response.item.description,
                 state: response.item.state,
-                code: response.item.code,
                 anp: { id: this.anpId },
                 active: true,
                 version: 1,
@@ -216,7 +212,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
     });
     this.insertGoals = this.fb.group({
       component: ['', Validators.compose([Validators.required])],
-      code: [''],
+      code: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
       masterPlan: [0],
       state: [true]
