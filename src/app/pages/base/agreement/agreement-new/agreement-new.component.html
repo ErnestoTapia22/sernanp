@@ -44,7 +44,7 @@
             Datos Generales
           </button>
         </li>
-        <li class="nav-item d-none" role="presentation">
+        <li class="nav-item" role="presentation">
           <!-- prettier-ignore -->
           <button
             class="nav-link"
@@ -53,9 +53,10 @@
             data-bs-target="#tabWorkPlan"
             type="button"
             role="tab"
-            [ngClass]="{ 'disabled': !agreementExist }"
-            [disabled]="!agreementExist"
+            
           >
+          <!-- [ngClass]="{ 'disabled': !agreementExist }"
+            [disabled]="!agreementExist" -->
             Plan de Trabajo
           </button>
         </li>
@@ -215,10 +216,20 @@
                   </div>
                   <div class="col-md-3">
                     <div>
-                      <label for="ddlDepartment" class="form-label">Departamento (*)</label>
-                      <select placeholder="SELECCIONE" id="ddlDepartment" class="form-select" (change)="searchProvinces($event)">
+                      <label for="ddlDepartment" class="form-label"
+                        >Departamento (*)</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        id="ddlDepartment"
+                        class="form-select"
+                        (change)="searchProvinces($event)"
+                      >
                         <option selected value="0">SELECCIONE</option>
-                        <option *ngFor="let item of departments" [value]="item.code">
+                        <option
+                          *ngFor="let item of departments"
+                          [value]="item.code"
+                        >
                           {{ item.name }}
                         </option>
                       </select>
@@ -226,10 +237,19 @@
                   </div>
                   <div class="col-md-3">
                     <div>
-                      <label for="ddlProvince" class="form-label">Provincia (*)</label>
-                      <select id="ddlProvince" class="form-select" (change)="searchDistricts($event)">
+                      <label for="ddlProvince" class="form-label"
+                        >Provincia (*)</label
+                      >
+                      <select
+                        id="ddlProvince"
+                        class="form-select"
+                        (change)="searchDistricts($event)"
+                      >
                         <option selected value="0">SELECCIONE</option>
-                        <option *ngFor="let item of provinces" [value]="item.code">
+                        <option
+                          *ngFor="let item of provinces"
+                          [value]="item.code"
+                        >
                           {{ item.name }}
                         </option>
                       </select>
@@ -237,18 +257,34 @@
                   </div>
                   <div class="col-md-3">
                     <div>
-                      <label for="ddlProvince" class="form-label">Distrito (*)</label>
-                      <select id="ddlProvince" class="form-select" formControlName="distritoId">
+                      <label for="ddlProvince" class="form-label"
+                        >Distrito (*)</label
+                      >
+                      <select
+                        id="ddlProvince"
+                        class="form-select"
+                        formControlName="distritoId"
+                      >
                         <option selected value="0">SELECCIONE</option>
-                        <option *ngFor="let item of districts" [value]="item.code">
+                        <option
+                          *ngFor="let item of districts"
+                          [value]="item.code"
+                        >
                           {{ item.name }}
                         </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label for="txtLocalization" class="form-label">Localización (*)</label>
-                    <input type="text" class="form-control" id="txtLocalization" formControlName="localization"/>
+                    <label for="txtLocalization" class="form-label"
+                      >Localización (*)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtLocalization"
+                      formControlName="localization"
+                    />
                   </div>
                 </div>
               </div>

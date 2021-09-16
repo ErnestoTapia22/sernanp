@@ -380,7 +380,12 @@ export class AgreementNewComponent implements OnInit {
         }
       });
       this.agreementService.departmentList().subscribe((response) => {
-        if ( response && response.items !== undefined && response.items !== null && response.items.length > 0 ) {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
           this.departments = response.items;
         }
       });
@@ -394,11 +399,13 @@ export class AgreementNewComponent implements OnInit {
   }
   searchProvinces(event) {
     const id = event.target.value;
+    console.log(id);
     if (id == 0) {
       this.provinces = [];
       this.districts = [];
       return;
     }
+    return;
     try {
       this.agreementService.searchProvinces(id).subscribe((response) => {
         if (response && response.items.length > 0) {
@@ -820,8 +827,8 @@ export class AgreementNewComponent implements OnInit {
             anp: { id: response.item.anp.id || 0 },
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
-            localization: "",
-            distritoId : ""
+            localization: '',
+            distritoId: '',
           });
           this.addAgreementLayers();
         }
