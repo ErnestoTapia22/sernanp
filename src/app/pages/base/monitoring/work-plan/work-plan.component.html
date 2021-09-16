@@ -1,0 +1,399 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="row page-titles">
+    <div class="col-auto align-self-center">
+      <h4 class="text-nowrap">Plan de trabajo</h4>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end align-items-center text-end">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
+            <li class="breadcrumb-item">
+              <a routerLink="/monitoring">Monitoreo</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Plan de trabajo
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Start Page Content -->
+  <!-- ============================================================== -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">Detalle acuerdo</label>
+          <!-- <div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary mx-2"
+              (click)="search(form.value)"
+            >
+              <i class="bi bi-search"></i>
+              Buscar
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-brush"></i>
+              Limpiar
+            </button>
+          </div> -->
+        </div>
+        <div class="card-body">
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="txtCode" class="form-label">Código </label>
+                <input
+                  id="txtCode"
+                  type="text"
+                  class="form-control"
+                  placeholder="Código"
+                  formControlName="code"
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="txtName" class="form-label">Nombre </label>
+                <input
+                  id="txtName"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nombre"
+                  formControlName="name"
+                />
+              </div>
+              <div class="col-md-3" formGroupName="anp">
+                <label for="ddAnp" class="form-label">ANP</label>
+                <select id="ddAnp" class="form-select" formControlName="id">
+                  <option value="0">SELECCIONE</option>
+                  <option *ngFor="let item of anpList" [value]="item.id">
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <div formGroupName="agreementState">
+                  <label for="ddState" class="form-label">Estado</label>
+                  <select id="ddState" class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option
+                      *ngFor="let item of agreementStateList"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="txtSuscriptionDate" class="form-label"
+                  >Fecha de suscripción
+                </label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="txtSuscriptionDate"
+                  formControlName="firm"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="numbValidity"
+                  >Vigencia en años
+                </label>
+                <input
+                  type="number"
+                  id="numbValidity"
+                  class="form-control"
+                  min="0"
+                  formControlName="vigency"
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="txtaGoal" class="form-label"
+                  >Objetivo general</label
+                >
+                <textarea
+                  id="txtaGoal"
+                  class="form-control"
+                  rows="2"
+                  formControlName="objective"
+                ></textarea>
+              </div>
+            </div>
+
+            <hr />
+          </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <label class="mb-0 fw-bold">Crear plan</label>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Objetivo</th>
+                  <th>Compromiso</th>
+                  <th>Suscriptor</th>
+                  <th>Actividades</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of commitmentsList; index as idx">
+                  <td>
+                    {{ item.actionLine.objetive.description }}
+                  </td>
+                  <td>
+                    {{ item.actionLine.objetive.description }}
+                  </td>
+                  <td>
+                    {{ item.description }}
+                  </td>
+                  <td>
+                    {{ item.allied.name }}
+                  </td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger border-0"
+                        (click)="
+                          onCreateActivityModal(contentCreateActivity, item.id)
+                        "
+                      >
+                        <i class="bi bi-list-check fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+</div>
+<ng-template #contentCreateActivity let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row g-3"></div>
+    <hr />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Nro.</td>
+            <td>Actividad</td>
+            <!-- <td>Tipo indicador</td> -->
+            <td>Indicador</td>
+            <td>Meta</td>
+            <td>Semestre</td>
+            <td>Opción</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let field of fieldArray; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                [value]="field.activity"
+              />
+            </td>
+            <!-- <td>
+              <input
+                class="form-control"
+                type="text"
+                [value]="field.indicatorType"
+              />
+            </td> -->
+
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                [value]="field.indicator"
+              />
+            </td>
+            <td>
+              <input class="form-control" type="text" [value]="field.goal" />
+            </td>
+            <td>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox1"
+                  [checked]="field.trim1"
+                />
+                <label class="form-check-label" for="inlineCheckbox1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox2"
+                  [checked]="field.trim2"
+                />
+                <label class="form-check-label" for="inlineCheckbox2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox3"
+                  [checked]="field.trim3"
+                />
+                <label class="form-check-label" for="inlineCheckbox3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox4"
+                  [checked]="field.trim4"
+                />
+                <label class="form-check-label" for="inlineCheckbox4">4</label>
+              </div>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-outline-danger border-0"
+                type="button"
+                (click)="deleteFieldValue(i)"
+              >
+                <i class="bi bi-dash-square fs-lg"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input class="form-control" type="text" disabled />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                id="newAttributeCode"
+                [(ngModel)]="newAttribute.activity"
+                name="newAttributeActivity"
+              />
+            </td>
+            <!-- <td>
+              <select
+                class="form-select"
+                [(ngModel)]="newAttribute.indicatorType"
+              >
+                <option value="Acumulado">Acumulado</option>
+                <option value="Promedio">Promedio</option>
+              </select>
+            </td> -->
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                id="newAttributeName"
+                [(ngModel)]="newAttribute.indicator"
+                name="newAttributeIndicator"
+              />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                id="newAttributePrice"
+                [(ngModel)]="newAttribute.goal"
+                name="newAttributeGoal"
+              />
+            </td>
+            <td>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox11"
+                  [(ngModel)]="newAttribute.trim1"
+                />
+                <label class="form-check-label" for="inlineCheckbox11">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox12"
+                  [(ngModel)]="newAttribute.trim2"
+                />
+                <label class="form-check-label" for="inlineCheckbox12">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox13"
+                  [(ngModel)]="newAttribute.trim3"
+                />
+                <label class="form-check-label" for="inlineCheckbox13">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="inlineCheckbox14"
+                  [(ngModel)]="newAttribute.trim4"
+                />
+                <label class="form-check-label" for="inlineCheckbox14">4</label>
+              </div>
+            </td>
+
+            <td>
+              <div class="text-nowrap">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-success border-0"
+                  (click)="addFieldValue()"
+                >
+                  <i class="bi bi-plus-square fs-lg"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+      Guardar
+    </button>
+  </div>
+</ng-template>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->

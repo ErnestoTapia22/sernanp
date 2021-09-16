@@ -47,6 +47,7 @@ import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agre
 
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { PublicComponent } from './pages/base/public/public.component';
+import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { PublicComponent } from './pages/base/public/public.component';
 
     NotFoundComponent,
     PublicComponent,
+    WorkPlanComponent,
   ],
   imports: [
     BrowserModule,

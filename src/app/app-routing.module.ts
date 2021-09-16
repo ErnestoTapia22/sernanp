@@ -21,6 +21,7 @@ import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './_models/auth/role';
 import { PublicComponent } from './pages/base/public/public.component';
+import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'default', pathMatch: 'full' },
@@ -71,6 +72,10 @@ const routes: Routes = [
         path: 'detail/:id',
         component: DetailComponent,
       },
+      {
+        path: 'work-plan/:id',
+        component: WorkPlanComponent,
+      },
     ],
   },
   {
@@ -108,7 +113,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: AnpComponent },
-      { path: 'masterplan/:id/:withMasterPlan', component: MasterPlanComponent },
+      {
+        path: 'masterplan/:id/:withMasterPlan',
+        component: MasterPlanComponent,
+      },
     ],
   },
   { path: 'not-found', component: NotFoundComponent },
