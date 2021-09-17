@@ -42,6 +42,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   anpList: any[] = [];
   agreementStateList: any[] = [];
   vigency: number = 0;
+  departments: any[] = [];
+  provinces: any[] = [];
+  districts: any[] = [];
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -62,6 +65,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     ) {
       this.agreementId = this.route.snapshot.paramMap.get('id');
       this.searchAnp();
+      this.searchDepartments();
       this.searchAgreementState();
       this.getDetail(this.agreementId);
     }
@@ -123,6 +127,12 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       agreementState: this.fb.group({
         id: [{ value: '', disabled: true }],
       }),
+      distritoId: [''],
+      department: [{ value: 0, disabled: true }],
+      province: [{ value: 0, disabled: true }],
+      district: [{ value: 0, disabled: true }],
+      localization: [{ value: '', disabled: true }],
+      description: [{ value: '', disabled: true }],
     });
     this.anpForm = this.fb.group({
       item: [JSON.stringify({ name: '', code: '' })],
@@ -180,8 +190,14 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             agreementState: { id: response.item.agreementState.id || 0 },
             objective: '',
             anp: { id: response.item.anp.id || 0 },
+            localization: '',
+            distritoId: response.item.distritoId,
+            department: 0,
+            province: 0,
+            district: 0,
+            description: response.item.description,
           });
-
+          this.setLocalization(response.item.distritoId);
           this.disableFields();
         }
       });
@@ -202,6 +218,13 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   onCreateActivityModal(content, id) {
     this.modalRef = this.modalService.open(content, {
       size: 'lg',
+      backdrop: 'static',
+      centered: true,
+    });
+  }
+  onCreateEvaluationModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      size: 'sm',
       backdrop: 'static',
       centered: true,
     });
@@ -246,6 +269,76 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
         { autoClose: true }
       );
     }
+  }
+  searchDepartments() {
+    try {
+      this.agreementService.departmentList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.departments = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer los departamentos', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchProvinces(event) {
+    const id = event;
+    if (id == 0) {
+      this.provinces = [];
+      this.districts = [];
+      return;
+    }
+
+    try {
+      this.agreementService
+        .searchProvinces(id.toString())
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.provinces = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al traer las provincias', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchDistricts(event) {
+    const id = event;
+    if (id == 0) {
+      this.districts = [];
+      return;
+    }
+    try {
+      this.agreementService.searchDistricts(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.districts = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  setLocalization(districId: string) {
+    if (districId.length < 4) {
+      return;
+    }
+    this.searchProvinces(districId.substring(0, 2));
+    this.searchDistricts(districId.substring(0, 4));
+    this.form.patchValue({
+      department: districId.substring(0, 2),
+      province: districId.substring(0, 4),
+      district: districId,
+    });
   }
   ngOnDestroy() {}
 }

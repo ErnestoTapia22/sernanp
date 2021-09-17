@@ -15,7 +15,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
             <li class="breadcrumb-item">
-              <a routerLink="/monitoring">Monitoreo</a>
+              <a routerLink="/monitoring">Detalle acuerdo</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               Plan de trabajo
@@ -47,12 +47,28 @@
             class="nav-link active"
             id="workPlan-tab"
             data-bs-toggle="tab"
-            data-bs-target="#tabWorkPlan"
+            data-bs-target="#tabAgreementDetail"
             type="button"
             role="tab"
           >
-            Plan de trabajo
+            Detalle acuerdo
           </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <!-- prettier-ignore -->
+          <button
+                class="nav-link"
+                id="results-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabWorkPlan"
+                type="button"
+                role="tab"
+                
+              >
+              <!-- [ngClass]="{ 'disabled': !agreementExist }"
+                [disabled]="!agreementExist" -->
+                Plan de trabajo
+              </button>
         </li>
         <li class="nav-item" role="presentation">
           <!-- prettier-ignore -->
@@ -67,16 +83,16 @@
               >
               <!-- [ngClass]="{ 'disabled': !agreementExist }"
                 [disabled]="!agreementExist" -->
-                Monitoreo
+                Monitoreo 1
               </button>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div
           class="tab-pane pt-2 fade show active"
-          id="tabWorkPlan"
+          id="tabAgreementDetail"
           role="tabpanel"
-          aria-labelledby="workPlan-tab"
+          aria-labelledby="agreementDetail-tab"
         >
           <div class="card">
             <div class="card-header">
@@ -180,15 +196,108 @@
                       formControlName="objective"
                     ></textarea>
                   </div>
+                  <div class="col-md-6">
+                    <label for="txtaObs" class="form-label"
+                      >Observaciones
+                    </label>
+
+                    <textarea
+                      id="txtaObs"
+                      class="form-control"
+                      rows="2"
+                      formControlName="description"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlDepartment" class="form-label"
+                        >Departamento (*)</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        id="ddlDepartment"
+                        class="form-select"
+                        (change)="searchProvinces($event.target.value)"
+                        formControlName="department"
+                      >
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of departments"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlProvince" class="form-label"
+                        >Provincia (*)</label
+                      >
+                      <select
+                        id="ddlProvince"
+                        class="form-select"
+                        (change)="searchDistricts($event.target.value)"
+                        formControlName="province"
+                      >
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of provinces"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <label for="ddlProvince" class="form-label"
+                        >Distrito (*)</label
+                      >
+                      <select
+                        id="ddlProvince"
+                        class="form-select"
+                        formControlName="district"
+                      >
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of districts"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="txtLocalization" class="form-label"
+                      >Localización (*)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtLocalization"
+                      formControlName="localization"
+                    />
+                  </div>
                 </div>
 
                 <hr />
               </form>
             </div>
           </div>
+        </div>
+        <div
+          class="tab-pane pt-2 fade"
+          id="tabWorkPlan"
+          role="tabpanel"
+          aria-labelledby="workPlan-tab"
+        >
           <div class="card">
             <div class="card-header">
-              <label class="mb-0 fw-bold">Crear plan</label>
+              <label class="mb-0 fw-bold">Crear</label>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -246,12 +355,10 @@
           role="tabpanel"
           aria-labelledby="monitoring-tab"
         >
-          <div
-            class="card"
-            *ngFor="let e of [].constructor(vigency); let i = index"
-          >
+          <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
+          <div class="card">
             <div class="card-header">
-              <label class="mb-0 fw-bold">Año {{ i + 1 }}</label>
+              <label class="mb-0 fw-bold">Registrar</label>
               <button type="button" class="btn btn-sm btn-outline-success mx-2">
                 <i class="bi bi-play-circle"></i>
                 Iniciar Monitoreo
@@ -269,10 +376,10 @@
 
                       <!-- <td colspan="2">Año 1</td>
                       <td colspan="2">Año 2</td> -->
-                      <td>Trim. 1</td>
-                      <td>Trim. 2</td>
-                      <td>Trim. 3</td>
-                      <td>Trim. 4</td>
+                      <td>Sem. 1</td>
+                      <td>Sem. 2</td>
+                      <td>Sem. 3</td>
+                      <td>Sem. 4</td>
                       <td rowspan="2">Meta</td>
                       <td rowspan="2" style="width: 85px">Valor actual</td>
                       <td rowspan="2">Progreso (tiempo)</td>
@@ -486,12 +593,21 @@
               </div>
               <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary">
-                  <i class="fas fa-times-circle"></i>
-                  Cancelar</button
+                  <i class="bi bi-brush"></i>
+                  Limpiar</button
                 >&nbsp;
-                <button type="button" class="btn btn-success">
-                  <i class="fas fa-save"></i>
-                  Guardar
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  (click)="onCreateEvaluationModal(contentCreateEvaluation)"
+                >
+                  <i class="bi bi-check2-square"></i>
+                  Generar evaluación
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-success" disabled>
+                  <i class="bi bi-display"></i>
+                  Guardar monitoreo
                 </button>
               </div>
             </div>
@@ -512,35 +628,32 @@
   <div class="modal-body">
     <div class="row g-3"></div>
     <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
-      <li
-        *ngFor="let e of [].constructor(vigency); let i = index"
-        class="nav-item"
-        role="presentation"
-      >
+      <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
+      <li class="nav-item" role="presentation">
+        <!-- [attr.data-bs-target]="'#tabActivity' + i" -->
+        <!-- [ngClass]="{ active: i == 0 }" -->
         <button
-          class="nav-link"
-          [ngClass]="{ active: i == 0 }"
+          class="nav-link active"
           id="workPlan-tab"
           data-bs-toggle="tab"
-          [attr.data-bs-target]="'#tabActivity' + i"
+          data-bs-target="#tabActivity"
           type="button"
           role="tab"
         >
-          Año {{ i + 1 }}
+          Plan de trabajo 1
         </button>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <!-- prettier-ignore -->
+      <!-- [ngClass]="{ 'show active': i == 0 }" -->
+      <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
       <div
-        *ngFor="let e of [].constructor(vigency); let i = index"
-        class="tab-pane pt-2 fade"
-        [ngClass]="{ 'show active': i == 0 }"
-        [id]="'tabActivity' + i"
+        class="tab-pane pt-2 fade show active"
+        id="tabActivity"
         role="tabpanel"
         aria-labelledby="agreement-tab"
       >
-     
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -785,6 +898,41 @@
       class="btn btn-primary"
     >
       Aceptar
+    </button>
+  </div>
+</ng-template>
+<ng-template #contentCreateEvaluation let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createActivityLabel">
+      Crear envaluación del monitoreo
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row g-3"></div>
+    <div class="col-md-12">
+      <label class="form-label">Logros</label>
+      <textarea class="form-control" rows="2"> </textarea>
+    </div>
+    <div class="col-md-12">
+      <label class="form-label">Resultados</label>
+      <textarea class="form-control" rows="2"> </textarea>
+    </div>
+    <div class="col-md-12">
+      <label class="form-label">Inconvenientes</label>
+      <textarea class="form-control" rows="2"> </textarea>
+    </div>
+    <div class="col-md-12">
+      <label class="form-label">Recomendaciones</label>
+      <textarea class="form-control" rows="2"> </textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+      Guardar
     </button>
   </div>
 </ng-template>
