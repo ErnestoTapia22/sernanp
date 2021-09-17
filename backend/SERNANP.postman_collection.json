@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f61b7539-119b-4da3-896c-5cc2acab012e",
+		"_postman_id": "577acf02-f999-438a-8778-90e30097c9e1",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -854,6 +854,68 @@
 				},
 				{
 					"name": "AlliedSearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/search/105"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WorkPlan",
+			"item": [
+				{
+					"name": "WorkPlanDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/detail/3"
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPlanDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/delete/4"
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPlanInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"prueba\",\r\n    \"description\": \"prueba\",\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"state\": true,\r\n    \"year\": 1000,\r\n    \"version\": 100,\r\n    \"active\": true\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/workplan/save/"
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPlanSearch",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
