@@ -298,14 +298,25 @@
           <div class="card">
             <div class="card-header">
               <label class="mb-0 fw-bold">Crear</label>
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-primary mx-2"
-                (click)="saveWorkPlan()"
-              >
-                <i class="bi bi-save"></i>
-                Guardar plan de trabajo
-              </button>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary mx-2"
+                  (click)="saveWorkPlan()"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar plan de trabajo
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info mx-2"
+                  (click)="cleanTempField()"
+                  [disabled]="!fieldArrayTotalTemp.length"
+                >
+                  <i class="bi bi-trash"></i>
+                  Deshacer cambios
+                </button>
+              </div>
             </div>
             <div>
               <div class="card-body">
@@ -736,17 +747,25 @@
                   <td>Indicador</td>
                   <td>Meta</td>
                   <td>Semestre</td>
+                  <td></td>
                   <td>Opción</td>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let field of fieldArray; let i = index">
                   <td>{{ i + 1 }}</td>
+                  <td class="d-none">
+                    <input
+                      class="form-control"
+                      type="text"
+                      [value]="field.id"
+                    />
+                  </td>
                   <td>
                     <input
                       class="form-control"
                       type="text"
-                      [value]="field.activity"
+                      [value]="field.name"
                     />
                   </td>
                   <!-- <td>
@@ -796,6 +815,9 @@
                     </div>
                   </td>
                   <td>
+                    {{ field.isNew ? "Nuevo" : "" }}
+                  </td>
+                  <td>
                     <button
                       class="btn btn-sm btn-outline-danger border-0"
                       type="button"
@@ -814,8 +836,17 @@
                       class="form-control"
                       type="text"
                       id="newAttributeCode"
-                      [(ngModel)]="newAttribute.activity"
+                      [(ngModel)]="newAttribute.name"
                       name="newAttributeActivity"
+                    />
+                  </td>
+                  <td class="d-none">
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="newAttributeId"
+                      [(ngModel)]="newAttribute.id"
+                      name="newAttributeId"
                     />
                   </td>
                   <!-- <td>
@@ -869,7 +900,7 @@
                       >
                     </div>
                   </td>
-
+                  <td></td>
                   <td>
                     <div class="text-nowrap">
                       <button
@@ -892,7 +923,11 @@
       <button type="button" class="btn btn-secondary" (click)="modal.close()">
         Cancelar
       </button>
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="saveActivityTemp()"
+      >
         Guardar
       </button>
     </div>

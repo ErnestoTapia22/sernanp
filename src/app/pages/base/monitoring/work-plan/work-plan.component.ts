@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
+import { WorkPlanService } from '@app/_services/base/work-plan.service';
 
 import {
   FormArray,
@@ -39,6 +40,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   modalRef: NgbModalRef;
   fieldArrayList: any[] = [];
   fieldArray: Array<any> = [];
+  fieldArrayTotalTemp: any[] = [];
   newAttribute: any = {};
   anpForm: FormGroup;
   anpList: any[] = [];
@@ -49,6 +51,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   districts: any[] = [];
   workPlanForm: FormGroup;
   formActivity: FormGroup;
+
+  commitmentId: number = 0;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -57,7 +61,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     private agreementService: AgreementService,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private anpService: AnpService
+    private anpService: AnpService,
+    private workPlanService: WorkPlanService
   ) {}
 
   ngOnInit(): void {
@@ -254,6 +259,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       backdrop: 'static',
       centered: true,
     });
+    this.commitmentId = id;
+    this.activityListByCommitment();
   }
   onCreateEvaluationModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -405,6 +412,61 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     }
 
     console.log(newFieldArray);
+  }
+  activityListByCommitment() {
+    if (
+      this.commitmentId === 0 ||
+      this.commitmentId === undefined ||
+      this.commitmentId === null
+    ) {
+      return;
+    }
+    console.log(this.fieldArrayTotalTemp);
+    const activitiesFound = this.fieldArrayTotalTemp.find(
+      (x) => x.commitmentId == this.commitmentId
+    );
+    console.log(activitiesFound);
+    if (activitiesFound === undefined || activitiesFound === null) {
+      try {
+        this.workPlanService
+          .activityListByCommitment(this.commitmentId)
+          .subscribe((response) => {
+            if (response && response.items.length > 0) {
+              console.log(response);
+              this.fieldArray = response.items;
+            }
+          });
+      } catch (error) {
+        this.alertService.error(
+          'Error al traer la lista de actividades',
+          'Error',
+          { autoClose: true }
+        );
+      }
+    } else {
+      this.fieldArray = this.fieldArrayTotalTemp.filter(
+        (x) => x.commitmentId === this.commitmentId
+      );
+    }
+  }
+  saveActivityTemp() {
+    console.log(this.fieldArray);
+    this.fieldArray.map((activity) => {
+      activity.commitmentId = this.commitmentId;
+      if (
+        activity.id === undefined ||
+        activity.id === null ||
+        activity.id === ''
+      ) {
+        activity.isNew = true;
+      }
+      this.fieldArrayTotalTemp.push(activity);
+    });
+
+    console.log(this.fieldArrayTotalTemp);
+  }
+  cleanTempField() {
+    this.fieldArrayTotalTemp = [];
   }
   ngOnDestroy() {}
 }
