@@ -53,6 +53,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   formActivity: FormGroup;
 
   commitmentId: number = 0;
+  disabled: boolean = false;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -155,24 +156,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       ],
     });
     this.workPlanForm = this.fb.group({
-      agreementId: [0],
-      anp: this.fb.group({
-        id: [{ value: '', disabled: true }],
+      conservationAgreement: this.fb.group({
+        id: 0,
       }),
-      commitments: new FormArray([
-        this.fb.group({
-          id: [0],
-          activities: new FormArray([
-            this.fb.group({
-              id: [0],
-              activity: [''],
-              indicator: [''],
-              goal: 0,
-              semester: [1],
-            }),
-          ]),
-        }),
-      ]),
+      year: '',
+      activities: new FormArray([]),
     });
     this.formActivity = this.fb.group({
       id: 0,
@@ -216,7 +204,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log(response);
           this.vigency = response.item.vigency;
           this.form.setValue({
             name: response.item.name,
@@ -381,37 +368,63 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     });
   }
   saveWorkPlan() {
-    console.log(this.fieldArray);
+    this.buildItem();
+    this.disabled = true;
+    try {
+      this.workPlanService
+        .workPlanInsert(JSON.stringify(this.workPlanForm.value))
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se guardaron correctamente los datos del plan de trabajo',
+              'Ok',
+              {
+                autoClose: true,
+              }
+            );
+            this.fieldArrayTotalTemp = [];
+          } else {
+            this.alertService.error('' + response.message, 'Error', {
+              autoClose: true,
+            });
+          }
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.disabled = false;
+      this.alertService.error('Error al guardar el plan de trabajo', 'Error', {
+        autoClose: true,
+      });
+    }
 
-    console.log(this.workPlanForm.value);
+    // console.log(this.workPlanForm.value);
   }
   buildItem() {
-    const newFieldArray = this.fieldArray.map((obj) => {
+    const newFieldArray: any[] = this.fieldArrayTotalTemp.map((obj) => {
       const o = Object.assign({}, obj);
-      o.semester = [];
+      const temArray = [];
+      o.semester = '';
       if (o.hasOwnProperty('trim1')) {
         if (o.trim1) {
-          o.semester.push(1);
+          temArray.push('1');
         }
       }
 
       if (o.hasOwnProperty('trim2')) {
         if (o.trim2) {
-          o.semester.push(2);
+          temArray.push('2');
         }
       }
+      o.semester = temArray.join(',');
 
       return o;
     });
-    for (let commitment of this.commitmentsList) {
-      for (let activity of newFieldArray) {
-      }
+    newFieldArray.forEach((item, index) => {
+      let langArr = <FormArray>this.workPlanForm.get('activities');
+      langArr.push(this.fb.group(item));
+    });
 
-      const formArray = this.workPlanForm.get('commitments') as FormArray;
-      formArray.push(new FormGroup(commitment));
-    }
-
-    console.log(newFieldArray);
+    console.log(this.workPlanForm.value);
   }
   activityListByCommitment() {
     if (
@@ -421,7 +434,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
-    console.log(this.fieldArrayTotalTemp);
+
     const activitiesFound = this.fieldArrayTotalTemp.find(
       (x) => x.commitmentId == this.commitmentId
     );
@@ -433,7 +446,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           .subscribe((response) => {
             if (response && response.items.length > 0) {
               console.log(response);
-              this.fieldArray = response.items;
+              this.setCheckBoxes(response.items);
             }
           });
       } catch (error) {
@@ -449,9 +462,30 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       );
     }
   }
+  setCheckBoxes(items: any[]) {
+    const parsed = items.map((item) => {
+      if (item.semester !== null && item.semester !== '') {
+        let arr: any[] = item.semester.split(',');
+        let found1 = arr.find((x) => x === '1');
+        if (found1) {
+          item.trim1 = true;
+        }
+        let found2 = arr.find((x) => x === '2');
+        if (found2) {
+          item.trim2 = true;
+        }
+      }
+      return item;
+    });
+
+    this.fieldArray = parsed;
+  }
   saveActivityTemp() {
-    console.log(this.fieldArray);
+    this.fieldArrayTotalTemp = this.fieldArrayTotalTemp.filter((obj) => {
+      return obj.commitmentId !== this.commitmentId;
+    });
     this.fieldArray.map((activity) => {
+      activity.commitment = { id: this.commitmentId };
       activity.commitmentId = this.commitmentId;
       if (
         activity.id === undefined ||
@@ -460,10 +494,10 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       ) {
         activity.isNew = true;
       }
+
       this.fieldArrayTotalTemp.push(activity);
     });
-
-    console.log(this.fieldArrayTotalTemp);
+    this.modalRef.close();
   }
   cleanTempField() {
     this.fieldArrayTotalTemp = [];

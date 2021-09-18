@@ -303,6 +303,7 @@
                   type="button"
                   class="btn btn-sm btn-outline-primary mx-2"
                   (click)="saveWorkPlan()"
+                  [disabled]="disabled || !fieldArrayTotalTemp.length"
                 >
                   <i class="bi bi-save"></i>
                   Guardar plan de trabajo
