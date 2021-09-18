@@ -5,18 +5,19 @@ import javax.persistence.Entity;
 @Entity
 public class ActivityModel extends BaseModel {
 
-	private PlanJobModel _planJob;
+	private WorkPlanModel _workPlan;
 	private CommitmentModel _commitment;
 	private int _goal;
 	private int _value;
 	private String _indicator;
+	private boolean _active;
 	
-	public PlanJobModel getPlanJob() {
-		return _planJob;
+	public WorkPlanModel getWorkPlan() {
+		return _workPlan;
 	}
 
-	public void setPlanJob(PlanJobModel planJob) {
-		this._planJob = planJob;
+	public void setWorkPlan(WorkPlanModel workPlan) {
+		this._workPlan = workPlan;
 	}
 	
 	public CommitmentModel getCommitment() {
@@ -49,5 +50,13 @@ public class ActivityModel extends BaseModel {
 
 	public void setIndicator(String indicator) {
 		this._indicator = indicator;
+	}
+	
+	public boolean getActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		this._active = active;
 	}
 }
