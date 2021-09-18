@@ -1,8 +1,11 @@
 package pe.sernanp.simrac.repository;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.stereotype.Repository;
+import pe.sernanp.simrac.mapper.WorkPlanMapper;
 import pe.sernanp.simrac.model.WorkPlanModel;
 
 @Repository
@@ -29,5 +32,11 @@ public class WorkPlanRepository extends BaseRepository<WorkPlanModel> {
 	@Override
 	public int delete(DataSource ds, int id) throws Exception {
 		return super.delete(ds, "simrac.fn_delete_plan_trabajo", id);
+	}
+	
+	public List<WorkPlanModel> searchByAgreement(DataSource ds, int agreementId) throws Exception {
+		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("pagreementid", agreementId);
+		return super.search23(ds,"simrac.fn_buscar_plantrabajoporacuerdo", parameters, new WorkPlanMapper());			
 	}
 }
