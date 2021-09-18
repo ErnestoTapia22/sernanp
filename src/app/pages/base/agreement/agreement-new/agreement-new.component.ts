@@ -379,11 +379,7 @@ export class AgreementNewComponent implements OnInit {
           this.sourceList = response.items;
         }
       });
-      this.agreementService.departmentList().subscribe((response) => {
-        if ( response && response.items !== undefined && response.items !== null && response.items.length > 0 ) {
-          this.departments = response.items;
-        }
-      });
+      this.searchDepartments();
     } catch (error) {
       this.alertService.error(
         'Error al traer la lista de estados del acuerdo',
@@ -392,27 +388,48 @@ export class AgreementNewComponent implements OnInit {
       );
     }
   }
+  searchDepartments() {
+    try {
+      this.agreementService.departmentList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.departments = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer los departamentos', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
   searchProvinces(event) {
-    const id = event.target.value;
+    const id = event;
     if (id == 0) {
       this.provinces = [];
       this.districts = [];
       return;
     }
+
     try {
-      this.agreementService.searchProvinces(id).subscribe((response) => {
-        if (response && response.items.length > 0) {
-          this.provinces = response.items;
-        }
-      });
+      this.agreementService
+        .searchProvinces(id.toString())
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.provinces = response.items;
+          }
+        });
     } catch (error) {
-      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+      this.alertService.error('Error al traer las provincias', 'Error', {
         autoClose: true,
       });
     }
   }
   searchDistricts(event) {
-    const id = event.target.value;
+    const id = event;
     if (id == 0) {
       this.districts = [];
       return;
@@ -518,7 +535,7 @@ export class AgreementNewComponent implements OnInit {
       code: [''],
       vigency: [
         0,
-        Validators.compose([Validators.required, Validators.pattern('[^0]+')]),
+        Validators.compose([Validators.required, Validators.min(1)]),
       ],
       firm: [''],
       partMen: [0],
@@ -544,10 +561,10 @@ export class AgreementNewComponent implements OnInit {
       allied: true,
       sectDet: [''],
       agreementState: this.fb.group({
-        id: [0, Validators.pattern('[^0]+')],
+        id: [0, Validators.min(1)],
       }),
       anp: this.fb.group({
-        id: [0, Validators.pattern('[^0]+')],
+        id: [0, Validators.min(1)],
       }),
       areaAmbitc: [{ value: 0, disabled: true }],
       source: this.fb.group({
@@ -556,7 +573,10 @@ export class AgreementNewComponent implements OnInit {
       ecosystemType: this.fb.group({
         id: [0],
       }),
-      distritoId: [0],
+      distritoId: [''],
+      department: [0, Validators.min(1)],
+      province: [0, Validators.min(1)],
+      district: [0, Validators.min(1)],
     });
     this.alliedForm = this.fb.group({
       id: [0],
@@ -622,13 +642,16 @@ export class AgreementNewComponent implements OnInit {
   insertAgreement() {
     try {
       this.submitted = true;
-      this.disabled = true;
+      // this.disabled = true;
 
       if (this.form.invalid) {
         this.disabled = false;
-        console.log(this.form.value);
+
         return;
       }
+      this.form.patchValue({
+        distritoId: this.form.get('district').value,
+      });
 
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.value))
@@ -820,10 +843,15 @@ export class AgreementNewComponent implements OnInit {
             anp: { id: response.item.anp.id || 0 },
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
-            localization: "",
-            distritoId : ""
+            localization: '',
+            distritoId: response.item.distritoId,
+            department: 0,
+            province: 0,
+            district: 0,
           });
           this.addAgreementLayers();
+          this.setLocalization(response.item.distritoId);
+          this.disableFields();
         }
       });
     } catch (error) {
@@ -833,6 +861,12 @@ export class AgreementNewComponent implements OnInit {
         { autoClose: true }
       );
     }
+  }
+  disableFields() {
+    this.form.get('department').disable();
+    this.form.get('province').disable();
+    this.form.get('district').disable();
+    this.form.get('code').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1183,9 +1217,9 @@ export class AgreementNewComponent implements OnInit {
         outFields: ['*'],
         definitionExpression: `codigo = '${agreementCode}'`,
       });
-      featureLayer.when((loaded) => {
-        console.log(loaded);
-      });
+      // featureLayer.when((loaded) => {
+      //   console.log(loaded);
+      // });
       this.map.add(featureLayer);
       if (index == 1) {
         this.zoomToLayer(featureLayer);
@@ -1233,5 +1267,17 @@ export class AgreementNewComponent implements OnInit {
         }
       );
     }
+  }
+  setLocalization(districId: string) {
+    if (districId.length < 4) {
+      return;
+    }
+    this.searchProvinces(districId.substring(0, 2));
+    this.searchDistricts(districId.substring(0, 4));
+    this.form.patchValue({
+      department: districId.substring(0, 2),
+      province: districId.substring(0, 4),
+      district: districId,
+    });
   }
 }

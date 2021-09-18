@@ -161,7 +161,7 @@ export class IndexComponent implements OnInit {
               mapImageLayer
                 .when(
                   (layer) => {
-                    layer.sublayers = subLayers;
+                    layer.sublayers = subLayers.reverse();
                     layer.sublayers.forEach((sublayer) => {
                       sublayer
                         .createFeatureLayer()

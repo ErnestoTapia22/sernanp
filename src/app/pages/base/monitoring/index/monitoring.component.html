@@ -7,19 +7,16 @@
   <!-- ============================================================== -->
   <div class="row page-titles">
     <div class="col-auto align-self-center">
-      <h4 class="text-nowrap">Monitoreo</h4>
+      <h4 class="text-nowrap">Acuerdos</h4>
     </div>
     <div class="col">
       <div class="d-flex justify-content-end align-items-center text-end">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
-            <li class="breadcrumb-item active" aria-current="page">
-              Monitoreo
-            </li>
+            <li class="breadcrumb-item active" aria-current="page">Acuerdos</li>
           </ol>
         </nav>
-
       </div>
     </div>
   </div>
@@ -79,9 +76,11 @@
                   <option value="3">Firmado</option>
                   <option value="4">En implementación</option>
                 </select>
-              </div>              
+              </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label">Fuente de financiamiento </label>
+                <label for="inputState" class="form-label"
+                  >Fuente de financiamiento
+                </label>
                 <select class="form-select" formControlName="category">
                   <option value="">SELECCIONE</option>
                   <option value="1">Público</option>
@@ -139,11 +138,11 @@
                         index as idx
                       "
                     >
-                    <td>{{ item.code }}</td>
-                    <td>{{ item.name }} </td>                                  
-                    <td>{{ item.agreementState.name }}</td>
-                    <td>{{ item.vigency }}</td>                                           
-                    <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
+                      <td>{{ item.code }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.agreementState.name }}</td>
+                      <td>{{ item.vigency }}</td>
+                      <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
                       <td>
                         <div class="text-nowrap">
                           <button
@@ -153,13 +152,17 @@
                           >
                             <i class="bi bi-eye fs-lg"></i>
                           </button>
-                          <!-- <button
+                          <button
                             type="button"
                             class="btn btn-sm btn-outline-success border-0"
+                            [routerLink]="['/monitoring/work-plan', item.id]"
                           >
-                            <i class="bi bi-pencil fs-lg"></i>
+                            <i class="bi bi-hammer fs-lg"></i>
                           </button>
-                          <button
+                          <!-- <progress id="file" max="100" value="70">
+                            70%
+                          </progress> -->
+                          <!-- <button
                             type="button"
                             class="btn btn-sm btn-outline-danger border-0"
                           >
