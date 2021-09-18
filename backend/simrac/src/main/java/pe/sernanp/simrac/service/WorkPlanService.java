@@ -32,18 +32,22 @@ public class WorkPlanService extends BaseService<WorkPlanModel>{
 		try {
 			Integer id = item.getId2();
 			String message = "";
-			boolean success = false;
+			boolean success = true;
 			int rowsAffected = 0;
 			definition = new DefaultTransactionDefinition();
 			status = this.transactionManager.getTransaction(definition);
+			List<WorkPlanModel> workPlans = this._repository.searchByAgreement(this._dataSource, item.getConservationAgreement().getId2());
+			item.setName("Plan de Trabajo N° " + (workPlans.size()+1));
+			item.setActive(success);
+			item.setState(success);
+			item.setVersion(workPlans.size() + 1);
 			id = this._repository.insert(this._dataSource, item);
 			message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 					: " Se guardaron sus datos de manera correcta";
-			success = (id == 0) ? false : true;
+			//success = (id == 0) ? false : true;
 			Object id2 = id;
 			item.getActivities().forEach( (activity) -> {
-				//activity.setWorkPlan(new WorkPlanModel());
-				//activity.getWorkPlan().setId(id);
+				activity.setState(success);
 				activity.setWorkPlan(new WorkPlanModel());
 				activity.getWorkPlan().setId(id2);
 				try {

@@ -36,6 +36,7 @@ public class ActivityRepository extends BaseRepository<ActivityModel> {
 		 parameters.put("pgoal", item.getGoal());
 		 parameters.put("pindicator", item.getIndicator());
 		 parameters.put("pactive", item.getActive());
+		 parameters.put("psemester", item.getSemester());
 	}
 	
 	@Override

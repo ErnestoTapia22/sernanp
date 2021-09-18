@@ -11,6 +11,7 @@ public class ActivityModel extends BaseModel {
 	private int _value;
 	private String _indicator;
 	private boolean _active;
+	private String _semester;
 	
 	public WorkPlanModel getWorkPlan() {
 		return _workPlan;
@@ -58,5 +59,13 @@ public class ActivityModel extends BaseModel {
 
 	public void setActive(boolean active) {
 		this._active = active;
+	}
+	
+	public String getSemester() {
+		return _semester;
+	}
+
+	public void setSemester(String semester) {
+		this._semester = semester;
 	}
 }
