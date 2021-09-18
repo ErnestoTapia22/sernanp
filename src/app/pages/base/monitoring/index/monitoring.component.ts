@@ -40,7 +40,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.page = 1;
     this.total = 0;
-    this.pageSize = 5;
+    this.pageSize = 10;
     this.builForm();
     // this.spinner.show();
     // setTimeout(() => {
@@ -57,9 +57,9 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     };
     let item = {
       name: '',
-      agreementState:{id:0},
-      source:{id:0},
-      code:''
+      agreementState: { id: 0 },
+      source: { id: 0 },
+      code: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
@@ -145,7 +145,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       ],
       category: ['', Validators.compose([])],
       state: ['', Validators.compose([])],
-      pageSize: ['5', Validators.compose([])],
+      pageSize: ['10', Validators.compose([])],
     });
   }
   ngOnDestroy() {

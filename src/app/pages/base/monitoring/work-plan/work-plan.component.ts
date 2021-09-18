@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -36,6 +37,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   commitmentsList: any[] = [];
   agreementId: string = '';
   modalRef: NgbModalRef;
+  fieldArrayList: any[] = [];
   fieldArray: Array<any> = [];
   newAttribute: any = {};
   anpForm: FormGroup;
@@ -45,6 +47,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   departments: any[] = [];
   provinces: any[] = [];
   districts: any[] = [];
+  workPlanForm: FormGroup;
+  formActivity: FormGroup;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -144,6 +148,35 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           order: 'asc',
         }),
       ],
+    });
+    this.workPlanForm = this.fb.group({
+      agreementId: [0],
+      anp: this.fb.group({
+        id: [{ value: '', disabled: true }],
+      }),
+      commitments: new FormArray([
+        this.fb.group({
+          id: [0],
+          activities: new FormArray([
+            this.fb.group({
+              id: [0],
+              activity: [''],
+              indicator: [''],
+              goal: 0,
+              semester: [1],
+            }),
+          ]),
+        }),
+      ]),
+    });
+    this.formActivity = this.fb.group({
+      id: 0,
+      activity: '',
+      indicator: '',
+      goal: 0,
+      semester: [],
+      sem1: false,
+      sem2: false,
     });
   }
   searchCommitments() {
@@ -339,6 +372,39 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       province: districId.substring(0, 4),
       district: districId,
     });
+  }
+  saveWorkPlan() {
+    console.log(this.fieldArray);
+
+    console.log(this.workPlanForm.value);
+  }
+  buildItem() {
+    const newFieldArray = this.fieldArray.map((obj) => {
+      const o = Object.assign({}, obj);
+      o.semester = [];
+      if (o.hasOwnProperty('trim1')) {
+        if (o.trim1) {
+          o.semester.push(1);
+        }
+      }
+
+      if (o.hasOwnProperty('trim2')) {
+        if (o.trim2) {
+          o.semester.push(2);
+        }
+      }
+
+      return o;
+    });
+    for (let commitment of this.commitmentsList) {
+      for (let activity of newFieldArray) {
+      }
+
+      const formArray = this.workPlanForm.get('commitments') as FormArray;
+      formArray.push(new FormGroup(commitment));
+    }
+
+    console.log(newFieldArray);
   }
   ngOnDestroy() {}
 }

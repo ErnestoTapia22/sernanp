@@ -44,7 +44,7 @@ export class AgreementComponent implements OnInit {
   ngOnInit(): void {
     this.page = 1;
     this.total = 0;
-    this.pageSize = 5;
+    this.pageSize = 10;
     this.buildForm();
     // this.spinner.show();
     // setTimeout(() => {
@@ -134,7 +134,7 @@ export class AgreementComponent implements OnInit {
       ],
       category: [''],
       state: [''],
-      pageSize: ['5'],
+      pageSize: ['10'],
       name: [''],
       agreementState: this.fb.group({
         id: [0],

@@ -43,7 +43,7 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     this.page = 1;
     this.total = 0;
-    this.pageSize = 5;
+    this.pageSize = 10;
 
     let paginator = {
       limit: this.pageSize,
@@ -150,7 +150,7 @@ export class ReportsComponent implements OnInit {
       ],
       category: ['', Validators.compose([])],
       state: ['', Validators.compose([])],
-      pageSize: ['5', Validators.compose([])],
+      pageSize: ['10', Validators.compose([])],
     });
   }
   ngOnDestroy() {
