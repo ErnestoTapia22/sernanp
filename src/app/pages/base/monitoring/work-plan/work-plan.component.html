@@ -426,10 +426,10 @@
                     >
                       <thead style="font-weight: bold">
                         <tr>
-                          <td rowspan="2">Objetivo P.M.</td>
-                          <td rowspan="2">Compromisos</td>
-                          <td rowspan="2">Actividades</td>
-                          <td rowspan="2">Indicadores</td>
+                          <td>Objetivo P.M.</td>
+                          <td>Compromisos</td>
+                          <td>Actividades</td>
+                          <td>Indicadores</td>
 
                           <!-- <td colspan="2">Año 1</td>
                   <td colspan="2">Año 2</td> -->
@@ -437,10 +437,10 @@
                           <td>Sem. 2</td>
                           <!-- <td>Sem. 3</td>
                     <td>Sem. 4</td> -->
-                          <td rowspan="2">Meta</td>
-                          <td rowspan="2" style="width: 85px">Valor actual</td>
-                          <td rowspan="2">Progreso (tiempo)</td>
-                          <td rowspan="2">Progreso (meta)</td>
+                          <td>Meta</td>
+                          <td style="width: 85px">Valor actual</td>
+                          <td>Progreso (tiempo)</td>
+                          <td>Progreso (meta)</td>
                           <!-- <td rowspan="2">Meta</td>
                   <td rowspan="2">Resultados</td> -->
                         </tr>
@@ -452,30 +452,32 @@
                 </tr> -->
                       </thead>
                       <tbody>
-                        <tr>
-                          <td rowspan="3">
-                            OB 1 - Mantener la cobertura vegetal del Parque
-                            Nacional
-                          </td>
-                          <td rowspan="2">
-                            Fortalecer las capacidades de los integrantes de la
-                            Empresa, en el manejo de equipo básicos
+                        <tr *ngFor="let item of monitoringList; index as idx">
+                          <td>
+                            {{ item.objetive || "sin datos" }}
                           </td>
                           <td>
-                            Vigilancia participativa en el Sector San Alberto
+                            {{ item.commitment.name }}
                           </td>
-                          <td>N° de hectárea cubiertas</td>
+                          <td>
+                            {{ item.name }}
+                          </td>
+                          <td>{{ item.indicator }}</td>
 
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" /></td>
+                          <td>
+                            <input type="checkbox" [checked]="item.trim1" />
+                          </td>
+                          <td>
+                            <input type="checkbox" [checked]="item.trim2" />
+                          </td>
                           <!-- <td><input type="checkbox" /></td>
                     <td><input type="checkbox" /></td> -->
-                          <td>1000</td>
+                          <td>{{ item.goal }}</td>
                           <td>
                             <input
                               type="number"
                               class="form-control"
-                              value="250"
+                              [value]="item.value"
                             />
                           </td>
                           <td>
@@ -494,181 +496,6 @@
                           </td>
                           <td>
                             <div class="circle round-success"></div>
-                          </td>
-                          <!-- <td rowspan="4">
-                    Contribuir al mantenimiento de la Cobertura sin
-                    afectación en las ecorregiones (% de selva baja y % de
-                    yungas) presentes en los sectores de Chinguriato y
-                    quebrada Kinkateni - Yoyato, Nueva Convención, La
-                    Libertad, Kirajateni, al interior del SNM.
-                  </td>
-                  <td rowspan="4">
-                    R1 Se mantiene la cobertura vegetal de las ecorregiones
-                    presentes en el ANP que contribuirán a la conservación
-                    de la diversidad biológica
-                  </td> -->
-                        </tr>
-                        <tr>
-                          <td>
-                            Talleres de capacitación a los vigilantes locales
-                          </td>
-                          <td>N° de talleres</td>
-
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <!-- <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td> -->
-                          <td>50</td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control"
-                              value="25"
-                            />
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div
-                                class="progress-bar bg-warning"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                              >
-                                50%
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="circle round-success"></div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            De igual forma fortalecer las capacidades a los
-                            integrantes de la empresa en temas de manejos de
-                            recursos naturales.
-                          </td>
-                          <td>
-                            Reportar hallazgos de actividades que afectan la
-                            integridad del Area Natural Protegida
-                          </td>
-                          <td>N° de reportes</td>
-
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <!-- <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td> -->
-                          <td>30</td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control"
-                              value="15"
-                            />
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div
-                                class="progress-bar bg-warning"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                              >
-                                50%
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="circle round-yellow"></div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td rowspan="2">
-                            OB 2 - Mantener poblaciones de especies de interés
-                            para la gestion del Parque Nacional
-                          </td>
-                          <td>
-                            Participación en actividades de vigilancia
-                            desarrolladas por el equipo técnico de la Jefatura
-                            del ANP
-                          </td>
-                          <td>
-                            Capacitar a los miembros de Oxalecker en temas de
-                            relacionados
-                          </td>
-                          <td>N° de capacitaciones</td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <!-- <td><input type="checkbox" checked /></td>
-                    <td><input type="checkbox" checked /></td> -->
-                          <td>20</td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control"
-                              value="20"
-                            />
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div
-                                class="progress-bar bg-success"
-                                role="progressbar"
-                                style="width: 100%"
-                                aria-valuenow="100"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                              >
-                                100%
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="circle round-success"></div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Participar en las actividades a ser realizadas en
-                            favor de la conservación del PNYCH
-                          </td>
-                          <td>
-                            Participar en las actividades de monitoreo biológico
-                            convocados por el PNYCH
-                          </td>
-                          <td>Nº de participantes</td>
-                          <!-- <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td> -->
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td>500</td>
-                          <td>
-                            <input
-                              type="number"
-                              class="form-control"
-                              value="125"
-                            />
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div
-                                class="progress-bar bg-danger"
-                                role="progressbar"
-                                style="width: 25%"
-                                aria-valuenow="25"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                              >
-                                25%
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="circle round-danger"></div>
                           </td>
                         </tr>
                       </tbody>

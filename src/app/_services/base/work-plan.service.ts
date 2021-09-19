@@ -10,9 +10,11 @@ import { AlertService } from '../base/alert.service';
 export class WorkPlanService {
   private segmentWorkPlanInsert;
   private segmentActivityListByCommitment;
+  private segmentMonitoringSearch;
   constructor(private apiService: ApiBaseService) {
     this.segmentWorkPlanInsert = '/workplan/save';
     this.segmentActivityListByCommitment = '/activity/searchbycommitment/';
+    this.segmentMonitoringSearch = '/workplan/searchbyagreement/';
   }
   workPlanInsert(item): Observable<any> {
     return this.apiService.post(
@@ -25,6 +27,11 @@ export class WorkPlanService {
   activityListByCommitment(id): Observable<any> {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentActivityListByCommitment}${id}`
+    );
+  }
+  monitoringSearch(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentMonitoringSearch}${id}`
     );
   }
 }

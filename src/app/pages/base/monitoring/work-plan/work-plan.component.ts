@@ -54,6 +54,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
 
   commitmentId: number = 0;
   disabled: boolean = false;
+  monitoringList: any[] = [];
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -78,6 +79,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.searchDepartments();
       this.searchAgreementState();
       this.getDetail(this.agreementId);
+      this.searchMonitoring();
     }
 
     this.searchCommitments();
@@ -423,7 +425,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       let langArr = <FormArray>this.workPlanForm.get('activities');
       langArr.push(this.fb.group(item));
     });
-
+    this.workPlanForm.patchValue({
+      conservationAgreement: { id: this.agreementId },
+    });
     console.log(this.workPlanForm.value);
   }
   activityListByCommitment() {
@@ -446,7 +450,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           .subscribe((response) => {
             if (response && response.items.length > 0) {
               console.log(response);
-              this.setCheckBoxes(response.items);
+              this.fieldArray = this.setCheckBoxes(response.items);
             }
           });
       } catch (error) {
@@ -478,7 +482,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       return item;
     });
 
-    this.fieldArray = parsed;
+    return parsed;
   }
   saveActivityTemp() {
     this.fieldArrayTotalTemp = this.fieldArrayTotalTemp.filter((obj) => {
@@ -501,6 +505,33 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   cleanTempField() {
     this.fieldArrayTotalTemp = [];
+  }
+  searchMonitoring() {
+    if (
+      this.agreementId === undefined ||
+      this.agreementId === null ||
+      this.agreementId === ''
+    ) {
+      return;
+    }
+    try {
+      this.workPlanService
+        .monitoringSearch(this.agreementId)
+        .subscribe((response) => {
+          console.log(response);
+          if (
+            response &&
+            response.item !== null &&
+            response.item.activities.length > 0
+          ) {
+            this.monitoringList = this.setCheckBoxes(response.item.activities);
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al buscar monitoreos', 'Error', {
+        autoClose: true,
+      });
+    }
   }
   ngOnDestroy() {}
 }
