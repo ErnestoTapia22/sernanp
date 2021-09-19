@@ -443,6 +443,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       (x) => x.commitmentId == this.commitmentId
     );
     console.log(activitiesFound);
+    console.log(this.commitmentId);
     if (activitiesFound === undefined || activitiesFound === null) {
       try {
         this.workPlanService
@@ -451,6 +452,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             if (response && response.items.length > 0) {
               console.log(response);
               this.fieldArray = this.setCheckBoxes(response.items);
+            } else {
+              this.fieldArray = [];
             }
           });
       } catch (error) {
