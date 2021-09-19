@@ -11,10 +11,10 @@ import { AgreementComponent } from './pages/base/agreement/index/agreement.compo
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
 import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
-import { ReportsComponent } from './pages/base/reports/reports.component';
-import { UserComponent } from './pages/base/user/user.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { UserComponent } from './pages/user/user.component';
 import { TestComponent } from './pages/base/test/test.component';
-import { AdminComponent } from './pages/base/admin/admin.component';
+import { AdminComponent } from './pages/admin/admin.component';
 import { AnpComponent } from './pages/masterplan/anp/anp.component';
 import { MasterPlanComponent } from './pages/masterplan/master-plan/master-plan.component';
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AdminService } from '../../../_services/base/admin.service';
+import { AdminService } from '../../_services/admin/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../../_services/base/alert.service';
+import { AlertService } from '../../_services/base/alert.service';
 
 import { Observable, Subscription } from 'rxjs';
 

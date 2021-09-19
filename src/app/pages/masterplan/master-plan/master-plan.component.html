@@ -171,18 +171,14 @@
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label">Componente</label>
-          <select
-            class="form-select"
-            formControlName="component"
-            [ngClass]="{
-              'input-invalid': submitted && g.component.errors?.required
-            }"
+          <select class="form-select" formControlName="component" [ngClass]="{'input-invalid': submitted && g.component.errors?.required}">
+          <option selected value="0">SELECCIONE</option>
+          <option
+            *ngFor="let item of components"
+            [value]="item.id"
           >
-            <option value="">SELECCIONE</option>
-            <option value="1">Ambiental</option>
-            <option value="2">Económico</option>
-            <option value="3">Social</option>
-            <option value="4">SocioCultural</option>
+            {{ item.name }}
+          </option>
           </select>
         </div>
         <div class="col-md-6">

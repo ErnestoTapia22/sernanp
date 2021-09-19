@@ -64,32 +64,40 @@
             <div class="row g-3">
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Código</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="code"
-                />
+                <input type="text" class="form-control" formControlName="code"/>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="name"
-                />
+                <input type="text" class="form-control" formControlName="name"/>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div formGroupName="agreementState">
-                  <label for="inputState" class="form-label"
-                    >Estado del acuerdo
-                  </label>
+                  <label for="inputState" class="form-label">ANP</label>
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
-
-                    <option
-                      *ngFor="let item of agreementStateList"
-                      [value]="item.id"
-                    >
+                    <option *ngFor="let item of agreementStateList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div formGroupName="agreementState">
+                  <label for="inputState" class="form-label">Estado del acuerdo</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of agreementStateList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-none">
+                <div formGroupName="source">
+                  <label for="inputState" class="form-label">Fuente de financiamiento</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
                       {{ item.name }}
                     </option>
                   </select>
@@ -97,19 +105,49 @@
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div formGroupName="source">
-                  <label for="inputState" class="form-label"
-                    >Fuente de financiamiento
-                  </label>
+                  <label for="inputState" class="form-label">Departamento</label>
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
-
-                    <option
-                      *ngFor="let item of agreementSourceList"
-                      [value]="item.id"
-                    >
+                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
                       {{ item.name }}
                     </option>
                   </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div formGroupName="source">
+                  <label for="inputState" class="form-label">Provincia</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div formGroupName="source">
+                  <label for="inputState" class="form-label">Distrito</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                  <label for="txtSuscriptionDateStart" class="form-label">Fecha de suscripción</label>
+                  <div class="row">
+                    <div class="col-auto">
+                      <input type="date" class="form-control" id="txtSuscriptionDateStart" placeholder="Desde"/>
+                    </div>
+                    <div class="col-auto">
+                      <input type="date" class="form-control" id="txtSuscriptionDateEnd" placeholder="Hasta"/>
+                    </div>
+                    
+                  </div>                  
                 </div>
               </div>
             </div>

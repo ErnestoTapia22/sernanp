@@ -72,4 +72,9 @@ export class MasterPlanService {
       `${environment.apiUrl}${this.segmentActionLineDelete}${id}`
     );
   }
+  componentList(): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}/component/list`
+    );
+  }
 }
