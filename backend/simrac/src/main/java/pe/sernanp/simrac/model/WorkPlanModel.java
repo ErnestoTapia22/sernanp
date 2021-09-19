@@ -1,7 +1,6 @@
 package pe.sernanp.simrac.model;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 
 @Entity
