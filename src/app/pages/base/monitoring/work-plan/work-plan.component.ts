@@ -5,8 +5,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
+import { WorkPlanService } from '@app/_services/base/work-plan.service';
 
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -36,7 +38,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   commitmentsList: any[] = [];
   agreementId: string = '';
   modalRef: NgbModalRef;
+  fieldArrayList: any[] = [];
   fieldArray: Array<any> = [];
+  fieldArrayTotalTemp: any[] = [];
   newAttribute: any = {};
   anpForm: FormGroup;
   anpList: any[] = [];
@@ -45,6 +49,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   departments: any[] = [];
   provinces: any[] = [];
   districts: any[] = [];
+  workPlanForm: FormGroup;
+  formActivity: FormGroup;
+
+  commitmentId: number = 0;
+  disabled: boolean = false;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -53,7 +62,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     private agreementService: AgreementService,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private anpService: AnpService
+    private anpService: AnpService,
+    private workPlanService: WorkPlanService
   ) {}
 
   ngOnInit(): void {
@@ -145,6 +155,22 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
         }),
       ],
     });
+    this.workPlanForm = this.fb.group({
+      conservationAgreement: this.fb.group({
+        id: 0,
+      }),
+      year: '',
+      activities: new FormArray([]),
+    });
+    this.formActivity = this.fb.group({
+      id: 0,
+      activity: '',
+      indicator: '',
+      goal: 0,
+      semester: [],
+      sem1: false,
+      sem2: false,
+    });
   }
   searchCommitments() {
     if (
@@ -178,7 +204,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log(response);
           this.vigency = response.item.vigency;
           this.form.setValue({
             name: response.item.name,
@@ -221,6 +246,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       backdrop: 'static',
       centered: true,
     });
+    this.commitmentId = id;
+    this.activityListByCommitment();
   }
   onCreateEvaluationModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -339,6 +366,141 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       province: districId.substring(0, 4),
       district: districId,
     });
+  }
+  saveWorkPlan() {
+    this.buildItem();
+    this.disabled = true;
+    try {
+      this.workPlanService
+        .workPlanInsert(JSON.stringify(this.workPlanForm.value))
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se guardaron correctamente los datos del plan de trabajo',
+              'Ok',
+              {
+                autoClose: true,
+              }
+            );
+            this.fieldArrayTotalTemp = [];
+          } else {
+            this.alertService.error('' + response.message, 'Error', {
+              autoClose: true,
+            });
+          }
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.disabled = false;
+      this.alertService.error('Error al guardar el plan de trabajo', 'Error', {
+        autoClose: true,
+      });
+    }
+
+    // console.log(this.workPlanForm.value);
+  }
+  buildItem() {
+    const newFieldArray: any[] = this.fieldArrayTotalTemp.map((obj) => {
+      const o = Object.assign({}, obj);
+      const temArray = [];
+      o.semester = '';
+      if (o.hasOwnProperty('trim1')) {
+        if (o.trim1) {
+          temArray.push('1');
+        }
+      }
+
+      if (o.hasOwnProperty('trim2')) {
+        if (o.trim2) {
+          temArray.push('2');
+        }
+      }
+      o.semester = temArray.join(',');
+
+      return o;
+    });
+    newFieldArray.forEach((item, index) => {
+      let langArr = <FormArray>this.workPlanForm.get('activities');
+      langArr.push(this.fb.group(item));
+    });
+
+    console.log(this.workPlanForm.value);
+  }
+  activityListByCommitment() {
+    if (
+      this.commitmentId === 0 ||
+      this.commitmentId === undefined ||
+      this.commitmentId === null
+    ) {
+      return;
+    }
+
+    const activitiesFound = this.fieldArrayTotalTemp.find(
+      (x) => x.commitmentId == this.commitmentId
+    );
+    console.log(activitiesFound);
+    if (activitiesFound === undefined || activitiesFound === null) {
+      try {
+        this.workPlanService
+          .activityListByCommitment(this.commitmentId)
+          .subscribe((response) => {
+            if (response && response.items.length > 0) {
+              console.log(response);
+              this.setCheckBoxes(response.items);
+            }
+          });
+      } catch (error) {
+        this.alertService.error(
+          'Error al traer la lista de actividades',
+          'Error',
+          { autoClose: true }
+        );
+      }
+    } else {
+      this.fieldArray = this.fieldArrayTotalTemp.filter(
+        (x) => x.commitmentId === this.commitmentId
+      );
+    }
+  }
+  setCheckBoxes(items: any[]) {
+    const parsed = items.map((item) => {
+      if (item.semester !== null && item.semester !== '') {
+        let arr: any[] = item.semester.split(',');
+        let found1 = arr.find((x) => x === '1');
+        if (found1) {
+          item.trim1 = true;
+        }
+        let found2 = arr.find((x) => x === '2');
+        if (found2) {
+          item.trim2 = true;
+        }
+      }
+      return item;
+    });
+
+    this.fieldArray = parsed;
+  }
+  saveActivityTemp() {
+    this.fieldArrayTotalTemp = this.fieldArrayTotalTemp.filter((obj) => {
+      return obj.commitmentId !== this.commitmentId;
+    });
+    this.fieldArray.map((activity) => {
+      activity.commitment = { id: this.commitmentId };
+      activity.commitmentId = this.commitmentId;
+      if (
+        activity.id === undefined ||
+        activity.id === null ||
+        activity.id === ''
+      ) {
+        activity.isNew = true;
+      }
+
+      this.fieldArrayTotalTemp.push(activity);
+    });
+    this.modalRef.close();
+  }
+  cleanTempField() {
+    this.fieldArrayTotalTemp = [];
   }
   ngOnDestroy() {}
 }

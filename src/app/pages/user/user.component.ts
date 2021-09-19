@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AdminService } from '@app/_services/base/admin.service';
+import { AdminService } from '../../_services/admin/admin.service';
 import {
   FormArray,
   FormBuilder,
@@ -8,7 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AlertService } from '../../../_services/base/alert.service';
+import { AlertService } from '../../_services/base/alert.service';
 import { UserService } from '@app/_services/auth/user.service';
 import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from '@app/_services/auth/authentication.service';

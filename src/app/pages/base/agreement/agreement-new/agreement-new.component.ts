@@ -1124,11 +1124,16 @@ export class AgreementNewComponent implements OnInit {
   }
   searchAnp() {
     try {
-      this.anpService.anpSearch(this.anpForm.value).subscribe((response) => {
+      this.anpService.anpList().subscribe((response) => {
         if (response && response.items.length > 0) {
           this.anpList = response.items;
         }
       });
+      //this.anpService.anpSearch(this.anpForm.value).subscribe((response) => {
+      //  if (response && response.items.length > 0) {
+      //    this.anpList = response.items;
+      //  }
+      //});
     } catch (error) {
       this.alertService.error('Error al traer la lista de anp', 'Error', {
         autoClose: true,

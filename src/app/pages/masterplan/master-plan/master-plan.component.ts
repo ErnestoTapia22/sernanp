@@ -25,6 +25,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   closeRegisterObserver: Subscription;
   actionLinesList: any[] = [];
+  components: any[] = [];
   objectiveId: number = 0;
 
   constructor(
@@ -221,6 +222,16 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       this.insertGoals.reset({});
 
       this.submitted = false;
+    });
+    this.masterPlanService.componentList().subscribe((response) => {
+      if (
+        response &&
+        response.items !== undefined &&
+        response.items !== null &&
+        response.items.length > 0
+      ) {
+        this.components = response.items;
+      }
     });
   }
   ngOnDestroy() {

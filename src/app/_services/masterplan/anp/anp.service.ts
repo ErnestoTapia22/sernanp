@@ -17,4 +17,9 @@ export class AnpService {
       item
     );
   }
+  anpList(): Observable<any> {
+    return this.apiBaseService.get(
+      `${environment.apiUrl}/anp/list`
+    );
+  }
 }

@@ -40,7 +40,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.page = 1;
     this.total = 0;
-    this.pageSize = 5;
+    this.pageSize = 10;
     this.builForm();
     // this.spinner.show();
     // setTimeout(() => {
@@ -57,9 +57,9 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     };
     let item = {
       name: '',
-      agreementState:{id:0},
-      source:{id:0},
-      code:''
+      agreementState: { id: 0 },
+      source: { id: 0 },
+      code: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
@@ -84,7 +84,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
             this.pageSize = data.paginator.limit;
             this.isLoading = false;
             this.spinner.hide();
-            this.setTableHeight(this.pageSize);
+            this.setTableHeight(this.pageSize, data.items.length);
           } else {
             this.isLoading = false;
             this.spinner.hide();
@@ -145,17 +145,22 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       ],
       category: ['', Validators.compose([])],
       state: ['', Validators.compose([])],
-      pageSize: ['5', Validators.compose([])],
+      pageSize: ['10', Validators.compose([])],
     });
   }
   ngOnDestroy() {
     this.queryObserver.unsubscribe();
   }
-  setTableHeight(rows) {
+  setTableHeight(rows, itemsLength?: number) {
     if (rows !== undefined && rows !== null) {
       const cm = document.getElementById('tableBody');
-      const height = 50.838 * parseInt(rows);
-      cm.setAttribute('style', `height:${height}px`);
+      if (itemsLength < rows) {
+        const height = 50.838 * itemsLength;
+        cm.setAttribute('style', `height:${height}px`);
+      } else {
+        const height = 50.838 * parseInt(rows);
+        cm.setAttribute('style', `height:${height}px`);
+      }
     }
   }
 }

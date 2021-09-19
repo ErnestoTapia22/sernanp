@@ -22,14 +22,14 @@
             </li>
           </ol>
         </nav>
-        <button
+        <!-- <button
           type="button"
           class="btn btn-danger ms-3"
           (click)="onDeleteModal(contentDelete)"
         >
           <i class="bi bi-x-circle me-2"></i>
           <span class="d-none d-sm-inline-block">Cerrar acuerdo</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -83,7 +83,7 @@
               >
               <!-- [ngClass]="{ 'disabled': !agreementExist }"
                 [disabled]="!agreementExist" -->
-                Monitoreo 1
+                Monitoreo 
               </button>
         </li>
       </ul>
@@ -298,53 +298,75 @@
           <div class="card">
             <div class="card-header">
               <label class="mb-0 fw-bold">Crear</label>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary mx-2"
+                  (click)="saveWorkPlan()"
+                  [disabled]="disabled || !fieldArrayTotalTemp.length"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar plan de trabajo
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-info mx-2"
+                  (click)="cleanTempField()"
+                  [disabled]="!fieldArrayTotalTemp.length"
+                >
+                  <i class="bi bi-trash"></i>
+                  Deshacer cambios
+                </button>
+              </div>
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Componente</th>
-                      <th>Objetivo</th>
-                      <th>Compromiso</th>
-                      <th>Suscriptor</th>
-                      <th>Actividades</th>
-                    </tr>
-                  </thead>
+            <div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Componente</th>
+                        <th>Objetivo</th>
+                        <th>Compromiso</th>
+                        <th>Suscriptor</th>
+                        <th>Actividades</th>
+                      </tr>
+                    </thead>
 
-                  <tbody>
-                    <tr *ngFor="let item of commitmentsList; index as idx">
-                      <td>
-                        {{ item.actionLine.objetive.description }}
-                      </td>
-                      <td>
-                        {{ item.actionLine.objetive.description }}
-                      </td>
-                      <td>
-                        {{ item.description }}
-                      </td>
-                      <td>
-                        {{ item.allied.name }}
-                      </td>
-                      <td>
-                        <div class="text-nowrap">
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-outline-danger border-0"
-                            (click)="
-                              onCreateActivityModal(
-                                contentCreateActivity,
-                                item.id
-                              )
-                            "
-                          >
-                            <i class="bi bi-list-check fs-lg"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                    <tbody>
+                      <tr *ngFor="let item of commitmentsList; index as idx">
+                        <td>
+                          {{ item.actionLine.objetive.description }}
+                        </td>
+                        <td>
+                          {{ item.actionLine.objetive.description }}
+                        </td>
+                        <td>
+                          {{ item.description }}
+                        </td>
+                        <td>
+                          {{ item.allied.name }}
+                        </td>
+                        <td>
+                          <div class="text-nowrap">
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-outline-danger border-0"
+                              (click)="
+                                onCreateActivityModal(
+                                  contentCreateActivity,
+                                  item.id
+                                )
+                              "
+                            >
+                              <i class="bi bi-list-check fs-lg"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -356,328 +378,398 @@
           aria-labelledby="monitoring-tab"
         >
           <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
-          <div class="card">
-            <div class="card-header">
-              <label class="mb-0 fw-bold">Registrar</label>
-              <button type="button" class="btn btn-sm btn-outline-success mx-2">
-                <i class="bi bi-play-circle"></i>
-                Iniciar Monitoreo
+          <ul class="nav nav-tabs nav-tabs-flat" id="myTab2" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="monitoringHistory-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabMonitoringHistory"
+                type="button"
+                role="tab"
+              >
+                Nro. 1
               </button>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover table-bordered align-middle">
-                  <thead style="font-weight: bold">
-                    <tr>
-                      <td rowspan="2">Objetivo P.M.</td>
-                      <td rowspan="2">Compromisos</td>
-                      <td rowspan="2">Actividades</td>
-                      <td rowspan="2">Indicadores</td>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane pt-2 fade show active"
+              id="tabMonitoringHistory"
+              role="tabpanel"
+              aria-labelledby="monitoringHistory-tab"
+            >
+              <div class="card">
+                <div class="card-header">
+                  <label class="mb-0 fw-bold">Registrar</label>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-success mx-2"
+                    >
+                      <i class="bi bi-play-circle"></i>
+                      Iniciar Monitoreo
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger mx-2"
+                    >
+                      <i class="bi bi-stop-circle"></i>
+                      Finalizar Monitoreo
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-bordered align-middle"
+                    >
+                      <thead style="font-weight: bold">
+                        <tr>
+                          <td rowspan="2">Objetivo P.M.</td>
+                          <td rowspan="2">Compromisos</td>
+                          <td rowspan="2">Actividades</td>
+                          <td rowspan="2">Indicadores</td>
 
-                      <!-- <td colspan="2">Año 1</td>
-                      <td colspan="2">Año 2</td> -->
-                      <td>Sem. 1</td>
-                      <td>Sem. 2</td>
-                      <td>Sem. 3</td>
-                      <td>Sem. 4</td>
-                      <td rowspan="2">Meta</td>
-                      <td rowspan="2" style="width: 85px">Valor actual</td>
-                      <td rowspan="2">Progreso (tiempo)</td>
-                      <td rowspan="2">Progreso (meta)</td>
-                      <!-- <td rowspan="2">Meta</td>
-                      <td rowspan="2">Resultados</td> -->
-                    </tr>
-                    <!-- <tr>
-                      <td>Semt. 1</td>
-                      <td>Semt. 2</td>
-                      <td>Semt. 3</td>
-                      <td>Semt. 4</td>
-                    </tr> -->
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td rowspan="3">
-                        OB 1 - Mantener la cobertura vegetal del Parque Nacional
-                      </td>
-                      <td rowspan="2">
-                        Fortalecer las capacidades de los integrantes de la
-                        Empresa, en el manejo de equipo básicos
-                      </td>
-                      <td>Vigilancia participativa en el Sector San Alberto</td>
-                      <td>N° de hectárea cubiertas</td>
+                          <!-- <td colspan="2">Año 1</td>
+                  <td colspan="2">Año 2</td> -->
+                          <td>Sem. 1</td>
+                          <td>Sem. 2</td>
+                          <!-- <td>Sem. 3</td>
+                    <td>Sem. 4</td> -->
+                          <td rowspan="2">Meta</td>
+                          <td rowspan="2" style="width: 85px">Valor actual</td>
+                          <td rowspan="2">Progreso (tiempo)</td>
+                          <td rowspan="2">Progreso (meta)</td>
+                          <!-- <td rowspan="2">Meta</td>
+                  <td rowspan="2">Resultados</td> -->
+                        </tr>
+                        <!-- <tr>
+                  <td>Semt. 1</td>
+                  <td>Semt. 2</td>
+                  <td>Semt. 3</td>
+                  <td>Semt. 4</td>
+                </tr> -->
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td rowspan="3">
+                            OB 1 - Mantener la cobertura vegetal del Parque
+                            Nacional
+                          </td>
+                          <td rowspan="2">
+                            Fortalecer las capacidades de los integrantes de la
+                            Empresa, en el manejo de equipo básicos
+                          </td>
+                          <td>
+                            Vigilancia participativa en el Sector San Alberto
+                          </td>
+                          <td>N° de hectárea cubiertas</td>
 
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td>1000</td>
-                      <td>
-                        <input type="number" class="form-control" value="250" />
-                      </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-danger"
-                            role="progressbar"
-                            style="width: 25%"
-                            aria-valuenow="25"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                            25%
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="circle round-success"></div>
-                      </td>
-                      <!-- <td rowspan="4">
-                        Contribuir al mantenimiento de la Cobertura sin
-                        afectación en las ecorregiones (% de selva baja y % de
-                        yungas) presentes en los sectores de Chinguriato y
-                        quebrada Kinkateni - Yoyato, Nueva Convención, La
-                        Libertad, Kirajateni, al interior del SNM.
-                      </td>
-                      <td rowspan="4">
-                        R1 Se mantiene la cobertura vegetal de las ecorregiones
-                        presentes en el ANP que contribuirán a la conservación
-                        de la diversidad biológica
-                      </td> -->
-                    </tr>
-                    <tr>
-                      <td>Talleres de capacitación a los vigilantes locales</td>
-                      <td>N° de talleres</td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" /></td>
+                          <!-- <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td> -->
+                          <td>1000</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="250"
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-danger"
+                                role="progressbar"
+                                style="width: 25%"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                25%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-success"></div>
+                          </td>
+                          <!-- <td rowspan="4">
+                    Contribuir al mantenimiento de la Cobertura sin
+                    afectación en las ecorregiones (% de selva baja y % de
+                    yungas) presentes en los sectores de Chinguriato y
+                    quebrada Kinkateni - Yoyato, Nueva Convención, La
+                    Libertad, Kirajateni, al interior del SNM.
+                  </td>
+                  <td rowspan="4">
+                    R1 Se mantiene la cobertura vegetal de las ecorregiones
+                    presentes en el ANP que contribuirán a la conservación
+                    de la diversidad biológica
+                  </td> -->
+                        </tr>
+                        <tr>
+                          <td>
+                            Talleres de capacitación a los vigilantes locales
+                          </td>
+                          <td>N° de talleres</td>
 
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td>50</td>
-                      <td>
-                        <input type="number" class="form-control" value="25" />
-                      </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-warning"
-                            role="progressbar"
-                            style="width: 50%"
-                            aria-valuenow="50"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                            50%
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="circle round-success"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        De igual forma fortalecer las capacidades a los
-                        integrantes de la empresa en temas de manejos de
-                        recursos naturales.
-                      </td>
-                      <td>
-                        Reportar hallazgos de actividades que afectan la
-                        integridad del Area Natural Protegida
-                      </td>
-                      <td>N° de reportes</td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <!-- <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td> -->
+                          <td>50</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="25"
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-warning"
+                                role="progressbar"
+                                style="width: 50%"
+                                aria-valuenow="50"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                50%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-success"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            De igual forma fortalecer las capacidades a los
+                            integrantes de la empresa en temas de manejos de
+                            recursos naturales.
+                          </td>
+                          <td>
+                            Reportar hallazgos de actividades que afectan la
+                            integridad del Area Natural Protegida
+                          </td>
+                          <td>N° de reportes</td>
 
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td>30</td>
-                      <td>
-                        <input type="number" class="form-control" value="15" />
-                      </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-warning"
-                            role="progressbar"
-                            style="width: 50%"
-                            aria-valuenow="50"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                            50%
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="circle round-yellow"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td rowspan="2">
-                        OB 2 - Mantener poblaciones de especies de interés para
-                        la gestion del Parque Nacional
-                      </td>
-                      <td>
-                        Participación en actividades de vigilancia desarrolladas
-                        por el equipo técnico de la Jefatura del ANP
-                      </td>
-                      <td>
-                        Capacitar a los miembros de Oxalecker en temas de
-                        relacionados
-                      </td>
-                      <td>N° de capacitaciones</td>
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td>20</td>
-                      <td>
-                        <input type="number" class="form-control" value="20" />
-                      </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-success"
-                            role="progressbar"
-                            style="width: 100%"
-                            aria-valuenow="100"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                            100%
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="circle round-success"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Participar en las actividades a ser realizadas en favor
-                        de la conservación del PNYCH
-                      </td>
-                      <td>
-                        Participar en las actividades de monitoreo biológico
-                        convocados por el PNYCH
-                      </td>
-                      <td>Nº de participantes</td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" /></td>
-                      <td><input type="checkbox" checked /></td>
-                      <td>500</td>
-                      <td>
-                        <input type="number" class="form-control" value="125" />
-                      </td>
-                      <td>
-                        <div class="progress">
-                          <div
-                            class="progress-bar bg-danger"
-                            role="progressbar"
-                            style="width: 25%"
-                            aria-valuenow="25"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                            25%
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="circle round-danger"></div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary">
-                  <i class="bi bi-brush"></i>
-                  Limpiar</button
-                >&nbsp;
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  (click)="onCreateEvaluationModal(contentCreateEvaluation)"
-                >
-                  <i class="bi bi-check2-square"></i>
-                  Generar evaluación
-                </button>
-                &nbsp;
-                <button type="button" class="btn btn-success" disabled>
-                  <i class="bi bi-display"></i>
-                  Guardar monitoreo
-                </button>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <!-- <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td> -->
+                          <td>30</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="15"
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-warning"
+                                role="progressbar"
+                                style="width: 50%"
+                                aria-valuenow="50"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                50%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-yellow"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td rowspan="2">
+                            OB 2 - Mantener poblaciones de especies de interés
+                            para la gestion del Parque Nacional
+                          </td>
+                          <td>
+                            Participación en actividades de vigilancia
+                            desarrolladas por el equipo técnico de la Jefatura
+                            del ANP
+                          </td>
+                          <td>
+                            Capacitar a los miembros de Oxalecker en temas de
+                            relacionados
+                          </td>
+                          <td>N° de capacitaciones</td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <!-- <td><input type="checkbox" checked /></td>
+                    <td><input type="checkbox" checked /></td> -->
+                          <td>20</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="20"
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-success"
+                                role="progressbar"
+                                style="width: 100%"
+                                aria-valuenow="100"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                100%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-success"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Participar en las actividades a ser realizadas en
+                            favor de la conservación del PNYCH
+                          </td>
+                          <td>
+                            Participar en las actividades de monitoreo biológico
+                            convocados por el PNYCH
+                          </td>
+                          <td>Nº de participantes</td>
+                          <!-- <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td> -->
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td>500</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              value="125"
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-danger"
+                                role="progressbar"
+                                style="width: 25%"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                25%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-danger"></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary">
+                      <i class="bi bi-brush"></i>
+                      Limpiar</button
+                    >&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-info"
+                      (click)="onCreateEvaluationModal(contentCreateEvaluation)"
+                    >
+                      <i class="bi bi-check2-square"></i>
+                      Generar evaluación
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-success" disabled>
+                      <i class="bi bi-display"></i>
+                      Guardar monitoreo
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
   </div>
-  <!-- ============================================================== -->
-  <!-- End PAge Content -->
-  <!-- ============================================================== -->
-</div>
-<ng-template #contentCreateActivity let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
-  </div>
-  <div class="modal-body">
-    <div class="row g-3"></div>
-    <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
-      <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
-      <li class="nav-item" role="presentation">
-        <!-- [attr.data-bs-target]="'#tabActivity' + i" -->
-        <!-- [ngClass]="{ active: i == 0 }" -->
-        <button
-          class="nav-link active"
-          id="workPlan-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#tabActivity"
-          type="button"
-          role="tab"
+  <ng-template #contentCreateActivity let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
+      <button type="button" class="btn-close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3"></div>
+      <ul class="nav nav-tabs nav-tabs-flat" id="myTab" role="tablist">
+        <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
+        <li class="nav-item" role="presentation">
+          <!-- [attr.data-bs-target]="'#tabActivity' + i" -->
+          <!-- [ngClass]="{ active: i == 0 }" -->
+          <button
+            class="nav-link active"
+            id="workPlan-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabActivity"
+            type="button"
+            role="tab"
+          >
+            Plan de trabajo 1
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <!-- prettier-ignore -->
+        <!-- [ngClass]="{ 'show active': i == 0 }" -->
+        <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
+        <div
+          class="tab-pane pt-2 fade show active"
+          id="tabActivity"
+          role="tabpanel"
+          aria-labelledby="agreement-tab"
         >
-          Plan de trabajo 1
-        </button>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <!-- prettier-ignore -->
-      <!-- [ngClass]="{ 'show active': i == 0 }" -->
-      <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
-      <div
-        class="tab-pane pt-2 fade show active"
-        id="tabActivity"
-        role="tabpanel"
-        aria-labelledby="agreement-tab"
-      >
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <td>Nro.</td>
-                <td>Actividad</td>
-                <!-- <td>Tipo indicador</td> -->
-                <td>Indicador</td>
-                <td>Meta</td>
-                <td>Semestre</td>
-                <td>Opción</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let field of fieldArray; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    [value]="field.activity"
-                  />
-                </td>
-                <!-- <td>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>Nro.</td>
+                  <td>Actividad</td>
+                  <!-- <td>Tipo indicador</td> -->
+                  <td>Indicador</td>
+                  <td>Meta</td>
+                  <td>Semestre</td>
+                  <td></td>
+                  <td>Opción</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let field of fieldArray; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td class="d-none">
+                    <input
+                      class="form-control"
+                      type="text"
+                      [value]="field.id"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="text"
+                      [value]="field.name"
+                    />
+                  </td>
+                  <!-- <td>
                 <input
                   class="form-control"
                   type="text"
@@ -685,90 +777,80 @@
                 />
               </td> -->
 
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    [value]="field.indicator"
-                  />
-                </td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    [value]="field.goal"
-                  />
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
+                  <td>
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox1"
-                      [checked]="field.trim1"
+                      class="form-control"
+                      type="text"
+                      [value]="field.indicator"
                     />
-                    <label class="form-check-label" for="inlineCheckbox1"
-                      >1</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
+                  </td>
+                  <td>
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox2"
-                      [checked]="field.trim2"
+                      class="form-control"
+                      type="text"
+                      [value]="field.goal"
                     />
-                    <label class="form-check-label" for="inlineCheckbox2"
-                      >2</label
+                  </td>
+                  <td>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="inlineCheckbox1"
+                        [checked]="field.trim1"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox1"
+                        >1</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="inlineCheckbox2"
+                        [checked]="field.trim2"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox2"
+                        >2</label
+                      >
+                    </div>
+                  </td>
+                  <td>
+                    {{ field.isNew ? "Nuevo" : "" }}
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-danger border-0"
+                      type="button"
+                      (click)="deleteFieldValue(i)"
                     >
-                  </div>
-                  <div class="form-check form-check-inline">
+                      <i class="bi bi-dash-square fs-lg"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input class="form-control" type="text" disabled />
+                  </td>
+                  <td>
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox3"
-                      [checked]="field.trim3"
+                      class="form-control"
+                      type="text"
+                      id="newAttributeCode"
+                      [(ngModel)]="newAttribute.name"
+                      name="newAttributeActivity"
                     />
-                    <label class="form-check-label" for="inlineCheckbox3"
-                      >3</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
+                  </td>
+                  <td class="d-none">
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox4"
-                      [checked]="field.trim4"
+                      class="form-control"
+                      type="text"
+                      id="newAttributeId"
+                      [(ngModel)]="newAttribute.id"
+                      name="newAttributeId"
                     />
-                    <label class="form-check-label" for="inlineCheckbox4"
-                      >4</label
-                    >
-                  </div>
-                </td>
-                <td>
-                  <button
-                    class="btn btn-sm btn-outline-danger border-0"
-                    type="button"
-                    (click)="deleteFieldValue(i)"
-                  >
-                    <i class="bi bi-dash-square fs-lg"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input class="form-control" type="text" disabled />
-                </td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="newAttributeCode"
-                    [(ngModel)]="newAttribute.activity"
-                    name="newAttributeActivity"
-                  />
-                </td>
-                <!-- <td>
+                  </td>
+                  <!-- <td>
                 <select
                   class="form-select"
                   [(ngModel)]="newAttribute.indicatorType"
@@ -777,165 +859,148 @@
                   <option value="Promedio">Promedio</option>
                 </select>
               </td> -->
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="newAttributeName"
-                    [(ngModel)]="newAttribute.indicator"
-                    name="newAttributeIndicator"
-                  />
-                </td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="newAttributePrice"
-                    [(ngModel)]="newAttribute.goal"
-                    name="newAttributeGoal"
-                  />
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
+                  <td>
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox11"
-                      [(ngModel)]="newAttribute.trim1"
+                      class="form-control"
+                      type="text"
+                      id="newAttributeName"
+                      [(ngModel)]="newAttribute.indicator"
+                      name="newAttributeIndicator"
                     />
-                    <label class="form-check-label" for="inlineCheckbox11"
-                      >1</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
+                  </td>
+                  <td>
                     <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox12"
-                      [(ngModel)]="newAttribute.trim2"
+                      class="form-control"
+                      type="text"
+                      id="newAttributePrice"
+                      [(ngModel)]="newAttribute.goal"
+                      name="newAttributeGoal"
                     />
-                    <label class="form-check-label" for="inlineCheckbox12"
-                      >2</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox13"
-                      [(ngModel)]="newAttribute.trim3"
-                    />
-                    <label class="form-check-label" for="inlineCheckbox13"
-                      >3</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox14"
-                      [(ngModel)]="newAttribute.trim4"
-                    />
-                    <label class="form-check-label" for="inlineCheckbox14"
-                      >4</label
-                    >
-                  </div>
-                </td>
-
-                <td>
-                  <div class="text-nowrap">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-success border-0"
-                      (click)="addFieldValue()"
-                    >
-                      <i class="bi bi-plus-square fs-lg"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="inlineCheckbox11"
+                        [(ngModel)]="newAttribute.trim1"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox11"
+                        >1</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="inlineCheckbox12"
+                        [(ngModel)]="newAttribute.trim2"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox12"
+                        >2</label
+                      >
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="text-nowrap">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success border-0"
+                        (click)="addFieldValue()"
+                      >
+                        <i class="bi bi-plus-square fs-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">
-      Cancelar
-    </button>
-    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-      Guardar
-    </button>
-  </div>
-</ng-template>
-<ng-template #contentDelete let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Cerrar acuerdo</h4>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-      (click)="modal.close()"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <p class="text-center">
-      Esta acción no se puede deshacer.
-      <br />
-      ¿Estás seguro?
-    </p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">
-      Cancelar
-    </button>
-    <button
-      type="button"
-      ngbAutofocus
-      (click)="deleteMonitoring()"
-      class="btn btn-primary"
-    >
-      Aceptar
-    </button>
-  </div>
-</ng-template>
-<ng-template #contentCreateEvaluation let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="createActivityLabel">
-      Crear envaluación del monitoreo
-    </h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
-  </div>
-  <div class="modal-body">
-    <div class="row g-3"></div>
-    <div class="col-md-12">
-      <label class="form-label">Logros</label>
-      <textarea class="form-control" rows="2"> </textarea>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="saveActivityTemp()"
+      >
+        Guardar
+      </button>
     </div>
-    <div class="col-md-12">
-      <label class="form-label">Resultados</label>
-      <textarea class="form-control" rows="2"> </textarea>
+  </ng-template>
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Cerrar acuerdo</h4>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.close()"
+      ></button>
     </div>
-    <div class="col-md-12">
-      <label class="form-label">Inconvenientes</label>
-      <textarea class="form-control" rows="2"> </textarea>
+    <div class="modal-body">
+      <p class="text-center">
+        Esta acción no se puede deshacer.
+        <br />
+        ¿Estás seguro?
+      </p>
     </div>
-    <div class="col-md-12">
-      <label class="form-label">Recomendaciones</label>
-      <textarea class="form-control" rows="2"> </textarea>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button
+        type="button"
+        ngbAutofocus
+        (click)="deleteMonitoring()"
+        class="btn btn-primary"
+      >
+        Aceptar
+      </button>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">
-      Cancelar
-    </button>
-    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-      Guardar
-    </button>
-  </div>
-</ng-template>
-<!-- ============================================================== -->
-<!-- End Container fluid  -->
-<!-- ============================================================== -->
+  </ng-template>
+  <ng-template #contentCreateEvaluation let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createActivityLabel">
+        Crear envaluación del monitoreo
+      </h5>
+      <button type="button" class="btn-close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3"></div>
+      <div class="col-md-12">
+        <label class="form-label">Logros</label>
+        <textarea class="form-control" rows="2"> </textarea>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Resultados</label>
+        <textarea class="form-control" rows="2"> </textarea>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Inconvenientes</label>
+        <textarea class="form-control" rows="2"> </textarea>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Recomendaciones</label>
+        <textarea class="form-control" rows="2"> </textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+        Guardar
+      </button>
+    </div>
+  </ng-template>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+</div>
