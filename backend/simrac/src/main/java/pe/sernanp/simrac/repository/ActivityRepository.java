@@ -56,4 +56,9 @@ public class ActivityRepository extends BaseRepository<ActivityModel> {
 		return super.search23(ds,"simrac.fn_buscar_actividadporcompromiso",parameters, new ActivityMapper());			
 	}
 	
+	public List<ActivityModel> searchByMonitoringAndAgreement(DataSource ds, int id) throws Exception {
+		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("pagreementid", id);
+		return super.search23(ds,"simrac.fn_buscar_actividadpormonitoreoacuerdo",parameters, new ActivityMapper());			
+	}
 }

@@ -5,7 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.stereotype.Repository;
+
+import pe.sernanp.simrac.mapper.MonitoringMapper;
+import pe.sernanp.simrac.mapper.SourceMapper;
 import pe.sernanp.simrac.model.MonitoringModel;
+import pe.sernanp.simrac.model.SourceModel;
 
 @Repository
 public class MonitoringRepository extends BaseRepository<MonitoringModel>  {
@@ -36,5 +40,9 @@ public class MonitoringRepository extends BaseRepository<MonitoringModel>  {
 		parameters.put("pregistrationdate", registrationDate);		
 		parameters.put("pstate", state);
 		return super.insert(ds, "simrac.fn_insertar_respuesta", parameters);
+	}
+	
+	public MonitoringModel detail(DataSource ds, int id) throws Exception {
+		return super.detail2(ds, "simrac.fn_detalle_monitoreo", id, new MonitoringMapper());
 	}
 }
