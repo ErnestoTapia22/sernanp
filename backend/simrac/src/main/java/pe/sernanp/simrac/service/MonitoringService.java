@@ -87,9 +87,15 @@ public class MonitoringService extends BaseService<MonitoringModel>{
 			for (int id2 : ids) {
 				MonitoringModel ite = this._repository.detail(this._dataSource, id2);
 				items2.add(ite);
-			}
+			}			
 			for (MonitoringModel news : items2) {
-				news.setActivities(items.stream().filter(p -> p.getMonitoring().getId2() == news.getId2()).toList());
+				List<ActivityModel> items233 = new ArrayList<ActivityModel>();
+				items.forEach(i -> {
+					if (i.getMonitoring().getId2() == news.getId2())
+						items233.add(i);
+				});
+				news.setActivities(items233);
+				//news.setActivities(items.   .filter(p -> p.getMonitoring().getId2() == news.getId2()).toList());
 			}			
 			response.setSuccess(success);
 			response.setItems(items2);
