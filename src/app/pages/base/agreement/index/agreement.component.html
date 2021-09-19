@@ -75,7 +75,7 @@
                   <label for="inputState" class="form-label">ANP</label>
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementStateList" [value]="item.id">
+                    <option *ngFor="let item of anps" [value]="item.id">
                       {{ item.name }}
                     </option>
                   </select>
@@ -104,33 +104,33 @@
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="source">
-                  <label for="inputState" class="form-label">Departamento</label>
-                  <select class="form-select" formControlName="id">
+                <div formGroupName="department">
+                  <label for="ddlDepartment" class="form-label">Departamento</label>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="id" (change)="searchProvinces($event.target.value)">
                     <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
+                    <option *ngFor="let item of departments" [value]="item.code">
                       {{ item.name }}
                     </option>
                   </select>
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="source">
+                <div formGroupName="province">
                   <label for="inputState" class="form-label">Provincia</label>
-                  <select class="form-select" formControlName="id">
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="id" (change)="searchDistricts($event.target.value)">
                     <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
+                    <option *ngFor="let item of provinces" [value]="item.code">
                       {{ item.name }}
                     </option>
                   </select>
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="source">
+                <div formGroupName="district">
                   <label for="inputState" class="form-label">Distrito</label>
-                  <select class="form-select" formControlName="id">
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
+                    <option *ngFor="let item of districts" [value]="item.code">
                       {{ item.name }}
                     </option>
                   </select>
