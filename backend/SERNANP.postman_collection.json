@@ -1489,7 +1489,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/workplan/searchbyagreement/100"
+						"url": "http://localhost:8050/simrac/api/monitoring/searchbyagreement/100"
 					},
 					"response": []
 				},

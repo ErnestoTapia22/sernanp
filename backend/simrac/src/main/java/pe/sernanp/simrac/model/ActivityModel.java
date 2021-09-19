@@ -13,6 +13,8 @@ public class ActivityModel extends BaseModel {
 	private boolean _active;
 	private String _semester;
 	
+	private MonitoringModel _monitoring;
+	
 	public WorkPlanModel getWorkPlan() {
 		return _workPlan;
 	}
@@ -67,5 +69,13 @@ public class ActivityModel extends BaseModel {
 
 	public void setSemester(String semester) {
 		this._semester = semester;
+	}
+	
+	public MonitoringModel getMonitoring() {
+		return _monitoring;
+	}
+
+	public void setMonitoring(MonitoringModel monitoring) {
+		this._monitoring = monitoring;
 	}
 }
