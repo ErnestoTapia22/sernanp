@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonitoringService } from '../../../../_services/base/monitoring.service';
 import { AgreementService } from '../../../../_services/base/agreement.service';
 import { AlertService } from '../../../../_services/base/alert.service';
+import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {
   FormBuilder,
@@ -33,12 +34,17 @@ export class AgreementComponent implements OnInit {
   parsed: any;
   agreementStateList: any[] = [];
   agreementSourceList: any[] = [];
+  departments: any[] = [];
+  provinces: any[] = [];
+  districts: any[] = [];
+  anps: any[] = [];
 
   constructor(
     private agreementService: AgreementService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private anpService: AnpService
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +126,45 @@ export class AgreementComponent implements OnInit {
 
     this.onSearch();
   }
-
+  searchProvinces(event) {
+    const id = event;
+    if (id == 0) {
+      this.provinces = [];      
+      return;
+    }
+    this.districts = [];
+    try {
+      this.agreementService
+        .searchProvinces(id.toString())
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.provinces = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al traer las provincias', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchDistricts(event) {
+    const id = event;
+    if (id == 0) {
+      this.districts = [];
+      return;
+    }
+    try {
+      this.agreementService.searchDistricts(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.districts = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
   buildForm(): void {
     this.form = this.fb.group({
       code: ['', Validators.compose([Validators.maxLength(10)])],
@@ -142,6 +186,15 @@ export class AgreementComponent implements OnInit {
       source: this.fb.group({
         id: [0],
       }),
+      department: this.fb.group({
+        id: [0],
+      }),
+      province: this.fb.group({
+        id: [0],
+      }),
+      district: this.fb.group({
+        id: [0],
+      })
     });
   }
   ngOnDestroy() {
@@ -179,6 +232,21 @@ export class AgreementComponent implements OnInit {
           response.items.length > 0
         ) {
           this.agreementSourceList = response.items;
+        }
+      });
+      this.anpService.anpList().subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.anps = response.items;
+        }
+      });
+      this.agreementService.departmentList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.departments = response.items;
         }
       });
     } catch (error) {

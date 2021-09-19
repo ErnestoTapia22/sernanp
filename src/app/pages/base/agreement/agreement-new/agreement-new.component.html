@@ -420,6 +420,7 @@
                                 <tr>
                                   <td>Objetivo</td>
                                   <td>Compromiso</td>
+                                  <td>Línea de Acción</td>
                                   <td>Suscriptor</td>
                                   <td>Opciones</td>
                                 </tr>
@@ -433,9 +434,12 @@
                                 >
                                   <td>
                                     {{ item.actionLine.objetive.description }}
-                                  </td>
+                                  </td>                                  
                                   <td>
                                     {{ item.description }}
+                                  </td>
+                                  <td>
+                                    {{ item.actionLine.name }}
                                   </td>
                                   <td>
                                     {{ item.allied.name }}

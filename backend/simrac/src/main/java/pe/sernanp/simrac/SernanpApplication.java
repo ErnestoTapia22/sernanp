@@ -11,7 +11,7 @@ public class SernanpApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		System.out.println("inicio de aplicación");
+		System.out.println("inicio de aplicación 2");
 		return builder.sources(SernanpApplication.class);		
 	}
 	
