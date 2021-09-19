@@ -1482,6 +1482,38 @@
 			]
 		},
 		{
+			"name": "Monitoring",
+			"item": [
+				{
+					"name": "searchbyagreement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/workplan/searchbyagreement/100"
+					},
+					"response": []
+				},
+				{
+					"name": "MonitoringInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\":\"se comenta que\",\r\n    \"recommendation\":\"se recomienda\",\r\n    \"evaluation\":\"apto\",\r\n    \"description\":\"\",\r\n    \"achievement\":\"ssss\",\r\n    \"activities\" : [\r\n        {\r\n            \"id\":10,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":11,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":12,\r\n            \"value\":100\r\n        }\r\n    ]\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/monitoring/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Servicio Publico",
 			"request": {
 				"method": "POST",
