@@ -297,7 +297,9 @@
         >
           <div class="card">
             <div class="card-header">
-              <label class="mb-0 fw-bold">Compromisos del Plan de Trabajo</label>
+              <label class="mb-0 fw-bold"
+                >Compromisos del Plan de Trabajo</label
+              >
               <div>
                 <button
                   type="button"
@@ -440,25 +442,14 @@
                           <td>Actividades</td>
                           <td>Indicadores</td>
 
-                          <!-- <td colspan="2">Año 1</td>
-                <td colspan="2">Año 2</td> -->
                           <td>Sem. 1</td>
                           <td>Sem. 2</td>
-                          <!-- <td>Sem. 3</td>
-                  <td>Sem. 4</td> -->
+
                           <td>Meta</td>
                           <td style="width: 85px">Valor actual</td>
                           <td>Progreso (tiempo)</td>
                           <td>Progreso (meta)</td>
-                          <!-- <td rowspan="2">Meta</td>
-                <td rowspan="2">Resultados</td> -->
                         </tr>
-                        <!-- <tr>
-                <td>Semt. 1</td>
-                <td>Semt. 2</td>
-                <td>Semt. 3</td>
-                <td>Semt. 4</td>
-              </tr> -->
                       </thead>
                       <tbody>
                         <tr
@@ -494,8 +485,7 @@
                               disabled
                             />
                           </td>
-                          <!-- <td><input type="checkbox" /></td>
-                  <td><input type="checkbox" /></td> -->
+
                           <td>{{ activity.goal }}</td>
                           <td>
                             <input
@@ -508,14 +498,33 @@
                           <td>
                             <div class="progress">
                               <div
-                                class="progress-bar bg-danger"
+                                class="progress-bar"
+                                [ngClass]="{
+                                  'bg-danger':
+                                    activity.progress < activity.goal / 3,
+                                  'bg-warning':
+                                    activity.progress >= activity.goal / 3 &&
+                                    activity.progress <=
+                                      (activity.goal / 3) * 2,
+                                  'bg-success':
+                                    activity.progress > (activity.goal / 3) * 2
+                                }"
                                 role="progressbar"
-                                style="width: 25%"
-                                aria-valuenow="25"
+                                [ngStyle]="{
+                                  width:
+                                    (activity.progress * 100) / activity.goal +
+                                    '%'
+                                }"
+                                [attr.aria-valuenow]="activity.progress"
                                 aria-valuemin="0"
-                                aria-valuemax="100"
+                                [attr.aria-valuemax]="activity.goal"
                               >
-                                25%
+                                {{
+                                  (
+                                    (activity.progress * 100) /
+                                    activity.goal
+                                  ).toFixed(1) + "%"
+                                }}
                               </div>
                             </div>
                           </td>
@@ -560,7 +569,7 @@
                         class="form-control"
                         rows="3"
                         disabled
-                        >{{ item.comment }}</textarea
+                        >{{ item.achievement }}</textarea
                       >
                     </div>
                     <div class="col-md-6">
@@ -572,7 +581,7 @@
                         class="form-control"
                         rows="3"
                         disabled
-                        >{{ item.achievement }}</textarea
+                        >{{ item.evaluation }}</textarea
                       >
                     </div>
                     <div class="col-md-6">
@@ -584,7 +593,7 @@
                         class="form-control"
                         rows="3"
                         disabled
-                        >{{ item.description }}</textarea
+                        >{{ item.comment }}</textarea
                       >
                     </div>
                     <div class="col-md-6">
@@ -707,14 +716,26 @@
                           <td>
                             <div class="progress">
                               <div
-                                class="progress-bar bg-danger"
+                                class="progress-bar"
+                                [ngClass]="{
+                                  'bg-danger': item.value < item.goal / 3,
+                                  'bg-warning':
+                                    item.value >= item.goal / 3 &&
+                                    item.value <= (item.goal / 3) * 2,
+                                  'bg-success': item.value > (item.goal / 3) * 2
+                                }"
+                                [ngStyle]="{
+                                  width: (item.value * 100) / item.goal + '%'
+                                }"
+                                [attr.aria-valuenow]="item.value"
                                 role="progressbar"
-                                style="width: 25%"
-                                aria-valuenow="25"
                                 aria-valuemin="0"
-                                aria-valuemax="100"
+                                [attr.aria-valuemax]="item.goal"
                               >
-                                25%
+                                {{
+                                  ((item.value * 100) / item.goal).toFixed(1) +
+                                    "%"
+                                }}
                               </div>
                             </div>
                           </td>
@@ -1059,9 +1080,9 @@
           <textarea
             class="form-control"
             rows="2"
-            formControlName="comment"
+            formControlName="achievement"
             [ngClass]="{
-              'input-invalid': submitted && f.comment.errors?.required
+              'input-invalid': submitted && f.achievement.errors?.required
             }"
           >
           </textarea>
@@ -1071,9 +1092,9 @@
           <textarea
             class="form-control"
             rows="2"
-            formControlName="description"
+            formControlName="evaluation"
             [ngClass]="{
-              'input-invalid': submitted && f.description.errors?.required
+              'input-invalid': submitted && f.evaluation.errors?.required
             }"
           >
           </textarea>
@@ -1083,9 +1104,9 @@
           <textarea
             class="form-control"
             rows="2"
-            formControlName="evaluation"
+            formControlName="comment"
             [ngClass]="{
-              'input-invalid': submitted && f.evaluation.errors?.required
+              'input-invalid': submitted && f.comment.errors?.required
             }"
           >
           </textarea>
