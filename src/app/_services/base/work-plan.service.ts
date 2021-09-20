@@ -11,10 +11,14 @@ export class WorkPlanService {
   private segmentWorkPlanInsert;
   private segmentActivityListByCommitment;
   private segmentMonitoringSearch;
+  private segmentMonitoringSearchHistory;
+  private segmentMonitoringInsert;
   constructor(private apiService: ApiBaseService) {
     this.segmentWorkPlanInsert = '/workplan/save';
     this.segmentActivityListByCommitment = '/activity/searchbycommitment/';
     this.segmentMonitoringSearch = '/workplan/searchbyagreement/';
+    this.segmentMonitoringSearchHistory = '/monitoring/searchbyagreement/';
+    this.segmentMonitoringInsert = '/monitoring/save';
   }
   workPlanInsert(item): Observable<any> {
     return this.apiService.post(
@@ -32,6 +36,18 @@ export class WorkPlanService {
   monitoringSearch(id): Observable<any> {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentMonitoringSearch}${id}`
+    );
+  }
+  monitoringSearchHistory(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentMonitoringSearchHistory}${id}`
+    );
+  }
+  monitoringInsert(item): Observable<any> {
+    return this.apiService.post(
+      `${environment.apiUrl}${this.segmentMonitoringInsert}`,
+      item,
+      null
     );
   }
 }

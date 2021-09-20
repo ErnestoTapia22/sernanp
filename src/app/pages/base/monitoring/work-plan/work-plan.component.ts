@@ -42,6 +42,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   fieldArray: Array<any> = [];
   fieldArrayTotalTemp: any[] = [];
   newAttribute: any = {};
+  editAttribute: any = {};
   anpForm: FormGroup;
   anpList: any[] = [];
   agreementStateList: any[] = [];
@@ -55,6 +56,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   commitmentId: number = 0;
   disabled: boolean = false;
   monitoringList: any[] = [];
+  monitoringListHistory: any[] = [];
+  monitoringHistoryCount: number = 0;
+  formMonitoring: FormGroup;
+  submitted: boolean = false;
+
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -80,11 +86,15 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.searchAgreementState();
       this.getDetail(this.agreementId);
       this.searchMonitoring();
+      this.monitoringSearchHistory();
     }
 
     this.searchCommitments();
 
     // this.onSearch();
+  }
+  get f() {
+    return this.formMonitoring.controls;
   }
   onDeleteModal(content) {
     this.modalRef = this.modalService.open(content, {
@@ -172,6 +182,14 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       semester: [],
       sem1: false,
       sem2: false,
+    });
+    this.formMonitoring = this.fb.group({
+      comment: ['', Validators.required],
+      recommendation: ['', Validators.required],
+      evaluation: ['', Validators.required],
+      description: ['', Validators.required],
+      achievement: [''],
+      activities: new FormArray([]),
     });
   }
   searchCommitments() {
@@ -372,6 +390,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   saveWorkPlan() {
     this.buildItem();
     this.disabled = true;
+    console.log(this.workPlanForm.value);
+
     try {
       this.workPlanService
         .workPlanInsert(JSON.stringify(this.workPlanForm.value))
@@ -384,6 +404,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
                 autoClose: true,
               }
             );
+            this.searchMonitoring();
+            this.monitoringSearchHistory();
             this.fieldArrayTotalTemp = [];
           } else {
             this.alertService.error('' + response.message, 'Error', {
@@ -421,10 +443,12 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
 
       return o;
     });
+    let langArr = <FormArray>this.workPlanForm.get('activities');
+    langArr.clear();
     newFieldArray.forEach((item, index) => {
-      let langArr = <FormArray>this.workPlanForm.get('activities');
       langArr.push(this.fb.group(item));
     });
+
     this.workPlanForm.patchValue({
       conservationAgreement: { id: this.agreementId },
     });
@@ -443,33 +467,58 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       (x) => x.commitmentId == this.commitmentId
     );
     console.log(activitiesFound);
-    console.log(this.commitmentId);
-    if (activitiesFound === undefined || activitiesFound === null) {
-      try {
-        this.workPlanService
-          .activityListByCommitment(this.commitmentId)
-          .subscribe((response) => {
-            if (response && response.items.length > 0) {
-              console.log(response);
-              this.fieldArray = this.setCheckBoxes(response.items);
-            } else {
-              this.fieldArray = [];
-            }
-          });
-      } catch (error) {
-        this.alertService.error(
-          'Error al traer la lista de actividades',
-          'Error',
-          { autoClose: true }
-        );
-      }
-    } else {
-      this.fieldArray = this.fieldArrayTotalTemp.filter(
-        (x) => x.commitmentId === this.commitmentId
-      );
-    }
+    // if (activitiesFound === undefined || activitiesFound === null) {
+    // try {
+    //   this.workPlanService
+    //     .activityListByCommitment(this.commitmentId)
+    //     .subscribe((response) => {
+    //       if (response && response.items.length > 0) {
+    //         console.log(response);
+    //         this.fieldArray = this.setCheckBoxes(response.items);
+    //       } else {
+    //         this.fieldArray = [];
+    //       }
+    //     });
+    // } catch (error) {
+    //   this.alertService.error(
+    //     'Error al traer la lista de actividades',
+    //     'Error',
+    //     { autoClose: true }
+    //   );
+    // }
+    // } else {
+    this.fieldArray = this.fieldArrayTotalTemp.filter(
+      (x) => x.commitmentId === this.commitmentId
+    );
+    // }
+  }
+  editFieldValue(field) {
+    field.edit = true;
+  }
+  saveFieldValue(field, index) {
+    this.fieldArray.splice(index, 1);
+    this.fieldArray.push(field);
+    field.edit = false;
   }
   setCheckBoxes(items: any[]) {
+    const parsed = items.map((item) => {
+      if (item.semester !== null && item.semester !== '') {
+        let arr: any[] = item.semester.split(',');
+        let found1 = arr.find((x) => x === '1');
+        if (found1) {
+          item.trim1 = true;
+        }
+        let found2 = arr.find((x) => x === '2');
+        if (found2) {
+          item.trim2 = true;
+        }
+      }
+      return item;
+    });
+
+    return parsed;
+  }
+  setCheckBoxes2(items: any[]) {
     const parsed = items.map((item) => {
       if (item.semester !== null && item.semester !== '') {
         let arr: any[] = item.semester.split(',');
@@ -491,6 +540,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     this.fieldArrayTotalTemp = this.fieldArrayTotalTemp.filter((obj) => {
       return obj.commitmentId !== this.commitmentId;
     });
+    console.log(this.fieldArray);
+    console.log(this.fieldArrayTotalTemp);
     this.fieldArray.map((activity) => {
       activity.commitment = { id: this.commitmentId };
       activity.commitmentId = this.commitmentId;
@@ -507,7 +558,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     this.modalRef.close();
   }
   cleanTempField() {
-    this.fieldArrayTotalTemp = [];
+    this.searchMonitoring();
   }
   searchMonitoring() {
     if (
@@ -528,6 +579,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             response.item.activities.length > 0
           ) {
             this.monitoringList = this.setCheckBoxes(response.item.activities);
+            this.setTemporaryField(
+              this.setCheckBoxes(response.item.activities)
+            );
           }
         });
     } catch (error) {
@@ -535,6 +589,114 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
         autoClose: true,
       });
     }
+  }
+  comparer(otherArray) {
+    return function (current) {
+      return (
+        otherArray.filter(function (other) {
+          return other.id == current.id;
+        }).length == 0
+      );
+    };
+  }
+  monitoringSearchHistory() {
+    if (
+      this.agreementId === undefined ||
+      this.agreementId === null ||
+      this.agreementId === ''
+    ) {
+      return;
+    }
+    try {
+      this.workPlanService
+        .monitoringSearchHistory(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.monitoringListHistory = response.items.map((act) => {
+              const parsed = this.setCheckBoxes(act.activities);
+              act.activities = parsed;
+              return act;
+            });
+            this.monitoringHistoryCount = response.items.length;
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer el historial de monitoreos',
+        'Error',
+        {
+          autoClose: true,
+        }
+      );
+    }
+  }
+  setTemporaryField(items: any[]) {
+    items = items.map((item) => {
+      item.commitmentId = item.commitment.id;
+      item.edit = false;
+      return item;
+    });
+    this.fieldArrayTotalTemp = items;
+  }
+  monitoringSave() {
+    this.submitted = true;
+    this.disabled = true;
+    if (this.monitoringList.length === 0) {
+      this.disabled = false;
+      return;
+    }
+    if (this.formMonitoring.invalid) {
+      this.disabled = false;
+      return;
+    }
+    let langArr = <FormArray>this.formMonitoring.get('activities');
+    langArr.clear();
+    this.monitoringList.forEach((item, index) => {
+      langArr.push(this.fb.group(item));
+    });
+    console.log(this.formMonitoring.value);
+
+    try {
+      this.workPlanService
+        .monitoringInsert(JSON.stringify(this.formMonitoring.value))
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.searchMonitoring();
+            this.monitoringSearchHistory();
+            this.alertService.success(
+              'Se guardó correctamente el monitoreo',
+              'Ok',
+              {
+                autoClose: true,
+              }
+            );
+          } else {
+            this.alertService.error(response.message, 'Error', {
+              autoClose: true,
+            });
+          }
+          this.submitted = false;
+          this.disabled = false;
+          this.resetFormMonitoring();
+          this.modalRef.close();
+        });
+    } catch (error) {
+      this.disabled = false;
+      this.submitted = false;
+      this.alertService.error('Error al guardar el monitoreo', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  resetFormMonitoring() {
+    this.formMonitoring.setValue({
+      comment: '',
+      recommendation: '',
+      evaluation: '',
+      description: '',
+      achievement: '',
+      activities: [],
+    });
   }
   ngOnDestroy() {}
 }

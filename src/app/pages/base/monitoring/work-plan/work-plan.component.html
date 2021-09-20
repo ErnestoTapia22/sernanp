@@ -379,25 +379,232 @@
         >
           <!-- *ngFor="let e of [].constructor(vigency); let i = index" -->
           <ul class="nav nav-tabs nav-tabs-flat" id="myTab2" role="tablist">
-            <li class="nav-item" role="presentation">
+            <li
+              *ngFor="
+                let e of [].constructor(monitoringHistoryCount);
+                let i = index
+              "
+              class="nav-item"
+              role="presentation"
+            >
+              <!-- [attr.data-bs-target]="'#tabMonitoringCurrent' + i" -->
               <button
-                class="nav-link active"
+                class="nav-link"
                 id="monitoringHistory-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#tabMonitoringHistory"
+                [attr.data-bs-target]="'#tabMonitoringHistory' + i"
                 type="button"
                 role="tab"
               >
-                Nro. 1
+                Nro. {{ i + 1 }}
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="monitoringCurrent-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#tabMonitoringCurrent"
+                type="button"
+                role="tab"
+              >
+                Actual
               </button>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
             <div
-              class="tab-pane pt-2 fade show active"
-              id="tabMonitoringHistory"
+              *ngFor="let item of monitoringListHistory; let i = index"
+              class="tab-pane pt-2 fade"
+              [id]="'tabMonitoringHistory' + i"
               role="tabpanel"
               aria-labelledby="monitoringHistory-tab"
+            >
+              <div class="card">
+                <div class="card-header">
+                  <label class="mb-0 fw-bold">Monitoreo</label>
+                  <div></div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-bordered align-middle"
+                    >
+                      <thead style="font-weight: bold">
+                        <tr>
+                          <td>Objetivo P.M.</td>
+                          <td>Compromisos</td>
+                          <td>Actividades</td>
+                          <td>Indicadores</td>
+
+                          <!-- <td colspan="2">Año 1</td>
+                <td colspan="2">Año 2</td> -->
+                          <td>Sem. 1</td>
+                          <td>Sem. 2</td>
+                          <!-- <td>Sem. 3</td>
+                  <td>Sem. 4</td> -->
+                          <td>Meta</td>
+                          <td style="width: 85px">Valor actual</td>
+                          <td>Progreso (tiempo)</td>
+                          <td>Progreso (meta)</td>
+                          <!-- <td rowspan="2">Meta</td>
+                <td rowspan="2">Resultados</td> -->
+                        </tr>
+                        <!-- <tr>
+                <td>Semt. 1</td>
+                <td>Semt. 2</td>
+                <td>Semt. 3</td>
+                <td>Semt. 4</td>
+              </tr> -->
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="let activity of item.activities; index as idx"
+                        >
+                          <td>
+                            {{
+                              activity.commitment.actionLine.objetive.name ||
+                                "sin datos"
+                            }}
+                          </td>
+                          <td>
+                            {{ activity.commitment.name }}
+                          </td>
+                          <td>
+                            {{ activity.name }}
+                          </td>
+                          <td>{{ activity.indicator }}</td>
+
+                          <td>
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [checked]="activity.trim1"
+                              disabled
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [checked]="activity.trim2"
+                              disabled
+                            />
+                          </td>
+                          <!-- <td><input type="checkbox" /></td>
+                  <td><input type="checkbox" /></td> -->
+                          <td>{{ activity.goal }}</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              [value]="activity.value"
+                              disabled
+                            />
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-danger"
+                                role="progressbar"
+                                style="width: 25%"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                25%
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="circle round-success"></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary">
+                      <i class="bi bi-brush"></i>
+                      Limpiar</button
+                    >&nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-info"
+                      (click)="onCreateEvaluationModal(contentCreateEvaluation)"
+                    >
+                      <i class="bi bi-check2-square"></i>
+                      Generar evaluación
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-success" disabled>
+                      <i class="bi bi-display"></i>
+                      Guardar monitoreo
+                    </button>
+                  </div> -->
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <label class="mb-0 fw-bold">Evaluación</label>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="txtCode" class="form-label">Logros </label>
+                      <textarea
+                        [id]="'txtGoals' + i"
+                        class="form-control"
+                        rows="3"
+                        disabled
+                        >{{ item.comment }}</textarea
+                      >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="txtName" class="form-label"
+                        >Resultados
+                      </label>
+                      <textarea
+                        [id]="'txtResults' + i"
+                        class="form-control"
+                        rows="3"
+                        disabled
+                        >{{ item.achievement }}</textarea
+                      >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="txtName" class="form-label"
+                        >Inconvenientes
+                      </label>
+                      <textarea
+                        [id]="'txtObstacle' + i"
+                        class="form-control"
+                        rows="3"
+                        disabled
+                        >{{ item.description }}</textarea
+                      >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="txtName" class="form-label"
+                        >Recomendaciones</label
+                      >
+                      <textarea
+                        [id]="'txtRecommendations' + i"
+                        class="form-control"
+                        rows="3"
+                        disabled
+                        >{{ item.recommendation }}</textarea
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane pt-2 fade show active"
+              id="tabMonitoringCurrent"
+              role="tabpanel"
+              aria-labelledby="monitoringCurrent-tab"
             >
               <div class="card">
                 <div class="card-header">
@@ -454,7 +661,10 @@
                       <tbody>
                         <tr *ngFor="let item of monitoringList; index as idx">
                           <td>
-                            {{ item.objetive || "sin datos" }}
+                            {{
+                              item.commitment.actionLine.objetive.name ||
+                                "sin datos"
+                            }}
                           </td>
                           <td>
                             {{ item.commitment.name }}
@@ -465,10 +675,20 @@
                           <td>{{ item.indicator }}</td>
 
                           <td>
-                            <input type="checkbox" [checked]="item.trim1" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [checked]="item.trim1"
+                              disabled
+                            />
                           </td>
                           <td>
-                            <input type="checkbox" [checked]="item.trim2" />
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [checked]="item.trim2"
+                              disabled
+                            />
                           </td>
                           <!-- <td><input type="checkbox" /></td>
                     <td><input type="checkbox" /></td> -->
@@ -478,6 +698,7 @@
                               type="number"
                               class="form-control"
                               [value]="item.value"
+                              [(ngModel)]="item.value"
                             />
                           </td>
                           <td>
@@ -514,11 +735,11 @@
                       <i class="bi bi-check2-square"></i>
                       Generar evaluación
                     </button>
-                    &nbsp;
+                    <!-- &nbsp;
                     <button type="button" class="btn btn-success" disabled>
                       <i class="bi bi-display"></i>
                       Guardar monitoreo
-                    </button>
+                    </button> -->
                   </div>
                 </div>
               </div>
@@ -551,7 +772,7 @@
             type="button"
             role="tab"
           >
-            Plan de trabajo 1
+            Plan de trabajo
           </button>
         </li>
       </ul>
@@ -587,6 +808,8 @@
                       class="form-control"
                       type="text"
                       [value]="field.id"
+                      [(ngModel)]="field.id"
+                      [disabled]="!field.edit"
                     />
                   </td>
                   <td>
@@ -594,6 +817,8 @@
                       class="form-control"
                       type="text"
                       [value]="field.name"
+                      [(ngModel)]="field.name"
+                      [disabled]="!field.edit"
                     />
                   </td>
                   <!-- <td>
@@ -609,6 +834,8 @@
                       class="form-control"
                       type="text"
                       [value]="field.indicator"
+                      [(ngModel)]="field.indicator"
+                      [disabled]="!field.edit"
                     />
                   </td>
                   <td>
@@ -616,6 +843,8 @@
                       class="form-control"
                       type="text"
                       [value]="field.goal"
+                      [(ngModel)]="field.goal"
+                      [disabled]="!field.edit"
                     />
                   </td>
                   <td>
@@ -625,6 +854,8 @@
                         type="checkbox"
                         id="inlineCheckbox1"
                         [checked]="field.trim1"
+                        [(ngModel)]="field.trim1"
+                        [disabled]="!field.edit"
                       />
                       <label class="form-check-label" for="inlineCheckbox1"
                         >1</label
@@ -636,6 +867,8 @@
                         type="checkbox"
                         id="inlineCheckbox2"
                         [checked]="field.trim2"
+                        [(ngModel)]="field.trim2"
+                        [disabled]="!field.edit"
                       />
                       <label class="form-check-label" for="inlineCheckbox2"
                         >2</label
@@ -646,6 +879,22 @@
                     {{ field.isNew ? "Nuevo" : "" }}
                   </td>
                   <td>
+                    <button
+                      *ngIf="!field.edit"
+                      class="btn btn-sm btn-outline-info border-0"
+                      type="button"
+                      (click)="editFieldValue(field)"
+                    >
+                      <i class="bi bi-pencil fs-lg"></i>
+                    </button>
+                    <button
+                      *ngIf="field.edit"
+                      class="btn btn-sm btn-outline-success border-0"
+                      type="button"
+                      (click)="saveFieldValue(field, i)"
+                    >
+                      <i class="bi bi-check-lg"></i>
+                    </button>
                     <button
                       class="btn btn-sm btn-outline-danger border-0"
                       type="button"
@@ -799,33 +1048,67 @@
       </h5>
       <button type="button" class="btn-close" (click)="modal.close()"></button>
     </div>
-    <div class="modal-body">
-      <div class="row g-3"></div>
-      <div class="col-md-12">
-        <label class="form-label">Logros</label>
-        <textarea class="form-control" rows="2"> </textarea>
+    <form [formGroup]="formMonitoring" (ngSubmit)="monitoringSave()" novalidate>
+      <div class="modal-body">
+        <div class="row g-3"></div>
+        <div class="col-md-12">
+          <label class="form-label">Logros</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="comment"
+            [ngClass]="{
+              'input-invalid': submitted && f.comment.errors?.required
+            }"
+          >
+          </textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Resultados</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="description"
+            [ngClass]="{
+              'input-invalid': submitted && f.description.errors?.required
+            }"
+          >
+          </textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Inconvenientes</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="evaluation"
+            [ngClass]="{
+              'input-invalid': submitted && f.evaluation.errors?.required
+            }"
+          >
+          </textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Recomendaciones</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="recommendation"
+            [ngClass]="{
+              'input-invalid': submitted && f.recommendation.errors?.required
+            }"
+          >
+          </textarea>
+        </div>
       </div>
-      <div class="col-md-12">
-        <label class="form-label">Resultados</label>
-        <textarea class="form-control" rows="2"> </textarea>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="disabled">
+          Guardar Monitoreo
+        </button>
       </div>
-      <div class="col-md-12">
-        <label class="form-label">Inconvenientes</label>
-        <textarea class="form-control" rows="2"> </textarea>
-      </div>
-      <div class="col-md-12">
-        <label class="form-label">Recomendaciones</label>
-        <textarea class="form-control" rows="2"> </textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.close()">
-        Cancelar
-      </button>
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-        Guardar
-      </button>
-    </div>
+    </form>
   </ng-template>
   <!-- ============================================================== -->
   <!-- End Container fluid  -->
