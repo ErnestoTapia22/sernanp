@@ -447,8 +447,8 @@
 
                           <td>Meta</td>
                           <td style="width: 85px">Valor actual</td>
-                          <td>Progreso (tiempo)</td>
-                          <td>Progreso (meta)</td>
+                          <td>Progreso (Actividad)</td>
+                          <td>Progreso (Compromiso)</td>
                         </tr>
                       </thead>
                       <tbody>
@@ -496,40 +496,63 @@
                             />
                           </td>
                           <td>
-                            <div class="progress">
+                            <div class="progress position-relative">
                               <div
                                 class="progress-bar"
                                 [ngClass]="{
-                                  'bg-danger':
-                                    activity.progress < activity.goal / 3,
+                                  'bg-danger': activity.progress < 30,
                                   'bg-warning':
-                                    activity.progress >= activity.goal / 3 &&
-                                    activity.progress <=
-                                      (activity.goal / 3) * 2,
-                                  'bg-success':
-                                    activity.progress > (activity.goal / 3) * 2
+                                    activity.progress >= 30 &&
+                                    activity.progress <= 70,
+                                  'bg-success': activity.progress > 70
                                 }"
                                 role="progressbar"
                                 [ngStyle]="{
-                                  width:
-                                    (activity.progress * 100) / activity.goal +
-                                    '%'
+                                  width: activity.progress + '%'
                                 }"
                                 [attr.aria-valuenow]="activity.progress"
                                 aria-valuemin="0"
                                 [attr.aria-valuemax]="activity.goal"
+                              ></div>
+                              <small
+                                class="
+                                  justify-content-center
+                                  d-flex
+                                  position-absolute
+                                  w-100
+                                "
+                                [ngClass]="{
+                                  'text-white': activity.progress > 60
+                                }"
+                                >{{ activity.progress.toFixed(1) + "%" }}</small
                               >
-                                {{
-                                  (
-                                    (activity.progress * 100) /
-                                    activity.goal
-                                  ).toFixed(1) + "%"
-                                }}
-                              </div>
                             </div>
                           </td>
                           <td>
-                            <div class="circle round-success"></div>
+                            <div
+                              class="circle"
+                              [ngClass]="{
+                                'round-danger':
+                                  activity.commitment.progress < 30,
+                                'round-warning':
+                                  activity.commitment.progress >= 30 / 3 &&
+                                  activity.commitment.progress <= 70 * 2,
+                                'round-success':
+                                  activity.commitment.progress > 70
+                              }"
+                            >
+                              <span
+                                class="align-middle"
+                                [ngClass]="{
+                                  'text-white':
+                                    activity.commitment.progress < 30 ||
+                                    activity.commitment.progress > 70
+                                }"
+                                >{{
+                                  activity.commitment.progress.toFixed(1)
+                                }}</span
+                              >
+                            </div>
                           </td>
                         </tr>
                       </tbody>
@@ -658,8 +681,8 @@
                     <td>Sem. 4</td> -->
                           <td>Meta</td>
                           <td style="width: 85px">Valor actual</td>
-                          <td>Progreso (tiempo)</td>
-                          <td>Progreso (meta)</td>
+                          <td>Progreso (Actividad)</td>
+                          <td>Progreso (Compromiso)</td>
                           <!-- <td rowspan="2">Meta</td>
                   <td rowspan="2">Resultados</td> -->
                         </tr>
@@ -714,7 +737,7 @@
                             />
                           </td>
                           <td>
-                            <div class="progress">
+                            <div class="progress position-relative">
                               <div
                                 class="progress-bar"
                                 [ngClass]="{
@@ -731,16 +754,46 @@
                                 role="progressbar"
                                 aria-valuemin="0"
                                 [attr.aria-valuemax]="item.goal"
+                              ></div>
+                              <small
+                                class="
+                                  justify-content-center
+                                  d-flex
+                                  position-absolute
+                                  w-100
+                                "
+                                [ngClass]="{
+                                  'text-white': item.value > (item.goal / 3) * 2
+                                }"
                               >
                                 {{
                                   ((item.value * 100) / item.goal).toFixed(1) +
                                     "%"
-                                }}
-                              </div>
+                                }}</small
+                              >
                             </div>
                           </td>
                           <td>
-                            <div class="circle round-success"></div>
+                            <div
+                              class="circle"
+                              [ngClass]="{
+                                'round-danger': item.commitment.progress < 30,
+                                'round-warning':
+                                  item.commitment.progress >= 30 / 3 &&
+                                  item.commitment.progress <= 70 * 2,
+                                'round-success': item.commitment.progress > 70
+                              }"
+                            >
+                              <span
+                                class="align-middle"
+                                [ngClass]="{
+                                  'text-white':
+                                    item.commitment.progress < 30 ||
+                                    item.commitment.progress > 70
+                                }"
+                                >{{ item.commitment.progress.toFixed(1) }}</span
+                              >
+                            </div>
                           </td>
                         </tr>
                       </tbody>
