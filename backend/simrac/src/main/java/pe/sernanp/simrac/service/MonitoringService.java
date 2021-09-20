@@ -77,28 +77,27 @@ public class MonitoringService extends BaseService<MonitoringModel>{
 			}
 			boolean success = true;			
 			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();			
-			List<ActivityModel> items = this._activityRepository.searchByMonitoringAndAgreement(this._dataSource, id);
-			List<Integer> ids = new ArrayList<Integer>();
-			items.forEach(monitoring -> {
-				if (!ids.contains(monitoring.getMonitoring().getId2()))
-					ids.add(monitoring.getMonitoring().getId2());				
+			List<ActivityModel> activities = this._activityRepository.searchByMonitoringAndAgreement(this._dataSource, id);
+			List<Integer> monitoringIds = new ArrayList<Integer>();
+			activities.forEach(activity -> {
+				if (!monitoringIds.contains(activity.getMonitoring().getId2()))
+					monitoringIds.add(activity.getMonitoring().getId2());				
 			});
-			List<MonitoringModel> items2 = new ArrayList<MonitoringModel>();
-			for (int id2 : ids) {
-				MonitoringModel ite = this._repository.detail(this._dataSource, id2);
-				items2.add(ite);
-			}			
-			for (MonitoringModel news : items2) {
-				List<ActivityModel> items233 = new ArrayList<ActivityModel>();
-				items.forEach(i -> {
-					if (i.getMonitoring().getId2() == news.getId2())
-						items233.add(i);
+			List<MonitoringModel> items = new ArrayList<MonitoringModel>();
+			for (int monitoringId : monitoringIds) {
+				MonitoringModel item = this._repository.detail(this._dataSource, monitoringId);
+				items.add(item);
+			}
+			for (MonitoringModel item : items) {
+				List<ActivityModel> activitiesFound = new ArrayList<ActivityModel>();
+				activities.forEach(activity -> {
+					if (activity.getMonitoring().getId2() == item.getId2())
+						activitiesFound.add(activity);
 				});
-				news.setActivities(items233);
-				//news.setActivities(items.   .filter(p -> p.getMonitoring().getId2() == news.getId2()).toList());
-			}			
+				item.setActivities(activitiesFound);
+			}
 			response.setSuccess(success);
-			response.setItems(items2);
+			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

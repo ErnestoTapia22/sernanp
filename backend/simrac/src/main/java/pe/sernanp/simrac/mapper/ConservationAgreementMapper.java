@@ -26,8 +26,8 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setSource(new SourceModel());
 		super.mapRowWithTable(rs, item.getSource(), "source");
 		
-		item.setDistritoId(ResultSetExtension.getString2(rs, "districtid"));
-		item.setDistritName(ResultSetExtension.getString2(rs, "districtname"));
+		item.setDistrictId(ResultSetExtension.getString2(rs, "districtid"));
+		item.setDistrictName(ResultSetExtension.getString2(rs, "districtname"));
 		item.setFirm(ResultSetExtension.getDate2(rs, "firm"));
 		item.setVigency(ResultSetExtension.getInt2(rs, "vigency"));
 		item.setPartMen(ResultSetExtension.getInt2(rs, "partmen"));
@@ -38,7 +38,7 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setBenFamily(ResultSetExtension.getString2(rs, "benfamily"));
 		item.setAreaAmbitc(ResultSetExtension.getDouble2(rs, "areambitc"));
 		item.setProducedArea(ResultSetExtension.getDouble2(rs, "producedarea"));
-		item.setDetalleProduction(ResultSetExtension.getString2(rs, "detalleproduction"));
+		item.setDetailProduction(ResultSetExtension.getString2(rs, "detalleproduction"));
 		item.setRestHect(ResultSetExtension.getDouble2(rs, "resthect"));
 		item.setRestdet(ResultSetExtension.getString2(rs, "restdet"));
 		item.setSectNom(ResultSetExtension.getString2(rs, "sectnom"));
@@ -47,7 +47,7 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setTerritoryMod(ResultSetExtension.getString2(rs, "territorymod"));
 		item.setFinanApa(ResultSetExtension.getBoolean2(rs, "finanapa"));
 		item.setFinanNum(ResultSetExtension.getDouble2(rs, "finannum"));
-		item.setComTxt(ResultSetExtension.getString2(rs, "comtxt"));
+		item.setComment(ResultSetExtension.getString2(rs, "comtxt"));
 		item.setGenObj(ResultSetExtension.getString2(rs, "genobj"));
 		item.setFinanMod(ResultSetExtension.getString2(rs, "finanmod"));
 		item.setFondName(ResultSetExtension.getString2(rs, "fondname"));

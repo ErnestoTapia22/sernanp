@@ -82,6 +82,7 @@
                       class="form-control"
                       placeholder="Código"
                       formControlName="code"
+                      disabled
                     />
                   </div>
                   <div class="col-md-6">
@@ -655,55 +656,27 @@
                   >
                     <div class="row g-3">
                       <div class="col-md-3">
-                        <label for="numbScope" class="form-label"
-                          >Ámbito del ADC (Ha)</label
-                        >
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          id="numbScope"
-                          formControlName="areaAmbitc"
-                        />
+                        <label for="numbScope" class="form-label">Ámbito del ADC (Ha)</label>
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" id="numbScope" formControlName="areaAmbitc"/>
+                          <span class="input-group-text">Ha</span>
+                        </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbProductiveA" class="form-label"
-                          >Superficie de intervención (Ha)</label
-                        >
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Superficie bajo manejo productivo "
-                        ></i>
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          id="numbProductiveA"
-                          formControlName="producedArea"
-                        />
+                        <label for="numbProductiveA" class="form-label">Superficie de intervención (Ha)</label>
+                        <i class="bi bi-info-circle mx-1" placement="top" ngbTooltip="Superficie bajo manejo productivo"></i>
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" id="numbProductiveA" formControlName="producedArea"/>
+                          <span class="input-group-text">Ha</span>
+                        </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbInterventionA" class="form-label"
-                          >Ubicacion Superficie de intervención</label
-                        >
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado "
-                        ></i>
-                        <input
-                          type="text"
-                          min="0"
-                          class="form-control"
-                          id="numbInterventionA"
-                          value=""
-                        />
+                        <label for="numbInterventionA" class="form-label">Ubicacion Superficie de intervención</label>
+                        <i class="bi bi-info-circle mx-1" placement="top" ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"></i>
+                        <input type="text" min="0" class="form-control" id="numbInterventionA" value=""/>
                       </div>
-
                       <div class="col-md-3">
-                        <label for="detalleProduction" class="form-label"
-                          >Detalle superficie intervención
+                        <label for="detalleProduction" class="form-label">Detalle superficie intervención
                         </label>
                         <i
                           class="bi bi-info-circle mx-1"
@@ -714,25 +687,18 @@
                           id="detalleProduction"
                           class="form-control"
                           rows="1"
-                          formControlName="detalleProduction"
+                          formControlName="detailProduction"
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="restHect" class="form-label"
-                          >Superficie bajo restauración (Ha)</label
-                        >
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          id="restHect"
-                          formControlName="restHect"
-                        />
+                        <label for="restHect" class="form-label">Superficie bajo restauración (Ha)</label>
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" id="restHect" formControlName="restHect"/>
+                          <span class="input-group-text">Ha</span>
+                        </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="txtaIndirectB" class="form-label"
-                          >Detalle ámbito bajo restauración</label
-                        >
+                        <label for="txtaIndirectB" class="form-label">Detalle ámbito bajo restauración</label>
                         <textarea
                           id="txtaDetailAR"
                           class="form-control"
@@ -752,16 +718,11 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label"
-                          >Superficie del(os) sector(es) de V y C (Ha)</label
-                        >
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          id="numbAreaVC"
-                          formControlName="sectHect"
-                        />
+                        <label for="numbAreaVC" class="form-label">Superficie del(os) sector(es) de V y C (Ha)</label>
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" id="numbAreaVC" formControlName="sectHect"/>
+                          <span class="input-group-text">Ha</span>
+                        </div>                        
                       </div>
                       <div class="col-md-3">
                         <label for="txtaDetailSVC" class="form-label"
@@ -795,6 +756,13 @@
                           rows="1"
                           formControlName="territoryMod"
                         ></textarea>
+                      </div>
+                      <div class="col-md-3">
+                        <label for="numbAreaVC" class="form-label">Superficie del Ámbito de control</label>
+                        <div class="input-group">
+                          <input type="number" min="0" class="form-control" id="numbAreaVC" formControlName="sectHect"/>
+                          <span class="input-group-text">Ha</span>
+                        </div>                        
                       </div>
                       <div class="col-md-3 d-none">
                         <div class="mb-3">
@@ -858,7 +826,6 @@
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Articulaciones</label>
-
                 <button
                   type="submit"
                   class="btn btn-sm btn-outline-success mx-2"
@@ -872,49 +839,31 @@
                 <div class="row g-3">
                   <div class="col-md-3">
                     <div class="form-check form-switch form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="chkArticulated"
-                        value="option3"
-                      />
-                      <label for="chkArticulated" class="form-label"
-                        >Plan maestro (*)</label
-                      >
+                      <input class="form-check-input" type="checkbox" id="chkArticulated" value="option3"/>
+                      <label for="chkArticulated" class="form-label">Plan maestro (*)</label>
+                    </div>
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="chkLocalDevelopment" value="option3"/>
+                      <label class="form-check-label" for="chkLocalDevelopment">Plan de desarrollo local</label>
+                    </div>
+                    <div class="">
+                      <label for="detalle" class="form-label">Detalle del/los municipios del ADC</label>
+                      <input type="text" class="form-control" id="detalle"/>
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label"
-                      >Plan de vida de las comunidades</label
-                    >
+                    <label class="form-label">Plan de vida de las comunidades</label>
                     <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkComunityL"
-                        id="yes"
-                      />
+                      <input class="form-check-input" type="radio" name="chkComunityL" id="yes"/>
                       <label class="form-check-label" for="yes">Sí</label>
                     </div>
-
                     <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkComunityL"
-                        id="not"
-                      />
+                      <input class="form-check-input" type="radio" name="chkComunityL" id="not"/>
                       <label class="form-check-label" for="not">No</label>
                     </div>
                     <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkComunityL"
-                        id="ecaNotApply"
-                      />
-                      <label class="form-check-label" for="ecaNotApply"
-                        >No aplica</label
+                      <input class="form-check-input" type="radio" name="chkComunityL" id="ecaNotApply"/>
+                      <label class="form-check-label" for="ecaNotApply">No aplica</label
                       >
                     </div>
                   </div>
@@ -954,27 +903,18 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="form-check form-switch form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="chkLocalDevelopment"
-                        value="option3"
-                      />
-                      <label class="form-check-label" for="chkLocalDevelopment"
-                        >Plan de desarrollo local</label
-                      >
+                    <label class="form-label">Zonificación Forestal</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="ecaYes" value="1" />
+                      <label class="form-check-label" for="ecaYes">Sí</label>
                     </div>
-                    <div class="">
-                      <label for="detalle" class="form-label"
-                        >Detalle del/los municipios del ADC</label
-                      >
-                      <input
-                        type="number"
-                        min="0"
-                        class="form-control"
-                        id="detalle"
-                      />
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="ecaNot"  value="0"/>
+                      <label class="form-check-label" for="ecaNot">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="notApply"  value="2"/>
+                      <label class="form-check-label" for="notApply">No aplica</label>
                     </div>
                   </div>
                 </div>

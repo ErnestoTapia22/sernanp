@@ -74,6 +74,7 @@ export class AgreementComponent implements OnInit {
       this.agreementService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {
+          this.agreementList = [];
           if (data && data.items && data.items.length > 0) {
             this.agreementList = data.items;
             this.total = data.total;
@@ -85,6 +86,7 @@ export class AgreementComponent implements OnInit {
           } else {
             this.isLoading = false;
             this.spinner.hide();
+            this.alertService.info('No se encontraron elementos', 'Ok', { autoClose: true });
           }
         });
     } catch (error) {
@@ -132,6 +134,10 @@ export class AgreementComponent implements OnInit {
       this.provinces = [];      
       return;
     }
+    this.form.patchValue({
+      provinceId: '',
+      districtId: ''
+    });
     this.districts = [];
     try {
       this.agreementService
@@ -153,6 +159,9 @@ export class AgreementComponent implements OnInit {
       this.districts = [];
       return;
     }
+    this.form.patchValue({
+      districtId: ''
+    });
     try {
       this.agreementService.searchDistricts(id).subscribe((response) => {
         if (response && response.items.length > 0) {
@@ -168,33 +177,20 @@ export class AgreementComponent implements OnInit {
   buildForm(): void {
     this.form = this.fb.group({
       code: ['', Validators.compose([Validators.maxLength(10)])],
-      firm: [
-        '',
-        Validators.compose([
-          Validators.pattern(
-            '/^(((0[1-9]|[12]d|3[01])/(0[13578]|1[02])/((19|[2-9]d)d{2}))|((0[1-9]|[12]d|30)/(0[13456789]|1[012])/((19|[2-9]d)d{2}))|((0[1-9]|1d|2[0-8])/02/((19|[2-9]d)d{2}))|(29/02/((1[6-9]|[2-9]d)(0[48]|[2468][048]|[13579][26])|(([1][26]|[2468][048]|[3579][26])00))))$/g'
-          ),
-        ]),
-      ],
-      category: [''],
+      name: [''],
+      firm: [''],
+      firmEnd: [''],
       state: [''],
       pageSize: ['10'],
-      name: [''],
       agreementState: this.fb.group({
         id: [0],
       }),
-      source: this.fb.group({
+      anp: this.fb.group({
         id: [0],
       }),
-      department: this.fb.group({
-        id: [0],
-      }),
-      province: this.fb.group({
-        id: [0],
-      }),
-      district: this.fb.group({
-        id: [0],
-      })
+      departmentId: [''],
+      provinceId: [''],
+      districtId: [''],
     });
   }
   ngOnDestroy() {
@@ -224,16 +220,16 @@ export class AgreementComponent implements OnInit {
           this.agreementStateList = response.items;
         }
       });
-      this.agreementService.agreementSourceList().subscribe((response) => {
-        if (
-          response &&
-          response.items !== undefined &&
-          response.items !== null &&
-          response.items.length > 0
-        ) {
-          this.agreementSourceList = response.items;
-        }
-      });
+      //this.agreementService.agreementSourceList().subscribe((response) => {
+      //  if (
+      //    response &&
+      //    response.items !== undefined &&
+      //    response.items !== null &&
+      //    response.items.length > 0
+      //  ) {
+      //    this.agreementSourceList = response.items;
+      //  }
+      //});
       this.anpService.anpList().subscribe((response) => {
         if (response && response.items.length > 0) {
           this.anps = response.items;
@@ -273,10 +269,15 @@ export class AgreementComponent implements OnInit {
       order: 'asc',
     };
     let item = {
-      name: '',
-      agreementState: { id: 0 },
-      source: { id: 0 },
       code: '',
+      name: '',      
+      agreementState: { id: 0 },
+      anp: { id: 0 },
+      departmentId: '',
+      provinceId: '',
+      districtId: '',
+      firm: '',
+      firmEnd: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),

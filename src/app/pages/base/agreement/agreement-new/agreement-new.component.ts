@@ -533,10 +533,7 @@ export class AgreementNewComponent implements OnInit {
       state: [true],
       registrationDate: [''],
       code: [''],
-      vigency: [
-        0,
-        Validators.compose([Validators.required, Validators.min(1)]),
-      ],
+      vigency: [0, Validators.compose([Validators.required, Validators.min(1)])],
       firm: [''],
       partMen: [0],
       partWomen: [0],
@@ -546,7 +543,7 @@ export class AgreementNewComponent implements OnInit {
       benFamily: [''],
       localization: [''],
       producedArea: [0],
-      detalleProduction: [''],
+      detailProduction: [''],
       restHect: [0],
       restdet: [''],
       sectNom: [''],
@@ -554,7 +551,7 @@ export class AgreementNewComponent implements OnInit {
       territoryMod: [''],
       finanApa: [false],
       finanNum: [0],
-      comTxt: [''],
+      comment: [''],
       genObj: [''],
       finanMod: [''],
       fondName: [''],
@@ -573,7 +570,7 @@ export class AgreementNewComponent implements OnInit {
       ecosystemType: this.fb.group({
         id: [0],
       }),
-      distritoId: [''],
+      districtId: [''],
       department: [0, Validators.min(1)],
       province: [0, Validators.min(1)],
       district: [0, Validators.min(1)],
@@ -650,7 +647,7 @@ export class AgreementNewComponent implements OnInit {
         return;
       }
       this.form.patchValue({
-        distritoId: this.form.get('district').value,
+        districtId: this.form.get('district').value,
       });
 
       this.agreementService
@@ -825,7 +822,7 @@ export class AgreementNewComponent implements OnInit {
             benFamily: response.item.benFamily,
             areaAmbitc: response.item.areaAmbitc,
             producedArea: response.item.producedArea,
-            detalleProduction: response.item.detalleProduction,
+            detailProduction: response.item.detailProduction,
             agreementState: { id: response.item.agreementState.id || 0 },
             restHect: response.item.restHect,
             restdet: response.item.restdet,
@@ -835,7 +832,7 @@ export class AgreementNewComponent implements OnInit {
             territoryMod: response.item.territoryMod,
             finanApa: response.item.finanApa,
             finanNum: response.item.finanNum,
-            comTxt: response.item.comTxt,
+            comment: response.item.comment,
             genObj: response.item.genObj,
             finanMod: response.item.finanMod,
             fondName: response.item.fondName,
@@ -844,13 +841,13 @@ export class AgreementNewComponent implements OnInit {
             source: { id: response.item.source.id || 0 },
             ecosystemType: { id: 0 },
             localization: '',
-            distritoId: response.item.distritoId,
+            districtId: response.item.districtId,
             department: 0,
             province: 0,
             district: 0,
           });
           this.addAgreementLayers();
-          this.setLocalization(response.item.distritoId);
+          this.setLocalization(response.item.districtId);
           this.disableFields();
         }
       });
