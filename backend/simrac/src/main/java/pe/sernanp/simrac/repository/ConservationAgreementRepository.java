@@ -28,8 +28,14 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
 		parameters.put("pcode", item.getCode());
 		parameters.put("pname", item.getName());
+		parameters.put("panpid", item.getAnp().getId2());
 		parameters.put("pagreementstateid", item.getAgreementState().getId2());
-		parameters.put("psourceid", item.getSource().getId2());
+		parameters.put("pdepartmentid", item.getDepartmentId());
+		parameters.put("pprovinceid", item.getProvinceId());
+		parameters.put("pdistrictid", item.getDistrictId());
+		parameters.put("pfirmstart", item.getFirm());
+		parameters.put("pfirmend", item.getFirmEnd());
+		parameters.put("pstate", item.getState());
 		return super.search2(ds,"simrac.fn_buscar_acuerdoconservacion",parameters,paginator, new ConservationAgreementMapper());
 	}
 	
@@ -52,7 +58,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		 parameters.put("pagreementstateid", item.getAgreementState().getId2() == 0 ? null : item.getAgreementState().getId2());
 		 parameters.put("psourceid", item.getSource().getId2() == 0 ? null : item.getSource().getId2());
 		 
-		 parameters.put("pdistrictid", item.getDistritoId() );
+		 parameters.put("pdistrictid", item.getDistrictId() );
 		 
 		 parameters.put("pname", item.getName());
 		 parameters.put("pdescription", item.getDescription());
@@ -69,7 +75,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		 parameters.put("pbenfamily", item.getBenFamily());
 		 parameters.put("pareaambitc", item.getAreaAmbitc());
 		 parameters.put("pproducedarea", item.getProducedArea());
-		 parameters.put("pdetalleproduction", item.getDetalleProduction());
+		 parameters.put("pdetalleproduction", item.getDetailProduction());
 		 parameters.put("presthect", item.getRestHect());
 		 parameters.put("prestdet", item.getRestdet());
 		 parameters.put("psectnom", item.getSectNom());
@@ -78,7 +84,7 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		 parameters.put("pterritorymod", item.getTerritoryMod());
 		 parameters.put("pfinanapa", item.getFinanApa());
 		 parameters.put("pfinannum", item.getFinanNum());
-		 parameters.put("pcomtxt", item.getComTxt());
+		 parameters.put("pcomtxt", item.getComment());
 		 parameters.put("pgenobj", item.getGenObj());
 		 parameters.put("pfinanmod", item.getFinanMod());
 		 parameters.put("pfondname", item.getFondName());

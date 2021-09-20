@@ -71,7 +71,7 @@
                 <input type="text" class="form-control" formControlName="name"/>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="agreementState">
+                <div formGroupName="anp">
                   <label for="inputState" class="form-label">ANP</label>
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
@@ -92,22 +92,11 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-none">
-                <div formGroupName="source">
-                  <label for="inputState" class="form-label">Fuente de financiamiento</label>
-                  <select class="form-select" formControlName="id">
-                    <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementSourceList" [value]="item.id">
-                      {{ item.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="department">
+                <div>
                   <label for="ddlDepartment" class="form-label">Departamento</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="id" (change)="searchProvinces($event.target.value)">
-                    <option selected value="0">SELECCIONE</option>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="departmentId" (change)="searchProvinces($event.target.value)">
+                    <option selected value="">SELECCIONE</option>
                     <option *ngFor="let item of departments" [value]="item.code">
                       {{ item.name }}
                     </option>
@@ -115,10 +104,10 @@
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="province">
+                <div>
                   <label for="inputState" class="form-label">Provincia</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="id" (change)="searchDistricts($event.target.value)">
-                    <option selected value="0">SELECCIONE</option>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="provinceId" (change)="searchDistricts($event.target.value)">
+                    <option selected value="">SELECCIONE</option>
                     <option *ngFor="let item of provinces" [value]="item.code">
                       {{ item.name }}
                     </option>
@@ -126,10 +115,10 @@
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div formGroupName="district">
+                <div>
                   <label for="inputState" class="form-label">Distrito</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="id">
-                    <option selected value="0">SELECCIONE</option>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="districtId">
+                    <option selected value="">SELECCIONE</option>
                     <option *ngFor="let item of districts" [value]="item.code">
                       {{ item.name }}
                     </option>
@@ -141,12 +130,11 @@
                   <label for="txtSuscriptionDateStart" class="form-label">Fecha de suscripción</label>
                   <div class="row">
                     <div class="col-auto">
-                      <input type="date" class="form-control" id="txtSuscriptionDateStart" placeholder="Desde"/>
+                      <input type="date" class="form-control" id="txtSuscriptionDateStart" placeholder="Desde" formControlName="firm"/>
                     </div>
                     <div class="col-auto">
-                      <input type="date" class="form-control" id="txtSuscriptionDateEnd" placeholder="Hasta"/>
-                    </div>
-                    
+                      <input type="date" class="form-control" id="txtSuscriptionDateEnd" placeholder="Hasta" formControlName="firmEnd"/>
+                    </div>                    
                   </div>                  
                 </div>
               </div>
@@ -160,8 +148,9 @@
                   <tr>
                     <th>Código</th>
                     <th>Nombre</th>
+                    <th>ANP</th>
                     <th>Estado</th>
-                    <th>Años de Vigencia</th>
+                    <th>Vigencia (Años)</th>
                     <th>Fecha Suscr.</th>
                     <th>Opciones</th>
                   </tr>
@@ -201,6 +190,7 @@
                     >
                       <td>{{ item.code }}</td>
                       <td>{{ item.name }}</td>
+                      <td>{{ item.anp.name }}</td>
                       <td>{{ item.agreementState.name }}</td>
                       <td>{{ item.vigency }}</td>
                       <td>

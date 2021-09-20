@@ -12,11 +12,14 @@ public class ConservationAgreementModel extends BaseModel {
 	private AnpModel _anp;
 	private AgreementStateModel _agreementState;
 	private SourceModel _source;
-	private String _districtid;
-	private String _districtname;
+	private String _districtId;
+	private String _departmentId;
+	private String _provinceId;
+	private String _districtName;
 	
 	private int _vigency;
 	private Date _firm;
+	private Date _firmEnd;
 	private int _partmen;
 	private int _partwomen;
 	private String _benperson;
@@ -25,7 +28,7 @@ public class ConservationAgreementModel extends BaseModel {
 	private String _benfamily;
 	private double _areaambitc;
 	private double _producedarea;
-	private String _detalleproduction;
+	private String _detailProduction;
 	
 	private double _resthect;
 	private String _restdet;
@@ -35,7 +38,7 @@ public class ConservationAgreementModel extends BaseModel {
 	private String _territorymod;
 	private boolean _finanapa;
 	private double _finannum;
-	private String _comtxt;
+	private String _comment;
 	private String _genobj;
 	private String _finanmod;
 	private String _fondname;
@@ -68,20 +71,20 @@ public class ConservationAgreementModel extends BaseModel {
 		this._agreementState = agreementState;
 	}
 
-	public String getDistritoId () {
-		return _districtid;
+	public String getDistrictId () {
+		return _districtId;
 	}
 	
-	public void setDistritoId (String districtid) {
-		_districtid = districtid;
+	public void setDistrictId (String districtid) {
+		_districtId = districtid;
 	}
 	
-	public String getDistritName () {
-		return _districtname;
+	public String getDistrictName () {
+		return _districtName;
 	}
 	
-	public void setDistritName (String districtname) {
-		_districtname = districtname;
+	public void setDistrictName (String districtname) {
+		_districtName = districtname;
 	}
 	
 	public int getVigency () {
@@ -164,12 +167,12 @@ public class ConservationAgreementModel extends BaseModel {
 		_producedarea = producedarea;
 	}
 	
-	public String getDetalleProduction () {
-		return _detalleproduction;
+	public String getDetailProduction () {
+		return _detailProduction;
 	}
 	
-	public void setDetalleProduction (String detalleproduction) {
-		_detalleproduction = detalleproduction;
+	public void setDetailProduction (String detailproduction) {
+		_detailProduction = detailproduction;
 	}
 	
 	public SourceModel getSource() {
@@ -244,12 +247,12 @@ public class ConservationAgreementModel extends BaseModel {
 		_finannum = finannum;
 	}	
 	
-	public String getComTxt () {
-		return _comtxt;
+	public String getComment () {
+		return _comment;
 	}
 	
-	public void setComTxt (String comtxt) {
-		_comtxt = comtxt ;
+	public void setComment (String comment) {
+		_comment = comment ;
 	}
 	
 	public String getGenObj () {
@@ -282,6 +285,29 @@ public class ConservationAgreementModel extends BaseModel {
 	
 	public void setAllied (Boolean allied) {
 		_allied = allied ;
+	}		
+	
+	public String getDepartmentId () {
+		return _departmentId;
 	}
 	
+	public void setDepartmentId(String departmentId) {
+		_departmentId = departmentId;
+	}
+	
+	public String getProvinceId () {
+		return _provinceId;
+	}
+	
+	public void setProvinceId(String provinceId) {
+		_provinceId = provinceId;
+	}
+	
+	public Date getFirmEnd () {
+		return _firmEnd;
+	}
+	
+	public void setFirmEnd (Date firmEnd) {
+		_firmEnd = firmEnd;
+	}
 }

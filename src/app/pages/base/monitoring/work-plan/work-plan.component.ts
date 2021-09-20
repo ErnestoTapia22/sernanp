@@ -139,7 +139,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       agreementState: this.fb.group({
         id: [{ value: '', disabled: true }],
       }),
-      distritoId: [''],
+      districtId: [''],
       department: [{ value: 0, disabled: true }],
       province: [{ value: 0, disabled: true }],
       district: [{ value: 0, disabled: true }],
@@ -218,13 +218,13 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             objective: '',
             anp: { id: response.item.anp.id || 0 },
             localization: '',
-            distritoId: response.item.distritoId,
+            districtId: response.item.districtId,
             department: 0,
             province: 0,
             district: 0,
             description: response.item.description,
           });
-          this.setLocalization(response.item.distritoId);
+          this.setLocalization(response.item.districtId);
           this.disableFields();
         }
       });
