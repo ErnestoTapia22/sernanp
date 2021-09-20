@@ -8,6 +8,7 @@ import pe.sernanp.simrac.model.ActionLineModel;
 import pe.sernanp.simrac.model.AlliedCategoryModel;
 import pe.sernanp.simrac.model.AlliedModel;
 import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.model.ComponentModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
 
@@ -29,6 +30,8 @@ public class CommitmentMapper extends BaseMapper <CommitmentModel> {
 		item.getActionLine().setObjetive(new ObjetiveModel());
 		super.mapRowWithTable (rs, item.getActionLine().getObjetive(), "objetive");
 	
+		item.getActionLine().getObjetive().setComponent(new ComponentModel());
+		super.mapRowWithTable (rs, item.getActionLine().getObjetive().getComponent(), "component");
 		
 		item.setIndicator(ResultSetExtension.getString2(rs, "indicator"));
 		item.setActive(ResultSetExtension.getBoolean2(rs, "active"));

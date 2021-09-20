@@ -2,3 +2,7 @@
     border: 0px;
     background-color: white;
 }
+
+.esri-input[type="text"], .esri-input[type="number"] {
+    height: inherit !important;
+}

@@ -43,19 +43,19 @@ export const environment = {
       id: 1,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
       disabled: false,
-      name: 'Áreas de Administración Nacional',
+      name: 'Áreas de Naturales Protegidas',
     },
     {
       id: 2,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
       disabled: false,
-      name: 'Áreas de Administración Regional',
+      name: 'Áreas de Conservación Regional',
     },
     {
       id: 3,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
       disabled: false,
-      name: 'Áreas de Administración Privada',
+      name: 'Áreas de Conservación Privada',
     },
     {
       id: 4,
@@ -81,6 +81,12 @@ export const environment = {
       disabled: false,
       name: 'Capitales',
     },
+    {
+      id: 8,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_cultura_000201/MapServer',
+      disabled: false,
+      name: 'Comunidades',
+    }    
   ],
   conservationAgreements: [
     {

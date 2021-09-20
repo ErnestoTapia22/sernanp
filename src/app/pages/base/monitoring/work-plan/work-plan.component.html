@@ -297,7 +297,7 @@
         >
           <div class="card">
             <div class="card-header">
-              <label class="mb-0 fw-bold">Crear</label>
+              <label class="mb-0 fw-bold">Compromisos del Plan de Trabajo</label>
               <div>
                 <button
                   type="button"
@@ -327,19 +327,22 @@
                       <tr>
                         <th>Componente</th>
                         <th>Objetivo</th>
+                        <th>Línea de Acción</th>
                         <th>Compromiso</th>
                         <th>Suscriptor</th>
                         <th>Actividades</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       <tr *ngFor="let item of commitmentsList; index as idx">
+                        <td>
+                          {{ item.actionLine.objetive.component.name }}
+                        </td>
                         <td>
                           {{ item.actionLine.objetive.description }}
                         </td>
                         <td>
-                          {{ item.actionLine.objetive.description }}
+                          {{ item.actionLine.name }}
                         </td>
                         <td>
                           {{ item.description }}
@@ -608,7 +611,7 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">Registrar</label>
+                  <label class="mb-0 fw-bold">Evaluación</label>
                   <div>
                     <button
                       type="button"

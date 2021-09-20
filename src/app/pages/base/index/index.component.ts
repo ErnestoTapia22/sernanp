@@ -11,6 +11,8 @@ import Home from '@arcgis/core/widgets/Home';
 import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 import Expand from '@arcgis/core/widgets/Expand';
 import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
+import Search from "@arcgis/core/widgets/Search";
+import Locator from "@arcgis/core/tasks/Locator";
 import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
@@ -119,7 +121,118 @@ export class IndexComponent implements OnInit {
       expanded: false,
       expandTooltip: 'Estilos de mapa',
     });
-    //adds
+    const featureLayerDistricts = new FeatureLayer({
+      url:
+        "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_117th_Congressional_Districts_all/FeatureServer/0",
+      popupTemplate: {
+        // autocasts as new PopupTemplate()
+        title: "Congressional District {DISTRICTID} </br>{NAME}, ({PARTY})",
+        overwriteActions: true
+      }
+    });
+    const featureLayerSenators = new FeatureLayer({
+      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_Senators_2020/FeatureServer/0",
+      popupTemplate: {
+        // autocasts as new PopupTemplate()
+        title: "<a href={Web_Page} target='_blank'> {Name}</a>, ({Party}-{State}) ",
+        overwriteActions: true
+      }
+    });
+    const sources = [
+      {
+        layer: new FeatureLayer({
+            url: `https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0`
+        }),
+        searchFields: ["anp_codi", "anp_nomb", "anp_cate", "anp_ubpo"],
+        displayField: "anp_nomb",
+        exactMatch: false,
+        outFields: ["*"],
+        name: 'Áreas Naturales Protegidas',
+        placeholder: "Código - Nombre",
+      },
+      {
+        layer: new FeatureLayer({
+            url: `https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0`
+        }),
+        searchFields: ["anp_codi", "anp_nomb"],
+        displayField: "anp_nomb",
+        exactMatch: false,
+        outFields: ["*"],
+        name: 'Áreas de Conservación',
+        placeholder: "Código - Nombre",
+      },
+      {
+        locator: new Locator({ url: "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer" }),
+        singleLineFieldName: "SingleLine",
+        name: "Búsqueda General",
+        localSearchOptions: {
+            minScale: 300000,
+            distance: 50000
+        },
+        placeholder: "Búsqueda General",
+        maxResults: 3,
+        maxSuggestions: 6,
+        suggestionsEnabled: true,
+        minSuggestCharacters: 0,
+        countryCode: "PE"
+      }
+    ];
+    const searchWidget = new Search({
+      view: view,
+      allPlaceholder: "Código, Nombre",
+      searchAllEnabled: false,
+      includeDefaultSources: false,
+      sources : sources
+    });
+    //const searchWidget = new Search({
+    //  view: view,
+    //  allPlaceholder: "Código, Nombre",
+    //  searchAllEnabled: false,
+    //  includeDefaultSources: false,
+    //  sources: [
+    //      {
+    //          layer: new FeatureLayer({
+    //              url: `https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer/0`
+    //          }),
+    //          searchFields: 'anp_codi, anp_nomb',
+    //          displayField: 'anp_nomb',
+    //          exactMatch: false,
+    //          //popupTemplate: rutas.layersBusqueda[0].popupTemplate,
+    //          outFields: ["*"],
+    //          name: 'Áreas de Naturales Protegidas',
+    //          placeholder: 'Código - Nombre'
+    //      },
+    //      {
+    //          layer: new FeatureLayer({
+    //              url: `https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/1`
+    //          }),
+    //          searchFields: 'anp_codi, anp_nomb',
+    //          displayField: 'anp_nomb',
+    //          exactMatch: false,
+    //          //popupTemplate: rutas.layersBusqueda[0].popupTemplate,
+    //          outFields: ["*"],
+    //          name: 'Áreas de Naturales Protegidas',
+    //          placeholder: 'Código - Nombre'
+    //      },
+    //      {
+    //          locator: new Locator({ url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer" }),
+    //          singleLineFieldName: "SingleLine",
+    //          name: "Búsqueda General",
+    //          localSearchOptions: {
+    //              minScale: 300000,
+    //              distance: 50000
+    //          },
+    //          placeholder: "Búsqueda General",
+    //          maxResults: 3,
+    //          maxSuggestions: 6,
+    //          suggestionsEnabled: true,
+    //          minSuggestCharacters: 0,
+    //          countryCode: "PE"
+    //      }
+    //  ]
+    //});
+    //adds    
+    view.ui.add(searchWidget, 'top-right');
     view.ui.add(MeExpand, 'top-left');
     view.ui.add(bkExpand, 'top-left');
     view.ui.add(cw, 'top-left');

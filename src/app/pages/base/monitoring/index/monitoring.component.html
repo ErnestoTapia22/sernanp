@@ -51,43 +51,79 @@
             <div class="row g-3">
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Código</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="code"
-                />
+                <input type="text" class="form-control" formControlName="code"/>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="code"
-                />
+                <input type="text" class="form-control" formControlName="name"/>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label"
-                  >Estado del acuerdo
-                </label>
-                <select class="form-select" formControlName="state">
-                  <option value="">SELECCIONE</option>
-                  <option value="1">En envaluación</option>
-                  <option value="2">En diseño</option>
-                  <option value="3">Firmado</option>
-                  <option value="4">En implementación</option>
-                </select>
+                <div formGroupName="anp">
+                  <label for="inputState" class="form-label">ANP</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of anps" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <label for="inputState" class="form-label"
-                  >Fuente de financiamiento
-                </label>
-                <select class="form-select" formControlName="category">
-                  <option value="">SELECCIONE</option>
-                  <option value="1">Público</option>
-                  <option value="2">Privado</option>
-                  <option value="3">Cooperación</option>
-                  <option value="4">Otro</option>
-                </select>
+                <div formGroupName="agreementState">
+                  <label for="inputState" class="form-label">Estado del acuerdo</label>
+                  <select class="form-select" formControlName="id">
+                    <option selected value="0">SELECCIONE</option>
+                    <option *ngFor="let item of agreementStateList" [value]="item.id">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                  <label for="ddlDepartment" class="form-label">Departamento</label>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="departmentId" (change)="searchProvinces($event.target.value)">
+                    <option selected value="">SELECCIONE</option>
+                    <option *ngFor="let item of departments" [value]="item.code">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                  <label for="inputState" class="form-label">Provincia</label>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="provinceId" (change)="searchDistricts($event.target.value)">
+                    <option selected value="">SELECCIONE</option>
+                    <option *ngFor="let item of provinces" [value]="item.code">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                  <label for="inputState" class="form-label">Distrito</label>
+                  <select placeholder="SELECCIONE" class="form-select" formControlName="districtId">
+                    <option selected value="">SELECCIONE</option>
+                    <option *ngFor="let item of districts" [value]="item.code">
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div>
+                  <label for="txtSuscriptionDateStart" class="form-label">Fecha de suscripción</label>
+                  <div class="row">
+                    <div class="col-auto">
+                      <input type="date" class="form-control" id="txtSuscriptionDateStart" placeholder="Desde" formControlName="firm"/>
+                    </div>
+                    <div class="col-auto">
+                      <input type="date" class="form-control" id="txtSuscriptionDateEnd" placeholder="Hasta" formControlName="firmEnd"/>
+                    </div>                    
+                  </div>                  
+                </div>
               </div>
             </div>
 
@@ -99,8 +135,9 @@
                   <tr>
                     <th>Código</th>
                     <th>Nombre</th>
+                    <th>ANP</th>
                     <th>Estado</th>
-                    <th>Años de Vigencia</th>
+                    <th>Vigencia (Años)</th>
                     <th>Fecha Suscr.</th>
                     <th>Ver monitoreo</th>
                   </tr>
@@ -140,6 +177,7 @@
                     >
                       <td>{{ item.code }}</td>
                       <td>{{ item.name }}</td>
+                      <td>{{ item.anp.name }}</td>
                       <td>{{ item.agreementState.name }}</td>
                       <td>{{ item.vigency }}</td>
                       <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>
