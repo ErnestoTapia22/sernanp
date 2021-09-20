@@ -217,7 +217,7 @@ export class UserComponent implements OnInit, OnDestroy {
       }),
       paginator: this.formBuilder.group({
         offset: [1],
-        limit: [5],
+        limit: [10],
         sort: [''],
         order: ['asc'],
       }),
@@ -500,7 +500,7 @@ export class UserComponent implements OnInit, OnDestroy {
       },
       paginator: {
         offset: 1,
-        limit: 5,
+        limit: 10,
         sort: '',
         order: 'asc',
       },

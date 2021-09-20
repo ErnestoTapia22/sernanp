@@ -48,13 +48,13 @@ export class AdminComponent implements OnInit, OnDestroy {
         items: [],
         item: {},
       },
-      ecosystemtype: {
-        name: 'Tipo ecosistema',
-        ownName: 'ecosystemtype',
+      component: {
+        name: 'Componente',
+        ownName: 'component',
         id: 0,
         items: [],
         item: {},
-      },
+      }
     };
   }
 
@@ -134,9 +134,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.modules && Object.keys(this.modules).length > 0) {
         for (const key in this.modules) {
           this.adminService.moduleList(key).subscribe((response) => {
-            if (response && response.items && response.items.length > 0) {
-              if (key == 'alliedcategory') {
-              }
+            if (response && response.items && response.items.length > 0) {              
               this.modules[key].items = [];
               this.modules[key].items = response.items;
             } else {

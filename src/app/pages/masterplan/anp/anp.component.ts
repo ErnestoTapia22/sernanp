@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 export class AnpComponent implements OnInit, OnDestroy {
   inboundClick = true;
   pageSize: any[] = [];
-  selectedPageSize: number = 5;
+  selectedPageSize: number = 10;
   page: Number = 0;
   total: Number = 0;
   items: any[];
@@ -128,7 +128,7 @@ export class AnpComponent implements OnInit, OnDestroy {
   }
   initQuery() {
     let paginator = {
-      limit: 5,
+      limit: 10,
       offset: '1',
       sort: 'name',
       order: 'asc',
