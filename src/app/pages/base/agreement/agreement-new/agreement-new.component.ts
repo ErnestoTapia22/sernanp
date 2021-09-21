@@ -24,6 +24,7 @@ import Map from '@arcgis/core/Map';
 //services
 import { AlertService } from '@app/_services/base/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ExcelService } from '@app/_services/report/excel.service';
 
 @Component({
   selector: 'app-agreement-new',
@@ -130,7 +131,8 @@ export class AgreementNewComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private masterPlanService: MasterPlanService,
-    private anpService: AnpService
+    private anpService: AnpService,
+    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -532,8 +534,11 @@ export class AgreementNewComponent implements OnInit {
       description: [''],
       state: [true],
       registrationDate: [''],
-      code: [''],
-      vigency: [0, Validators.compose([Validators.required, Validators.min(1)])],
+      code: [{ value: '', disabled: true }],
+      vigency: [
+        0,
+        Validators.compose([Validators.required, Validators.min(1)]),
+      ],
       firm: [''],
       partMen: [0],
       partWomen: [0],
@@ -1281,5 +1286,11 @@ export class AgreementNewComponent implements OnInit {
       province: districId.substring(0, 4),
       district: districId,
     });
+  }
+  exportAsXLSX() {
+    if (this.commitmentsList.length === 0) {
+      return;
+    }
+    this.excelService.exportAsExcelFile(this.commitmentsList, 'sample');
   }
 }
