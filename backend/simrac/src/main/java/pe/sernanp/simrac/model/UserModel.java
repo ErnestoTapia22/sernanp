@@ -13,6 +13,7 @@ public class UserModel extends BaseModel {
 	private String _userName;
 	private String _lastName;
 	private String _documentNumber;
+	private String _token;
 	
 	public int getSystem () {
 		return _system;
@@ -60,5 +61,13 @@ public class UserModel extends BaseModel {
 	
 	public void setDocumentNumber(String documentNumber) {
 		_documentNumber = documentNumber;
+	}
+	
+	public String getToken() {
+		return _token;
+	}
+	
+	public void setToken(String token) {
+		_token = token;
 	}
 }

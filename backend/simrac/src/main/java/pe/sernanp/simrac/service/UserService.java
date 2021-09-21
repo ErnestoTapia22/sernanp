@@ -1,6 +1,8 @@
 package pe.sernanp.simrac.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -12,9 +14,17 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.repository.ModuleRepository;
 import pe.sernanp.simrac.repository.UserRepository;
+import pe.sernanp.simrac.SernanpApplication;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.model.ModuleModel;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
+import java.util.stream.Collectors;
+
+import javax.crypto.SecretKey;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +45,14 @@ public class UserService extends BaseService<UserModel> {
 			UserModel item = this._repository.validate(this._dataSource, id);
 			List<ModuleModel> items = this._repositoryModule.search(this._dataSource, item.getSystem(), item.getId2());				
 			item.setModules(items);
+			
+			// Add token
+			
+			String token = getJWTToken(id);
+			item.setToken(token);
+			
+			// End add token
+			
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
@@ -126,5 +144,32 @@ public class UserService extends BaseService<UserModel> {
 			}
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	private String getJWTToken(String username) {
+		//String secretKey = "mySecretKey";
+		
+		//SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+		
+		SecretKey key = SernanpApplication.key; //Keys.secretKeyFor(SignatureAlgorithm.HS256);
+		//String base64Key = Encoders.BASE64.encode(key.getEncoded());
+		
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+				.commaSeparatedStringToAuthorityList("ROLE_USER");
+		
+		String token = Jwts
+				.builder()
+				.setId("simracJWT")
+				.setSubject(username)
+				.claim("authorities",
+						grantedAuthorities.stream()
+								.map(GrantedAuthority::getAuthority)
+								.collect(Collectors.toList()))
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.signWith(key, SignatureAlgorithm.HS256).compact();
+				//.signWith(SignatureAlgorithm.HS512, base64Key).compact();
+
+		return "Bearer " + token;
 	}
 }

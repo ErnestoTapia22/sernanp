@@ -12,7 +12,7 @@ public class ActivityModel extends BaseModel {
 	private String _indicator;
 	private boolean _active;
 	private String _semester;
-	private int _progress;
+	private float _progress;
 	
 	private MonitoringModel _monitoring;
 	
@@ -80,9 +80,9 @@ public class ActivityModel extends BaseModel {
 		this._monitoring = monitoring;
 	}
 	
-	public int getProgress() {
+	public double getProgress() {
 		if (this._goal != 0 && this._value != 0)
-			return (this._value / this._goal) * 100;
+			return (this._value * 100.00 ) / this._goal;
 		else 
 			return 0;
 	}
