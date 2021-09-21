@@ -82,7 +82,7 @@
                       class="form-control"
                       placeholder="Código"
                       formControlName="code"
-                      disabled
+                     
                     />
                   </div>
                   <div class="col-md-6">
@@ -384,9 +384,10 @@
                     type="button"
                     class="btn btn-sm btn-outline-primary mx-2"
                     [disabled]="!agreementExist"
+                    (click)="exportAsXLSX()"
                   >
-                    <i class="bi bi-cloud-arrow-down"></i>
-                    Exportar
+                  <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
                   </button>
                 </div>
               </div>
