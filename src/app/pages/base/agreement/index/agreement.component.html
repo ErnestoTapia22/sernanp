@@ -64,11 +64,19 @@
             <div class="row g-3">
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Código</label>
-                <input type="text" class="form-control" formControlName="code"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="code"
+                />
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" formControlName="name"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                />
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div formGroupName="anp">
@@ -83,10 +91,15 @@
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div formGroupName="agreementState">
-                  <label for="inputState" class="form-label">Estado del acuerdo</label>
+                  <label for="inputState" class="form-label"
+                    >Estado del acuerdo</label
+                  >
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
-                    <option *ngFor="let item of agreementStateList" [value]="item.id">
+                    <option
+                      *ngFor="let item of agreementStateList"
+                      [value]="item.id"
+                    >
                       {{ item.name }}
                     </option>
                   </select>
@@ -94,10 +107,20 @@
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div>
-                  <label for="ddlDepartment" class="form-label">Departamento</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="departmentId" (change)="searchProvinces($event.target.value)">
+                  <label for="ddlDepartment" class="form-label"
+                    >Departamento</label
+                  >
+                  <select
+                    placeholder="SELECCIONE"
+                    class="form-select"
+                    formControlName="departmentId"
+                    (change)="searchProvinces($event.target.value)"
+                  >
                     <option selected value="">SELECCIONE</option>
-                    <option *ngFor="let item of departments" [value]="item.code">
+                    <option
+                      *ngFor="let item of departments"
+                      [value]="item.code"
+                    >
                       {{ item.name }}
                     </option>
                   </select>
@@ -106,7 +129,12 @@
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div>
                   <label for="inputState" class="form-label">Provincia</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="provinceId" (change)="searchDistricts($event.target.value)">
+                  <select
+                    placeholder="SELECCIONE"
+                    class="form-select"
+                    formControlName="provinceId"
+                    (change)="searchDistricts($event.target.value)"
+                  >
                     <option selected value="">SELECCIONE</option>
                     <option *ngFor="let item of provinces" [value]="item.code">
                       {{ item.name }}
@@ -117,7 +145,11 @@
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div>
                   <label for="inputState" class="form-label">Distrito</label>
-                  <select placeholder="SELECCIONE" class="form-select" formControlName="districtId">
+                  <select
+                    placeholder="SELECCIONE"
+                    class="form-select"
+                    formControlName="districtId"
+                  >
                     <option selected value="">SELECCIONE</option>
                     <option *ngFor="let item of districts" [value]="item.code">
                       {{ item.name }}
@@ -126,16 +158,21 @@
                 </div>
               </div>
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div>
-                  <label for="txtSuscriptionDateStart" class="form-label">Fecha de suscripción</label>
-                  <div class="row">
-                    <div class="col-auto">
-                      <input type="date" class="form-control" id="txtSuscriptionDateStart" placeholder="Desde" formControlName="firm"/>
-                    </div>
-                    <div class="col-auto">
-                      <input type="date" class="form-control" id="txtSuscriptionDateEnd" placeholder="Hasta" formControlName="firmEnd"/>
-                    </div>                    
-                  </div>                  
+                <label for="txtSuscriptionDateStart" class="form-label"
+                  >Fecha de suscripción</label
+                >
+                <div class="input-group mb-3">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="firm"
+                  />
+                  <span class="input-group-text">-</span>
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="firmEnd"
+                  />
                 </div>
               </div>
             </div>

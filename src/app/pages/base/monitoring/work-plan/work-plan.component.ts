@@ -187,8 +187,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       comment: ['', Validators.required],
       recommendation: ['', Validators.required],
       evaluation: ['', Validators.required],
-      description: ['', Validators.required],
-      achievement: [''],
+      description: [''],
+      achievement: ['', Validators.required],
       activities: new FormArray([]),
     });
   }
@@ -204,6 +204,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.agreementService
         .commitmentsSearch(this.agreementId)
         .subscribe((response) => {
+          console.log(response);
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
           }
@@ -518,24 +519,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
 
     return parsed;
   }
-  setCheckBoxes2(items: any[]) {
-    const parsed = items.map((item) => {
-      if (item.semester !== null && item.semester !== '') {
-        let arr: any[] = item.semester.split(',');
-        let found1 = arr.find((x) => x === '1');
-        if (found1) {
-          item.trim1 = true;
-        }
-        let found2 = arr.find((x) => x === '2');
-        if (found2) {
-          item.trim2 = true;
-        }
-      }
-      return item;
-    });
 
-    return parsed;
-  }
   saveActivityTemp() {
     this.fieldArrayTotalTemp = this.fieldArrayTotalTemp.filter((obj) => {
       return obj.commitmentId !== this.commitmentId;
@@ -611,6 +595,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.workPlanService
         .monitoringSearchHistory(this.agreementId)
         .subscribe((response) => {
+          console.log(['monitor history', response]);
           if (response && response.items.length > 0) {
             this.monitoringListHistory = response.items.map((act) => {
               const parsed = this.setCheckBoxes(act.activities);

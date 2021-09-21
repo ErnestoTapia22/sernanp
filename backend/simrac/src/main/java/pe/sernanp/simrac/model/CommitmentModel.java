@@ -7,11 +7,11 @@ public class CommitmentModel extends BaseModel {
 
 	private ConservationAgreementModel _conservationagreement;
 	private ActionLineModel _actionline;
-	private AlliedModel _allied;
-	
+	private AlliedModel _allied;	
 	private String _indicator;
 	private Boolean _active;
 	
+	private double _progress;
 	
 	public ConservationAgreementModel getConservationAgreement() {
 		return _conservationagreement;
@@ -51,5 +51,13 @@ public class CommitmentModel extends BaseModel {
 	
 	public void setActive (Boolean active) {
 		_active = active;
+	}
+	
+	public double getProgress () {
+		return _progress;
+	}
+	
+	public void setProgress (int value, int goal) {
+		_progress += (value * 100.00 ) / goal;
 	}
 }

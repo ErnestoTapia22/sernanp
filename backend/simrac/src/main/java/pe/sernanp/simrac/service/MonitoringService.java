@@ -90,10 +90,13 @@ public class MonitoringService extends BaseService<MonitoringModel>{
 			}
 			for (MonitoringModel item : items) {
 				List<ActivityModel> activitiesFound = new ArrayList<ActivityModel>();
-				activities.forEach(activity -> {
-					if (activity.getMonitoring().getId2() == item.getId2())
+				activities.forEach(activity -> {					
+					if (activity.getMonitoring().getId2() == item.getId2()) {
 						activitiesFound.add(activity);
+						activity.getCommitment().setProgress(activity.getValue(), activity.getGoal());
+					}						
 				});
+				
 				item.setActivities(activitiesFound);
 			}
 			response.setSuccess(success);
