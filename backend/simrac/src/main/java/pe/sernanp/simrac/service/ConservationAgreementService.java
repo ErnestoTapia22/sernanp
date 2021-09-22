@@ -23,6 +23,7 @@ import pe.gisriv.extension.spatial.ShapeFileReader;
 import pe.sernanp.simrac.model.BaseGeometryEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.model.EconomicActivityModel;
+import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.model.SpatialReferenceEntity;
 import pe.sernanp.simrac.repository.ConservationAgreementRepository;
 
@@ -245,33 +246,4 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	public List<String> insert5(int id) throws IOException {
-		List<String> milist = new ArrayList<String>();
-		String dato1 = "";
-		String dato3 = "BB";
-		String dato2 = "CC";
-				
-		milist.add (dato1);
-		milist.add (dato2);
-		milist.add (dato3);
-
-		return milist;
-	}
-	
-	public List<ConservationAgreementModel> insert10 (int id) throws IOException {
-		List <ConservationAgreementModel> insert11 = new ArrayList<ConservationAgreementModel> ();
-		ConservationAgreementModel dato1 = new ConservationAgreementModel ();
-		dato1.setId(10);
-		dato1.setVigency(2020);
-		ConservationAgreementModel dato2 = new ConservationAgreementModel ();
-		dato2.setId(20);
-		dato2.setVigency(2040);
-
-			
-		insert11.add(dato1);
-		insert11.add(dato2);
-		return insert11;
-	}
-	
 }
