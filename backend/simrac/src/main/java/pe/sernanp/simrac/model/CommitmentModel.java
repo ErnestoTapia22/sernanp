@@ -58,6 +58,6 @@ public class CommitmentModel extends BaseModel {
 	}
 	
 	public void setProgress (int value, int goal) {
-		_progress += (value * 100.00 ) / goal;
+		_progress = ((value * 100.00 ) / goal);
 	}
 }
