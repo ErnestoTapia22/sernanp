@@ -60,6 +60,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   monitoringHistoryCount: number = 0;
   formMonitoring: FormGroup;
   submitted: boolean = false;
+  monitoringReady: boolean = false;
 
   constructor(
     private monitoringService: MonitoringService,
@@ -682,6 +683,12 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       achievement: '',
       activities: [],
     });
+  }
+  activateMonitoring() {
+    this.monitoringReady = true;
+  }
+  deActivateMonitoring() {
+    this.monitoringReady = false;
   }
   ngOnDestroy() {}
 }

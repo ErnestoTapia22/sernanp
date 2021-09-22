@@ -71,6 +71,7 @@ export class AgreementComponent implements OnInit {
     try {
       this.isLoading = true;
       this.spinner.show();
+      console.log(this.queryObserver.getValue());
       this.agreementService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {
@@ -86,7 +87,9 @@ export class AgreementComponent implements OnInit {
           } else {
             this.isLoading = false;
             this.spinner.hide();
-            this.alertService.info('No se encontraron elementos', 'Ok', { autoClose: true });
+            this.alertService.info('No se encontraron elementos', 'Ok', {
+              autoClose: true,
+            });
           }
         });
     } catch (error) {
@@ -124,6 +127,7 @@ export class AgreementComponent implements OnInit {
   search(filters: any): void {
     const q = this.queryObserver.getValue();
     q.item = JSON.stringify(filters);
+    console.log(q.item);
     this.queryObserver.next(q);
 
     this.onSearch();
@@ -131,12 +135,12 @@ export class AgreementComponent implements OnInit {
   searchProvinces(event) {
     const id = event;
     if (id == 0) {
-      this.provinces = [];      
+      this.provinces = [];
       return;
     }
     this.form.patchValue({
       provinceId: '',
-      districtId: ''
+      districtId: '',
     });
     this.districts = [];
     try {
@@ -160,7 +164,7 @@ export class AgreementComponent implements OnInit {
       return;
     }
     this.form.patchValue({
-      districtId: ''
+      districtId: '',
     });
     try {
       this.agreementService.searchDistricts(id).subscribe((response) => {
@@ -270,7 +274,7 @@ export class AgreementComponent implements OnInit {
     };
     let item = {
       code: '',
-      name: '',      
+      name: '',
       agreementState: { id: 0 },
       anp: { id: 0 },
       departmentId: '',

@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { AlertService } from '@app/_services/base/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PdfService } from '@app/_services/report/pdf.service';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +12,7 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import printPdf from '@app/print/pdf/index';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-reports',
@@ -24,6 +26,7 @@ export class ReportsComponent implements OnInit {
   pageSize: any;
   page: Number;
   form: FormGroup;
+  modalRef: NgbModalRef;
   url: string =
     'https://i.postimg.cc/QCJnRkYt/Whats-App-Image-2021-08-30-at-6-31-19-PM.jpg';
   urlSafe: SafeResourceUrl;
@@ -32,12 +35,15 @@ export class ReportsComponent implements OnInit {
     item: '',
     paginator: '',
   });
+  agreementId: string = '0';
   constructor(
     public sanitizer: DomSanitizer,
     private agreementService: AgreementService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private pdfService: PdfService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +62,18 @@ export class ReportsComponent implements OnInit {
       agreementState: { id: 0 },
       source: { id: 0 },
       code: '',
+
+      firm: '',
+      firmEnd: '',
+      state: '',
+      pageSize: '10',
+
+      anp: {
+        id: 0,
+      },
+      departmentId: '',
+      provinceId: '',
+      districtId: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
@@ -67,15 +85,16 @@ export class ReportsComponent implements OnInit {
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
-  downloadPdf(id) {
-    try {
-      this.agreementService.agreementDetail(id).subscribe((response) => {
-        console.log(response);
-        printPdf(response);
-      });
-    } catch (error) {
-      this.alertService.error('error :' + error, 'Error');
-    }
+  downloadPdf(content) {
+    this.pdfService.sendToPdf('ResportePDF', this.agreementId, content);
+    // try {
+    //   this.agreementService.agreementDetail(id).subscribe((response) => {
+    //     console.log(response);
+    //     printPdf(response);
+    //   });
+    // } catch (error) {
+    //   this.alertService.error('error :' + error, 'Error');
+    // }
   }
   search(filters: any): void {
     // const q = this.queryObserver.getValue();
@@ -89,6 +108,7 @@ export class ReportsComponent implements OnInit {
     try {
       this.isLoading = true;
       this.spinner.show();
+      // console.log(this.queryObserver.getValue());
       this.agreementService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {
@@ -99,7 +119,7 @@ export class ReportsComponent implements OnInit {
             this.pageSize = data.paginator.limit;
             this.isLoading = false;
             this.spinner.hide();
-            this.setTableHeight(this.pageSize);
+            this.setTableHeight(this.pageSize, data.items.length);
           } else {
             this.isLoading = false;
             this.spinner.hide();
@@ -156,11 +176,23 @@ export class ReportsComponent implements OnInit {
   ngOnDestroy() {
     this.queryObserver.unsubscribe();
   }
-  setTableHeight(rows) {
+  setTableHeight(rows, itemsLength?: number) {
     if (rows !== undefined && rows !== null) {
       const cm = document.getElementById('tableBody');
-      const height = 50.838 * parseInt(rows);
-      cm.setAttribute('style', `height:${height}px`);
+      if (itemsLength < rows) {
+        const height = 50.838 * itemsLength;
+        cm.setAttribute('style', `height:${height}px`);
+      } else {
+        const height = 50.838 * parseInt(rows);
+        cm.setAttribute('style', `height:${height}px`);
+      }
     }
+  }
+  onReportPdf(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+    });
   }
 }

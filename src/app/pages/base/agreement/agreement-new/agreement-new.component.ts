@@ -25,6 +25,7 @@ import Map from '@arcgis/core/Map';
 import { AlertService } from '@app/_services/base/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExcelService } from '@app/_services/report/excel.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-agreement-new',
@@ -654,6 +655,7 @@ export class AgreementNewComponent implements OnInit {
       this.form.patchValue({
         districtId: this.form.get('district').value,
       });
+      console.log(this.form.value);
 
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.value))
@@ -1291,6 +1293,33 @@ export class AgreementNewComponent implements OnInit {
     if (this.commitmentsList.length === 0) {
       return;
     }
-    this.excelService.exportAsExcelFile(this.commitmentsList, 'sample');
+    const result = this.formatToExport();
+    console.log(result);
+    console.log(this.commitmentsList);
+    // return;
+    this.excelService.exportAsExcelFile(
+      result,
+      'Reporte Compromisos',
+      this.agreementId
+    );
+  }
+  formatToExport() {
+    return _.map(this.commitmentsList, (item) => {
+      item.registrationDate = new Date(item.registrationDate);
+      item.alliedName = item.allied.name;
+      return _.omit(item, [
+        'progress',
+        'conservationAgreement',
+        'actionLine',
+        'allied',
+        'indicator',
+        'name',
+        'state',
+        'issynchronized',
+        'code',
+        'guid',
+        'observation',
+      ]);
+    });
   }
 }

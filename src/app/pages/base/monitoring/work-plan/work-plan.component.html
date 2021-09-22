@@ -648,6 +648,8 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-success mx-2"
+                      [disabled]="monitoringReady"
+                      (click)="activateMonitoring()"
                     >
                       <i class="bi bi-play-circle"></i>
                       Iniciar Monitoreo
@@ -655,6 +657,8 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-danger mx-2"
+                      [disabled]="!monitoringReady"
+                      (click)="deActivateMonitoring()"
                     >
                       <i class="bi bi-stop-circle"></i>
                       Finalizar Monitoreo
@@ -732,6 +736,7 @@
                             <input
                               type="number"
                               class="form-control"
+                              [disabled]="!monitoringReady"
                               [value]="item.value"
                               [(ngModel)]="item.value"
                             />
@@ -808,6 +813,7 @@
                       type="button"
                       class="btn btn-info"
                       (click)="onCreateEvaluationModal(contentCreateEvaluation)"
+                      [disabled]="!monitoringReady"
                     >
                       <i class="bi bi-check2-square"></i>
                       Generar evaluación

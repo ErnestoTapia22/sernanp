@@ -6,7 +6,7 @@ export interface TreeModel extends TreeItem {
 export class CustomTreeItem extends TreeviewItem {
   legends: any;
   constructor(exItem: TreeModel) {
-    super((exItem as unknown) as TreeItem);
+    super(exItem as unknown as TreeItem);
     if (exItem.legends) {
       this.legends = exItem.legends;
     }
