@@ -22,11 +22,10 @@ public class SernanpApplication extends SpringBootServletInitializer {
 	public static final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 	
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		System.out.println("inicio de aplicación 2");
-		return builder.sources(SernanpApplication.class);		
-	}
-	
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		System.out.println("inicio de aplicación");
+		return application.sources(SernanpApplication.class);		
+	}	
 	
 	public static void main(String[] args) {
 		System.out.println("inicio de aplicación");
@@ -36,15 +35,17 @@ public class SernanpApplication extends SpringBootServletInitializer {
 	@EnableWebSecurity
 	@Configuration
 	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.csrf().disable()
 				.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST).permitAll().antMatchers(HttpMethod.GET).permitAll().antMatchers(HttpMethod.PUT).permitAll() //comentar para producción
-				//.antMatchers("/api/user/validate/{id}").permitAll() //descomentar para producción
+				.antMatchers("/api/user/validate/{id}").permitAll() //descomentar para producción
 				.anyRequest().authenticated();
+			http.cors().and();					
 		}
+		
 	}
 }
