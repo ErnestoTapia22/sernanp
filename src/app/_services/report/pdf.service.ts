@@ -22,17 +22,17 @@ export class PdfService {
       });
       window.open(URL.createObjectURL(pdf.output('blob')));
     });
-    html2canvas(content, { scale: 4 }).then((canvas) => {
-      const contentDataURL = canvas.toDataURL('image/jpeg', 1.0);
-      let pdf = new jspdf('p', 'mm', 'a4');
+    // html2canvas(content, { scale: 4 }).then((canvas) => {
+    //   const contentDataURL = canvas.toDataURL('image/jpeg', 1.0);
+    //   let pdf = new jspdf('p', 'mm', 'a4');
 
-      // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in landscape mode
-      // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, 210, 297);
-      pdf.setProperties({
-        title: 'This is my title',
-      });
-      window.open(URL.createObjectURL(pdf.output('blob')));
-    });
+    //   // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in landscape mode
+    //   // let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
+    //   pdf.addImage(contentDataURL, 'PNG', 0, 0, 210, 297);
+    //   pdf.setProperties({
+    //     title: 'This is my title',
+    //   });
+    //   window.open(URL.createObjectURL(pdf.output('blob')));
+    // });
   }
 }
