@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl2: 'http://desarrollo.sernanp.gob.pe:28081/ws_simrac/api',
-  apiUrl: 'http://100.122.8.47:8060/simrac/api',
+  apiUrl: 'http://desarrollo.sernanp.gob.pe:28081/ws_simrac/api',
+  apiUrl2: 'http://100.122.8.47:8060/simrac/api',
   webUrl: 'http://localhost:4200/',
   authUrl: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token',
   logOutUrl: 'http://desarrollo.sernanp.gob.pe:28081/dianaac/Salir.action',
@@ -29,47 +29,53 @@ export const environment = {
   ],
   initialLayers: [
     {
-      id: 5,
-      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
+      id: 0,
+      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer',
       disabled: false,
-      name: 'Áreas de Administración Nacional',
-    },
-    {
-      id: 6,
-      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
-      disabled: false,
-      name: 'Áreas de Administración Regional',
-    },
-    {
-      id: 7,
-      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
-      disabled: false,
-      name: 'Áreas de Administración Privada',
+      name: 'Acuerdos de Conservación',
     },
     {
       id: 1,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
+      disabled: false,
+      name: 'Áreas de Naturales Protegidas',
+    },
+    {
+      id: 2,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
+      disabled: false,
+      name: 'Áreas de Conservación Regional',
+    },
+    {
+      id: 3,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
+      disabled: false,
+      name: 'Áreas de Conservación Privada',
+    },
+    {
+      id: 4,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000501/MapServer',
       disabled: false,
       name: 'Límite Departamental',
     },
     {
-      id: 2,
+      id: 5,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000502/MapServer',
       disabled: false,
       name: 'Límite Provincial',
     },
     {
-      id: 3,
+      id: 6,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000503/MapServer',
       disabled: false,
       name: 'Límite Distrital',
     },
     {
-      id: 4,
+      id: 7,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000504/MapServer',
       disabled: false,
       name: 'Capitales',
-    },
+    }
   ],
   conservationAgreements: [
     {

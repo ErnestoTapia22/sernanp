@@ -55,7 +55,7 @@ export class UserService {
   }
   roleInsert(item): Observable<any> {
     return this.apiBaseService.post(
-      `${environment.apiUrl}/${this.segmentRoleInsert}`,
+      `${environment.apiUrl}${this.segmentRoleInsert}`,
       item,
       null
     );

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { AlertService } from '@app/_services/base/alert.service';
+import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PdfService } from '@app/_services/report/pdf.service';
 import {
@@ -36,6 +37,12 @@ export class ReportsComponent implements OnInit {
     paginator: '',
   });
   agreementId: string = '0';
+  agreementStateList: any[] = [];
+  agreementSourceList: any[] = [];
+  departments: any[] = [];
+  provinces: any[] = [];
+  districts: any[] = [];
+  anps: any[] = [];
   constructor(
     public sanitizer: DomSanitizer,
     private agreementService: AgreementService,
@@ -43,7 +50,8 @@ export class ReportsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fb: FormBuilder,
     private pdfService: PdfService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private anpService: AnpService
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +89,7 @@ export class ReportsComponent implements OnInit {
     });
 
     this.buildForm();
+    this.fillSelects();
     this.onSearch();
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
@@ -97,21 +106,56 @@ export class ReportsComponent implements OnInit {
     // }
   }
   search(filters: any): void {
-    // const q = this.queryObserver.getValue();
-    // q.item = JSON.stringify(filters);
-    // this.queryObserver.next(q);
-    // console.log(this.queryObserver.getValue());
+    const q = this.queryObserver.getValue();
+    q.item = JSON.stringify(filters);
+    this.queryObserver.next(q);
+    console.log(this.queryObserver.getValue());
 
     this.onSearch();
+  }
+  fillSelects() {
+    try {
+      this.agreementService.agreementStateList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.agreementStateList = response.items;
+        }
+      });
+      this.anpService.anpList().subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.anps = response.items;
+        }
+      });
+      this.agreementService.departmentList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          this.departments = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer la lista de estados del acuerdo o la lista de fuente de financiamiento',
+        'error',
+        { autoClose: true }
+      );
+    }
   }
   onSearch() {
     try {
       this.isLoading = true;
       this.spinner.show();
-      // console.log(this.queryObserver.getValue());
       this.agreementService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {
+          this.agreementList = [];
           if (data && data.items && data.items.length > 0) {
             this.agreementList = data.items;
             this.total = data.total;
@@ -123,12 +167,61 @@ export class ReportsComponent implements OnInit {
           } else {
             this.isLoading = false;
             this.spinner.hide();
+            this.alertService.info('No se encontraron elementos', 'Ok', {
+              autoClose: true,
+            });
           }
         });
     } catch (error) {
       this.isLoading = false;
       this.spinner.hide();
       this.alertService.error('Error al traer acuerdos:' + error, 'Error');
+    }
+  }
+  searchProvinces(event) {
+    const id = event;
+    if (id == 0) {
+      this.provinces = [];
+      return;
+    }
+    this.form.patchValue({
+      provinceId: '',
+      districtId: '',
+    });
+    this.districts = [];
+    try {
+      this.agreementService
+        .searchProvinces(id.toString())
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.provinces = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al traer las provincias', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchDistricts(event) {
+    const id = event;
+    if (id == 0) {
+      this.districts = [];
+      return;
+    }
+    this.form.patchValue({
+      districtId: '',
+    });
+    try {
+      this.agreementService.searchDistricts(id).subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.districts = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las lineas de acción', 'Error', {
+        autoClose: true,
+      });
     }
   }
   parseData(parent, key, value) {
@@ -160,6 +253,7 @@ export class ReportsComponent implements OnInit {
   buildForm(): void {
     this.form = this.fb.group({
       code: ['', Validators.compose([Validators.maxLength(10)])],
+      name: [''],
       firm: [
         '',
         Validators.compose([
@@ -168,9 +262,19 @@ export class ReportsComponent implements OnInit {
           ),
         ]),
       ],
+      firmEnd: [''],
       category: ['', Validators.compose([])],
       state: ['', Validators.compose([])],
       pageSize: ['10', Validators.compose([])],
+      agreementState: this.fb.group({
+        id: [0],
+      }),
+      anp: this.fb.group({
+        id: [0],
+      }),
+      departmentId: [''],
+      provinceId: [''],
+      districtId: [''],
     });
   }
   ngOnDestroy() {
