@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "533ee02a-b0da-463a-98c5-7e6a32239a7c",
+		"_postman_id": "c166b3df-89e2-4f6d-aa98-957fd1d6c97e",
 		"name": "SERNANP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -831,6 +831,65 @@
 			]
 		},
 		{
+			"name": "Component",
+			"item": [
+				{
+					"name": "ComponentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/component/detail/8"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/component/delete/8"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"name\": \"prueba1\",\r\n    \"description\": \"prueba1\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/component/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"8\",\r\n    \"name\": \"prueba1nu3333\",\r\n    \"description\": \"prueba23333\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/component/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "AlliedCommitment",
 			"item": [
 				{
@@ -1229,6 +1288,60 @@
 		{
 			"name": "ANP",
 			"item": [
+				{
+					"name": "AnpInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{              \r\n    \"id\": 0,\r\n    \"name\": \"prueba\",\r\n    \"category\": \"Refugio X\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"xx\",\r\n    \"registrationDate\": \"2021-09-20\",\r\n    \"state\": true,\r\n    \"district\": \"X\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n              \r\n    \"id\": 133,\r\n    \"name\": \"pruebanuevo\",\r\n    \"category\": \"RefugioXX\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"X\",\r\n    \"registrationDate\": \"2021-09-20T15:56:35.166+0000\",\r\n    \"state\": true,\r\n    \"stateName\": \"Activo\",\r\n    \"district\": \"Lima\",\r\n    \"observation\": null,\r\n    \"guid\": \"\",\r\n    \"issynchronized\": null        \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/delete/132"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/detail/133"
+					},
+					"response": []
+				},
 				{
 					"name": "AnpSearch",
 					"request": {
