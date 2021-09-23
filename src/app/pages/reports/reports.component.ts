@@ -13,6 +13,7 @@ import {
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import printPdf from '@app/print/pdf/index';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import Zoom from '@arcgis/core/widgets/Zoom';
 
 @Component({
   selector: 'app-reports',
@@ -36,6 +37,13 @@ export class ReportsComponent implements OnInit {
     paginator: '',
   });
   agreementId: string = '0';
+  commitmentsList: any[] = [];
+  mapProperties: any;
+  mapViewProperties: any;
+  agreementDetail: object = {
+    department: [{ name: '' }],
+  };
+
   constructor(
     public sanitizer: DomSanitizer,
     private agreementService: AgreementService,
@@ -50,6 +58,14 @@ export class ReportsComponent implements OnInit {
     this.page = 1;
     this.total = 0;
     this.pageSize = 10;
+    this.mapProperties = {
+      basemap: 'hybrid',
+      ground: 'world-elevation',
+    };
+    this.mapViewProperties = {
+      center: [-75.744, -8.9212],
+      zoom: 9,
+    };
 
     let paginator = {
       limit: this.pageSize,
@@ -84,17 +100,31 @@ export class ReportsComponent implements OnInit {
     this.onSearch();
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
+  onMapInit({ map, view }) {
+    view.ui.remove('zoom');
+  }
 
-  downloadPdf(content) {
-    this.pdfService.sendToPdf('ResportePDF', this.agreementId, content);
-    // try {
-    //   this.agreementService.agreementDetail(id).subscribe((response) => {
-    //     console.log(response);
-    //     printPdf(response);
-    //   });
-    // } catch (error) {
-    //   this.alertService.error('error :' + error, 'Error');
+  downloadPdf(content, append: boolean, delimiter) {
+    // this.pdfService.makePDF(content);
+    // this.pdfService.sendToPdf('ResportePDF', this.agreementId, content);
+    // const domClone = content.cloneNode(true);
+    // let $printSection = document.getElementById('printSection');
+    // if (!$printSection) {
+    //   $printSection = document.createElement('div');
+    //   $printSection.id = 'printSection';
+    //   document.body.appendChild($printSection);
     // }
+    // if (append !== true) {
+    //   $printSection.innerHTML = '';
+    // } else if (append === true) {
+    //   if (typeof delimiter === 'string') {
+    //     $printSection.innerHTML += delimiter;
+    //   } else if (typeof delimiter === 'object') {
+    //     $printSection.appendChild(delimiter);
+    //   }
+    // }
+    // $printSection.appendChild(domClone);
+    // window.print();
   }
   search(filters: any): void {
     // const q = this.queryObserver.getValue();
@@ -194,5 +224,64 @@ export class ReportsComponent implements OnInit {
       size: 'lg',
       backdrop: 'static',
     });
+    this.agreementId = id;
+    this.getDetail();
+  }
+  getDetail() {
+    if (
+      this.agreementId === null &&
+      this.agreementId === undefined &&
+      this.agreementId === ''
+    ) {
+      this.alertService.error('No se encontro el id del acuerdo', 'Error', {
+        autoClose: true,
+      });
+      return;
+    }
+    try {
+      this.agreementService
+        .agreementDetail(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.item !== null) {
+            console.log(response);
+
+            this.agreementDetail = response.item;
+            this.agreementDetail['department'] = [{ name: '' }];
+            this.fillSelects(response.item.districtId);
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al traer el detalle del acuerdo',
+        'Error',
+        { autoClose: true }
+      );
+    }
+  }
+  fillSelects(districtId) {
+    if (districtId === null || districtId === undefined) {
+      return;
+    }
+    try {
+      this.agreementService.departmentList().subscribe((response) => {
+        if (
+          response &&
+          response.items !== undefined &&
+          response.items !== null &&
+          response.items.length > 0
+        ) {
+          console.log(response);
+          this.agreementDetail['department'] = response.items.filter((item) => {
+            return item.code === districtId.substring(0, 2);
+          });
+
+          console.log(this.agreementDetail);
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer data del acuerdo', 'Error', {
+        autoClose: true,
+      });
+    }
   }
 }
