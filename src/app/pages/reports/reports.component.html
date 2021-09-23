@@ -37,18 +37,6 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
-            id="datos-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#tabGeneral"
-            type="button"
-            role="tab"
-          >
-            General
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
             id="mapa-tab"
             data-bs-toggle="tab"
             data-bs-target="#tabEspecific"
@@ -58,10 +46,22 @@
             Específico
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="datos-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabGeneral"
+            type="button"
+            role="tab"
+          >
+            General
+          </button>
+        </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div
-          class="tab-pane pt-2 fade show active"
+          class="tab-pane pt-2 fade"
           id="tabGeneral"
           role="tabpanel"
           aria-labelledby="general-tab"
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div
-          class="tab-pane pt-2 fade"
+          class="tab-pane pt-2 fade show active"
           id="tabEspecific"
           role="tabpanel"
           aria-labelledby="Especific-tab"
@@ -178,7 +178,9 @@
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div>
-                      <label for="inputState" class="form-label">Provincia</label>
+                      <label for="inputState" class="form-label"
+                        >Provincia</label
+                      >
                       <select
                         placeholder="SELECCIONE"
                         class="form-select"
@@ -186,7 +188,10 @@
                         (change)="searchDistricts($event.target.value)"
                       >
                         <option selected value="">SELECCIONE</option>
-                        <option *ngFor="let item of provinces" [value]="item.code">
+                        <option
+                          *ngFor="let item of provinces"
+                          [value]="item.code"
+                        >
                           {{ item.name }}
                         </option>
                       </select>
@@ -194,14 +199,19 @@
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div>
-                      <label for="inputState" class="form-label">Distrito</label>
+                      <label for="inputState" class="form-label"
+                        >Distrito</label
+                      >
                       <select
                         placeholder="SELECCIONE"
                         class="form-select"
                         formControlName="districtId"
                       >
                         <option selected value="">SELECCIONE</option>
-                        <option *ngFor="let item of districts" [value]="item.code">
+                        <option
+                          *ngFor="let item of districts"
+                          [value]="item.code"
+                        >
                           {{ item.name }}
                         </option>
                       </select>

@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthenticationService } from '@app/_services/auth/authentication.service';
+import { User } from '@app/_models/auth/user';
 @Component({
   selector: 'app-full-layout',
   templateUrl: './full-layout.component.html',
@@ -7,51 +9,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class FullLayoutComponent implements OnInit, OnDestroy {
   items: any;
 
-  simpleItems2 = {
-    text: 'parent-2',
-    value: 'p2',
-    collapsed: true,
-    children: [
-      {
-        text: 'child-1',
-        value: 'c1',
-      },
-      {
-        text: 'child-2',
-        value: 'c2',
-        children: [
-          {
-            text: 'child-1-2',
-            value: 'c12',
-          },
-          {
-            text: 'child-1-2',
-            value: 'c12',
-            disabled: true,
-            collapsed: true,
-            checked: true,
-            children: [
-              {
-                text: 'child-1-2',
-                value: 'c12',
-              },
-              {
-                text: 'child-1-2',
-                value: 'c12',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
+  isLogedIn: boolean = false;
+  user: User;
   private view: any = null;
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService) {}
   status: boolean = false;
   clickEvent() {
     this.status = !this.status;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = this.authenticationService.userValue;
+    if (this.user) {
+      this.isLogedIn = true;
+    }
+  }
 
   onSelectedChange(event) {
     // console.log(event);

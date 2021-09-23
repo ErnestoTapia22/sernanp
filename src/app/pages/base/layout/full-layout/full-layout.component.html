@@ -6,7 +6,10 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav">
         <ul id="sidebarnav" (click)="clickAside($event)">
-          <li class="user-pro">
+          <li
+            class="user-pro"
+            *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -18,8 +21,8 @@
             </a>
           </li>
           <!-- <li class="nav-small-cap">--- PERSONAL</li> -->
-          
-          <li>
+
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -35,7 +38,7 @@
               <li><a href="javascript:void(0)">Compose Mail</a></li>
             </ul> -->
           </li>
-          <li>
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -57,7 +60,7 @@
               <li><a href="javascript:void(0)">Modern</a></li>
             </ul> -->
           </li>
-          <li>
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -76,7 +79,7 @@
               <li><a href="javascript:void(0)">Contact Detail</a></li>
             </ul> -->
           </li>
-          <li>
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -92,7 +95,7 @@
               <li><a href="javascript:void(0)">Compose Mail</a></li>
             </ul> -->
           </li>
-          <li>
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -109,7 +112,7 @@
             </ul> -->
           </li>
 
-          <li>
+          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
             <a
               class="has-arrow"
               aria-expanded="false"
