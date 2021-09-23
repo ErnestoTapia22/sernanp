@@ -125,32 +125,105 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="code"
+                      formControlName="name"
                     />
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <label for="inputState" class="form-label"
-                      >Estado del acuerdo
-                    </label>
-                    <select class="form-select" formControlName="state">
-                      <option value="">SELECCIONE</option>
-                      <option value="1">En envaluación</option>
-                      <option value="2">En diseño</option>
-                      <option value="3">Firmado</option>
-                      <option value="4">En implementación</option>
-                    </select>
+                    <div formGroupName="anp">
+                      <label for="inputState" class="form-label">ANP</label>
+                      <select class="form-select" formControlName="id">
+                        <option selected value="0">SELECCIONE</option>
+                        <option *ngFor="let item of anps" [value]="item.id">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <label for="inputState" class="form-label"
-                      >Fuente de financiamiento
-                    </label>
-                    <select class="form-select" formControlName="category">
-                      <option value="">SELECCIONE</option>
-                      <option value="1">Público</option>
-                      <option value="2">Privado</option>
-                      <option value="3">Cooperación</option>
-                      <option value="4">Otro</option>
-                    </select>
+                    <div formGroupName="agreementState">
+                      <label for="inputState" class="form-label"
+                        >Estado del acuerdo</label
+                      >
+                      <select class="form-select" formControlName="id">
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of agreementStateList"
+                          [value]="item.id"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="ddlDepartment" class="form-label"
+                        >Departamento</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="departmentId"
+                        (change)="searchProvinces($event.target.value)"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of departments"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="inputState" class="form-label">Provincia</label>
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="provinceId"
+                        (change)="searchDistricts($event.target.value)"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option *ngFor="let item of provinces" [value]="item.code">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="inputState" class="form-label">Distrito</label>
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="districtId"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option *ngFor="let item of districts" [value]="item.code">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label for="txtSuscriptionDateStart" class="form-label"
+                      >Fecha de suscripción</label
+                    >
+                    <div class="input-group mb-3">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="firm"
+                      />
+                      <span class="input-group-text">-</span>
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="firmEnd"
+                      />
+                    </div>
                   </div>
                 </div>
 

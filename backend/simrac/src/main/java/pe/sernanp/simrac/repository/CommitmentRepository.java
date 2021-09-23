@@ -15,6 +15,19 @@ import pe.sernanp.simrac.model.CommitmentModel;
 public class CommitmentRepository extends BaseRepository<CommitmentModel> {
 	
 	@Override
+	protected void setParameters(Map<String, Object> parameters, CommitmentModel item) throws Exception {
+		 parameters.put("pid", item.getId2());
+		 parameters.put("pagreementid", item.getConservationAgreement () .getId2());
+		 parameters.put("palliedid", item.getAllied() .getId2());
+		 parameters.put("pactionlineid", item.getActionLine() .getId2());
+		 
+		 parameters.put("pdescription", item.getDescription());
+		 parameters.put("pregistrationdate", item.getRegistrationDate());
+		 parameters.put("pstate", item.getState());
+		 parameters.put("pindicator", item.getIndicator());
+		 parameters.put("pactive", item.getActive());
+		 
+	}@Override
 	public CommitmentModel detail(DataSource ds, int id) throws Exception {
 		return super.detail2(ds, "simrac.fn_detalle_compromiso", id, new CommitmentMapper());
 	}
@@ -29,28 +42,11 @@ public class CommitmentRepository extends BaseRepository<CommitmentModel> {
 		return super.delete(ds, "simrac.fn_eliminar_compromiso", id);
 	}
 	
-	
-	@Override
-	protected void setParameters(Map<String, Object> parameters, CommitmentModel item) throws Exception {
-		 parameters.put("pid", item.getId2());
-		 parameters.put("pagreementid", item.getConservationAgreement () .getId2());
-		 parameters.put("palliedid", item.getAllied() .getId2());
-		 parameters.put("pactionlineid", item.getActionLine() .getId2());
-		 
-		 parameters.put("pdescription", item.getDescription());
-		 parameters.put("pregistrationdate", item.getRegistrationDate());
-		 parameters.put("pstate", item.getState());
-		 parameters.put("pindicator", item.getIndicator());
-		 parameters.put("pactive", item.getActive());
-		 
-	}
-	
 	public List<CommitmentModel> search(DataSource ds, int id) throws Exception {
 		System.out.println(ds);
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("pagreementid",id);
 		return super.search23(ds,"simrac.fn_buscar_compromisoporacuerdo",parameters, new CommitmentMapper());
-		
 	}
 	
 }
