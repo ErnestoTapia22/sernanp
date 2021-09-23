@@ -11,6 +11,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
 
   isLogedIn: boolean = false;
   user: User;
+  arrayModules: any[] = [];
   private view: any = null;
   constructor(private authenticationService: AuthenticationService) {}
   status: boolean = false;
@@ -21,6 +22,9 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     this.user = this.authenticationService.userValue;
     if (this.user) {
       this.isLogedIn = true;
+      this.arrayModules = this.user.modules.map((value) => {
+        return value.path;
+      });
     }
   }
 

@@ -46,7 +46,7 @@ const routes: Routes = [
       { path: 'index', component: IndexComponent },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/map' },
   },
   {
     path: 'agreement',
@@ -64,7 +64,7 @@ const routes: Routes = [
       },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/agreement/index' },
   },
   {
     path: 'monitoring',
@@ -82,7 +82,7 @@ const routes: Routes = [
       },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/monitoring/index' },
   },
   {
     path: 'reports',
@@ -92,7 +92,7 @@ const routes: Routes = [
       { path: 'index', component: ReportsComponent },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/reports/index' },
   },
   {
     path: 'user',
@@ -102,7 +102,7 @@ const routes: Routes = [
       { path: 'index', component: UserComponent },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/user/index' },
   },
   {
     path: 'admin',
@@ -115,7 +115,7 @@ const routes: Routes = [
       },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/admin/index' },
   },
   {
     path: 'anp',
@@ -129,7 +129,7 @@ const routes: Routes = [
       },
     ],
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador SIMRAC'] },
+    data: { roles: ['Administrador SIMRAC'], module: '/anp/index' },
   },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: 'not-found' },

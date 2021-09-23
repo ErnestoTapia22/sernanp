@@ -7,8 +7,8 @@
       <nav class="sidebar-nav">
         <ul id="sidebarnav" (click)="clickAside($event)">
           <li
-            class="user-pro"
-            *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'"
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/map') !== -1"
           >
             <a
               class="has-arrow"
@@ -22,7 +22,10 @@
           </li>
           <!-- <li class="nav-small-cap">--- PERSONAL</li> -->
 
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/anp/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -38,7 +41,10 @@
               <li><a href="javascript:void(0)">Compose Mail</a></li>
             </ul> -->
           </li>
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/agreement/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -60,7 +66,10 @@
               <li><a href="javascript:void(0)">Modern</a></li>
             </ul> -->
           </li>
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/monitoring/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -79,7 +88,10 @@
               <li><a href="javascript:void(0)">Contact Detail</a></li>
             </ul> -->
           </li>
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/reports/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -95,7 +107,10 @@
               <li><a href="javascript:void(0)">Compose Mail</a></li>
             </ul> -->
           </li>
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/user/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
@@ -112,7 +127,10 @@
             </ul> -->
           </li>
 
-          <li *ngIf="isLogedIn && user.role.name === 'Administrador SIMRAC'">
+          <li
+            routerLinkActive="user-pro"
+            *ngIf="arrayModules.indexOf('/admin/index') !== -1"
+          >
             <a
               class="has-arrow"
               aria-expanded="false"
