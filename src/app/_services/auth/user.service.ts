@@ -77,7 +77,7 @@ export class UserService {
   }
   rolModuleInsert(item): Observable<any> {
     return this.apiBaseService.post(
-      `${environment.apiUrl}/${this.segmentRolModuleInsert}`,
+      `${environment.apiUrl}${this.segmentRolModuleInsert}`,
       item,
       null
     );

@@ -166,7 +166,7 @@ public class UserService extends BaseService<UserModel> {
 								.map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 360000000))
 				.signWith(key, SignatureAlgorithm.HS256).compact();
 				//.signWith(SignatureAlgorithm.HS512, base64Key).compact();
 
