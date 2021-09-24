@@ -2,7 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -48,6 +48,7 @@ import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agre
 import { NotFoundComponent } from './pages/base/not-found/not-found.component';
 import { PublicComponent } from './pages/base/public/public.component';
 import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.component';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,11 @@ import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.c
       provide: APP_INITIALIZER,
       useFactory: initAppFactory,
       deps: [InitService, AlertService],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true,
     },
   ],

@@ -1,7 +1,6 @@
 package pe.sernanp.simrac.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Entity;
 

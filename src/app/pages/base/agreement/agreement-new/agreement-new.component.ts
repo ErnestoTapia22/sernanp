@@ -124,6 +124,9 @@ export class AgreementNewComponent implements OnInit {
   hasVigilance: boolean = false;
   hasRestauration: boolean = false;
   commitmentId: number = 0;
+  commitmentsListExternal: any[] = [];
+  commitmentExternalId: number = 0;
+  formCreateCommitmentsExternal: FormGroup;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -202,6 +205,14 @@ export class AgreementNewComponent implements OnInit {
       backdrop: 'static',
     });
     this.commitmentId = id;
+  }
+  onDeleteCommitmentsExternalModal(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+    this.commitmentExternalId = id;
   }
   onMapInit({ map, view }) {
     this.map = map;
@@ -640,6 +651,16 @@ export class AgreementNewComponent implements OnInit {
         }),
       ],
     });
+    this.formCreateCommitmentsExternal = this.fb.group({
+      description: '',
+      objetive: '',
+      alignedTo: '',
+      subscriber: '',
+      description2: '',
+      objetive2: '',
+      alignedTo2: '',
+      subscriber2: '',
+    });
   }
 
   insertAgreement() {
@@ -989,6 +1010,13 @@ export class AgreementNewComponent implements OnInit {
     });
     this.masterPlanSearch();
   }
+  onContentCreateCommitmentsExternalModal(content) {
+    this.modalRef = this.modalService.open(content, {
+      size: 'lg',
+      backdrop: 'static',
+      centered: true,
+    });
+  }
   insertCommitments() {
     this.submitted = true;
     this.disabled = true;
@@ -1067,6 +1095,32 @@ export class AgreementNewComponent implements OnInit {
       this.alertService.error('Error al insertar los compromisos', 'error', {
         autoClose: true,
       });
+    }
+  }
+  searchCommitmentsExternal() {
+    if (
+      this.agreementId === '' ||
+      this.agreementId === null ||
+      this.agreementId === '0'
+    ) {
+      return;
+    }
+    try {
+      this.agreementService
+        .commitmentsSearch(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.commitmentsListExternal = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al insertar los compromisos externos',
+        'error',
+        {
+          autoClose: true,
+        }
+      );
     }
   }
   formCreateCommitmentsReset() {
@@ -1270,6 +1324,34 @@ export class AgreementNewComponent implements OnInit {
     } catch (error) {
       this.alertService.error(
         'Error al eliminar el compromiso' + error,
+        'error',
+        {
+          autoClose: false,
+        }
+      );
+    }
+  }
+  onDeleteCommitmentExternal() {
+    try {
+      this.agreementService
+        .commitmentExternalDelete(this.commitmentId)
+        .subscribe((response) => {
+          if (response && response.success) {
+            this.alertService.success(
+              'Se elimino correctamente el compromiso externo',
+              'Ok',
+              {
+                autoClose: false,
+              }
+            );
+            this.commitmentsListExternal = [];
+            this.searchCommitmentsExternal();
+            this.modalRef.close();
+          }
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al eliminar el compromiso externo' + error,
         'error',
         {
           autoClose: false,
