@@ -71,7 +71,6 @@ export class AgreementComponent implements OnInit {
     try {
       this.isLoading = true;
       this.spinner.show();
-      console.log(this.queryObserver.getValue());
       this.agreementService
         .agreementSearch(this.queryObserver.getValue())
         .subscribe((data) => {

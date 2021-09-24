@@ -82,7 +82,6 @@
                       class="form-control"
                       placeholder="Código"
                       formControlName="code"
-                     
                     />
                   </div>
                   <div class="col-md-6">
@@ -290,6 +289,157 @@
             </div>
             <div class="card">
               <div class="card-header">
+                <label class="mb-0 fw-bold">Articulaciones</label>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="chkArticulated"
+                        value="option3"
+                      />
+                      <label for="chkArticulated" class="form-label"
+                        >Plan maestro (*)</label
+                      >
+                    </div>
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="chkLocalDevelopment"
+                        value="option3"
+                      />
+                      <label class="form-check-label" for="chkLocalDevelopment"
+                        >Plan de desarrollo local</label
+                      >
+                    </div>
+                    <div class="">
+                      <label for="detalle" class="form-label"
+                        >Detalle del/los municipios del ADC</label
+                      >
+                      <input type="text" class="form-control" id="detalle" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label"
+                      >Plan de vida de las comunidades</label
+                    >
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="yes"
+                      />
+                      <label class="form-check-label" for="yes">Sí</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="not"
+                      />
+                      <label class="form-check-label" for="not">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkComunityL"
+                        id="ecaNotApply"
+                      />
+                      <label class="form-check-label" for="ecaNotApply"
+                        >No aplica</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label"
+                      >Plan de vida institucional (ECA)</label
+                    >
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaYes"
+                      />
+                      <label class="form-check-label" for="ecaYes">Sí</label>
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaNot"
+                      />
+                      <label class="form-check-label" for="ecaNot">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="notApply"
+                      />
+                      <label class="form-check-label" for="notApply"
+                        >No aplica</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Zonificación Forestal</label>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaYes"
+                        value="1"
+                      />
+                      <label class="form-check-label" for="ecaYes">Sí</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="ecaNot"
+                        value="0"
+                      />
+                      <label class="form-check-label" for="ecaNot">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkEcaComunityL"
+                        id="notApply"
+                        value="2"
+                      />
+                      <label class="form-check-label" for="notApply"
+                        >No aplica</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
                 <label class="mb-0 fw-bold">Suscriptores</label>
                 <button
                   type="button"
@@ -364,6 +514,7 @@
                 </div>
               </div>
             </div>
+
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Compromisos</label>
@@ -386,7 +537,7 @@
                     [disabled]="!agreementExist"
                     (click)="exportAsXLSX()"
                   >
-                  <i class="bi bi-file-earmark-excel"></i>
+                    <i class="bi bi-file-earmark-excel"></i>
                     Exportar Excel
                   </button>
                 </div>
@@ -436,7 +587,7 @@
                                 >
                                   <td>
                                     {{ item.actionLine.objetive.description }}
-                                  </td>                                  
+                                  </td>
                                   <td>
                                     {{ item.description }}
                                   </td>
@@ -472,6 +623,118 @@
                         </div>
                       </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Compromisos externos</label>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary mx-2"
+                    (click)="
+                      onContentCreateCommitmentsExternalModal(
+                        contentCreateCommitmentsExternal
+                      )
+                    "
+                    [disabled]="!agreementExist"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                    Agregar compromisos
+                  </button>
+                  &nbsp;
+                  <!-- <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary mx-2"
+                    [disabled]="!agreementExist"
+                    (click)="exportAsXLSX()"
+                  >
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
+                  </button> -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body" id="parent">
+                        <div class="row g-3">
+                          <!-- <div class="col-md-6">
+                              <label class="form-label"
+                                >Agregar compromisos</label
+                              >
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-primary d-flex"
+                                (click)="
+                                  onContentCreateCommitmentsModal(
+                                    contentCreateCommitments
+                                  )
+                                "
+                              >
+                                <i class="bi bi-plus-lg"></i>
+                              </button>
+                            </div> -->
+                        </div>
+                        <!-- <hr /> -->
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead class="fw-bold">
+                              <tr>
+                                <td>Objetivo</td>
+                                <td>Compromiso</td>
+                                <td>Línea de Acción</td>
+                                <td>Suscriptor</td>
+                                <td>Opciones</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of commitmentsListExternal;
+                                  index as idx
+                                "
+                              >
+                                <td>
+                                  {{ item.objetive }}
+                                </td>
+                                <td>
+                                  {{ item.description }}
+                                </td>
+                                <td>
+                                  {{ item.actionLine }}
+                                </td>
+                                <td>
+                                  {{ item.allied }}
+                                </td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-danger
+                                        border-0
+                                      "
+                                      (click)="
+                                        onDeleteCommitmentsExternalModal(
+                                          contentCommitmentsExternalDelete,
+                                          item.id
+                                        )
+                                      "
+                                    >
+                                      <i class="bi bi-trash fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -657,27 +920,60 @@
                   >
                     <div class="row g-3">
                       <div class="col-md-3">
-                        <label for="numbScope" class="form-label">Ámbito del ADC (Ha)</label>
+                        <label for="numbScope" class="form-label"
+                          >Ámbito del ADC (Ha)</label
+                        >
                         <div class="input-group">
-                          <input type="number" min="0" class="form-control" id="numbScope" formControlName="areaAmbitc"/>
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="numbScope"
+                            formControlName="areaAmbitc"
+                          />
                           <span class="input-group-text">Ha</span>
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbProductiveA" class="form-label">Superficie de intervención (Ha)</label>
-                        <i class="bi bi-info-circle mx-1" placement="top" ngbTooltip="Superficie bajo manejo productivo"></i>
+                        <label for="numbProductiveA" class="form-label"
+                          >Superficie de intervención (Ha)</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Superficie bajo manejo productivo"
+                        ></i>
                         <div class="input-group">
-                          <input type="number" min="0" class="form-control" id="numbProductiveA" formControlName="producedArea"/>
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="numbProductiveA"
+                            formControlName="producedArea"
+                          />
                           <span class="input-group-text">Ha</span>
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbInterventionA" class="form-label">Ubicacion Superficie de intervención</label>
-                        <i class="bi bi-info-circle mx-1" placement="top" ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"></i>
-                        <input type="text" min="0" class="form-control" id="numbInterventionA" value=""/>
+                        <label for="numbInterventionA" class="form-label"
+                          >Ubicacion Superficie de intervención</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"
+                        ></i>
+                        <input
+                          type="text"
+                          min="0"
+                          class="form-control"
+                          id="numbInterventionA"
+                          value=""
+                        />
                       </div>
                       <div class="col-md-3">
-                        <label for="detalleProduction" class="form-label">Detalle superficie intervención
+                        <label for="detalleProduction" class="form-label"
+                          >Detalle superficie intervención
                         </label>
                         <i
                           class="bi bi-info-circle mx-1"
@@ -692,14 +988,24 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="restHect" class="form-label">Superficie bajo restauración (Ha)</label>
+                        <label for="restHect" class="form-label"
+                          >Superficie bajo restauración (Ha)</label
+                        >
                         <div class="input-group">
-                          <input type="number" min="0" class="form-control" id="restHect" formControlName="restHect"/>
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="restHect"
+                            formControlName="restHect"
+                          />
                           <span class="input-group-text">Ha</span>
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="txtaIndirectB" class="form-label">Detalle ámbito bajo restauración</label>
+                        <label for="txtaIndirectB" class="form-label"
+                          >Detalle ámbito bajo restauración</label
+                        >
                         <textarea
                           id="txtaDetailAR"
                           class="form-control"
@@ -719,11 +1025,19 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label">Superficie del(os) sector(es) de V y C (Ha)</label>
+                        <label for="numbAreaVC" class="form-label"
+                          >Superficie del(os) sector(es) de V y C (Ha)</label
+                        >
                         <div class="input-group">
-                          <input type="number" min="0" class="form-control" id="numbAreaVC" formControlName="sectHect"/>
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="numbAreaVC"
+                            formControlName="sectHect"
+                          />
                           <span class="input-group-text">Ha</span>
-                        </div>                        
+                        </div>
                       </div>
                       <div class="col-md-3">
                         <label for="txtaDetailSVC" class="form-label"
@@ -759,11 +1073,19 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label">Superficie del Ámbito de control</label>
+                        <label for="numbAreaVC" class="form-label"
+                          >Superficie del Ámbito de control</label
+                        >
                         <div class="input-group">
-                          <input type="number" min="0" class="form-control" id="numbAreaVC" formControlName="sectHect"/>
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="numbAreaVC"
+                            formControlName="sectHect"
+                          />
                           <span class="input-group-text">Ha</span>
-                        </div>                        
+                        </div>
                       </div>
                       <div class="col-md-3 d-none">
                         <div class="mb-3">
@@ -824,103 +1146,7 @@
                 </div>
               </div>
             </div>
-            <div class="card">
-              <div class="card-header">
-                <label class="mb-0 fw-bold">Articulaciones</label>
-                <button
-                  type="submit"
-                  class="btn btn-sm btn-outline-success mx-2"
-                  [disabled]="disabled"
-                >
-                  <i class="bi bi-save"></i>
-                  Guardar
-                </button>
-              </div>
-              <div class="card-body">
-                <div class="row g-3">
-                  <div class="col-md-3">
-                    <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="chkArticulated" value="option3"/>
-                      <label for="chkArticulated" class="form-label">Plan maestro (*)</label>
-                    </div>
-                    <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="chkLocalDevelopment" value="option3"/>
-                      <label class="form-check-label" for="chkLocalDevelopment">Plan de desarrollo local</label>
-                    </div>
-                    <div class="">
-                      <label for="detalle" class="form-label">Detalle del/los municipios del ADC</label>
-                      <input type="text" class="form-control" id="detalle"/>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Plan de vida de las comunidades</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkComunityL" id="yes"/>
-                      <label class="form-check-label" for="yes">Sí</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkComunityL" id="not"/>
-                      <label class="form-check-label" for="not">No</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkComunityL" id="ecaNotApply"/>
-                      <label class="form-check-label" for="ecaNotApply">No aplica</label
-                      >
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label"
-                      >Plan de vida institucional (ECA)</label
-                    >
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaYes"
-                      />
-                      <label class="form-check-label" for="ecaYes">Sí</label>
-                    </div>
 
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaNot"
-                      />
-                      <label class="form-check-label" for="ecaNot">No</label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="notApply"
-                      />
-                      <label class="form-check-label" for="notApply"
-                        >No aplica</label
-                      >
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Zonificación Forestal</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="ecaYes" value="1" />
-                      <label class="form-check-label" for="ecaYes">Sí</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="ecaNot"  value="0"/>
-                      <label class="form-check-label" for="ecaNot">No</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="chkEcaComunityL" id="notApply"  value="2"/>
-                      <label class="form-check-label" for="notApply">No aplica</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="card">
               <div class="card-header">
                 <label class="mb-0 fw-bold">Financiamiento</label>
@@ -1302,6 +1528,130 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
     </div>
   </form>
 </ng-template>
+<ng-template #contentCreateCommitmentsExternal let-modal>
+  <form
+    [formGroup]="formCreateCommitmentsExternal"
+    (ngSubmit)="insertCommitmentsExternal()"
+    novalidate
+  >
+    <div class="modal-header">
+      <h5 class="modal-title" id="createPerfilLabel">Crear Compromisos</h5>
+      <button type="button" class="btn-close" (click)="modal.close()"></button>
+    </div>
+    <div class="modal-body">
+      <ul class="nav nav-tabs nav-tabs-flat" id="myComp" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="datos-tabMP"
+            data-bs-toggle="tab"
+            data-bs-target="#tabMP"
+            type="button"
+            role="tab"
+          >
+            Planes externos
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane pt-2 fade show active"
+          id="tabMP"
+          role="tabpanel"
+          aria-labelledby="datos-tabMP"
+        >
+          <form [formGroup]="formCreateCommitmentsExternal" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Compromiso 1</label>
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  formControlName="description"
+                  [ngClass]="{
+                    'input-invalid': submitted && h.description.errors?.required
+                  }"
+                ></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Compromiso 2</label>
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  formControlName="description2"
+                  [ngClass]="{
+                    'input-invalid':
+                      submitted && h.description2.errors?.required
+                  }"
+                ></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Objetivo 1</label>
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  formControlName="objetive"
+                  [ngClass]="{
+                    'input-invalid': submitted && h.description.errors?.required
+                  }"
+                ></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Objetivo 2</label>
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  formControlName="objetive2"
+                  [ngClass]="{
+                    'input-invalid': submitted && h.description.errors?.required
+                  }"
+                ></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Alineado a (1)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="alignedTo"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Alineado a (2)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="alignedTo2"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Suscriptor 1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="subscriber"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Suscriptor 2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="subscriber2"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</ng-template>
 <ng-template #contentAlliedDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Eliminar suscriptor</h4>
@@ -1328,6 +1678,39 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       type="button"
       ngbAutofocus
       (click)="onDeleteAllied()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #contentCommitmentsExternalDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar compromiso</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="onDeleteCommitmentExternal()"
       class="btn btn-primary"
     >
       Aceptar

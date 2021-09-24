@@ -27,6 +27,8 @@ export class AgreementService {
   private segmentCommitmentsInsert;
   private segmentCommitmentsSearch;
   private segmentCommitmentsDelete;
+  private segmentCommitmentsExternalDelete;
+  private segmentCommitmentsExternalSearch;
 
   constructor(private apiService: ApiBaseService, private http: HttpClient) {
     this.segmentSearch = '/conservationagreement/search';
@@ -42,6 +44,8 @@ export class AgreementService {
     this.segmentAlliedInsert = '/allied/save';
     this.segmentAlliedDelete = '/allied/delete/';
     this.segmentCommitmentsDelete = '/commitment/delete/';
+    this.segmentCommitmentsExternalDelete = '/commitmentexternal/delete/';
+    this.segmentCommitmentsExternalSearch = '/commitmentexternal/search/';
   }
   uploadShape(file: File) {
     const fd = new FormData();
@@ -76,9 +80,7 @@ export class AgreementService {
     );
   }
   departmentList(): Observable<any> {
-    return this.apiService.get(
-      `${environment.apiUrl}/district/listdepartment`
-    );
+    return this.apiService.get(`${environment.apiUrl}/district/listdepartment`);
   }
   searchProvinces(id): Observable<any> {
     return this.apiService.get(
@@ -126,6 +128,11 @@ export class AgreementService {
       `${environment.apiUrl}${this.segmentCommitmentsSearch}${id}`
     );
   }
+  commitmentsExternalSearch(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentCommitmentsExternalSearch}${id}`
+    );
+  }
   alliedDelete(id): Observable<any> {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentAlliedDelete}${id}`
@@ -134,6 +141,11 @@ export class AgreementService {
   commitmentDelete(id): Observable<any> {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentCommitmentsDelete}${id}`
+    );
+  }
+  commitmentExternalDelete(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentCommitmentsExternalDelete}${id}`
     );
   }
 }

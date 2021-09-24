@@ -37,18 +37,6 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
-            id="datos-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#tabGeneral"
-            type="button"
-            role="tab"
-          >
-            General
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
             id="mapa-tab"
             data-bs-toggle="tab"
             data-bs-target="#tabEspecific"
@@ -58,10 +46,22 @@
             Específico
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="datos-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tabGeneral"
+            type="button"
+            role="tab"
+          >
+            General
+          </button>
+        </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div
-          class="tab-pane pt-2 fade show active"
+          class="tab-pane pt-2 fade"
           id="tabGeneral"
           role="tabpanel"
           aria-labelledby="general-tab"
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div
-          class="tab-pane pt-2 fade"
+          class="tab-pane pt-2 fade show active"
           id="tabEspecific"
           role="tabpanel"
           aria-labelledby="Especific-tab"
@@ -125,32 +125,115 @@
                     <input
                       type="text"
                       class="form-control"
-                      formControlName="code"
+                      formControlName="name"
                     />
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <label for="inputState" class="form-label"
-                      >Estado del acuerdo
-                    </label>
-                    <select class="form-select" formControlName="state">
-                      <option value="">SELECCIONE</option>
-                      <option value="1">En envaluación</option>
-                      <option value="2">En diseño</option>
-                      <option value="3">Firmado</option>
-                      <option value="4">En implementación</option>
-                    </select>
+                    <div formGroupName="anp">
+                      <label for="inputState" class="form-label">ANP</label>
+                      <select class="form-select" formControlName="id">
+                        <option selected value="0">SELECCIONE</option>
+                        <option *ngFor="let item of anps" [value]="item.id">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <label for="inputState" class="form-label"
-                      >Fuente de financiamiento
-                    </label>
-                    <select class="form-select" formControlName="category">
-                      <option value="">SELECCIONE</option>
-                      <option value="1">Público</option>
-                      <option value="2">Privado</option>
-                      <option value="3">Cooperación</option>
-                      <option value="4">Otro</option>
-                    </select>
+                    <div formGroupName="agreementState">
+                      <label for="inputState" class="form-label"
+                        >Estado del acuerdo</label
+                      >
+                      <select class="form-select" formControlName="id">
+                        <option selected value="0">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of agreementStateList"
+                          [value]="item.id"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="ddlDepartment" class="form-label"
+                        >Departamento</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="departmentId"
+                        (change)="searchProvinces($event.target.value)"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of departments"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="inputState" class="form-label"
+                        >Provincia</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="provinceId"
+                        (change)="searchDistricts($event.target.value)"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of provinces"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div>
+                      <label for="inputState" class="form-label"
+                        >Distrito</label
+                      >
+                      <select
+                        placeholder="SELECCIONE"
+                        class="form-select"
+                        formControlName="districtId"
+                      >
+                        <option selected value="">SELECCIONE</option>
+                        <option
+                          *ngFor="let item of districts"
+                          [value]="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <label for="txtSuscriptionDateStart" class="form-label"
+                      >Fecha de suscripción</label
+                    >
+                    <div class="input-group mb-3">
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="firm"
+                      />
+                      <span class="input-group-text">-</span>
+                      <input
+                        type="date"
+                        class="form-control"
+                        formControlName="firmEnd"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -248,605 +331,398 @@
     <h5 class="modal-title" id="createPerfilLabel">Reporte</h5>
     <button type="button" class="btn-close" (click)="modal.close()"></button>
   </div>
-  <div class="modal-body" #pdf>
-    <TABLE cellpadding="0" cellspacing="0" class="t0">
-      <TR>
-        <TD class="tr0 td0"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="2" class="tr0 td9"
-          ><P class="p1 ft2"
-            >Página <SPAN class="ft1">1 </SPAN>de <SPAN class="ft1">2</SPAN></P
-          ></TD
-        >
-        <TD class="tr0 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr1 td0"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr1 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="5" class="tr1 td11"
-          ><P class="p2 ft3">Resumen del Acuerdo</P></TD
-        >
-        <TD class="tr1 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr1 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr1 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr1 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr1 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr2 td13"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td14"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td15"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td16"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td17"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td18"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td19"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td20"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td21"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td22"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr2 td21"><P class="p0 ft4">&nbsp;</P></TD>
-        <TD class="tr3 td10"><P class="p0 ft5">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr4 td23"><P class="p3 ft6">Datos Generales</P></TD>
-        <TD class="tr4 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr4 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr5 td23"><P class="p3 ft7">ANP</P></TD>
-        <TD colspan="2" class="tr5 td25"><P class="p4 ft8">Manu1</P></TD>
-        <TD class="tr5 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td4"><P class="p5 ft7">Estado</P></TD>
-        <TD class="tr5 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr5 td26"
-          ><P class="p6 ft8">En evaluación</P></TD
-        >
-        <TD class="tr5 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Objetivo</P></TD>
-        <TD colspan="2" class="tr6 td25"
-          ><P class="p7 ft8">Objetivo general</P></TD
-        >
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">Fecha de Firma</P></TD
-        >
-        <TD colspan="3" class="tr6 td26"><P class="p8 ft8">30/08/2021</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Años de Vigencia</P></TD>
-        <TD class="tr6 td1"><P class="p4 ft8">3</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">Financiamiento (Soles)</P></TD
-        >
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="2" class="tr6 td28"><P class="p9 ft8">30,000.00</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Ámbito AdC (Has)</P></TD>
-        <TD colspan="2" class="tr6 td25"><P class="p10 ft8">1,000.00</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">¿Financiam. Apalancado?</P></TD
-        >
-        <TD colspan="2" class="tr6 td29"><P class="p6 ft8">Si</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Familias beneficiadas</P></TD>
-        <TD colspan="2" class="tr6 td25"><P class="p4 ft8">10</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Detalle del beneficiario</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Beneficiarios Indirectos</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Has. Manejo productivo</P></TD>
-        <TD colspan="2" class="tr6 td25"><P class="p10 ft8">1,000.00</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">Detalle ámbito bajo</P></TD
-        >
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">manejo productivo</P></TD
-        >
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Has. Bajo restauración</P></TD>
-        <TD colspan="2" class="tr6 td25"><P class="p10 ft8">1,000.00</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">Detalle del ámbito bajo</P></TD
-        >
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"><P class="p5 ft7">restauración</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">Nombre(s) del sector(es)</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p10 ft8">texto</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="3" class="tr6 td27"
-          ><P class="p5 ft7">Detalle del sector de VyC</P></TD
-        >
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">de VyC</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"
-          ><P class="p3 ft7">Observaciones/comentarios</P></TD
-        >
-        <TD colspan="2" class="tr6 td25"
-          ><P class="p7 ft8">[Observaciones]</P></TD
-        >
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr7 td30"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td14"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td15"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td16"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td17"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td18"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td19"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td20"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td21"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td22"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td31"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr8 td10"><P class="p0 ft10">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr9 td13"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td14"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td15"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td16"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td17"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td18"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td19"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td20"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td22"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr9 td32"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr10 td0"><P class="p0 ft8">Demarcaciones</P></TD>
-        <TD class="tr10 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr10 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr5 td0"><P class="p11 ft11">Departamento</P></TD>
-        <TD class="tr5 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="2" class="tr5 td33"><P class="p12 ft11">Provincia</P></TD>
-        <TD class="tr5 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td8"><P class="p13 ft11">Distrito</P></TD>
-        <TD class="tr5 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr5 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td0"><P class="p14 ft7">Áncash</P></TD>
-        <TD class="tr6 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td4"><P class="p15 ft7">Áncash</P></TD>
-        <TD class="tr6 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD colspan="2" class="tr6 td29"><P class="p16 ft7">Áncash</P></TD>
-        <TD class="tr6 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr11 td13"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td14"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td15"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td16"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td17"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td18"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td19"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td20"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td22"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr11 td32"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr12 td0"><P class="p0 ft8">Compromisos/Actividades</P></TD>
-        <TD class="tr12 td1"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td3"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td4"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td5"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td7"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td12"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td8"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr12 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr0 td13"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td14"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td15"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td16"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td17"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td18"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td19"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td20"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td22"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr0 td21"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr13 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr3 td23"><P class="p3 ft12">Compromisos</P></TD>
-        <TD class="tr3 td34"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td2"><P class="p17 ft12">Actividades</P></TD>
-        <TD class="tr3 td35"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td36"><P class="p17 ft12">Indicadores</P></TD>
-        <TD class="tr3 td37"><P class="p17 ft12">Medios de</P></TD>
-        <TD class="tr3 td6"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td7"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD colspan="2" class="tr3 td9"><P class="p18 ft12">Año 1</P></TD>
-        <TD class="tr3 td24"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td10"><P class="p0 ft5">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr14 td23"><P class="p0 ft13">&nbsp;</P></TD>
-        <TD class="tr14 td34"><P class="p0 ft13">&nbsp;</P></TD>
-        <TD class="tr14 td2"><P class="p0 ft13">&nbsp;</P></TD>
-        <TD class="tr14 td35"><P class="p0 ft13">&nbsp;</P></TD>
-        <TD class="tr14 td36"><P class="p0 ft13">&nbsp;</P></TD>
-        <TD rowspan="2" class="tr12 td37"
-          ><P class="p17 ft8">verificación</P></TD
-        >
-        <TD colspan="2" class="tr8 td38"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td21"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td22"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td31"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr14 td10"><P class="p0 ft13">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr3 td23"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td34"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td2"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td35"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td36"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD colspan="2" class="tr3 td39"><P class="p19 ft12">Trim</P></TD>
-        <TD class="tr3 td24"><P class="p20 ft14">Trim</P></TD>
-        <TD class="tr3 td40"><P class="p17 ft12">Trim</P></TD>
-        <TD class="tr3 td24"><P class="p13 ft12">Trim</P></TD>
-        <TD class="tr3 td10"><P class="p0 ft5">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p21 ft8">1</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p22 ft8">2</P></TD>
-        <TD class="tr6 td40"><P class="p17 ft8">3</P></TD>
-        <TD class="tr6 td24"><P class="p23 ft8">4</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr8 td30"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td42"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td15"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td43"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td44"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td45"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td19"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td46"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td31"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td47"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td31"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr14 td10"><P class="p0 ft13">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr3 td23"><P class="p3 ft15">Fortalecimientos de</P></TD>
-        <TD class="tr3 td34"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td2"><P class="p17 ft15">Implementación</P></TD>
-        <TD class="tr3 td35"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td36"><P class="p17 ft15">N° de</P></TD>
-        <TD class="tr3 td37"><P class="p17 ft15">Informe de</P></TD>
-        <TD class="tr3 td6"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td41"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td24"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td40"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td24"><P class="p0 ft5">&nbsp;</P></TD>
-        <TD class="tr3 td10"><P class="p0 ft5">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">capacidades a Vigilantes</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">con equipos a los</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p17 ft7">capacitaciones</P></TD>
-        <TD class="tr6 td37"><P class="p17 ft7">capacitación</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"
-          ><P class="p3 ft7">comunales (Uso de equipos,</P></TD
-        >
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">vigilantes</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p24 ft7">SI</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p19 ft7">NO</P></TD>
-        <TD class="tr6 td40"><P class="p25 ft7">SI</P></TD>
-        <TD class="tr6 td24"><P class="p20 ft7">NO</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p3 ft7">fichas de reportes y</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">comunales de las</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"
-          ><P class="p3 ft7">estrategias de vigilancia)</P></TD
-        >
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">APA</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr8 td23"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr8 td34"><P class="p0 ft10">&nbsp;</P></TD>
-        <TD class="tr7 td15"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td43"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td44"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td45"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td19"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td46"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td31"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td47"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td31"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr8 td10"><P class="p0 ft10">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr15 td23"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td34"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td2"><P class="p17 ft17">Implementación</P></TD>
-        <TD class="tr15 td35"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td36"><P class="p17 ft17">N° de</P></TD>
-        <TD class="tr15 td37"><P class="p17 ft17">Actas de</P></TD>
-        <TD class="tr15 td6"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td41"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td24"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td40"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td24"><P class="p0 ft16">&nbsp;</P></TD>
-        <TD class="tr15 td10"><P class="p0 ft16">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">con indumentaria</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p17 ft7">Indumentaria</P></TD>
-        <TD class="tr6 td37"><P class="p17 ft7">entrega</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">a los vigilantes</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p24 ft7">SI</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p19 ft7">SI</P></TD>
-        <TD class="tr6 td40"><P class="p25 ft7">SI</P></TD>
-        <TD class="tr6 td24"><P class="p20 ft7">SI</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">comunales de las</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr6 td23"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td34"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td2"><P class="p17 ft7">APA</P></TD>
-        <TD class="tr6 td35"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td36"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td37"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td6"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td41"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td40"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td24"><P class="p0 ft0">&nbsp;</P></TD>
-        <TD class="tr6 td10"><P class="p0 ft0">&nbsp;</P></TD>
-      </TR>
-      <TR>
-        <TD class="tr7 td30"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td42"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td15"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td43"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td44"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td45"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td19"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td46"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td31"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td47"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr7 td31"><P class="p0 ft9">&nbsp;</P></TD>
-        <TD class="tr8 td10"><P class="p0 ft10">&nbsp;</P></TD>
-      </TR>
-    </TABLE>
+  <div class="modal-body">
+    <div class="card" #pdf>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="col-3">
+              <img
+                src="./assets/images/logo-sernanp.png"
+                height="70"
+                width="150"
+                class="img-fluid"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <h3 class="text-center text-decoration-underline">
+              Resumen acuerdo
+            </h3>
+          </div>
+          <div class="col-12">
+            <div class="container square">
+              <div class="col-12">
+                <h6>Datos generales</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="col-md-6">
+                  <label class="form-label col-6">Código</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.code
+                  }}</label>
+                  <label class="form-label col-6">ANP</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.code
+                  }}</label>
+                  <label class="form-label col-6">Estado</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Activo</label
+                  >
+                  <label class="form-label col-6">Nombre</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.name
+                  }}</label>
+                  <label class="form-label col-6">Fecha de suscripción</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.firm | date: "dd/MM/yyyy"
+                  }}</label>
+                  <label class="form-label col-6">Objetivo general</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label col-6">Vigencia</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">
+                    {{ agreementDetail.vigency }} años</label
+                  >
+                  <label class="form-label col-6">Departamento</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.department[0].name || "departamento"
+                  }}</label>
+                  <label class="form-label col-6">Provincia</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Activo</label
+                  >
+                  <label class="form-label col-6">Distrito</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >asdas</label
+                  >
+                  <label class="form-label col-6">Localización</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >23/12/2020</label
+                  >
+                  <label class="form-label col-6">Observaciones</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.observation || "Observacion"
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="container squaretb">
+              <div class="col-12">
+                <h6>Suscriptores</h6>
+              </div>
+              <div class="d-flex flex-row justify-content-center m-0">
+                <div class="text-center mx-5 mb-3">
+                  <p class="text-decoration-underline mb-0">Sernanp</p>
+                  <span>Jefatura</span>
+                </div>
+                <div class="text-center mx-5 mb-3">
+                  <p class="text-decoration-underline mb-0">Ibérica</p>
+                  <span>Empresas</span>
+                </div>
+                <div class="text-center mx-5 mb-3">
+                  <p class="text-decoration-underline mb-0">Sernanp</p>
+                  <span>Jefatura</span>
+                </div>
+              </div>
+            </div>
+            <div class="container square">
+              <div class="col-12">
+                <h6>Compromisos</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="fw-bold">
+                      <tr>
+                        <td>Compromiso</td>
+                        <td>Suscriptor</td>
+                        <td>fecha de registro</td>
+                        <td>Estado</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of commitmentsList; index as idx">
+                        <td>
+                          {{ item.description }}
+                        </td>
+                        <td>
+                          {{ item.allied.name }}
+                        </td>
+                        <td>
+                          {{ item.registrationDate }}
+                        </td>
+
+                        <td>
+                          {{ item.state }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="container square top20 bottom20">
+              <div class="col-12">
+                <h6>Beneficiarios</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="col-md-6">
+                  <label class="form-label col-6"
+                    >Nro. familias beneficiadas</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >1234</label
+                  >
+                  <label class="form-label col-6">Det. Benef. familia</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Manu01</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label col-6">Det. beneficiario</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >dada</label
+                  >
+                  <label class="form-label col-6"
+                    >Beneficiarios indirectos</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >dada</label
+                  >
+                </div>
+              </div>
+              <div class="col-12 row mb-3">
+                <div class="col-4 border1">
+                  <label class="form-label col-6">Hombres</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >3</label
+                  >
+                </div>
+                <div class="col-4 border1">
+                  <label class="form-label col-6">Mujeres</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >3</label
+                  >
+                </div>
+                <div class="col-4 border1">
+                  <label class="form-label col-6">Total</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >6</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="container square">
+              <div class="col-12">
+                <h6>Ámbito</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="col-md-6">
+                  <label class="form-label col-6">Ámbito total ADC</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >{{ agreementDetail.areaAmbitc }} Ha</label
+                  >
+                  <label class="form-label col-6"
+                    >Superficie intervención</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >{{ agreementDetail.producedArea }} Ha</label
+                  >
+                  <label class="form-label col-6"
+                    >Ubic. superfice intervención</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Lima</label
+                  >
+                  <label class="form-label col-6"
+                    >Detalle superficie intervención</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.detailProduction
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Superficie bajo restauración
+                  </label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.restHect
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Superficie Ámbito de control</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >{{ agreementDetail.sectHect }} Ha</label
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label col-6"
+                    >Detalle ámbito bajo restauración</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.restdet
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Nombre(s) del(os) sector(es) de V y C</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.sectNom
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Superficie del(os) sector(es) de V y C
+                  </label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >{{ agreementDetail.sectHect }} Ha</label
+                  >
+                  <label class="form-label col-6"
+                    >Detalle del(os) sector(es) de V y C</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.sectDet
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Modalidad gestión del territorio ADC</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.territoryMod
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="container square top20 bottom20">
+              <div class="col-12">
+                <h6>Mapa</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <app-base-map
+                  [mapProperties]="mapProperties"
+                  [mapViewProperties]="mapViewProperties"
+                  [maxHeight]="400"
+                  (mapInit)="onMapInit($event)"
+                >
+                </app-base-map>
+              </div>
+            </div>
+            <div class="container square">
+              <div class="col-12">
+                <h6>Articulaciones</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="col-md-12">
+                  <label class="form-label col-6">Plan maestro</label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Si</label
+                  >
+                  <label class="form-label col-6"
+                    >Plan de desarrollo local</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >si</label
+                  >
+                  <label class="form-label col-6"
+                    >Plan de vida de las comunidades</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >No aplica</label
+                  >
+                  <label class="form-label col-6"
+                    >Plan de vida institucional ECA</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >No</label
+                  >
+                  <label class="form-label col-6">Zonificación forestal </label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Si</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="container square top20">
+              <div class="col-12">
+                <h6>Financiamiento</h6>
+              </div>
+              <div class="col-md-12 row m-0">
+                <div class="col-md-12">
+                  <label class="form-label col-6"
+                    >Se ha apalancado financiamiento</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.finanApa ? "Si" : "No"
+                  }}</label>
+                  <label class="form-label col-6"
+                    >financiamiento en soles</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.finanNum
+                  }}</label>
+                  <label class="form-label col-6"
+                    >Fuente de financiamiento</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end"
+                    >Privado</label
+                  >
+                  <label class="form-label col-6"
+                    >Modalidad de financiamiento</label
+                  >
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.finanMod
+                  }}</label>
+                  <label class="form-label col-6">Nombre del fondo </label>
+
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.fondName || "Fondo"
+                  }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="modal-footer">

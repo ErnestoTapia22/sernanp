@@ -86,7 +86,7 @@ export const environment = {
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_cultura_000201/MapServer',
       disabled: false,
       name: 'Comunidades',
-    }    
+    },
   ],
   conservationAgreements: [
     {
