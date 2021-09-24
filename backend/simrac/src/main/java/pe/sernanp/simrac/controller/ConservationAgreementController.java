@@ -164,10 +164,9 @@ public class ConservationAgreementController extends BaseController<Conservation
 	@SuppressWarnings({ "unchecked", "unchecked" })
 	@RequestMapping(value = "/search2", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<ConservationAgreementModel> search2(@RequestParam("item") String item) throws IOException {
+	public ResponseEntity<ConservationAgreementModel> search2(@RequestBody ConservationAgreementModel item) throws IOException {
 		try {
-			ConservationAgreementModel item2 = super.fromJson(item, ConservationAgreementModel.class);
-			ResponseEntity<ConservationAgreementModel> response = this._service.search2(item2 );
+			ResponseEntity<ConservationAgreementModel> response = this._service.search2(item);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
