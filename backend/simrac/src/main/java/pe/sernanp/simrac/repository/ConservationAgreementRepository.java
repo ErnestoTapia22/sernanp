@@ -142,4 +142,20 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		return super.delete(ds, "simrac.fn_eliminar_acuerdoconservacion", id);
 	}	
 	
+	
+	public List<ConservationAgreementModel> search2(DataSource ds, ConservationAgreementModel item) throws Exception{		
+		LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+		parameters.put("pcode", item.getCode());
+		parameters.put("pname", item.getName());
+		parameters.put("panpid", item.getAnp().getId2());
+		parameters.put("pagreementstateid", item.getAgreementState().getId2());
+		parameters.put("pdepartmentid", item.getDepartmentId());
+		parameters.put("pprovinceid", item.getProvinceId());
+		parameters.put("pdistrictid", item.getDistrictId());
+		parameters.put("pfirmstart", item.getFirm());
+		parameters.put("pfirmend", item.getFirmEnd());
+		parameters.put("pstate", item.getState());
+		return super.search23(ds,"simrac.fn_buscar_acuerdo_conservacion2",parameters, new ConservationAgreementMapper());
+	}
+	
 }

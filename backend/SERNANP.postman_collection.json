@@ -758,6 +758,36 @@
 					"response": []
 				},
 				{
+					"name": "ConservationAgreementSearch2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\",\"agreementState\":{\"id\":1},\"anp\":{\"id\":0},\"code\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/search2"
+					},
+					"response": []
+				},
+				{
 					"name": "ConservationAgreementDelete",
 					"request": {
 						"method": "GET",
@@ -838,7 +868,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/component/detail/8"
+						"url": "http://localhost:8050/simrac/api/component/detail/10"
 					},
 					"response": []
 				},
@@ -847,7 +877,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/component/delete/8"
+						"url": "http://localhost:8050/simrac/api/component/delete/9"
 					},
 					"response": []
 				},
@@ -876,7 +906,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"8\",\r\n    \"name\": \"prueba1nu3333\",\r\n    \"description\": \"prueba23333\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
+							"raw": "{\r\n    \"id\":\"9\",\r\n    \"name\": \"prueba1nu3333\",\r\n    \"description\": \"prueb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

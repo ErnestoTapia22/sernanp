@@ -246,4 +246,16 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
+	
+	
+	public ResponseEntity<ConservationAgreementModel> search2(ConservationAgreementModel item ) throws Exception{
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			List<ConservationAgreementModel> items = this._repository.search2(this._dataSource, item);
+			response.setItems(items);			
+			return response;			
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

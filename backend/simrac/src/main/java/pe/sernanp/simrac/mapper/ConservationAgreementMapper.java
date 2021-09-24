@@ -36,6 +36,7 @@ public class ConservationAgreementMapper extends BaseMapper<ConservationAgreemen
 		item.setBenIndirect(ResultSetExtension.getString2(rs, "benindirect"));
 		item.setNumFamily(ResultSetExtension.getDouble2(rs, "numfamily"));
 		item.setBenFamily(ResultSetExtension.getString2(rs, "benfamily"));
+		
 		item.setAreaAmbitc(ResultSetExtension.getDouble2(rs, "areambitc"));
 		item.setProducedArea(ResultSetExtension.getDouble2(rs, "producedarea"));
 		item.setDetailProduction(ResultSetExtension.getString2(rs, "detalleproduction"));
