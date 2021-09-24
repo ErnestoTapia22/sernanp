@@ -152,8 +152,8 @@ public class ConservationAgreementRepository extends BaseRepository<Conservation
 		parameters.put("pdepartmentid", item.getDepartmentId());
 		parameters.put("pprovinceid", item.getProvinceId());
 		parameters.put("pdistrictid", item.getDistrictId());
-		parameters.put("pfirmstart", item.getFirm());
-		parameters.put("pfirmend", item.getFirmEnd());
+		parameters.put("pfirmstart", item.getFirm() == null ? null : new java.sql.Date(item.getFirm().getTime()));
+		parameters.put("pfirmend", item.getFirmEnd() == null ? null : new java.sql.Date(item.getFirmEnd().getTime()));
 		parameters.put("pstate", item.getState());
 		return super.search23(ds,"simrac.fn_buscar_acuerdo_conservacion2",parameters, new ConservationAgreementMapper());
 	}
