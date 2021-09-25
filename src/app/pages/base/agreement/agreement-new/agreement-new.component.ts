@@ -171,6 +171,7 @@ export class AgreementNewComponent implements OnInit {
     this.searchAllied();
     this.searchCommitments();
     this.autocalculatedField();
+    this.searchCommitmentsExternal();
   }
   get g() {
     return this.alliedForm.controls;
@@ -212,6 +213,7 @@ export class AgreementNewComponent implements OnInit {
       size: 'sm',
       backdrop: 'static',
     });
+    console.log(id);
     this.commitmentExternalId = id;
   }
   onMapInit({ map, view }) {
@@ -369,6 +371,9 @@ export class AgreementNewComponent implements OnInit {
   }
   get f() {
     return this.form.controls;
+  }
+  get i() {
+    return this.formCreateCommitmentsExternal.controls;
   }
   fillSelects() {
     this.searchAnp();
@@ -652,14 +657,18 @@ export class AgreementNewComponent implements OnInit {
       ],
     });
     this.formCreateCommitmentsExternal = this.fb.group({
+      id: 0,
+      conservationAgreement: { id: this.agreementId },
       description: '',
       objetive: '',
-      alignedTo: '',
+      actionLine: '',
       subscriber: '',
+      state: true,
       description2: '',
       objetive2: '',
-      alignedTo2: '',
+      actionLine2: '',
       subscriber2: '',
+      registrationDate: '',
     });
   }
 
@@ -1075,6 +1084,70 @@ export class AgreementNewComponent implements OnInit {
       });
     }
   }
+  insertCommitmentsExternal() {
+    this.submitted = true;
+    this.disabled = true;
+
+    if (this.formCreateCommitmentsExternal.invalid) {
+      this.disabled = false;
+      return;
+    }
+    if (this.edit === false) {
+      if (this.agreementExist === false) {
+        this.disabled = false;
+        this.alertService.warn('Guarde primero el acuerdo', 'Info', {
+          autoClose: true,
+        });
+        return;
+      }
+    } else {
+      if (
+        this.agreementId === '' ||
+        this.agreementId === null ||
+        this.agreementId === '0'
+      ) {
+        this.disabled = false;
+        return;
+      }
+    }
+    this.formCreateCommitmentsExternal.patchValue({
+      conservationAgreement: { id: this.agreementId },
+    });
+    try {
+      this.agreementService
+        .commitmentExternalSave(
+          JSON.stringify(this.formCreateCommitmentsExternal.value)
+        )
+        .subscribe((response) => {
+          if (response && response.success === true) {
+            this.alertService.success(
+              'Se registro correctamente el compromiso externo',
+              'Ok',
+              { autoClose: true }
+            );
+            this.searchCommitmentsExternal();
+            this.modalRef.close();
+          } else {
+            this.alertService.error('error: ' + response.message, 'error', {
+              autoClose: true,
+            });
+          }
+          this.formCreateCommitmentsExternalReset();
+          this.submitted = false;
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.disabled = false;
+      this.alertService.error(
+        'Error al insertar los compromisos externos',
+        'error',
+        {
+          autoClose: true,
+        }
+      );
+    }
+  }
   searchCommitments() {
     if (
       this.agreementId === '' ||
@@ -1107,7 +1180,7 @@ export class AgreementNewComponent implements OnInit {
     }
     try {
       this.agreementService
-        .commitmentsSearch(this.agreementId)
+        .commitmentsExternalSearch(this.agreementId)
         .subscribe((response) => {
           if (response && response.items.length > 0) {
             this.commitmentsListExternal = response.items;
@@ -1140,6 +1213,22 @@ export class AgreementNewComponent implements OnInit {
       actionLine: {
         id: 0,
       },
+    });
+  }
+  formCreateCommitmentsExternalReset() {
+    this.formCreateCommitmentsExternal.setValue({
+      id: 0,
+      conservationAgreement: { id: this.agreementId },
+      description: '',
+      objetive: '',
+      actionLine: '',
+      subscriber: '',
+      state: true,
+      description2: '',
+      objetive2: '',
+      actionLine2: '',
+      subscriber2: '',
+      registrationDate: '',
     });
   }
   masterPlanSearch() {
@@ -1333,8 +1422,9 @@ export class AgreementNewComponent implements OnInit {
   }
   onDeleteCommitmentExternal() {
     try {
+      console.log(this.commitmentExternalId);
       this.agreementService
-        .commitmentExternalDelete(this.commitmentId)
+        .commitmentExternalDelete(this.commitmentExternalId)
         .subscribe((response) => {
           if (response && response.success) {
             this.alertService.success(
