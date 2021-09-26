@@ -117,6 +117,9 @@
 .round-success {
   background-color: #00a772;
 }
+.round-warning {
+  background-color: #ffc107;
+}
 .circle {
   border-radius: 60%;
   width: 30px;
