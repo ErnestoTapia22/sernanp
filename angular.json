@@ -34,7 +34,12 @@
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true,
-            "allowedCommonJsDependencies": ["moment"]
+            "allowedCommonJsDependencies": [
+              "moment",
+              "raf",
+              "@babel/runtime-corejs3",
+              "jspdf"
+            ]
           },
           "configurations": {
             "production": {

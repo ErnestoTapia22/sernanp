@@ -59,6 +59,7 @@ export class PdfService {
         var j = 1;
         while (j != pagecount) {
           doc.addPage('a4', 'p');
+
           doc.addImage(imgData, 'PNG', 2, -(j * pageHeight), pageWidth - 4, 0);
           j++;
         }

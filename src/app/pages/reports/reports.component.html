@@ -384,11 +384,9 @@
                   }}</label>
                   <label class="form-label col-6">Objetivo general</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.objetive
+                  }}</label>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label col-6">Vigencia</label>
@@ -403,19 +401,19 @@
                   }}</label>
                   <label class="form-label col-6">Provincia</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >Activo</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.province[0].name
+                  }}</label>
                   <label class="form-label col-6">Distrito</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >asdas</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.district[0].name
+                  }}</label>
                   <label class="form-label col-6">Localización</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >23/12/2020</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.location || "localización"
+                  }}</label>
                   <label class="form-label col-6">Observaciones</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
@@ -429,18 +427,21 @@
                 <h6>Suscriptores</h6>
               </div>
               <div class="d-flex flex-row justify-content-center m-0">
-                <div class="text-center mx-5 mb-3">
-                  <p class="text-decoration-underline mb-0">Sernanp</p>
-                  <span>Jefatura</span>
+                <div
+                  class="text-center mx-5 mb-3"
+                  *ngFor="let item of alliedList; index as idx"
+                >
+                  <p class="text-decoration-underline mb-0">{{ item.name }}</p>
+                  <span>{{ item.alliedCategory.name }}</span>
                 </div>
-                <div class="text-center mx-5 mb-3">
+                <!-- <div class="text-center mx-5 mb-3">
                   <p class="text-decoration-underline mb-0">Ibérica</p>
                   <span>Empresas</span>
                 </div>
                 <div class="text-center mx-5 mb-3">
                   <p class="text-decoration-underline mb-0">Sernanp</p>
                   <span>Jefatura</span>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="container square">
@@ -467,11 +468,11 @@
                           {{ item.allied.name }}
                         </td>
                         <td>
-                          {{ item.registrationDate }}
+                          {{ item.registrationDate | date: "dd/MM/yyyy" }}
                         </td>
 
                         <td>
-                          {{ item.state }}
+                          {{ item.state ? "Activo" : "Inactivo" }}
                         </td>
                       </tr>
                     </tbody>
@@ -489,51 +490,51 @@
                     >Nro. familias beneficiadas</label
                   >
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >1234</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.numFamily
+                  }}</label>
                   <label class="form-label col-6">Det. Benef. familia</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >Manu01</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.benFamily
+                  }}</label>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label col-6">Det. beneficiario</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >dada</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.benPerson
+                  }}</label>
                   <label class="form-label col-6"
                     >Beneficiarios indirectos</label
                   >
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >dada</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.benIndirect
+                  }}</label>
                 </div>
               </div>
               <div class="col-12 row mb-3">
                 <div class="col-4 border1">
                   <label class="form-label col-6">Hombres</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >3</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.partMen
+                  }}</label>
                 </div>
                 <div class="col-4 border1">
                   <label class="form-label col-6">Mujeres</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >3</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.partWomen
+                  }}</label>
                 </div>
                 <div class="col-4 border1">
                   <label class="form-label col-6">Total</label>
 
-                  <label class="form-label form-label col-6 fw-bold text-end"
-                    >6</label
-                  >
+                  <label class="form-label form-label col-6 fw-bold text-end">{{
+                    agreementDetail.partWomen + agreementDetail.partMen
+                  }}</label>
                 </div>
               </div>
             </div>
