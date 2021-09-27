@@ -902,7 +902,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
-    this.form.get('code').disable();
+    //this.form.get('code').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1481,8 +1481,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   formatToExport() {
     return _.map(this.commitmentsList, (item) => {
-      item.registrationDate = new Date(item.registrationDate);
-      item.alliedName = item.allied.name;
+      item.a1 = item.actionLine.objetive.description;
+      item.a4 = item.description;
+      item.a2 = item.actionLine.name;
+      item.a3 = item.allied.name;
       return _.omit(item, [
         'progress',
         'conservationAgreement',
@@ -1495,6 +1497,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         'code',
         'guid',
         'observation',
+        'registrationDate',
+        'active',
+        'id',
+        'stateName',
+        'description'
       ]);
     });
   }

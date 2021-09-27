@@ -256,15 +256,19 @@ export class AgreementComponent implements OnInit {
       );
     }
   }
-  clearForm() {
+  clearForm() {   
     this.form.reset({
       agreementState: { id: 0 },
-      source: { id: 0 },
+      anp: { id: 0 },
+      departmentId: [''],
+      provinceId: [''],
+      districtId: [''],
+      pageSize : 10
     });
     this.initQuery();
     this.onSearch();
   }
-  initQuery() {
+  initQuery() {    
     let paginator = {
       limit: this.pageSize,
       offset: '1',

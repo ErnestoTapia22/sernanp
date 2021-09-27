@@ -50,13 +50,12 @@ export class ExcelService {
     const worksheet: XLSX2.WorkSheet = XLSX2.utils.json_to_sheet(json, {
       dateNF: 'dd/MM/yyyy',
     });
-    worksheet['!cols'] = wscols;
-    worksheet.C1.v = 'fecha de registro';
-    worksheet.D1.v = 'estado';
-    worksheet.E1.v = 'compromiso';
-    worksheet.F1.v = 'suscriptor';
-    worksheet.A1.v = 'activo';
-
+    worksheet['!cols'] = wscols;    
+    worksheet.A1.v = 'Objetivo';
+    worksheet.B1.v = 'compromiso';
+    worksheet.C1.v = 'Línea de Acción';
+    worksheet.D1.v = 'suscriptor';
+    //console.log(worksheet);
     var range = XLSX2.utils.decode_range(worksheet['!ref']);
     for (var C = range.s.c; C <= range.e.c; ++C) {
       var address = XLSX2.utils.encode_col(C) + '1'; // <-- first row, column number C
@@ -86,7 +85,6 @@ export class ExcelService {
       };
     }
 
-    console.log('worksheet', worksheet);
     const workbook: XLSX2.WorkBook = {
       Sheets: { data: worksheet },
       SheetNames: ['data'],
