@@ -1414,7 +1414,15 @@
             </div>
             <div class="col-md-12" formGroupName="actionLine">
               <label class="form-label">Alineado a</label>
-              <select class="form-select" formControlName="id">
+              <select
+                class="form-select"
+                formControlName="id"
+                [ngClass]="{
+                  'input-invalid':
+                    submitted &&
+                    formCreateCommitments.get('actionLine.id').errors?.pattern
+                }"
+              >
                 <option value="0">SELECCIONE</option>
                 <option *ngFor="let item of actionLineList" [value]="item.id">
                   {{ item.name }}
@@ -1423,7 +1431,15 @@
             </div>
             <div class="col-md-12" formGroupName="allied">
               <label class="form-label">Suscriptor</label>
-              <select class="form-select" formControlName="id">
+              <select
+                class="form-select"
+                formControlName="id"
+                [ngClass]="{
+                  'input-invalid':
+                    submitted &&
+                    formCreateCommitments.get('allied.id').errors?.pattern
+                }"
+              >
                 <option value="0">SELECCIONE</option>
                 <option *ngFor="let item of alliedList" [value]="item.id">
                   {{ item.name }}
@@ -1562,8 +1578,8 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
         >
           <form [formGroup]="formCreateCommitmentsExternal" novalidate>
             <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Compromiso 1</label>
+              <div class="col-md-12">
+                <label class="form-label">Compromiso </label>
                 <textarea
                   class="form-control"
                   rows="2"
@@ -1573,20 +1589,9 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                   }"
                 ></textarea>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Compromiso 2</label>
-                <textarea
-                  class="form-control"
-                  rows="2"
-                  formControlName="description2"
-                  [ngClass]="{
-                    'input-invalid':
-                      submitted && i.description2.errors?.required
-                  }"
-                ></textarea>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Objetivo 1</label>
+
+              <div class="col-md-12">
+                <label class="form-label">Objetivo </label>
                 <textarea
                   class="form-control"
                   rows="2"
@@ -1596,47 +1601,22 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                   }"
                 ></textarea>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Objetivo 2</label>
-                <textarea
-                  class="form-control"
-                  rows="2"
-                  formControlName="objetive2"
-                  [ngClass]="{
-                    'input-invalid': submitted && i.description.errors?.required
-                  }"
-                ></textarea>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Alineado a (1)</label>
+
+              <div class="col-md-12">
+                <label class="form-label">Alineado a: </label>
                 <input
                   type="text"
                   class="form-control"
                   formControlName="actionLine"
                 />
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Alineado a (2)</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="actionLine2"
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Suscriptor 1</label>
+
+              <div class="col-md-12">
+                <label class="form-label">Suscriptor </label>
                 <input
                   type="text"
                   class="form-control"
                   formControlName="subscriber"
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Suscriptor 2</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="subscriber2"
                 />
               </div>
             </div>

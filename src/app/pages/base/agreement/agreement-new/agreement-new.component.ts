@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { MasterPlanService } from '@app/_services/masterplan/masterplan/master-plan.service';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, zipWith } from 'rxjs';
+import { BehaviorSubject, zipWith, Subscription } from 'rxjs';
 import {
   FormBuilder,
   FormControl,
@@ -32,7 +32,7 @@ import * as _ from 'lodash';
   templateUrl: './agreement-new.component.html',
   styleUrls: ['./agreement-new.component.css'],
 })
-export class AgreementNewComponent implements OnInit {
+export class AgreementNewComponent implements OnInit, OnDestroy {
   selectedAnp: number = 0;
   obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
@@ -127,6 +127,7 @@ export class AgreementNewComponent implements OnInit {
   commitmentsListExternal: any[] = [];
   commitmentExternalId: number = 0;
   formCreateCommitmentsExternal: FormGroup;
+  closeRegisterObserver: Subscription;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -173,6 +174,10 @@ export class AgreementNewComponent implements OnInit {
     this.autocalculatedField();
     this.searchCommitmentsExternal();
   }
+  ngOnDestroy() {
+    if (this.closeRegisterObserver !== undefined)
+      this.closeRegisterObserver.unsubscribe();
+  }
   get g() {
     return this.alliedForm.controls;
   }
@@ -213,7 +218,7 @@ export class AgreementNewComponent implements OnInit {
       size: 'sm',
       backdrop: 'static',
     });
-    console.log(id);
+
     this.commitmentExternalId = id;
   }
   onMapInit({ map, view }) {
@@ -626,6 +631,7 @@ export class AgreementNewComponent implements OnInit {
       conservationAgreement: this.fb.group({
         id: [this.agreementId],
       }),
+
       allied: this.fb.group({
         id: [
           0,
@@ -664,10 +670,6 @@ export class AgreementNewComponent implements OnInit {
       actionLine: '',
       subscriber: '',
       state: true,
-      description2: '',
-      objetive2: '',
-      actionLine2: '',
-      subscriber2: '',
       registrationDate: '',
     });
   }
@@ -1018,12 +1020,18 @@ export class AgreementNewComponent implements OnInit {
       centered: true,
     });
     this.masterPlanSearch();
+    this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
+      this.formCreateCommitmentsReset();
+    });
   }
   onContentCreateCommitmentsExternalModal(content) {
     this.modalRef = this.modalService.open(content, {
-      size: 'lg',
+      size: 'sm',
       backdrop: 'static',
       centered: true,
+    });
+    this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
+      this.formCreateCommitmentsExternalReset();
     });
   }
   insertCommitments() {
@@ -1224,10 +1232,6 @@ export class AgreementNewComponent implements OnInit {
       actionLine: '',
       subscriber: '',
       state: true,
-      description2: '',
-      objetive2: '',
-      actionLine2: '',
-      subscriber2: '',
       registrationDate: '',
     });
   }
