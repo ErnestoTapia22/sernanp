@@ -1,13 +1,18 @@
 package pe.sernanp.simrac.service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -15,6 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.gisriv.entity.FileEntity;
 import pe.gisriv.entity.PaginatorEntity;
 import pe.gisriv.entity.ResponseEntity;
@@ -32,34 +44,35 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 
 	@Autowired
 	private ConservationAgreementRepository _repository;
-	
+
 	@Override
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<ConservationAgreementModel> list() throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.list(this._dataSource);
 			response.setItems(items);
 			return response;
-			
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	@Override
-	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{
-		try {
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			List<ConservationAgreementModel> items = this._repository.search(this._dataSource, item, paginator);
-			response.setItems(items);
-			response.setPaginator(paginator);
-			return response;			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
 
-	public ResponseEntity<ConservationAgreementModel> find() throws Exception{
+	@Override
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator)
+			throws Exception {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			List<ConservationAgreementModel> items = this._repository.search(this._dataSource, item, paginator);
+			response.setItems(items);
+			response.setPaginator(paginator);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+
+	public ResponseEntity<ConservationAgreementModel> find() throws Exception {
 		try {
 			System.out.println(this._dataSource);
 			boolean success = true;
@@ -68,15 +81,15 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			response.setSuccess(success);
 			response.setItems(items);
 			return response;
-			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}	
+	}
 
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
-	public ResponseEntity save(ConservationAgreementModel item) throws Exception {		
+	public ResponseEntity save(ConservationAgreementModel item) throws Exception {
 		TransactionDefinition definition = null;
 		TransactionStatus status = null;
 		try {
@@ -113,7 +126,6 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 				throw new Exception(ex.getMessage());
 		}
 	}
-	
 
 	public ResponseEntity<ConservationAgreementModel> findBy2(ConservationAgreementModel item) throws Exception {
 		try {
@@ -123,11 +135,12 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			boolean success = true;
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.findBy2(this._dataSource, item);
-			//items.forEach(t ->{
-			//	t.setIsClient(true);
-			//});
-			//List<DocumentModel> itemsDocument = this._repository.findDocuments(this._dataSource, id);
-			//item.setDocuments(itemsDocument);
+			// items.forEach(t ->{
+			// t.setIsClient(true);
+			// });
+			// List<DocumentModel> itemsDocument =
+			// this._repository.findDocuments(this._dataSource, id);
+			// item.setDocuments(itemsDocument);
 			response.setSuccess(success);
 			response.setItems(items);
 			return response;
@@ -135,13 +148,13 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	public ResponseEntity<ConservationAgreementModel> findBy(ConservationAgreementModel item) throws Exception {
 		try {
 			Boolean state = item.getState();
-			if(state == true) {
+			if (state == true) {
 				item.setState(false);
-			}else {
+			} else {
 				item.setState(true);
 			}
 			List<ConservationAgreementModel> items = _repository.findBy(this._dataSource, item);
@@ -152,60 +165,62 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity saveGeometry(ConservationAgreementModel item, FileEntity itemFile) throws Exception {
 		try {
-			//BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile, item.getSpatialReference().getId2());
-			//item.setGeometry(itemGeometry.getGeometry());
-			//item.setSpatialReference(itemGeometry.getSpatialReference());
+			// BaseGeometryEntity itemGeometry = this.coordinateProcessing(itemFile,
+			// item.getSpatialReference().getId2());
+			// item.setGeometry(itemGeometry.getGeometry());
+			// item.setSpatialReference(itemGeometry.getSpatialReference());
 			ResponseEntity<BaseGeometryEntity> response = new ResponseEntity<BaseGeometryEntity>();
-			//response.setItem(item);
+			// response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	protected BaseGeometryEntity coordinateProcessing(FileEntity itemFile, int srid) throws Exception {
-		Reader reader= null;
+		Reader reader = null;
 		try {
-			switch(itemFile.getExtension()){
+			switch (itemFile.getExtension()) {
 				case ".zip":
-					reader= new ShapeFileReader(itemFile.getContentStream(),this.getPathTemporal(), 4326);
+					reader = new ShapeFileReader(itemFile.getContentStream(), this.getPathTemporal(), 4326);
 					break;
 				case ".xlsx":
-					reader =  null;//new SpreadSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
+					reader = null;// new
+									// SpreadSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
 					break;
 				case ".txt":
-					reader = null;//new TextSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
+					reader = null;// new
+									// TextSheetReader(itemFile.getContentStream(),GeometryType.POLYGON,srid,SRIDDEFAULT);
 					break;
-					default:
-						throw new Exception("El tipo de archivo no es válido");
+				default:
+					throw new Exception("El tipo de archivo no es válido");
 			}
-			if(reader==null) return null;
+			if (reader == null)
+				return null;
 			BaseGeometryEntity item = new BaseGeometryEntity();
 			item.setGeometry(reader.getGeometry());
 			item.setSpatialReference(new SpatialReferenceEntity());
 			item.getSpatialReference().setId(reader.getSourceSrid());
 			return item;
-		}
-		catch(Exception ex){
+		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	protected String getPathTemporal() throws IOException {		
+
+	protected String getPathTemporal() throws IOException {
 		Path temp = Files.createTempFile("", ".tmp");
 		String absolutePath = temp.toString();
-        System.out.println("Temp file : " + absolutePath);
+		System.out.println("Temp file : " + absolutePath);
 
-        String separator = FileSystems.getDefault().getSeparator();
-        String tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(separator));		
+		String separator = FileSystems.getDefault().getSeparator();
+		String tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(separator));
 		return "D:\\shape";
 	}
-	
 
 	@SuppressWarnings({ "rawtypes", "unused" })
 	@Transactional
@@ -214,7 +229,7 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 		TransactionStatus status = null;
 		try {
 			definition = new DefaultTransactionDefinition();
-			status = this.transactionManager.getTransaction(definition);			
+			status = this.transactionManager.getTransaction(definition);
 			Integer rowsAffected = this._repository.delete(this._dataSource, id);
 			this.transactionManager.commit(status);
 			ResponseEntity response = new ResponseEntity();
@@ -230,7 +245,7 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
@@ -246,16 +261,31 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	
-	public ResponseEntity<ConservationAgreementModel> search2(ConservationAgreementModel item ) throws Exception{
+
+	public ResponseEntity<ConservationAgreementModel> search2(ConservationAgreementModel item) throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = this._repository.search2(this._dataSource, item);
-			response.setItems(items);			
-			return response;			
+			response.setItems(items);
+			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
+	}
+
+	public org.springframework.http.ResponseEntity<byte[]> generatePdf(int id) throws Exception, JRException {
+		JRBeanCollectionDataSource beanCollectorDatasource = new JRBeanCollectionDataSource(
+				Collections.singletonList("Invoice"));
+		JasperReport compileReport = JasperCompileManager
+				.compileReport(new FileInputStream("src/main/resources/ReportAgreementDetail.jrxml"));
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", "1234");
+		JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectorDatasource);
+		byte[] data = JasperExportManager.exportReportToPdf(report);
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=ReporteAcuerdoDetalle.pdf");
+		return org.springframework.http.ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(data);
+
 	}
 }
