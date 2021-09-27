@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportAgreementDetail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f912ce4-4133-4325-b02c-7298e51286eb">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="Dataset1" uuid="8c1a717e-b834-4a15-be1f-076f0fe1806c">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="code" class="java.lang.String"/>
+		<field name="anp" class="java.lang.String"/>
+		<field name="state" class="java.lang.Boolean"/>
+		<field name="name" class="java.lang.String"/>
+		<field name="firm" class="java.sql.Date"/>
+		<field name="objetive" class="java.lang.String"/>
+		<field name="vigency" class="java.lang.Integer"/>
+		<field name="department" class="java.lang.String"/>
+		<field name="province" class="java.lang.String"/>
+		<field name="district" class="java.lang.String"/>
+		<field name="localization" class="java.lang.String"/>
+		<field name="observations" class="java.lang.String"/>
+		<variable name="code" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="d1685387-3bd0-4644-92eb-95a66621f9dc">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="test" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="anp" class="java.lang.String"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="state" class="java.lang.Boolean"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="firm" class="java.sql.Date"/>
+	<parameter name="objetive" class="java.lang.String"/>
+	<parameter name="vigency" class="java.lang.Integer"/>
+	<parameter name="department" class="java.lang.String"/>
+	<parameter name="province" class="java.lang.String"/>
+	<parameter name="district" class="java.lang.String"/>
+	<parameter name="localization" class="java.lang.String"/>
+	<parameter name="observations" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<variable name="ANP" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="157" y="0" width="240" height="60" uuid="3562e8e6-1fb5-4bf4-9b73-23a2d22eee45"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Detalle acuerdo]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="18" width="140" height="40" uuid="7c5f5d39-eafd-4177-8c2a-251ef106baba"/>
+				<imageExpression><![CDATA["logo-sernanp.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="510" y="18" width="40" height="30" uuid="28d5e979-8fb3-4688-9089-ef88e777385a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="153" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="153" backcolor="rgba(255, 255, 255, 0.0)" uuid="158d0380-e14d-4c01-b251-90e324ed50b7"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="2" width="100" height="18" uuid="25f26011-3f69-4ad9-8244-7b460da13330"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos Generales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="30" width="44" height="18" uuid="e925e439-ddee-430d-bf5b-44883646897d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="30" width="90" height="18" uuid="023feddb-8fb8-46b9-b841-d6d6b72b4c96"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="48" width="44" height="18" uuid="604691f8-0319-4f5f-9d64-b85be14937a1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ANP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="66" width="44" height="18" uuid="892f8be4-4d36-47ee-b3d6-106a75056421"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="84" width="44" height="18" uuid="37aea9e7-b3d9-4d0a-9452-99cec174da2f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="102" width="120" height="18" uuid="ecd2bbda-51fb-42ed-8b43-8df50d4b9d7e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha de suscripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="120" width="90" height="18" uuid="832a0c24-9514-48cf-9e3c-993fdcd6be46"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Objetivo general]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="50" width="90" height="18" uuid="11e99a89-c058-4acd-8edc-882a5763b7fd"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="68" width="90" height="18" uuid="c3ea3b03-de3e-4a99-82f1-0fc0f877c2e4"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="86" width="90" height="18" uuid="e49a4e47-fde9-4747-9dad-1ade04bb4748"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="104" width="90" height="18" uuid="46116d2a-ec4b-431d-9b6b-0c033448c925"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="120" width="90" height="18" uuid="950db82c-71ae-448b-b180-60b805373e47"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{objetive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="30" width="55" height="18" uuid="cff906dc-b64d-4b6f-befe-42761db333d4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Vigencia]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="30" width="90" height="18" uuid="7fa4ec73-bfe9-439b-ac42-ad2c123c1425"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{vigency}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="48" width="90" height="18" uuid="385a82fe-22c6-4d30-aa48-4c44f8374dce"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="66" width="55" height="23" uuid="d375fded-0719-4433-b982-3a705e20fe8d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Provincia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="84" width="44" height="23" uuid="9986f94b-a584-4e07-af2e-4969d79eb7e4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Distrito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="102" width="75" height="18" uuid="9899b11e-cd90-4008-9928-580677b1589f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Localización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="122" width="90" height="16" uuid="e49b2cec-e51e-4506-afda-71f6cfde1055"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="50" width="90" height="16" uuid="5c860de9-82fe-4a7b-bd96-cd52ae8c8a64"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{department}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="68" width="90" height="16" uuid="b059353d-0498-4e3f-ba9a-49105a23d3b0"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{province}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="86" width="90" height="16" uuid="6b66949c-dc23-4e30-8c1a-48e52d8a1bbf"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{district}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="104" width="90" height="16" uuid="a2b93a89-5cd1-49b8-9ccb-caeaf42fc582"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{localization}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="120" width="90" height="18" uuid="03615f3f-1a10-43be-b4a5-484f8bfabaf7"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{observations}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50"/>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="460" y="6" width="100" height="20" uuid="10831386-43e7-4ef7-a767-c7d105db8815"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
