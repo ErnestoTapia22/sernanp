@@ -123,7 +123,7 @@ export class PublicComponent implements OnInit {
     //adds
     view.ui.add(MeExpand, 'top-left');
     view.ui.add(bkExpand, 'top-left');
-    view.ui.add(cw, 'top-left');
+    //view.ui.add(cw, 'top-left');
     view.ui.add(home, 'top-left');
     view.ui.add(scaleBar, 'bottom-left');
   }
