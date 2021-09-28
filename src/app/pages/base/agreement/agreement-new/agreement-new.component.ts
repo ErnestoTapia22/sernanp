@@ -564,6 +564,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       firm: [''],
       partMen: [0],
       partWomen: [0],
+      numPart: [0],
       benPerson: [''],
       benIndirect: [''],
       numFamily: [0],
@@ -855,6 +856,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             firm: response.item.firm,
             partMen: response.item.partMen,
             partWomen: response.item.partWomen,
+            numPart: response.item.partMen + response.item.partWomen,
             benPerson: response.item.benPerson,
             benIndirect: response.item.benIndirect,
             numFamily: response.item.numFamily,
@@ -1334,7 +1336,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         parseFloat(val.sectHect) > 0 ? parseFloat(val.sectHect) : 0;
 
       const newVal = valueA + valueB + valueC;
-      this.form.controls.areaAmbitc.patchValue(newVal.toFixed(5), {
+      this.form.controls.areaAmbitc.patchValue(newVal.toFixed(4), {
+        emitEvent: false,
+      });
+      const newPart = val.partWomen + val.partMen;
+      this.form.controls.numPart.patchValue(newPart.toFixed(0), {
         emitEvent: false,
       });
       this.validateForm();

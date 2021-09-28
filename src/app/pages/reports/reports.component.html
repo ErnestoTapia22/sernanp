@@ -103,7 +103,7 @@
                   <i class="bi bi-search"></i>
                   Buscar
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">
+                <button type="button" class="btn btn-sm btn-outline-secondary"  (click)="clearForm()">
                   <i class="bi bi-brush"></i>
                   Limpiar
                 </button>
@@ -245,8 +245,9 @@
                       <tr>
                         <th>Código</th>
                         <th>Nombre</th>
+                        <th>ANP</th>
                         <th>Estado</th>
-                        <th>Años de Vigencia</th>
+                        <th>Vigencia (Años)</th>
                         <th>Fecha Suscr.</th>
                         <th>Opciones</th>
                       </tr>
@@ -274,6 +275,7 @@
                         >
                           <td>{{ item.code }}</td>
                           <td>{{ item.name }}</td>
+                          <td>{{ item.anp.name }}</td>
                           <td>{{ item.agreementState.name }}</td>
                           <td>{{ item.vigency }}</td>
                           <td>{{ item.firm | date: "dd/MM/yyyy" }}</td>

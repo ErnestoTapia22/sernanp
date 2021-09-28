@@ -74,39 +74,11 @@ export class ReportsComponent implements OnInit {
     this.mapViewProperties = {
       center: [-75.744, -8.9212],
       zoom: 9,
-    };
-
-    let paginator = {
-      limit: this.pageSize,
-      offset: '1',
-      sort: 'name',
-      order: 'asc',
-    };
-    let item = {
-      name: '',
-      agreementState: { id: 0 },
-      source: { id: 0 },
-      code: '',
-
-      firm: '',
-      firmEnd: '',
-      state: '',
-      pageSize: '10',
-
-      anp: {
-        id: 0,
-      },
-      departmentId: '',
-      provinceId: '',
-      districtId: '',
-    };
-    this.queryObserver.next({
-      item: JSON.stringify(item),
-      paginator: JSON.stringify(paginator),
-    });
+    };    
 
     this.buildForm();
     this.fillSelects();
+    this.initQuery();
     this.onSearch();
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
@@ -139,8 +111,8 @@ export class ReportsComponent implements OnInit {
   search(filters: any): void {
     const q = this.queryObserver.getValue();
     q.item = JSON.stringify(filters);
-    this.queryObserver.next(q);
-    console.log(this.queryObserver.getValue());
+    console.log(q.item);
+    this.queryObserver.next(q);    
 
     this.onSearch();
   }
@@ -211,14 +183,14 @@ export class ReportsComponent implements OnInit {
   }
   searchProvinces(event) {
     const id = event;
-    if (id == 0) {
-      this.provinces = [];
-      return;
-    }
     this.form.patchValue({
       provinceId: '',
       districtId: '',
     });
+    if (id == 0) {
+      this.provinces = [];
+      return;
+    }    
     this.districts = [];
     try {
       this.agreementService
@@ -236,13 +208,13 @@ export class ReportsComponent implements OnInit {
   }
   searchDistricts(event) {
     const id = event;
-    if (id == 0) {
-      this.districts = [];
-      return;
-    }
     this.form.patchValue({
       districtId: '',
     });
+    if (id == 0) {
+      this.districts = [];
+      return;
+    }    
     try {
       this.agreementService.searchDistricts(id).subscribe((response) => {
         if (response && response.items.length > 0) {
@@ -277,7 +249,7 @@ export class ReportsComponent implements OnInit {
     // const q = this.queryObserver.getValue();
     // q.paginator['limit'] = this.f.pageSizes.value;
     this.parseData('paginator', 'limit', parseInt(this.f.pageSize.value));
-
+    this.parseData('paginator', 'offset', 1);
     this.onSearch();
     // this.queryObserver.next({item:this.f.})
   }
@@ -294,9 +266,8 @@ export class ReportsComponent implements OnInit {
         ]),
       ],
       firmEnd: [''],
-      category: ['', Validators.compose([])],
-      state: ['', Validators.compose([])],
-      pageSize: ['10', Validators.compose([])],
+      state: [''],
+      pageSize: ['10'],
       agreementState: this.fb.group({
         id: [0],
       }),
@@ -469,5 +440,40 @@ export class ReportsComponent implements OnInit {
         autoClose: true,
       });
     }
+  }
+  clearForm() {   
+    this.form.reset({
+      agreementState: { id: 0 },
+      anp: { id: 0 },
+      departmentId: [''],
+      provinceId: [''],
+      districtId: [''],
+      pageSize : 10
+    });
+    this.initQuery();
+    this.onSearch();
+  }
+  initQuery() {    
+    let paginator = {
+      limit: this.pageSize,
+      offset: '1',
+      sort: 'name',
+      order: 'asc',
+    };
+    let item = {
+      code: '',
+      name: '',
+      agreementState: { id: 0 },
+      anp: { id: 0 },
+      departmentId: '',
+      provinceId: '',
+      districtId: '',
+      firm: '',
+      firmEnd: '',
+    };
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
   }
 }
