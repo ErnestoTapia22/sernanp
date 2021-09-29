@@ -39,15 +39,12 @@ public class SernanpApplication extends SpringBootServletInitializer {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.csrf().disable()
-					.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-					.authorizeRequests()
-					// .antMatchers(HttpMethod.POST).permitAll().antMatchers(HttpMethod.GET).permitAll().antMatchers(HttpMethod.PUT).permitAll()
-					// //comentar para producción
-					.antMatchers("/api/user/validate/{id}").permitAll()
-					.antMatchers("/api/conservationagreement/reportpdf/{id}").permitAll() // descomentar para producción
-					.anyRequest().authenticated();
+				.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.authorizeRequests()
+				.antMatchers(HttpMethod.POST).permitAll().antMatchers(HttpMethod.GET).permitAll().antMatchers(HttpMethod.PUT).permitAll() //comentar para producción
+				.antMatchers("/api/user/validate/{id}").permitAll() //descomentar para producción
+				.anyRequest().authenticated();
 			http.cors().and();
 		}
-
 	}
 }
