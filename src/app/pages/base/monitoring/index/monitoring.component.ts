@@ -279,4 +279,39 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       }
     }
   }
+  clearForm() {
+    this.form.reset({
+      agreementState: { id: 0 },
+      anp: { id: 0 },
+      departmentId: [''],
+      provinceId: [''],
+      districtId: [''],
+      pageSize : 10
+    });
+    this.initQuery();
+    this.onSearch();
+  }
+  initQuery() {
+    let paginator = {
+      limit: this.pageSize,
+      offset: '1',
+      sort: 'name',
+      order: 'asc',
+    };
+    let item = {
+      code: '',
+      name: '',
+      agreementState: { id: 0 },
+      anp: { id: 0 },
+      departmentId: '',
+      provinceId: '',
+      districtId: '',
+      firm: '',
+      firmEnd: '',
+    };
+    this.queryObserver.next({
+      item: JSON.stringify(item),
+      paginator: JSON.stringify(paginator),
+    });
+  }
 }

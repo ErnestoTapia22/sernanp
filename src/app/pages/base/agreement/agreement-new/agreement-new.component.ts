@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AgreementService } from '@app/_services/base/agreement.service';
 import { MasterPlanService } from '@app/_services/masterplan/masterplan/master-plan.service';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, zipWith } from 'rxjs';
+import { BehaviorSubject, zipWith, Subscription } from 'rxjs';
 import {
   FormBuilder,
   FormControl,
@@ -32,7 +32,7 @@ import * as _ from 'lodash';
   templateUrl: './agreement-new.component.html',
   styleUrls: ['./agreement-new.component.css'],
 })
-export class AgreementNewComponent implements OnInit {
+export class AgreementNewComponent implements OnInit, OnDestroy {
   selectedAnp: number = 0;
   obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
@@ -127,6 +127,7 @@ export class AgreementNewComponent implements OnInit {
   commitmentsListExternal: any[] = [];
   commitmentExternalId: number = 0;
   formCreateCommitmentsExternal: FormGroup;
+  closeRegisterObserver: Subscription;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -171,6 +172,11 @@ export class AgreementNewComponent implements OnInit {
     this.searchAllied();
     this.searchCommitments();
     this.autocalculatedField();
+    this.searchCommitmentsExternal();
+  }
+  ngOnDestroy() {
+    if (this.closeRegisterObserver !== undefined)
+      this.closeRegisterObserver.unsubscribe();
   }
   get g() {
     return this.alliedForm.controls;
@@ -212,6 +218,7 @@ export class AgreementNewComponent implements OnInit {
       size: 'sm',
       backdrop: 'static',
     });
+
     this.commitmentExternalId = id;
   }
   onMapInit({ map, view }) {
@@ -369,6 +376,9 @@ export class AgreementNewComponent implements OnInit {
   }
   get f() {
     return this.form.controls;
+  }
+  get i() {
+    return this.formCreateCommitmentsExternal.controls;
   }
   fillSelects() {
     this.searchAnp();
@@ -621,6 +631,7 @@ export class AgreementNewComponent implements OnInit {
       conservationAgreement: this.fb.group({
         id: [this.agreementId],
       }),
+
       allied: this.fb.group({
         id: [
           0,
@@ -652,14 +663,14 @@ export class AgreementNewComponent implements OnInit {
       ],
     });
     this.formCreateCommitmentsExternal = this.fb.group({
+      id: 0,
+      conservationAgreement: { id: this.agreementId },
       description: '',
       objetive: '',
-      alignedTo: '',
+      actionLine: '',
       subscriber: '',
-      description2: '',
-      objetive2: '',
-      alignedTo2: '',
-      subscriber2: '',
+      state: true,
+      registrationDate: '',
     });
   }
 
@@ -891,7 +902,7 @@ export class AgreementNewComponent implements OnInit {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
-    this.form.get('code').disable();
+    //this.form.get('code').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1009,12 +1020,18 @@ export class AgreementNewComponent implements OnInit {
       centered: true,
     });
     this.masterPlanSearch();
+    this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
+      this.formCreateCommitmentsReset();
+    });
   }
   onContentCreateCommitmentsExternalModal(content) {
     this.modalRef = this.modalService.open(content, {
-      size: 'lg',
+      size: 'sm',
       backdrop: 'static',
       centered: true,
+    });
+    this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
+      this.formCreateCommitmentsExternalReset();
     });
   }
   insertCommitments() {
@@ -1075,6 +1092,70 @@ export class AgreementNewComponent implements OnInit {
       });
     }
   }
+  insertCommitmentsExternal() {
+    this.submitted = true;
+    this.disabled = true;
+
+    if (this.formCreateCommitmentsExternal.invalid) {
+      this.disabled = false;
+      return;
+    }
+    if (this.edit === false) {
+      if (this.agreementExist === false) {
+        this.disabled = false;
+        this.alertService.warn('Guarde primero el acuerdo', 'Info', {
+          autoClose: true,
+        });
+        return;
+      }
+    } else {
+      if (
+        this.agreementId === '' ||
+        this.agreementId === null ||
+        this.agreementId === '0'
+      ) {
+        this.disabled = false;
+        return;
+      }
+    }
+    this.formCreateCommitmentsExternal.patchValue({
+      conservationAgreement: { id: this.agreementId },
+    });
+    try {
+      this.agreementService
+        .commitmentExternalSave(
+          JSON.stringify(this.formCreateCommitmentsExternal.value)
+        )
+        .subscribe((response) => {
+          if (response && response.success === true) {
+            this.alertService.success(
+              'Se registro correctamente el compromiso externo',
+              'Ok',
+              { autoClose: true }
+            );
+            this.searchCommitmentsExternal();
+            this.modalRef.close();
+          } else {
+            this.alertService.error('error: ' + response.message, 'error', {
+              autoClose: true,
+            });
+          }
+          this.formCreateCommitmentsExternalReset();
+          this.submitted = false;
+          this.disabled = false;
+        });
+    } catch (error) {
+      this.submitted = false;
+      this.disabled = false;
+      this.alertService.error(
+        'Error al insertar los compromisos externos',
+        'error',
+        {
+          autoClose: true,
+        }
+      );
+    }
+  }
   searchCommitments() {
     if (
       this.agreementId === '' ||
@@ -1107,7 +1188,7 @@ export class AgreementNewComponent implements OnInit {
     }
     try {
       this.agreementService
-        .commitmentsSearch(this.agreementId)
+        .commitmentsExternalSearch(this.agreementId)
         .subscribe((response) => {
           if (response && response.items.length > 0) {
             this.commitmentsListExternal = response.items;
@@ -1140,6 +1221,18 @@ export class AgreementNewComponent implements OnInit {
       actionLine: {
         id: 0,
       },
+    });
+  }
+  formCreateCommitmentsExternalReset() {
+    this.formCreateCommitmentsExternal.setValue({
+      id: 0,
+      conservationAgreement: { id: this.agreementId },
+      description: '',
+      objetive: '',
+      actionLine: '',
+      subscriber: '',
+      state: true,
+      registrationDate: '',
     });
   }
   masterPlanSearch() {
@@ -1333,8 +1426,9 @@ export class AgreementNewComponent implements OnInit {
   }
   onDeleteCommitmentExternal() {
     try {
+      console.log(this.commitmentExternalId);
       this.agreementService
-        .commitmentExternalDelete(this.commitmentId)
+        .commitmentExternalDelete(this.commitmentExternalId)
         .subscribe((response) => {
           if (response && response.success) {
             this.alertService.success(
@@ -1387,8 +1481,10 @@ export class AgreementNewComponent implements OnInit {
   }
   formatToExport() {
     return _.map(this.commitmentsList, (item) => {
-      item.registrationDate = new Date(item.registrationDate);
-      item.alliedName = item.allied.name;
+      item.a1 = item.actionLine.objetive.description;
+      item.a4 = item.description;
+      item.a2 = item.actionLine.name;
+      item.a3 = item.allied.name;
       return _.omit(item, [
         'progress',
         'conservationAgreement',
@@ -1401,6 +1497,11 @@ export class AgreementNewComponent implements OnInit {
         'code',
         'guid',
         'observation',
+        'registrationDate',
+        'active',
+        'id',
+        'stateName',
+        'description'
       ]);
     });
   }

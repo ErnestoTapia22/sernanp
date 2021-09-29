@@ -43,11 +43,14 @@ export class ReportsComponent implements OnInit {
   mapViewProperties: any;
   agreementDetail: object = {
     department: [{ name: '' }],
+    province: [{ name: '' }],
+    district: [{ name: '' }],
   };
   districts: any[] = [];
   departments: any[] = [];
   provinces: any[] = [];
   agreementStateList: any[] = [];
+  alliedList: any[] = [];
   anps: any[] = [];
   constructor(
     public sanitizer: DomSanitizer,
@@ -112,7 +115,7 @@ export class ReportsComponent implements OnInit {
   }
 
   downloadPdf(content, append: boolean, delimiter) {
-    // this.pdfService.makePDF(content);
+    this.pdfService.makePDF(content);
     // this.pdfService.sendToPdf('ResportePDF', this.agreementId, content);
     // const domClone = content.cloneNode(true);
     // let $printSection = document.getElementById('printSection');
@@ -327,6 +330,8 @@ export class ReportsComponent implements OnInit {
       backdrop: 'static',
     });
     this.agreementId = id;
+    this.commitmentsList = [];
+    this.alliedList = [];
     this.getDetail();
   }
   getDetail() {
@@ -349,7 +354,13 @@ export class ReportsComponent implements OnInit {
 
             this.agreementDetail = response.item;
             this.agreementDetail['department'] = [{ name: '' }];
+            this.agreementDetail['province'] = [{ name: '' }];
+            this.agreementDetail['district'] = [{ name: '' }];
             this.fillSelects2(response.item.districtId);
+
+            this.searchAllied();
+
+            this.searchCommitments();
           }
         });
     } catch (error) {
@@ -376,12 +387,85 @@ export class ReportsComponent implements OnInit {
           this.agreementDetail['department'] = response.items.filter((item) => {
             return item.code === districtId.substring(0, 2);
           });
-
-          console.log(this.agreementDetail);
         }
       });
+      this.agreementService
+        .searchProvinces(districtId.substring(0, 2))
+        .subscribe((response) => {
+          if (
+            response &&
+            response.items !== undefined &&
+            response.items !== null &&
+            response.items.length > 0
+          ) {
+            this.agreementDetail['province'] = response.items.filter((item) => {
+              return item.code === districtId.substring(0, 4);
+            });
+          }
+        });
+      this.agreementService
+        .searchDistricts(districtId.substring(0, 4))
+        .subscribe((response) => {
+          if (
+            response &&
+            response.items !== undefined &&
+            response.items !== null &&
+            response.items.length > 0
+          ) {
+            this.agreementDetail['district'] = response.items.filter((item) => {
+              return item.code === districtId;
+            });
+            console.log(this.agreementDetail);
+          }
+        });
     } catch (error) {
       this.alertService.error('Error al traer data del acuerdo', 'Error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchAllied() {
+    if (
+      this.agreementId === '0' ||
+      this.agreementId === '' ||
+      this.agreementId === null
+    ) {
+      return;
+    }
+
+    try {
+      this.agreementService
+        .alliedSearch(parseInt(this.agreementId))
+        .subscribe((response) => {
+          console.log(response);
+          if (response && response.items.length > 0) {
+            this.alliedList = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al traer los suscriptores', 'error', {
+        autoClose: true,
+      });
+    }
+  }
+  searchCommitments() {
+    if (
+      this.agreementId === '' ||
+      this.agreementId === null ||
+      this.agreementId === '0'
+    ) {
+      return;
+    }
+    try {
+      this.agreementService
+        .commitmentsSearch(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.commitmentsList = response.items;
+          }
+        });
+    } catch (error) {
+      this.alertService.error('Error al insertar los compromisos', 'error', {
         autoClose: true,
       });
     }

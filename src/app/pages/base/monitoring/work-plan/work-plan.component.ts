@@ -599,6 +599,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           console.log(['monitor history', response]);
           if (response && response.items.length > 0) {
             this.monitoringListHistory = response.items.map((act) => {
+              console.log(response);
               const parsed = this.setCheckBoxes(act.activities);
               act.activities = parsed;
               return act;
@@ -675,13 +676,22 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     }
   }
   resetFormMonitoring() {
-    this.formMonitoring.setValue({
-      comment: '',
-      recommendation: '',
-      evaluation: '',
-      description: '',
-      achievement: '',
-      activities: [],
+    this.formMonitoring.reset();
+    // this.formMonitoring.setValue({
+    //   achievement: '',
+    //   activities: new FormArray([]),
+    //   description: '',
+    //   comment: '',
+    //   evaluation: '',
+    //   recommendation: '',
+    // });
+    this.formMonitoring = this.fb.group({
+      comment: ['', Validators.required],
+      recommendation: ['', Validators.required],
+      evaluation: ['', Validators.required],
+      description: [''],
+      achievement: ['', Validators.required],
+      activities: new FormArray([]),
     });
   }
   activateMonitoring() {

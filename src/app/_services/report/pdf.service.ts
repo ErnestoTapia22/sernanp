@@ -43,7 +43,7 @@ export class PdfService {
       //! MAKE YOUR PDF
       var doc = new jspdf('p', 'mm', 'a4');
 
-      var imgData = canvas.toDataURL('image/png');
+      var imgData = canvas.toDataURL('image/png', 1.0);
       var pageHeight = doc.internal.pageSize.getHeight();
       var pageWidth = doc.internal.pageSize.getWidth();
 
@@ -54,12 +54,24 @@ export class PdfService {
       doc.addPage('a4', 'p');
       doc.addImage(imgData, 'PNG', 2, 0, pageWidth - 4, 0);
 
+      let image = new Image();
+      image.src = './assets/images/logo-sernanp.png';
+      image.width = 150;
+
       /* add extra pages if the div size is larger than a a4 size */
       if (pagecount > 0) {
         var j = 1;
         while (j != pagecount) {
           doc.addPage('a4', 'p');
-          doc.addImage(imgData, 'PNG', 2, -(j * pageHeight), pageWidth - 4, 0);
+          doc.addImage(image, 'PNG', 2, -(j * pageHeight), pageWidth - 4, 0);
+          doc.addImage(
+            imgData,
+            'PNG',
+            2,
+            -(j * pageHeight + 5),
+            pageWidth - 4,
+            0
+          );
           j++;
         }
       }
