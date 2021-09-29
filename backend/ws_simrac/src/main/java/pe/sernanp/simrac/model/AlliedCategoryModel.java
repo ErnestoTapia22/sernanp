@@ -6,26 +6,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "t_categoria_aliado", schema="simrac")
-
+@Table (name = "t_categoria_aliado", indexes = {@Index(name = "idx_categoriaaliado", columnList = "srl_id",unique = true)})
 public class AlliedCategoryModel {
 	
+	@Column (name= "srl_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column (name= "nombre", length=50)
+	@Column (name= "nombre", length=50, unique=true, nullable=false)
 	private String name;
-	@Column (name= "descripcion", length=200)
-	private String description;
-	@Column (name= "fecharegistro")
-	private Date registrationdate;
-	@Column (name= "estado")
-	private Boolean state;
 	
+	@Column (name= "descripcion", columnDefinition="TEXT")
+	private String description;
+	
+	@Column (name= "fecharegistro", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE", nullable=false)
+	private Date registrationDate;
+	
+	@Column (name= "estado", nullable=false)	
+	private Boolean state;	
 		
 	public int getId() {
 		return id;
@@ -45,11 +49,11 @@ public class AlliedCategoryModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getRegistrationdate() {
-		return registrationdate;
+	public Date getRegistrationDate() {
+		return registrationDate;
 	}
-	public void setRegistrationdate(Date registrationdate) {
-		this.registrationdate = registrationdate;
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 	public Boolean getState() {
 		return state;
