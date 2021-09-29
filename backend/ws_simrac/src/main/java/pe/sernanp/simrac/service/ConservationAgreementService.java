@@ -1,20 +1,19 @@
 package pe.sernanp.simrac.service;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.AlliedCategoryModel;
-import pe.sernanp.simrac.repository.AlliedCategoryRepository;
+import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.repository.ConservationAgreementRepository;
+
 
 @Service
-public class AlliedCategoryService {
+public class ConservationAgreementService {
 
 	@Autowired
-	private AlliedCategoryRepository _repository;
+	private ConservationAgreementRepository _repository;
 	
-	public ResponseEntity save (AlliedCategoryModel item) {
+	public ResponseEntity save (ConservationAgreementModel item) {
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -22,7 +21,7 @@ public class AlliedCategoryService {
 			int rowsAffected = 0;
 
 			if (id == 0) {
-				AlliedCategoryModel item2 = this._repository.save(item);
+				ConservationAgreementModel item2 = this._repository.save(item);
 				id = item2.getId();
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
@@ -44,10 +43,11 @@ public class AlliedCategoryService {
 		}
 	}
 	
-	public ResponseEntity<AlliedCategoryModel> list() throws Exception{
+
+	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
 		try {
-			ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<AlliedCategoryModel>();
-			List<AlliedCategoryModel> items = _repository.findAll();
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			List<ConservationAgreementModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 			
@@ -69,19 +69,19 @@ public class AlliedCategoryService {
 		}
 	}
 	
-	public ResponseEntity<AlliedCategoryModel> detail(int id) throws Exception {
+	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<AlliedCategoryModel>();
-			AlliedCategoryModel item = _repository.findById(id).get();
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			ConservationAgreementModel item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}
+	}		
 }

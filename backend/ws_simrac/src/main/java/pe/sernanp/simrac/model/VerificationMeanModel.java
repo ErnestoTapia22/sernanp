@@ -9,9 +9,9 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_categoria_aliado", indexes = {@Index(name = "idx_categoriaaliado", columnList = "srl_id",unique = true)})
-public class AlliedCategoryModel {
-	
+@Table (name = "t_medio_verificacion", indexes = {@Index(name = "idx_medioverificacion", columnList = "srl_id",unique = true)})
+public class VerificationMeanModel {
+
 	@Column (name= "srl_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

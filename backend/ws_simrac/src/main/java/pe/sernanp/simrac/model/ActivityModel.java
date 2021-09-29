@@ -9,8 +9,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_categoria_aliado", indexes = {@Index(name = "idx_categoriaaliado", columnList = "srl_id",unique = true)})
-public class AlliedCategoryModel {
+@Table (name = "t_actividad_economica", indexes = {@Index(name = "idx_actividadeconomica", columnList = "srl_id",unique = true)})
+public class ActivityModel {
 	
 	@Column (name= "srl_id")
 	@Id

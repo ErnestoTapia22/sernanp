@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.AlliedCategoryModel;
-import pe.sernanp.simrac.service.AlliedCategoryService;
+import pe.sernanp.simrac.model.AlliedModel;
+import pe.sernanp.simrac.service.AlliedService;
 
 @RestController
-@RequestMapping ("/api/alliedcategory")
-public class AlliedCategoryController {
-	
+@RequestMapping ("/api/allied")
+public class AlliedController {
+
 	@Autowired
-	private AlliedCategoryService _service;
+	private AlliedService _service;
 	
 	@RequestMapping(value = "/list")
 	@GetMapping
-	private ResponseEntity<AlliedCategoryModel> List () {
-		ResponseEntity<AlliedCategoryModel> response = new ResponseEntity<>();
+	private ResponseEntity<AlliedModel> List () {
+		ResponseEntity<AlliedModel> response = new ResponseEntity<>();
 		try {
 			response = this._service.list();
 		} catch (Exception ex) {
@@ -32,7 +32,7 @@ public class AlliedCategoryController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
-	private ResponseEntity<?> save (@RequestBody AlliedCategoryModel item) {
+	private ResponseEntity<?> save (@RequestBody AlliedModel item) {
 		try {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
@@ -54,9 +54,9 @@ public class AlliedCategoryController {
 		
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	private ResponseEntity<AlliedCategoryModel> detail (@PathVariable ("id") int id) {
+	private ResponseEntity<AlliedModel> detail (@PathVariable ("id") int id) {
 		try {
-			ResponseEntity<AlliedCategoryModel> response = this._service.detail(id);
+			ResponseEntity<AlliedModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
 			return null;

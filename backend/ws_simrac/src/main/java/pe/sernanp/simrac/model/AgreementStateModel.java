@@ -9,13 +9,20 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_categoria_aliado", indexes = {@Index(name = "idx_categoriaaliado", columnList = "srl_id",unique = true)})
-public class AlliedCategoryModel {
+@Table (name = "t_estado_acuerdo", indexes = {@Index(name = "idx_estadoacuerdo", columnList = "srl_id",unique = true)})
+public class AgreementStateModel {
 	
 	@Column (name= "srl_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column (name= "int_acuerdoid", length=50, unique=true, nullable=false)
+	private int int_acuerdoid;
+	
+	@Column (name= "int_acuerdoid", length=50, unique=true, nullable=false)
+	private int int_categoriaaliadoid;
+	
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)
 	private String name;

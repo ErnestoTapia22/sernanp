@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name = "persona", schema="public")
-public class Persona {
+public class PersonaModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,7 @@ public class Persona {
 	@Column (name= "correo", length=200)
 	private String correo;
 			
-	public Persona(int id, String nombre, String apellido, String correo) {
+	public PersonaModel(int id, String nombre, String apellido, String correo) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;

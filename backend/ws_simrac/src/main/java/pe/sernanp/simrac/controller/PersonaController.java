@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pe.sernanp.simrac.model.Persona;
+import pe.sernanp.simrac.model.PersonaModel;
 import pe.sernanp.simrac.service.PersonaService;
 
 @RestController
@@ -25,8 +25,8 @@ public class PersonaController {
 	private PersonaService personaService;
 	
 	@PostMapping
-	private ResponseEntity<Persona> guardar (@RequestBody Persona persona) {
-		Persona temporal = personaService.create(persona);
+	private ResponseEntity<PersonaModel> guardar (@RequestBody PersonaModel persona) {
+		PersonaModel temporal = personaService.create(persona);
 		
 		try {
 			return ResponseEntity.created(new URI("/api/persona" + temporal.getId())).body (temporal);
@@ -37,18 +37,18 @@ public class PersonaController {
 	}	
 	
 	@GetMapping
-	private ResponseEntity<List<Persona>> listarTodasLasPersonas () {
+	private ResponseEntity<List<PersonaModel>> listarTodasLasPersonas () {
 		return ResponseEntity.ok(personaService.getAllPersonas());	
 	}
 	
 	@DeleteMapping
-	private ResponseEntity<Void> eliminarPersona (@RequestBody Persona persona) {
+	private ResponseEntity<Void> eliminarPersona (@RequestBody PersonaModel persona) {
 		personaService.delete(persona);
 		return ResponseEntity.ok().build();
 	}
 		
 	@GetMapping (value = "{id}")
-	private ResponseEntity<Optional<Persona>> listarPersonasPorId (@PathVariable ("id") Long id) {
+	private ResponseEntity<Optional<PersonaModel>> listarPersonasPorId (@PathVariable ("id") Long id) {
 		return ResponseEntity.ok(personaService.findById(id));
 	}
 		
