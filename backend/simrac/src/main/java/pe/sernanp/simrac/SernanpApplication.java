@@ -41,7 +41,7 @@ public class SernanpApplication extends SpringBootServletInitializer {
 			http.csrf().disable()
 				.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				//.antMatchers(HttpMethod.POST).permitAll().antMatchers(HttpMethod.GET).permitAll().antMatchers(HttpMethod.PUT).permitAll() //comentar para producción
+				.antMatchers(HttpMethod.POST).permitAll().antMatchers(HttpMethod.GET).permitAll().antMatchers(HttpMethod.PUT).permitAll() //comentar para producción
 				.antMatchers("/api/user/validate/{id}").permitAll() //descomentar para producción
 				.anyRequest().authenticated();
 			http.cors().and();					

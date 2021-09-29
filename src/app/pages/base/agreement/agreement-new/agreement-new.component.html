@@ -477,7 +477,7 @@
                             <thead class="fw-bold">
                               <tr>
                                 <td>Nombre</td>
-                                <td>Categoria</td>
+                                <td>Categoría</td>
                                 <td>Opciones</td>
                               </tr>
                             </thead>
@@ -794,7 +794,7 @@
                     <i
                       class="bi bi-info-circle mx-1"
                       placement="top"
-                      ngbTooltip="Detalle del beneficiario (a nivel de personas)"
+                      ngbTooltip="Para el registro de beneficiarios a nivel de hombres y mujeres, se debe considerar el porcentaje de hombres y mujeres en función al último Censo Nacional, y de no existir se puede considerar una estimación a nivel de porcentaje. Ejemplo: 60% de varones y 40% de mujeres."
                     ></i>
                     <textarea
                       id="txtaDetailB"
@@ -827,7 +827,7 @@
                     <i
                       class="bi bi-info-circle mx-1"
                       placement="top"
-                      ngbTooltip="Detalle del beneficiario (a nivel de familia)"
+                      ngbTooltip="Precisar si estas familias pertenecen a un sector o cuenca específica de una comunidad o grupo poblacional específico. Ejemplo: 15 familias de productores pertenecientes a la Asociación de Productores PERSEMAX."
                     ></i>
                     <textarea
                       id="txtaDetailBF"
@@ -840,6 +840,11 @@
                     <label for="benIndirect" class="form-label"
                       >Beneficiarios indirectos</label
                     >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="En beneficiarios indirectos se puede considerar: población PIACI, el ANP, ECA, población aledaña de un sector o comunidad, entre otros."
+                    ></i>                    
                     <textarea
                       id="benIndirect"
                       class="form-control"
@@ -923,6 +928,11 @@
                         <label for="numbScope" class="form-label"
                           >Ámbito del ADC (Ha)</label
                         >
+                        <i
+                        class="bi bi-info-circle mx-1"
+                        placement="top"
+                        ngbTooltip="El ámbito del acuerdo de conservación debe ser la sumatoria de: superficie productiva, superficie bajo restauración, superficie del sector o sectores de vigilancia y control."
+                      ></i>
                         <div class="input-group">
                           <input
                             type="number"
@@ -978,7 +988,7 @@
                         <i
                           class="bi bi-info-circle mx-1"
                           placement="top"
-                          ngbTooltip="Detalle del ámbito bajo manejo productivo, actividad económica sostenible asociada al AdC"
+                          ngbTooltip="Precisar si la superficie productiva corresponde a una línea productiva en específica; por ejemplo: 20 Ha de café y 5 Ha de achiote, o de manera general; peces amazónicos, actividad maderera, turismo, entre otros."
                         ></i>
                         <textarea
                           id="detalleProduction"
@@ -1006,6 +1016,11 @@
                         <label for="txtaIndirectB" class="form-label"
                           >Detalle ámbito bajo restauración</label
                         >
+                        <i
+                        class="bi bi-info-circle mx-1"
+                        placement="top"
+                        ngbTooltip="Ejemplo: 15 Ha a reforestar."
+                      ></i>
                         <textarea
                           id="txtaDetailAR"
                           class="form-control"
@@ -1041,12 +1056,12 @@
                       </div>
                       <div class="col-md-3">
                         <label for="txtaDetailSVC" class="form-label"
-                          >Detalle del(os) sector(es) de V y C
+                          >Detalle del (de los) sectores de vigilancia y control
                         </label>
                         <i
                           class="bi bi-info-circle mx-1"
                           placement="top"
-                          ngbTooltip="Detalle del sector de VyC (tanto dentro como en el paisaje asociado del ANP)"
+                          ngbTooltip="Ejemplo: Sector Y donde 250 Ha están al interior del ANP y 100 Ha en ZA."
                         ></i>
                         <textarea
                           id="txtaDetailSVC"
@@ -1061,7 +1076,7 @@
                           <i
                             class="bi bi-info-circle mx-1"
                             placement="top"
-                            ngbTooltip="Señale algún otro tipo de modalidad de gestión del territorio comprometida en el AdC "
+                            ngbTooltip="Puede considerarse otra modalidad de gestión del territorio que se implementa en el AdC siendo estos: Plan de Desarrollo Local Concertado, Plan Maestro del ANP, Plan de Vida de las CCNN, Plan de Vida Institucional del ECA, entre otros."
                           ></i>
                         </label>
 
@@ -1317,7 +1332,7 @@
           />
         </div>
         <div class="col-md-3 col-lg-12" formGroupName="alliedCategory">
-          <label class="form-label">Categoria</label>
+          <label class="form-label">Categoría</label>
           <select
             class="form-select"
             formControlName="id"
