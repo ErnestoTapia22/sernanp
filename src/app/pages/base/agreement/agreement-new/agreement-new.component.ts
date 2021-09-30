@@ -91,7 +91,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         id: 'vigilancia',
       },
       geometry: {},
-    },
+    }/*,
     {
       attributes: {
         codigo: '',
@@ -103,7 +103,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         id: 'restauracion',
       },
       geometry: {},
-    },
+    },*/
   ];
   esriJsons: Graphic[] = [];
 
@@ -494,9 +494,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.layerId = layerId;
       this.layersGraphic[layerId].attributes.areatotal =
         this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.codigo =
+      this.layersGraphic[layerId].attributes.ac_codi =
         this.form.get('code').value;
-      this.layersGraphic[layerId].attributes.nombre =
+      this.layersGraphic[layerId].attributes.ac_deno =
         this.form.get('name').value;
       sourceGraphics = sourceGraphics.concat(graphics);
       const featureLayer = new FeatureLayer({
@@ -1377,7 +1377,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         id: layer.attributes.id,
         popupEnabled: true,
         outFields: ['*'],
-        definitionExpression: `codigo = '${agreementCode}'`,
+        definitionExpression: `ac_codi = '${agreementCode}'`,
       });
       // featureLayer.when((loaded) => {
       //   console.log(loaded);

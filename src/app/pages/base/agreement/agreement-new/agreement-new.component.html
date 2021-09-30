@@ -629,7 +629,7 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Compromisos externos</label>
+                <label class="mb-0 fw-bold">Alineamiento con instrumentos de planificación</label>
                 <div>
                   <button
                     type="button"
@@ -687,7 +687,6 @@
                                 <td>Objetivo</td>
                                 <td>Compromiso</td>
                                 <td>Línea de Acción</td>
-                                <td>Suscriptor</td>
                                 <td>Opciones</td>
                               </tr>
                             </thead>
@@ -706,9 +705,6 @@
                                 </td>
                                 <td>
                                   {{ item.actionLine }}
-                                </td>
-                                <td>
-                                  {{ item.allied }}
                                 </td>
                                 <td>
                                   <div class="text-nowrap">
@@ -1627,7 +1623,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                 />
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-12 d-none">
                 <label class="form-label">Suscriptor </label>
                 <input
                   type="text"
@@ -2049,7 +2045,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
               type="file"
               name="file"
               id="inFile3"
-              [disabled]="layersGraphic[2].attributes.sended"
+              
             />
           </label>
         </div>

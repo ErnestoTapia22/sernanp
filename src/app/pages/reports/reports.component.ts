@@ -445,9 +445,13 @@ export class ReportsComponent implements OnInit {
     this.form.reset({
       agreementState: { id: 0 },
       anp: { id: 0 },
-      departmentId: [''],
-      provinceId: [''],
-      districtId: [''],
+      departmentId: '',
+      provinceId: '',
+      districtId: '',
+      code: '',
+      name: '',
+      firm: '',
+      firmEnd: '',
       pageSize : 10
     });
     this.initQuery();
