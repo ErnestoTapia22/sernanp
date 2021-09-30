@@ -274,12 +274,17 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	}
 
 	public org.springframework.http.ResponseEntity<byte[]> generatePdf(int id) throws Exception, JRException {
+
+		ConservationAgreementModel agreementDetail = this._repository.detail(this._dataSource, id);
+
 		JRBeanCollectionDataSource beanCollectorDatasource = new JRBeanCollectionDataSource(
 				Collections.singletonList("Invoice"));
 		JasperReport compileReport = JasperCompileManager
 				.compileReport(new FileInputStream("src/main/resources/ReportAgreementDetail.jrxml"));
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("code", "1234");
+		map.put("code", agreementDetail.getCode());
+		map.put("anp", agreementDetail.getAnp().getId());
+		map.put("state", agreementDetail.getState());
 		JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectorDatasource);
 		byte[] data = JasperExportManager.exportReportToPdf(report);
 		HttpHeaders headers = new HttpHeaders();
