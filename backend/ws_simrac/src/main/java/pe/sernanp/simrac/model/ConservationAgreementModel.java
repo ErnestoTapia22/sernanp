@@ -2,10 +2,13 @@ package pe.sernanp.simrac.model;
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,15 +20,18 @@ public class ConservationAgreementModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column (name= "int_acuerdoid", length=50, unique=true, nullable=false)
-	private int int_acuerdoid;
+	@JoinColumn (name= "int_estadoacuerdoid", referencedColumnName = "srl_id", nullable=true)
+	@ManyToOne
+	private AgreementStateModel _agreementState;
 	
-	@Column (name= "int_acuerdoid", length=50, unique=true, nullable=false)
-	private int int_categoriaaliadoid;
+	@JoinColumn (name= "int_fuenteid", referencedColumnName = "srl_id", nullable=true)
+	@ManyToOne
+	private SourceModel _source;
 	
-	private String distritid;
+	@Column (name= "var_distritoid", length=6)
+	private String districtId;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=true)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
@@ -37,25 +43,25 @@ public class ConservationAgreementModel {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;	
 	
-	@Column (name= "int_vig", columnDefinition="INTEGER")	
+	@Column (name= "int_vig")	
 	private int vigency;
 	
-	@Column (name= "var_cod", length=20, columnDefinition="CHARACTER VARYING")	
+	@Column (name= "var_cod", length=20)	
 	private String code;
 	
 	@Column (name= "dte_fec_firma", columnDefinition= "DATE", nullable=false)
-	private Date firmEnd;
+	private Date firm;
 	
-	@Column (name= "int_part_hombres", columnDefinition="INTEGER")	
+	@Column (name= "int_part_hombres")	
 	private int partmen;
 	
-	@Column (name= "int_part_mujeres", columnDefinition="INTEGER")	
+	@Column (name= "int_part_mujeres")	
 	private int  partwomen;
 	
 	@Column (name= "txt_det_ben_per", columnDefinition="TEXT")
 	private String benindirect;
 	
-	@Column (name= "int_num_familia", columnDefinition="INTEGER")	
+	@Column (name= "int_num_familia")	
 	private int numfamily;
 	
 	@Column (name= "txt_det_ben_fam", columnDefinition="TEXT")
@@ -76,7 +82,7 @@ public class ConservationAgreementModel {
 	@Column (name= "num_hect_rest", columnDefinition="NUMERIC (12,4)")
 	private double resthect;
 	
-	@Column (name= "txt_det_sect", columnDefinition="TEXT")
+	@Column (name= "txt_det_rest", columnDefinition="TEXT")
 	private String restdet;
 	
 	@Column (name= "txt_nom_sect", columnDefinition="TEXT")
@@ -91,7 +97,7 @@ public class ConservationAgreementModel {
 	@Column (name= "txt_mod_territorio", columnDefinition="TEXT")
 	private String territorymod;
 	
-	@Column (name= "bol_apa_finan", columnDefinition="BOOLEAN")
+	@Column (name= "bol_apa_finan")
 	private boolean finanapa;
 	
 	@Column (name= "num_finan", columnDefinition="NUMERIC (12,4)")
@@ -109,11 +115,11 @@ public class ConservationAgreementModel {
 	@Column (name= "txt_nom_fondo", columnDefinition="TEXT")
 	private String fondname;
 	
-	@Column (name= "bol_aliado", columnDefinition="BOOLEAN")
+	@Column (name= "bol_aliado")
 	private boolean allied;
 	
 	@Column (name= "txt_localizacion", columnDefinition="TEXT")
-	private String location;
+	private String localization;
 	
 	@Column (name= "num_superficie_a", columnDefinition="NUMERIC (12,4)")
 	private double surface;
@@ -125,6 +131,19 @@ public class ConservationAgreementModel {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public AgreementStateModel getAgreementState() {
+		return _agreementState;
+	}
+	public void setAgreementState(AgreementStateModel _agreementState) {
+		this._agreementState = _agreementState;
+	}
+	public SourceModel get_source() {
+		return _source;
+	}
+	public void set_source(SourceModel _source) {
+		this._source = _source;
 	}
 	public String getName() {
 		return name;
@@ -150,23 +169,11 @@ public class ConservationAgreementModel {
 	public void setState(Boolean state) {
 		this.state = state;
 	}
-	public int getInt_acuerdoid() {
-		return int_acuerdoid;
+	public String getDistrictId() {
+		return districtId;
 	}
-	public void setInt_acuerdoid(int int_acuerdoid) {
-		this.int_acuerdoid = int_acuerdoid;
-	}
-	public int getInt_categoriaaliadoid() {
-		return int_categoriaaliadoid;
-	}
-	public void setInt_categoriaaliadoid(int int_categoriaaliadoid) {
-		this.int_categoriaaliadoid = int_categoriaaliadoid;
-	}
-	public String getDistritid() {
-		return distritid;
-	}
-	public void setDistritid(String distritid) {
-		this.distritid = distritid;
+	public void setDistrictId(String distritid) {
+		this.districtId = distritid;
 	}
 	public int getVigency() {
 		return vigency;
@@ -180,11 +187,11 @@ public class ConservationAgreementModel {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Date getFirmEnd() {
-		return firmEnd;
+	public Date getFirm() {
+		return firm;
 	}
-	public void setFirmEnd(Date firmEnd) {
-		this.firmEnd = firmEnd;
+	public void setFirm(Date firmEnd) {
+		this.firm= firmEnd;
 	}
 	public int getPartmen() {
 		return partmen;
@@ -318,11 +325,11 @@ public class ConservationAgreementModel {
 	public void setAllied(boolean allied) {
 		this.allied = allied;
 	}
-	public String getLocation() {
-		return location;
+	public String getLocalization() {
+		return localization;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocalization(String location) {
+		this.localization = location;
 	}
 	public double getSurface() {
 		return surface;

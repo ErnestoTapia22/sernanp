@@ -3,16 +3,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
-import pe.sernanp.simrac.repository.ConservationAgreementRepository;
+import pe.sernanp.simrac.model.MonitoringModel;
+import pe.sernanp.simrac.repository.MonitoringRepository;
 
 @Service
-public class ConservationAgreementService {
-
-	@Autowired
-	private ConservationAgreementRepository _repository;
+public class MonitoringService {
 	
-	public ResponseEntity save (ConservationAgreementModel item) {
+	@Autowired
+	private MonitoringRepository _repository;
+	
+	public ResponseEntity save (MonitoringModel item) {
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -20,7 +20,7 @@ public class ConservationAgreementService {
 			int rowsAffected = 0;
 
 			if (id == 0) {
-				ConservationAgreementModel item2 = this._repository.save(item);
+				MonitoringModel item2 = this._repository.save(item);
 				id = item2.getId();
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
@@ -43,10 +43,10 @@ public class ConservationAgreementService {
 	}
 	
 
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<MonitoringModel> list() throws Exception{
 		try {
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			List<ConservationAgreementModel> items = _repository.findAll();
+			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
+			List<MonitoringModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 			
@@ -68,14 +68,14 @@ public class ConservationAgreementService {
 		}
 	}
 	
-	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
+	public ResponseEntity<MonitoringModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			ConservationAgreementModel item = _repository.findById(id).get();
+			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
+			MonitoringModel item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;

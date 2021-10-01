@@ -3,25 +3,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.ConservationAgreementModel;
-import pe.sernanp.simrac.repository.ConservationAgreementRepository;
+import pe.sernanp.simrac.model.AgreementPlanModel;
+import pe.sernanp.simrac.repository.AgreementPlanRepository;
+
 
 @Service
-public class ConservationAgreementService {
+public class AgreementPlanService {
 
 	@Autowired
-	private ConservationAgreementRepository _repository;
+	private AgreementPlanRepository _repository;
 	
-	public ResponseEntity save (ConservationAgreementModel item) {
+	public ResponseEntity save (AgreementPlanModel item) {
 		try {
-			Integer id = item.getId();
+			Integer id = 0;
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
 
 			if (id == 0) {
-				ConservationAgreementModel item2 = this._repository.save(item);
-				id = item2.getId();
+				AgreementPlanModel item2 = this._repository.save(item);
+				id = 0;
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
@@ -43,10 +44,10 @@ public class ConservationAgreementService {
 	}
 	
 
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<AgreementPlanModel> list() throws Exception{
 		try {
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			List<ConservationAgreementModel> items = _repository.findAll();
+			ResponseEntity<AgreementPlanModel> response = new ResponseEntity<AgreementPlanModel>();
+			List<AgreementPlanModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 			
@@ -68,19 +69,19 @@ public class ConservationAgreementService {
 		}
 	}
 	
-	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
+	public ResponseEntity<AgreementPlanModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			ConservationAgreementModel item = _repository.findById(id).get();
+			ResponseEntity<AgreementPlanModel> response = new ResponseEntity<AgreementPlanModel>();
+			AgreementPlanModel item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}		
+	}
 }

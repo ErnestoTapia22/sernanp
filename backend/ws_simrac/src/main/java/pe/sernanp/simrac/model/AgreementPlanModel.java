@@ -9,54 +9,55 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_estado_acuerdo", indexes = {@Index(name = "idx_estadoacuerdo", columnList = "srl_id",unique = true)})
-public class AgreementStateModel {
-	
-	@Column (name= "srl_id")
+@Table (name = "t_acuerdoplan")
+public class AgreementPlanModel {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
-	private String name;
+	/* @Column (name= "int_planid")
+	private MasterPlanModel masterPlan;
 	
-	@Column (name= "txt_des", columnDefinition="TEXT")
-	private String description;
+	@Column (name= "int_acuerdoid")
+	private ConservationAgreementModel agreement; */
 	
 	@Column (name= "tsp_fec", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE", nullable=false)
 	private Date registrationDate;
 	
 	@Column (name= "bol_flg", nullable=false)	
-	private Boolean state;	
-		
-	public int getId() {
-		return id;
+	private Boolean state;
+
+	/* public MasterPlanModel getMasterPlan() {
+		return masterPlan;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setMasterPlan(MasterPlanModel masterPlan) {
+		this.masterPlan = masterPlan;
 	}
-	public String getName() {
-		return name;
+
+	public ConservationAgreementModel getAgreement() {
+		return agreement;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+
+	public void setAgreement(ConservationAgreementModel agreement) {
+		this.agreement = agreement; 
+	}*/
+
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}
+
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
 	public Boolean getState() {
 		return state;
 	}
+
 	public void setState(Boolean state) {
 		this.state = state;
-	}	
+	}
+	
 }

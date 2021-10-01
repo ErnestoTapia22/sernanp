@@ -9,13 +9,19 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_actividad_economica", indexes = {@Index(name = "idx_actividadeconomica", columnList = "srl_id",unique = true)})
+@Table (name = "t_actividad", indexes = {@Index(name = "idx_actividad", columnList = "srl_id",unique = true)})
 public class ActivityModel {
 	
 	@Column (name= "srl_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	//@Column (name= "int_compromisoid", columnDefinition="INTEGER")
+	//private CommitmentModel commiment;
+	
+	//@Column (name= "int_plantrabajoid", columnDefinition="INTEGER")
+	//private WorkPlanModel workPlan;
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)
 	private String name;

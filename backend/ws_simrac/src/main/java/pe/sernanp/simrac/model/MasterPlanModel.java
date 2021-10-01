@@ -9,8 +9,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "t_estado_acuerdo", indexes = {@Index(name = "idx_estadoacuerdo", columnList = "srl_id",unique = true)})
-public class AgreementStateModel {
+@Table (name = "t_plan_maestro", indexes = {@Index(name = "idx_planmaestro", columnList = "srl_id",unique = true)})
+public class MasterPlanModel {
 	
 	@Column (name= "srl_id")
 	@Id
@@ -27,36 +27,78 @@ public class AgreementStateModel {
 	private Date registrationDate;
 	
 	@Column (name= "bol_flg", nullable=false)	
-	private Boolean state;	
-		
+	private Boolean state;
+
+	@Column (name= "int_ver", columnDefinition="INTEGER")
+	private int version;
+	
+	@Column (name= "bol_activo", columnDefinition="BOOLEAN")	
+	private Boolean active;
+	
+	@Column (name= "int_anpid", columnDefinition="INTEGER")
+	private int anp;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}
+
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
 	public Boolean getState() {
 		return state;
 	}
+
 	public void setState(Boolean state) {
 		this.state = state;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public int getAnp() {
+		return anp;
+	}
+
+	public void setAnp(int anp) {
+		this.anp = anp;
 	}	
 }
