@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4177a107-314e-4251-81e9-652771da89c6",
+		"_postman_id": "48865b5f-f692-42d7-a76b-9c0727117d31",
 		"name": "SERNANP Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -483,7 +483,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/105"
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/3"
 					},
 					"response": []
 				},
@@ -494,7 +494,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"1\" },\r\n    \"source\": { \"id\": \"1\" },\r\n    \"distritoid\": 10,\r\n\r\n    \"name\": \"pppppp\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": 10.2,\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": true,\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 0,\r\n\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"1\" },\r\n    \"source\": { \"id\": \"3\" },\r\n    \"districtId\": 10,\r\n\r\n    \"name\": \"pppppp\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": 10.2,\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": true,\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1145,7 +1145,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/anp/detail/133"
+						"url": "http://localhost:8050/simrac/api/anp/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDetail List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/list"
 					},
 					"response": []
 				},
@@ -1159,7 +1168,7 @@
 							"formdata": [
 								{
 									"key": "item",
-									"value": "{\"name\":\"\",\"code\":\"\"}",
+									"value": "{\"name\":\"\"}",
 									"type": "text"
 								},
 								{

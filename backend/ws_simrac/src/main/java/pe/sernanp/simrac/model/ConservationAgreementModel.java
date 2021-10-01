@@ -26,7 +26,11 @@ public class ConservationAgreementModel {
 	
 	@JoinColumn (name= "int_fuenteid", referencedColumnName = "srl_id", nullable=true)
 	@ManyToOne
-	private SourceModel _source;
+	private SourceModel source;
+	
+	@JoinColumn (name= "int_anpid", nullable=true)
+	@ManyToOne
+	private AnpModel anp;
 	
 	@Column (name= "var_distritoid", length=6)
 	private String districtId;
@@ -139,11 +143,17 @@ public class ConservationAgreementModel {
 	public void setAgreementState(AgreementStateModel _agreementState) {
 		this._agreementState = _agreementState;
 	}
-	public SourceModel get_source() {
-		return _source;
+	public SourceModel getSource() {
+		return source;
 	}
-	public void set_source(SourceModel _source) {
-		this._source = _source;
+	public void setSource(SourceModel _source) {
+		this.source = _source;
+	}
+	public AnpModel getAnp() {
+		return anp;
+	}
+	public void setAnp(AnpModel _anp) {
+		this.anp = _anp;
 	}
 	public String getName() {
 		return name;

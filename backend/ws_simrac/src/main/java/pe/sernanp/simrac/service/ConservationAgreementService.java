@@ -12,7 +12,7 @@ public class ConservationAgreementService {
 	@Autowired
 	private ConservationAgreementRepository _repository;
 	
-	public ResponseEntity save (ConservationAgreementModel item) {
+	public ResponseEntity save(ConservationAgreementModel item) throws Exception {
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -29,16 +29,14 @@ public class ConservationAgreementService {
 				this._repository.save(item);
 				message += "Se actualizaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
-			}
-			
-			ResponseEntity respuesta = new ResponseEntity();
-			respuesta.setExtra(id.toString());
-			respuesta.setMessage(message);
-			respuesta.setSuccess(success);
-			return respuesta;
+			}			
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
 		} catch (Exception ex) {
-			return null;
-			
+			throw new Exception(ex.getMessage());			
 		}
 	}
 	
