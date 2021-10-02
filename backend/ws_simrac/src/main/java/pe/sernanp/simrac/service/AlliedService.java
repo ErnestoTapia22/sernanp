@@ -13,7 +13,7 @@ public class AlliedService {
 	private AlliedRepository _repository;
 	
 
-	public ResponseEntity save (AlliedModel item) {
+	public ResponseEntity save (AlliedModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -38,7 +38,7 @@ public class AlliedService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

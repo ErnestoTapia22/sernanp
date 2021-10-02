@@ -12,7 +12,7 @@ public class AgreementStateService {
 	@Autowired
 	private AgreementStateRepository _repository;
 	
-	public ResponseEntity save (AgreementStateModel item) {
+	public ResponseEntity save (AgreementStateModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,8 +37,7 @@ public class AgreementStateService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
-			
+			throw new Exception(ex.getMessage());			
 		}
 	}
 	
@@ -56,7 +55,7 @@ public class AgreementStateService {
 	}
 	
 	
-	public ResponseEntity delete (int id) throws Exception  {
+	public ResponseEntity delete (int id) throws Exception {
 		try {
 			this._repository.deleteById(id);
 			ResponseEntity response = new ResponseEntity();

@@ -12,7 +12,7 @@ public class MonitoringService {
 	@Autowired
 	private MonitoringRepository _repository;
 	
-	public ResponseEntity save (MonitoringModel item) {
+	public ResponseEntity save (MonitoringModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class MonitoringService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseController {
 			
 	@Autowired
-	protected HttpServletRequest _request;	
+	protected HttpServletRequest _request;
 		
 	@SuppressWarnings("rawtypes")
-	protected ResponseEntity<?> getJSON(Exception ex) {
+	protected ResponseEntity getJSON(Exception ex) {
 		// _logger.error("Exception!!!", ex);
 		ResponseEntity response = new ResponseEntity();
 		response.setMessage(ex.getMessage());

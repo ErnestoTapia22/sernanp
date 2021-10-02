@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.ExternalCommimentService;
 
 @RestController
 @RequestMapping ("/api/externanlcommiment")
-public class ExternalCommimentController {
+public class ExternalCommimentController extends BaseController {
 
 
 	@Autowired
@@ -38,7 +38,7 @@ public class ExternalCommimentController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -49,7 +49,7 @@ public class ExternalCommimentController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -60,7 +60,7 @@ public class ExternalCommimentController {
 			ResponseEntity<ExternalCommimentModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

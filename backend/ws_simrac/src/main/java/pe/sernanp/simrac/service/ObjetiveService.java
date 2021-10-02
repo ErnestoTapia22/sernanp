@@ -12,7 +12,7 @@ public class ObjetiveService {
 	@Autowired
 	private ObjetiveRepository _repository;
 	
-	public ResponseEntity save (ObjetiveModel item) {
+	public ResponseEntity save (ObjetiveModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class ObjetiveService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

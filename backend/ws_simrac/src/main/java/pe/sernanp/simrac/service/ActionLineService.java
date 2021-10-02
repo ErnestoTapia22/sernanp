@@ -12,7 +12,7 @@ public class ActionLineService {
 	@Autowired
 	private ActionLineRepository _repository;
 	
-	public ResponseEntity save (ActionLineModel item) {
+	public ResponseEntity save (ActionLineModel item) throws Exception {
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,8 +37,7 @@ public class ActionLineService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
-			
+			throw new Exception(ex.getMessage());
 		}
 	}
 	

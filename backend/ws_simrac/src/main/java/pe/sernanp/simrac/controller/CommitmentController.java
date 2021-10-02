@@ -11,11 +11,9 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.service.CommitmentService;
 
-
 @RestController
 @RequestMapping ("/api/commitment")
-public class CommitmentController {
-
+public class CommitmentController extends BaseController {
 
 	@Autowired
 	private CommitmentService _service;
@@ -29,7 +27,7 @@ public class CommitmentController {
 		} catch (Exception ex) {
 			response.setMessage(ex);
 		}
-		return response;	
+		return response;
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -39,7 +37,7 @@ public class CommitmentController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -50,7 +48,7 @@ public class CommitmentController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -61,7 +59,7 @@ public class CommitmentController {
 			ResponseEntity<CommitmentModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

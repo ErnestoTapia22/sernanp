@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.AnswerService;
 
 @RestController
 @RequestMapping ("/api/answer")
-public class AnswerController {
+public class AnswerController extends BaseController {
 
 	@Autowired
 	private AnswerService _service;
@@ -37,7 +37,7 @@ public class AnswerController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -48,7 +48,7 @@ public class AnswerController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -59,7 +59,7 @@ public class AnswerController {
 			ResponseEntity<AnswerModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

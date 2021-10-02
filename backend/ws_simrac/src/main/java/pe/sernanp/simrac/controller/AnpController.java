@@ -42,10 +42,7 @@ public class AnpController extends BaseController {
 			ResponseEntity<AnpModel> response = this._service.search(item2, paginator);
 			return response;
 		} catch (Exception ex) {
-			ResponseEntity response = new ResponseEntity();
-			response.setMessage(ex.getMessage());
-			response.setSuccess(false);
-			return response;
+			return super.getJSON(ex);
 		}
 	}
 }

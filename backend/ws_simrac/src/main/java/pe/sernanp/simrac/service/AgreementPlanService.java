@@ -6,14 +6,13 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AgreementPlanModel;
 import pe.sernanp.simrac.repository.AgreementPlanRepository;
 
-
 @Service
 public class AgreementPlanService {
 
 	@Autowired
 	private AgreementPlanRepository _repository;
 	
-	public ResponseEntity save (AgreementPlanModel item) {
+	public ResponseEntity save (AgreementPlanModel item) throws Exception {
 		try {
 			Integer id = 0;
 			String message = "";

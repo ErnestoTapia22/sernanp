@@ -14,7 +14,7 @@ public class AlliedCategoryService {
 	@Autowired
 	private AlliedCategoryRepository _repository;
 	
-	public ResponseEntity save (AlliedCategoryModel item) {
+	public ResponseEntity save (AlliedCategoryModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -39,7 +39,7 @@ public class AlliedCategoryService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

@@ -12,7 +12,7 @@ public class AnswerService {
 	@Autowired
 	private AnswerRepository _repository;
 	
-	public ResponseEntity save (AnswerModel item) {
+	public ResponseEntity save (AnswerModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class AnswerService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

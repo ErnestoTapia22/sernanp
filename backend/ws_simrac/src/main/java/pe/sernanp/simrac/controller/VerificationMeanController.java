@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.VerificationMeanService;
 
 @RestController
 @RequestMapping ("/api/verificationmean")
-public class VerificationMeanController {
+public class VerificationMeanController extends BaseController {
 	
 	@Autowired
 	private VerificationMeanService _service;
@@ -37,7 +37,7 @@ public class VerificationMeanController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -48,7 +48,7 @@ public class VerificationMeanController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -59,7 +59,7 @@ public class VerificationMeanController {
 			ResponseEntity<VerificationMeanModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

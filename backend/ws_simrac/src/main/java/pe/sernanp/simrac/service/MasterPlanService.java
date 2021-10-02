@@ -11,7 +11,7 @@ public class MasterPlanService {
 	@Autowired
 	private MasterPlanRepository _repository;
 	
-	public ResponseEntity save (MasterPlanModel item) {
+	public ResponseEntity save (MasterPlanModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -36,7 +36,7 @@ public class MasterPlanService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

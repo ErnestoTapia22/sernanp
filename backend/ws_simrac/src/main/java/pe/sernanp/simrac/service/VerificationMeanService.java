@@ -12,7 +12,7 @@ public class VerificationMeanService {
 	@Autowired
 	private VerificationMeanRepository _repository;
 	
-	public ResponseEntity save (VerificationMeanModel item) {
+	public ResponseEntity save (VerificationMeanModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class VerificationMeanService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.ObjetiveService;
 
 @RestController
 @RequestMapping ("/api/objetive")
-public class ObjetiveController {
+public class ObjetiveController extends BaseController {
 
 	@Autowired
 	private ObjetiveService _service;
@@ -37,7 +37,7 @@ public class ObjetiveController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -48,7 +48,7 @@ public class ObjetiveController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -59,7 +59,7 @@ public class ObjetiveController {
 			ResponseEntity<ObjetiveModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.ActionLineService;
 
 @RestController
 @RequestMapping ("/api/actionline")
-public class ActionLineController {
+public class ActionLineController extends BaseController {
 	
 	@Autowired
 	private ActionLineService _service;
@@ -37,7 +37,7 @@ public class ActionLineController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -48,7 +48,7 @@ public class ActionLineController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -59,7 +59,7 @@ public class ActionLineController {
 			ResponseEntity<ActionLineModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

@@ -12,7 +12,7 @@ public class ArticulateService {
 	@Autowired
 	private ArticulateRepository _repository;
 	
-	public ResponseEntity save (ArticulateModel item) {
+	public ResponseEntity save (ArticulateModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class ArticulateService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

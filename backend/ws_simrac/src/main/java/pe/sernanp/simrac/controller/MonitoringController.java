@@ -14,7 +14,7 @@ import pe.sernanp.simrac.service.MonitoringService;
 
 @RestController
 @RequestMapping ("/api/monitoring")
-public class MonitoringController {
+public class MonitoringController extends BaseController {
 
 	@Autowired
 	private MonitoringService _service;
@@ -38,7 +38,7 @@ public class MonitoringController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -49,7 +49,7 @@ public class MonitoringController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -60,7 +60,7 @@ public class MonitoringController {
 			ResponseEntity<MonitoringModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

@@ -12,7 +12,7 @@ public class ExternalCommimentService {
 	@Autowired
 	private ExternalCommimentRepository _repository;
 	
-	public ResponseEntity save (ExternalCommimentModel item) {
+	public ResponseEntity save (ExternalCommimentModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class ExternalCommimentService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

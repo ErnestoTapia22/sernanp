@@ -43,7 +43,7 @@ public class AnpService {
 	public ResponseEntity<AnpModel> search(AnpModel item, PaginatorEntity paginator) throws Exception{
 		try {
 			ResponseEntity<AnpModel> response = new ResponseEntity<AnpModel>();
-			Pageable page = PageRequest.of(paginator.getOffset(), paginator.getLimit());
+			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
 			Page<AnpModel> pag = this._repository.findAll(item.getDescription(), item.getName(), page);
 			List<AnpModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());

@@ -1,8 +1,15 @@
 package pe.sernanp.simrac.service;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.AnpModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.repository.ConservationAgreementRepository;
 
@@ -80,5 +87,21 @@ public class ConservationAgreementService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}		
+	}	
+	
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
+			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getDescription(), item.getName(), page);
+			List<ConservationAgreementModel> items = pag.getContent();
+			paginator.setTotal((int)pag.getTotalElements());
+			response.setItems(items);
+			response.setPaginator(paginator);
+			return response;
+			
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

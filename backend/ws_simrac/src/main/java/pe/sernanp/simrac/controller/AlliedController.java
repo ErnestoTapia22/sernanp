@@ -15,7 +15,7 @@ import pe.sernanp.simrac.service.AlliedService;
 
 @RestController
 @RequestMapping ("/api/allied")
-public class AlliedController {
+public class AlliedController extends BaseController  {
 
 	@Autowired
 	private AlliedService _service;
@@ -39,7 +39,7 @@ public class AlliedController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -50,7 +50,7 @@ public class AlliedController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -61,7 +61,7 @@ public class AlliedController {
 			ResponseEntity<AlliedModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 	
@@ -72,7 +72,7 @@ public class AlliedController {
 			ResponseEntity<AlliedModel> response = this._service.searchByAgreement(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 }
