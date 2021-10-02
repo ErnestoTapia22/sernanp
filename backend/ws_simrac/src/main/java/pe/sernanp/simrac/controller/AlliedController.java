@@ -1,4 +1,6 @@
 package pe.sernanp.simrac.controller;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,4 +64,15 @@ public class AlliedController {
 			return null;
 		}
 	}	
+	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<AlliedModel> search(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<AlliedModel> response = this._service.searchByAgreement(id);
+			return response;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
 }

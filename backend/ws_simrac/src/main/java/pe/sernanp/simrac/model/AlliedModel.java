@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,14 @@ public class AlliedModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	@ManyToOne
+	private ConservationAgreementModel conservationAgreement;
+	
+	@JoinColumn (name= "int_categoriaaliadoid", referencedColumnName = "srl_id", nullable=true)
+	@ManyToOne
+	private AlliedCategoryModel  alliedCategory;	
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)
 	private String name;
@@ -34,6 +44,19 @@ public class AlliedModel {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public ConservationAgreementModel getConservationAgreement() {
+		return conservationAgreement;
+	}
+	public void setConservationAgreemen(ConservationAgreementModel conservationAgreement) {
+		this.conservationAgreement = conservationAgreement;
+	}
+	public AlliedCategoryModel getAlliedCategory() {
+		return alliedCategory;
+	}
+	public void setAlliedCategory(AlliedCategoryModel alliedCategory) {
+		this.alliedCategory = alliedCategory;
 	}
 	public String getName() {
 		return name;
