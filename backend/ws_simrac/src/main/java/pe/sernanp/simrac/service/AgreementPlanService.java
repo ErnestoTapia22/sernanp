@@ -3,25 +3,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.VerificationMeanModel;
-import pe.sernanp.simrac.repository.VerificationMeanRepository;
+import pe.sernanp.simrac.model.AgreementPlanModel;
+import pe.sernanp.simrac.repository.AgreementPlanRepository;
 
 @Service
-public class VerificationMeanService {
+public class AgreementPlanService {
 
 	@Autowired
-	private VerificationMeanRepository _repository;
+	private AgreementPlanRepository _repository;
 	
-	public ResponseEntity save (VerificationMeanModel item) throws Exception{
+	public ResponseEntity save (AgreementPlanModel item) throws Exception {
 		try {
-			Integer id = item.getId();
+			Integer id = 0;
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
 
 			if (id == 0) {
-				VerificationMeanModel item2 = this._repository.save(item);
-				id = item2.getId();
+				AgreementPlanModel item2 = this._repository.save(item);
+				id = 0;
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
 				success = (id == 0) ? false : true;
@@ -37,16 +37,16 @@ public class VerificationMeanService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
+			return null;
 			
 		}
 	}
 	
 
-	public ResponseEntity<VerificationMeanModel> list() throws Exception{
+	public ResponseEntity<AgreementPlanModel> list() throws Exception{
 		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = _repository.findAll();
+			ResponseEntity<AgreementPlanModel> response = new ResponseEntity<AgreementPlanModel>();
+			List<AgreementPlanModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 			
@@ -68,19 +68,19 @@ public class VerificationMeanService {
 		}
 	}
 	
-	public ResponseEntity<VerificationMeanModel> detail(int id) throws Exception {
+	public ResponseEntity<AgreementPlanModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			VerificationMeanModel item = _repository.findById(id).get();
+			ResponseEntity<AgreementPlanModel> response = new ResponseEntity<AgreementPlanModel>();
+			AgreementPlanModel item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}			
+	}
 }

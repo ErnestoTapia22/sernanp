@@ -13,7 +13,7 @@ public class AlliedService {
 	private AlliedRepository _repository;
 	
 
-	public ResponseEntity save (AlliedModel item) {
+	public ResponseEntity save (AlliedModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -38,7 +38,7 @@ public class AlliedService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}
@@ -84,4 +84,20 @@ public class AlliedService {
 			throw new Exception(ex.getMessage());
 		}
 	}		
+	
+	public ResponseEntity<AlliedModel> searchByAgreement(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<AlliedModel> response = new ResponseEntity<AlliedModel>();
+			List<AlliedModel> item = this._repository.searchByAgreement(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

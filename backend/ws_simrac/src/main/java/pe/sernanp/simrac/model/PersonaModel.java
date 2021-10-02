@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "persona", schema="public")
+@Table (name = "persona", schema="simrac")
 public class PersonaModel {
 	
 	@Id

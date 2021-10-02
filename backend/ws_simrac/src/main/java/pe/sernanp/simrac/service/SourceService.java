@@ -12,7 +12,7 @@ public class SourceService {
 	@Autowired
 	private SourceRepository _repository;
 	
-	public ResponseEntity save (SourceModel item) {
+	public ResponseEntity save (SourceModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -37,7 +37,7 @@ public class SourceService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

@@ -13,8 +13,7 @@ import pe.sernanp.simrac.service.ArticulateService;
 
 @RestController
 @RequestMapping ("/api/articulate")
-public class ArticulateController {
-
+public class ArticulateController extends BaseController {
 
 	@Autowired
 	private ArticulateService _service;
@@ -38,7 +37,7 @@ public class ArticulateController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -49,7 +48,7 @@ public class ArticulateController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -60,7 +59,7 @@ public class ArticulateController {
 			ResponseEntity<ArticulateModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

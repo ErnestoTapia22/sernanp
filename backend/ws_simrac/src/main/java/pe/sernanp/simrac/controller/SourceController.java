@@ -11,10 +11,9 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.SourceModel;
 import pe.sernanp.simrac.service.SourceService;
 
-
 @RestController
 @RequestMapping ("/api/source")
-public class SourceController {
+public class SourceController extends BaseController {
 
 	@Autowired
 	private SourceService _service;
@@ -28,7 +27,7 @@ public class SourceController {
 		} catch (Exception ex) {
 			response.setMessage(ex);
 		}
-		return response;	
+		return response;
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -38,7 +37,7 @@ public class SourceController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -49,7 +48,7 @@ public class SourceController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -60,7 +59,7 @@ public class SourceController {
 			ResponseEntity<SourceModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

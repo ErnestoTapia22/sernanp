@@ -13,7 +13,7 @@ public class ComponentService {
 	private ComponentRepository _repository;
 
 
-	public ResponseEntity save (ComponentModel item) {
+	public ResponseEntity save (ComponentModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
@@ -38,7 +38,7 @@ public class ComponentService {
 			respuesta.setSuccess(success);
 			return respuesta;
 		} catch (Exception ex) {
-			return null;
+			throw new Exception(ex.getMessage());
 			
 		}
 	}

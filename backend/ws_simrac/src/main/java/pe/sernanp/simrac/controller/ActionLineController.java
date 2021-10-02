@@ -1,6 +1,4 @@
 package pe.sernanp.simrac.controller;
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.AlliedModel;
-import pe.sernanp.simrac.service.AlliedService;
+import pe.sernanp.simrac.model.ActionLineModel;
+import pe.sernanp.simrac.service.ActionLineService;
 
 @RestController
-@RequestMapping ("/api/allied")
-public class AlliedController extends BaseController  {
-
+@RequestMapping ("/api/actionline")
+public class ActionLineController extends BaseController {
+	
 	@Autowired
-	private AlliedService _service;
+	private ActionLineService _service;
 	
 	@RequestMapping(value = "/list")
 	@GetMapping
-	private ResponseEntity<AlliedModel> List () {
-		ResponseEntity<AlliedModel> response = new ResponseEntity<>();
+	private ResponseEntity<ActionLineModel> List () {
+		ResponseEntity<ActionLineModel> response = new ResponseEntity<>();
 		try {
 			response = this._service.list();
 		} catch (Exception ex) {
@@ -34,7 +32,7 @@ public class AlliedController extends BaseController  {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
-	private ResponseEntity<?> save (@RequestBody AlliedModel item) {
+	private ResponseEntity<?> save (@RequestBody ActionLineModel item) {
 		try {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
@@ -56,23 +54,12 @@ public class AlliedController extends BaseController  {
 		
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	private ResponseEntity<AlliedModel> detail (@PathVariable ("id") int id) {
+	private ResponseEntity<ActionLineModel> detail (@PathVariable ("id") int id) {
 		try {
-			ResponseEntity<AlliedModel> response = this._service.detail(id);
+			ResponseEntity<ActionLineModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
 	}	
-	
-	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
-	@ResponseBody()
-	public ResponseEntity<AlliedModel> search(@PathVariable("id") int id) throws IOException {
-		try {
-			ResponseEntity<AlliedModel> response = this._service.searchByAgreement(id);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}
-	}
 }

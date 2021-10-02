@@ -11,10 +11,9 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ComponentModel;
 import pe.sernanp.simrac.service.ComponentService;
 
-
 @RestController
 @RequestMapping ("/api/component")
-public class ComponentController {
+public class ComponentController extends BaseController {
 
 	@Autowired
 	private ComponentService _service;
@@ -38,7 +37,7 @@ public class ComponentController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -49,7 +48,7 @@ public class ComponentController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -60,7 +59,7 @@ public class ComponentController {
 			ResponseEntity<ComponentModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

@@ -13,7 +13,7 @@ import pe.sernanp.simrac.service.AgreementStateService;
 
 @RestController
 @RequestMapping ("/api/agreementstate")
-public class AgreementStateController {
+public class AgreementStateController extends BaseController {
 
 	@Autowired
 	private AgreementStateService _service;
@@ -37,7 +37,7 @@ public class AgreementStateController {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}		
 	}
 		
@@ -48,7 +48,7 @@ public class AgreementStateController {
 			ResponseEntity<?> response = this._service.delete(id);
 			return response;
 		} catch (Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}
 		
@@ -59,7 +59,7 @@ public class AgreementStateController {
 			ResponseEntity<AgreementStateModel> response = this._service.detail(id);
 			return response;
 		} catch(Exception ex) {
-			return null;
+			return super.getJSON(ex);
 		}
 	}	
 }

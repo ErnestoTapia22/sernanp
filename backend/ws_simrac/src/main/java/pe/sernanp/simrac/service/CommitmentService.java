@@ -3,24 +3,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
-import pe.sernanp.simrac.model.VerificationMeanModel;
-import pe.sernanp.simrac.repository.VerificationMeanRepository;
+import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.repository.CommitmentRepository;
 
 @Service
-public class VerificationMeanService {
+public class CommitmentService {
 
 	@Autowired
-	private VerificationMeanRepository _repository;
-	
-	public ResponseEntity save (VerificationMeanModel item) throws Exception{
+	private CommitmentRepository _repository;
+
+	public ResponseEntity save (CommitmentModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+	
 			if (id == 0) {
-				VerificationMeanModel item2 = this._repository.save(item);
+				CommitmentModel item2 = this._repository.save(item);
 				id = item2.getId();
 				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
 						: " Se guardaron sus datos de manera correcta";
@@ -41,12 +41,12 @@ public class VerificationMeanService {
 			
 		}
 	}
-	
 
-	public ResponseEntity<VerificationMeanModel> list() throws Exception{
+
+	public ResponseEntity<CommitmentModel> list() throws Exception{
 		try {
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			List<VerificationMeanModel> items = _repository.findAll();
+			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentModel>();
+			List<CommitmentModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
 			
@@ -68,19 +68,19 @@ public class VerificationMeanService {
 		}
 	}
 	
-	public ResponseEntity<VerificationMeanModel> detail(int id) throws Exception {
+	public ResponseEntity<CommitmentModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<VerificationMeanModel> response = new ResponseEntity<VerificationMeanModel>();
-			VerificationMeanModel item = _repository.findById(id).get();
+			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentModel>();
+			CommitmentModel item = _repository.findById(id).get();
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}			
+	}		
 }

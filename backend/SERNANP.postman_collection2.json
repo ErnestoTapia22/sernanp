@@ -1,0 +1,1475 @@
+{
+	"info": {
+		"_postman_id": "48865b5f-f692-42d7-a76b-9c0727117d31",
+		"name": "SERNANP Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "base",
+			"item": [
+				{
+					"name": "Articulate",
+					"item": [
+						{
+							"name": "ArticulateList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/articulate/list"
+							},
+							"response": []
+						},
+						{
+							"name": "ArticulateDetail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/articulate/detail/7"
+							},
+							"response": []
+						},
+						{
+							"name": "ArticulateDelete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/articulate/delete/7"
+							},
+							"response": []
+						},
+						{
+							"name": "ArticulateInsert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Detalla22\",\r\n    \"description\": \"Descripcion5\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/articulate/save"
+							},
+							"response": []
+						},
+						{
+							"name": "ArticulateUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 7,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/articulate/save"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "VerificationMean",
+					"item": [
+						{
+							"name": "VerificationMeanList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/verificationmean/list"
+							},
+							"response": []
+						},
+						{
+							"name": "VerificationMeanDetail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/verificationmean/detail/1"
+							},
+							"response": []
+						},
+						{
+							"name": "VerificationMeanDelete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/verificationmean/delete/5"
+							},
+							"response": []
+						},
+						{
+							"name": "VerificationMeanSearch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"name\":\"\"}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/verificationmean/search"
+							},
+							"response": []
+						},
+						{
+							"name": "VerificationMeanInsert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Sistema de monitoreo\",\r\n    \"description\": \"Descripcion6\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/verificationmean/save"
+							},
+							"response": []
+						},
+						{
+							"name": "VerificationMeanUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 5,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/verificationmean/save"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Source",
+					"item": [
+						{
+							"name": "SourceList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/source/list"
+							},
+							"response": []
+						},
+						{
+							"name": "SourceDetail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/source/detail/1"
+							},
+							"response": []
+						},
+						{
+							"name": "SourceDelete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/source/delete/1"
+							},
+							"response": []
+						},
+						{
+							"name": "SourceInsert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"otros\",\r\n    \"description\": \"Descripcion4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/source/save"
+							},
+							"response": []
+						},
+						{
+							"name": "SourceSearch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"name\":\"c\"}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/source/search"
+							},
+							"response": []
+						},
+						{
+							"name": "SourceUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 5,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/source/save"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AlliedCategory",
+					"item": [
+						{
+							"name": "AlliedCategoryList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/alliedcategory/list"
+							},
+							"response": []
+						},
+						{
+							"name": "AlliedCategoryDelete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/alliedcategory/delete/4"
+							},
+							"response": []
+						},
+						{
+							"name": "AlliedCategoryDetail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/alliedcategory/detail/1"
+							},
+							"response": []
+						},
+						{
+							"name": "AlliedCategorySearch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"name\":\"c\"}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/api/alliedcategory/search"
+							},
+							"response": []
+						},
+						{
+							"name": "AlliedCategoryInsert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"prueb222\",\r\n    \"description\": \"prueba\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/alliedcategory/save"
+							},
+							"response": []
+						},
+						{
+							"name": "AlliedCategoryUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/api/alliedcategory/save"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AgreementState",
+					"item": [
+						{
+							"name": "AgreementStateList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/agreementstate/list"
+							},
+							"response": []
+						},
+						{
+							"name": "AgreementStateDetail",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/agreementstate/detail/1"
+							},
+							"response": []
+						},
+						{
+							"name": "AgreementStateDelete",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8050/simrac/api/agreementstate/delete/6"
+							},
+							"response": []
+						},
+						{
+							"name": "AgreementStateSearch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "item",
+											"value": "{\"name\":\"\"}",
+											"type": "text"
+										},
+										{
+											"key": "paginator",
+											"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/agreementstate/search"
+							},
+							"response": []
+						},
+						{
+							"name": "AgreementStateInsert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Implementació22\",\r\n    \"description\": \"descripcion4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/agreementstate/save"
+							},
+							"response": []
+						},
+						{
+							"name": "AgreementStateUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 5,\r\n    \"name\": \"anthony\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8050/simrac/api/agreementstate/save"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ConservationAgreement",
+			"item": [
+				{
+					"name": "ConservationAgreementList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/conservationagreement/list"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/conservationagreement/detail/3"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementSave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"1\" },\r\n    \"source\": { \"id\": \"3\" },\r\n    \"districtId\": 10,\r\n\r\n    \"name\": \"pppppp\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": 10.2,\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": true,\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementSearch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\",\"agreementState\":{\"id\":1},\"source\":{\"id\":0},\"code\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/search"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementSearch2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\",\"agreementState\":{\"id\":1},\"anp\":{\"id\":0},\"code\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/conservationagreement/search2"
+					},
+					"response": []
+				},
+				{
+					"name": "ConservationAgreementDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/conservationagreement/delete/318"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Allied",
+			"item": [
+				{
+					"name": "AlliedDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/detail/3"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/allied/delete/4"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"alliedCategory\": { \r\n        \"id\": \"5\"\r\n    },\r\n    \"conservationAgreement\": {\r\n        \"id\": \"105\"\r\n    },\r\n    \"name\": \"prueba\",\r\n    \"description\": \"prueba\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedSearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/allied/search/105"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Component",
+			"item": [
+				{
+					"name": "ComponentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/component/detail/10"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/component/delete/9"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"name\": \"prueba1\",\r\n    \"description\": \"prueba1\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/component/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ComponentUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"9\",\r\n    \"name\": \"prueba1nu3333\",\r\n    \"description\": \"prueb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/component/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AlliedCommitment",
+			"item": [
+				{
+					"name": "AlliedCommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/delete/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AlliedCommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"conservationAgreement\": {\r\n    \"id\": \"317\"\r\n    },\r\n    \"name\": \"csaaaaaaadd\",\r\n    \"description\": \"bbbbbbb\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/alliedcommitment/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commitment",
+			"item": [
+				{
+					"name": "CommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/detail/5"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/commitment/delete/4"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \"allied\": { \"id\": \"3\"  },\r\n    \"actionLine\": { \"id\":\"1\" },   \r\n\r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"SSS\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "CommitmentSearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/commitment/search/105"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExternalCommitment",
+			"item": [
+				{
+					"name": "ExternalCommitmentDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/externalcommitment/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/externalcommitment/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"objetive\":\"SSS\",\r\n    \"actionLine\": \"AAAA\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/externalcommitment/save"
+					},
+					"response": []
+				},
+				{
+					"name": "ExternalCommitmentSearch",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/externalcommitment/search/105"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "SimracAuth",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": {
+								"password": "@re34n@tur4l",
+								"username": "dj-sernanp-app"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ANP + ZR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/anps/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acr/listAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Servicio Rest ACP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2a3d3873-a2da-4dd7-b5d2-7aa3b74497af"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://desarrollo.sernanp.gob.pe:28081/api-lanp/acp/listAll"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UserValidate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/user/validate/ycoyla"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"system\":\"27\",\"name\":\"\",\"userName\":\"\",\"lastName\":\"\",\"role\":{\"id\":0}}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/user/search"
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2456,\r\n    \"role\": {\r\n        \"id\": 124\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/user/save"
+					},
+					"response": []
+				},
+				{
+					"name": "SearchWithoutLogin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/user/searchwithoutlogin/41252200/27"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module",
+			"item": [
+				{
+					"name": "SearchBySystem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/module/searchbysystem/27"
+					},
+					"response": []
+				},
+				{
+					"name": "SearchByRole",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/module/searchbyrole/124"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "RoleDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/role/delete/125"
+					},
+					"response": []
+				},
+				{
+					"name": "RoleInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"0\",\r\n    \"name\": \"Admin 2\",\r\n    \"flag\": \"1\",\r\n    \"system\": 27\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/role/save"
+					},
+					"response": []
+				},
+				{
+					"name": "RoleSearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/role/search/27"
+					},
+					"response": []
+				},
+				{
+					"name": "Save2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":126,\r\n    \"modules\":[{\"id\": 447},{\"id\": 448}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/role/save2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ANP",
+			"item": [
+				{
+					"name": "AnpInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{              \r\n    \"id\": 0,\r\n    \"name\": \"prueba\",\r\n    \"category\": \"Refugio X\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"xx\",\r\n    \"registrationDate\": \"2021-09-20\",\r\n    \"state\": true,\r\n    \"district\": \"X\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n              \r\n    \"id\": 133,\r\n    \"name\": \"pruebanuevo\",\r\n    \"category\": \"RefugioXX\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"X\",\r\n    \"registrationDate\": \"2021-09-20T15:56:35.166+0000\",\r\n    \"state\": true,\r\n    \"stateName\": \"Activo\",\r\n    \"district\": \"Lima\",\r\n    \"observation\": null,\r\n    \"guid\": \"\",\r\n    \"issynchronized\": null        \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/save"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDelete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/delete/132"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/detail/1"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpDetail List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/anp/list"
+					},
+					"response": []
+				},
+				{
+					"name": "AnpSearch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"1\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/anp/search"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MasterPlan",
+			"item": [
+				{
+					"name": "Detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"c\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/detail/2"
+					},
+					"response": []
+				},
+				{
+					"name": "SearchByANP",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "item",
+									"value": "{\"name\":\"c\"}",
+									"type": "text"
+								},
+								{
+									"key": "paginator",
+									"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/searchbyanp/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":1 },\r\n    \"name\":\"Plan Maestro 1\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/save"
+					},
+					"response": []
+				},
+				{
+					"name": "searchobjetives",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/masterplan/searchobjetives/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Objetive",
+			"item": [
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"masterPlan\" : { \"id\":2 },\r\n    \"component\" : { \"id\":1 },\r\n    \"description\":\"Objetivo 1\",\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/objetive/save"
+					},
+					"response": []
+				},
+				{
+					"name": "searchactionlines",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/objetive/searchactionlines/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ActionLine",
+			"item": [
+				{
+					"name": "Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"objetive\" : { \"id\":1 },\r\n    \"name\":\"Seguridad\",\r\n    \"description\":\"11111111111111111\",\r\n    \"state\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/actionline/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WorkPlan",
+			"item": [
+				{
+					"name": "searchbyagreement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/workplan/searchbyagreement/100"
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPlanInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"conservationAgreement\": {\"id\":100},\r\n    \"year\": 2020,\r\n    \"activities\" : [\r\n        {\r\n            \"name\":\"Nuevo Valores1\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":19},\r\n            \"semester\":\"1\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores2\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":20},\r\n            \"semester\":\"2\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores3\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":21},\r\n            \"semester\":\"1,2\"\r\n        }\r\n    ]\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/workplan/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity",
+			"item": [
+				{
+					"name": "searchbycommitment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/activity/searchbycommitment/20"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Monitoring",
+			"item": [
+				{
+					"name": "searchbyagreement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8050/simrac/api/monitoring/searchbyagreement/100"
+					},
+					"response": []
+				},
+				{
+					"name": "MonitoringInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\":\"se comenta que\",\r\n    \"recommendation\":\"se recomienda\",\r\n    \"evaluation\":\"apto\",\r\n    \"description\":\"\",\r\n    \"achievement\":\"ssss\",\r\n    \"activities\" : [\r\n        {\r\n            \"id\":10,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":11,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":12,\r\n            \"value\":100\r\n        }\r\n    ]\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/monitoring/save"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Servicio Publico",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "item",
+							"value": "{\"name\":\"\"}",
+							"type": "text"
+						},
+						{
+							"key": "paginator",
+							"value": "{\"offset\":\"0\",\"limit\":\"10\",\"sort\":\"name\",\"order\":\"asc\"}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://100.122.8.47:8060/simrac/api/conservationagreement/search"
+			},
+			"response": []
+		}
+	]
+}
