@@ -438,6 +438,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
+                          <td>Línea de Acción</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -458,6 +459,12 @@
                           <td>
                             {{
                               activity.commitment.actionLine.objetive.name ||
+                                "sin datos"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              activity.commitment.actionLine.name ||
                                 "sin datos"
                             }}
                           </td>
@@ -643,7 +650,7 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">Evaluación</label>
+                  <label class="mb-0 fw-bold">Evaluación</label>                  
                   <div>
                     <button
                       type="button"
@@ -673,6 +680,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
+                          <td>Línea de Acción</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -702,6 +710,12 @@
                           <td>
                             {{
                               item.commitment.actionLine.objetive.name ||
+                                "sin datos"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              item.commitment.actionLine.name ||
                                 "sin datos"
                             }}
                           </td>
@@ -823,8 +837,19 @@
                       <i class="bi bi-display"></i>
                       Guardar monitoreo
                     </button> -->
+                  </div>                  
+                </div>              
+              </div>
+              <div class="card">
+                <div class="col-md-12 row p-3">
+                  <label class="mb-0 fw-bold col-form-label col-sm-4 col-md-4 col-lg-4">Cobertura de Vigilancia y Control del AC.</label>
+                  <div class="col-sm-4 col-md-4 col-lg-4">
+                    <input type="text" class="form-control-plaintext " value="1000 (ha)">
                   </div>
-                </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4">
+                    <input class="form-control col-sm-4 col-md-4 col-lg-4" type="text" value="500"/>
+                  </div>                  
+                </div>                
               </div>
             </div>
           </div>

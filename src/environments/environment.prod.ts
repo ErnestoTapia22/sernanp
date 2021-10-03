@@ -30,7 +30,8 @@ export const environment = {
   initialLayers: [
     {
       id: 0,
-      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer',
+      url2: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer',
+      url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/MapServer',
       disabled: false,
       name: 'Acuerdos de Conservación',
     },
@@ -75,28 +76,34 @@ export const environment = {
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000504/MapServer',
       disabled: false,
       name: 'Capitales',
+    },
+    {
+      id: 8,
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_cultura_000201/MapServer',
+      disabled: false,
+      name: 'Comunidades',
     }
   ],
   conservationAgreements: [
     {
-      name: 'Ámbito de Acuerdo de Conservación',
-      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/0',
+      name: 'Ámbito de Acuerdo de Conservación Poligono',
+      url2: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/0',
+      url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/FeatureServer/0',
       disabled: false,
     },
     {
-      name: 'Vigilancia y control',
-      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/1',
+      name: 'Ámbito de Acuerdo de Conservación Punto',
+      url2: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/1',
+      url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/FeatureServer/0',
       disabled: false,
-    },
-    {
-      name: 'Restauración',
-      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/2',
-      disabled: false,
-    },
-    {
-      name: 'Ámbito productivo',
-      url: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/3',
-      disabled: false,
-    },
+    }
   ],
+  searchWidget:[
+    {
+      url:"https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0"
+    },
+    {
+      url:"https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0"
+    }
+  ]
 };

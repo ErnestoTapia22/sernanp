@@ -122,7 +122,10 @@ export class AnpComponent implements OnInit, OnDestroy {
     }
   }
   cleanForm() {
-    this.form.reset();
+    this.form.reset({
+      name: '',
+      code: '',
+    });
     this.initQuery();
     this.onSearch();
   }

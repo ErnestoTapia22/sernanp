@@ -121,27 +121,10 @@ export class IndexComponent implements OnInit {
       expanded: false,
       expandTooltip: 'Estilos de mapa',
     });
-    const featureLayerDistricts = new FeatureLayer({
-      url:
-        "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_117th_Congressional_Districts_all/FeatureServer/0",
-      popupTemplate: {
-        // autocasts as new PopupTemplate()
-        title: "Congressional District {DISTRICTID} </br>{NAME}, ({PARTY})",
-        overwriteActions: true
-      }
-    });
-    const featureLayerSenators = new FeatureLayer({
-      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_Senators_2020/FeatureServer/0",
-      popupTemplate: {
-        // autocasts as new PopupTemplate()
-        title: "<a href={Web_Page} target='_blank'> {Name}</a>, ({Party}-{State}) ",
-        overwriteActions: true
-      }
-    });
     const sources = [
       {
         layer: new FeatureLayer({
-            url: `https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0`
+            url: environment.searchWidget[0].url,
         }),
         searchFields: ["anp_codi", "anp_nomb", "anp_cate", "anp_ubpo"],
         displayField: "anp_nomb",
@@ -152,10 +135,10 @@ export class IndexComponent implements OnInit {
       },
       {
         layer: new FeatureLayer({
-            url: `https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0`
+            url:  environment.searchWidget[1].url,
         }),
-        searchFields: ["anp_codi", "anp_nomb"],
-        displayField: "anp_nomb",
+        searchFields: ["ac_codi", "ac_deno"],
+        displayField: "ac_codi",
         exactMatch: false,
         outFields: ["*"],
         name: 'Áreas de Conservación',
@@ -184,53 +167,6 @@ export class IndexComponent implements OnInit {
       includeDefaultSources: false,
       sources : sources
     });
-    //const searchWidget = new Search({
-    //  view: view,
-    //  allPlaceholder: "Código, Nombre",
-    //  searchAllEnabled: false,
-    //  includeDefaultSources: false,
-    //  sources: [
-    //      {
-    //          layer: new FeatureLayer({
-    //              url: `https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer/0`
-    //          }),
-    //          searchFields: 'anp_codi, anp_nomb',
-    //          displayField: 'anp_nomb',
-    //          exactMatch: false,
-    //          //popupTemplate: rutas.layersBusqueda[0].popupTemplate,
-    //          outFields: ["*"],
-    //          name: 'Áreas de Naturales Protegidas',
-    //          placeholder: 'Código - Nombre'
-    //      },
-    //      {
-    //          layer: new FeatureLayer({
-    //              url: `https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/1`
-    //          }),
-    //          searchFields: 'anp_codi, anp_nomb',
-    //          displayField: 'anp_nomb',
-    //          exactMatch: false,
-    //          //popupTemplate: rutas.layersBusqueda[0].popupTemplate,
-    //          outFields: ["*"],
-    //          name: 'Áreas de Naturales Protegidas',
-    //          placeholder: 'Código - Nombre'
-    //      },
-    //      {
-    //          locator: new Locator({ url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer" }),
-    //          singleLineFieldName: "SingleLine",
-    //          name: "Búsqueda General",
-    //          localSearchOptions: {
-    //              minScale: 300000,
-    //              distance: 50000
-    //          },
-    //          placeholder: "Búsqueda General",
-    //          maxResults: 3,
-    //          maxSuggestions: 6,
-    //          suggestionsEnabled: true,
-    //          minSuggestCharacters: 0,
-    //          countryCode: "PE"
-    //      }
-    //  ]
-    //});
     //adds    
     view.ui.add(searchWidget, 'top-right');
     view.ui.add(MeExpand, 'top-left');
