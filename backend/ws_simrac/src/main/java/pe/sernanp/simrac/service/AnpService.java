@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
@@ -41,12 +40,12 @@ public class AnpService {
 	}
 	
 	public ResponseEntity<AnpModel> search(AnpModel item, PaginatorEntity paginator) throws Exception{
-		try {
-			ResponseEntity<AnpModel> response = new ResponseEntity<AnpModel>();
+		try {			
 			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<AnpModel> pag = this._repository.findAll(item.getDescription(), item.getName(), page);
+			Page<AnpModel> pag = this._repository.findAll(item.getCode(), item.getName(), page);
 			List<AnpModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());
+			ResponseEntity<AnpModel> response = new ResponseEntity<AnpModel>();
 			response.setItems(items);
 			response.setPaginator(paginator);
 			return response;

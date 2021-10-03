@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +19,7 @@ public class MasterPlanModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
@@ -29,14 +31,15 @@ public class MasterPlanModel {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;
 
-	@Column (name= "int_ver", columnDefinition="INTEGER")
+	@Column (name= "int_ver")
 	private int version;
 	
-	@Column (name= "bol_activo", columnDefinition="BOOLEAN")	
+	@Column (name= "bol_activo")	
 	private Boolean active;
 	
-	@Column (name= "int_anpid", columnDefinition="INTEGER")
-	private int anp;
+	@JoinColumn (name= "int_anpid", nullable=false)
+	@ManyToOne
+	private AnpModel anp;
 
 	public int getId() {
 		return id;
@@ -94,11 +97,10 @@ public class MasterPlanModel {
 		this.active = active;
 	}
 
-	public int getAnp() {
+	public AnpModel getAnp() {
 		return anp;
 	}
-
-	public void setAnp(int anp) {
-		this.anp = anp;
+	public void setAnp(AnpModel _anp) {
+		this.anp = _anp;
 	}	
 }

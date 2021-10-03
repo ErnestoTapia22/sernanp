@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,10 +19,11 @@ public class ActionLineModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	//@Column (name= "int_objetivoid", columnDefinition="INTEGER")
-	//private ObjetiveModel _objetive;
+	@JoinColumn(name= "int_objetivoid")
+	@ManyToOne
+	private ObjetiveModel _objetive;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=50, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
@@ -40,13 +43,13 @@ public class ActionLineModel {
 		this.id = id;
 	}
 
-	/*public ObjetiveModel getObjetive() {
+	public ObjetiveModel getObjetive() {
 		return _objetive;
 	}
 
 	public void setObjetiveId(ObjetiveModel objetive) {
 		this._objetive = objetive;
-	}*/
+	}
 
 	public String getName() {
 		return name;
