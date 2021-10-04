@@ -629,7 +629,9 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Alineamiento con instrumentos de planificación</label>
+                <label class="mb-0 fw-bold"
+                  >Alineamiento con instrumentos de planificación</label
+                >
                 <div>
                   <button
                     type="button"
@@ -780,7 +782,6 @@
                         id="numbTotal"
                         class="form-control"
                         formControlName="numPart"
-                        disabled
                       />
                     </div>
                   </div>
@@ -841,7 +842,7 @@
                       class="bi bi-info-circle mx-1"
                       placement="top"
                       ngbTooltip="En beneficiarios indirectos se puede considerar: población PIACI, el ANP, ECA, población aledaña de un sector o comunidad, entre otros."
-                    ></i>                    
+                    ></i>
                     <textarea
                       id="benIndirect"
                       class="form-control"
@@ -862,16 +863,16 @@
                     [disabled]="disabled"
                   >
                     <i class="bi bi-save"></i>
-                    Guardar</button
-                  >&nbsp;
-                  <button
+                    Guardar
+                  </button>
+                  <!-- <button
                     type="button"
                     class="btn btn-sm btn-outline-success mx-1"
                     (click)="addFeatureToService()"
                     [disabled]="!agreementExist"
                     [disabled]="disabled"
                   >
-                    <!-- <i class="bi bi-stack"></i> -->
+                
                     <span
                       *ngIf="disabled"
                       class="spinner-border spinner-border-sm"
@@ -879,7 +880,7 @@
                       aria-hidden="true"
                     ></span>
                     Guardar Shapefiles
-                  </button>
+                  </button> -->
                 </div>
               </div>
               <div class="card-body">
@@ -926,10 +927,10 @@
                           >Ámbito del ADC (Ha)</label
                         >
                         <i
-                        class="bi bi-info-circle mx-1"
-                        placement="top"
-                        ngbTooltip="El ámbito del acuerdo de conservación debe ser la sumatoria de: superficie productiva, superficie bajo restauración, superficie del sector o sectores de vigilancia y control."
-                      ></i>
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="El ámbito del acuerdo de conservación debe ser la sumatoria de: superficie productiva, superficie bajo restauración, superficie del sector o sectores de vigilancia y control."
+                        ></i>
                         <div class="input-group">
                           <input
                             type="number"
@@ -1014,10 +1015,10 @@
                           >Detalle ámbito bajo restauración</label
                         >
                         <i
-                        class="bi bi-info-circle mx-1"
-                        placement="top"
-                        ngbTooltip="Ejemplo: 15 Ha a reforestar."
-                      ></i>
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Ejemplo: 15 Ha a reforestar."
+                        ></i>
                         <textarea
                           id="txtaDetailAR"
                           class="form-control"
@@ -1145,13 +1146,919 @@
                   >
                     <div class="card">
                       <div class="card-body">
-                        <app-base-map
-                          [mapProperties]="mapProperties"
-                          [mapViewProperties]="mapViewProperties"
-                          [maxHeight]="400"
-                          (mapInit)="onMapInit($event)"
-                        >
-                        </app-base-map>
+                        <div class="row g-3">
+                          <div class="col-md-8">
+                            <app-base-map
+                              [mapProperties]="mapProperties"
+                              [mapViewProperties]="mapViewProperties"
+                              [maxHeight]="400"
+                              (mapInit)="onMapInit($event)"
+                            >
+                            </app-base-map>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <div class="form-check form-check-inline">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="geometryType"
+                                  id="ambitPolygon"
+                                  (change)="activateMonitoring($event)"
+                                  value="polygon"
+                                  checked
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="ambitPolygon"
+                                >
+                                  Polígono
+                                </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="geometryType"
+                                  id="ambitPoint"
+                                  (change)="activateMonitoring($event)"
+                                  value="point"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="ambitPoint"
+                                >
+                                  Punto
+                                </label>
+                              </div>
+                            </div>
+                            <div *ngIf="isPolygon">
+                              <ul
+                                class="nav nav-tabs nav-tabs-flat"
+                                id="tabPolygon"
+                                role="tablist"
+                              >
+                                <li class="nav-item" role="presentation">
+                                  <button
+                                    class="nav-link active"
+                                    id="ambAgreementPolygon-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tabAgreementPolygon"
+                                    type="button"
+                                    role="tab"
+                                  >
+                                    Ámbito del AC
+                                  </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button
+                                    class="nav-link"
+                                    id="ambProduced-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tabProduced"
+                                    type="button"
+                                    role="tab"
+                                  >
+                                    Ámbito productivo
+                                  </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button
+                                    class="nav-link"
+                                    id="ambRestauration-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tabRestauration"
+                                    type="button"
+                                    role="tab"
+                                  >
+                                    Ámbito restauración
+                                  </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button
+                                    class="nav-link"
+                                    id="ambVigilance-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#tabVigilance"
+                                    type="button"
+                                    role="tab"
+                                  >
+                                    Ámbito Vigilancia y C
+                                  </button>
+                                </li>
+                              </ul>
+                              <div class="tab-content" id="myTabContentPolygon">
+                                <ngx-spinner
+                                  [fullScreen]="false"
+                                  type="ball-clip-rotate"
+                                  size="medium"
+                                >
+                                </ngx-spinner>
+                                <div
+                                  class="tab-pane pt-2 fade show active"
+                                  id="tabAgreementPolygon"
+                                  role="tabpanel"
+                                  aria-labelledby="agreement-tab"
+                                >
+                                  <div class="row mb-3">
+                                    <label for="formFileSm" class="form-label"
+                                      >Carga shapefile del área de
+                                      conservación</label
+                                    >
+                                    <div class="col-md-8">
+                                      <form
+                                        enctype="multipart/form-data"
+                                        method="post"
+                                        id="uploadForm1"
+                                        (change)="eventFormListener1($event)"
+                                      >
+                                        <input
+                                          class="form-control form-control-sm"
+                                          id="formFileSm"
+                                          name="file"
+                                          type="file"
+                                        />
+                                      </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <span
+                                        class="file-upload-status"
+                                        style="opacity: 1"
+                                        id="upload-status1"
+                                      ></span>
+                                      <div id="fileInfo1"></div>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive tableFixHead">
+                                    <table class="table tableCustom">
+                                      <thead>
+                                        <tr>
+                                          <td>Vértice</td>
+                                          <td>Este(x)</td>
+                                          <td>Norte(y)</td>
+                                          <td>Opción</td>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          *ngFor="
+                                            let aPolygon of aPolygons;
+                                            index as idx
+                                          "
+                                        >
+                                          <td>{{ idx + 1 }}</td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aPolygon.x"
+                                              [(ngModel)]="aPolygon.x"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Este(x)"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aPolygon.y"
+                                              [(ngModel)]="aPolygon.y"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Norte(y)"
+                                              disabled
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <!-- <button
+                                              *ngIf="!field.edit"
+                                              class="
+                                                btn btn-sm btn-outline-info
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="editFieldValue(field)"
+                                            >
+                                              <i class="bi bi-pencil fs-lg"></i>
+                                            </button> -->
+                                            <!-- <button
+                                              *ngIf="field.edit"
+                                              class="
+                                                btn btn-sm btn-outline-success
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="saveFieldValue(field, i)"
+                                            >
+                                              <i class="bi bi-check-lg"></i>
+                                            </button> -->
+                                            <button
+                                              class="
+                                                btn btn-sm btn-outline-danger
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="deleteApolygonValue(i)"
+                                            >
+                                              <i
+                                                class="bi bi-dash-square fs-lg"
+                                              ></i>
+                                            </button>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeX"
+                                              [(ngModel)]="newAttributeA.x"
+                                              name="newAttributeAPolygon"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeY"
+                                              [(ngModel)]="newAttributeA.y"
+                                              name="newAttributeAPolygon"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <div class="text-nowrap">
+                                              <button
+                                                type="button"
+                                                class="
+                                                  btn btn-sm btn-outline-success
+                                                  border-0
+                                                "
+                                                (click)="addApolygonValue()"
+                                              >
+                                                <i
+                                                  class="
+                                                    bi bi-plus-square
+                                                    fs-lg
+                                                  "
+                                                ></i>
+                                              </button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div
+                                  class="tab-pane pt-2 fade"
+                                  id="tabProduced"
+                                  role="tabpanel"
+                                  aria-labelledby="produced-tab"
+                                >
+                                  <div class="row mb-3">
+                                    <label for="formFileSm" class="form-label"
+                                      >Carga shapefile del area
+                                      productiva</label
+                                    >
+                                    <div class="col-md-8">
+                                      <form
+                                        enctype="multipart/form-data"
+                                        method="post"
+                                        id="uploadForm2"
+                                        (change)="eventFormListener2($event)"
+                                      >
+                                        <input
+                                          class="form-control form-control-sm"
+                                          id="formFileProduced"
+                                          type="file"
+                                          name="file"
+                                        />
+                                      </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadProduced($event)"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <span
+                                        class="file-upload-status"
+                                        style="opacity: 1"
+                                        id="upload-status2"
+                                      ></span>
+                                      <div id="fileInfo2"></div>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive tableFixHead">
+                                    <table class="table tableCustom">
+                                      <thead>
+                                        <tr>
+                                          <td>Vértice</td>
+                                          <td>Este(x)</td>
+                                          <td>Norte(y)</td>
+                                          <td>Opción</td>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          *ngFor="
+                                            let aProduced of aProduceds;
+                                            index as idx
+                                          "
+                                        >
+                                          <td>{{ idx + 1 }}</td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aProduced.x"
+                                              [(ngModel)]="aProduced.x"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Este(x)"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aProduced.y"
+                                              [(ngModel)]="aProduced.y"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Norte(y)"
+                                              disabled
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <!-- <button
+                                            *ngIf="!field.edit"
+                                            class="
+                                              btn btn-sm btn-outline-info
+                                              border-0
+                                            "
+                                            type="button"
+                                            (click)="editFieldValue(field)"
+                                          >
+                                            <i class="bi bi-pencil fs-lg"></i>
+                                          </button> -->
+                                            <!-- <button
+                                            *ngIf="field.edit"
+                                            class="
+                                              btn btn-sm btn-outline-success
+                                              border-0
+                                            "
+                                            type="button"
+                                            (click)="saveFieldValue(field, i)"
+                                          >
+                                            <i class="bi bi-check-lg"></i>
+                                          </button> -->
+                                            <button
+                                              class="
+                                                btn btn-sm btn-outline-danger
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="deleteProducedValue(i)"
+                                            >
+                                              <i
+                                                class="bi bi-dash-square fs-lg"
+                                              ></i>
+                                            </button>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributePX"
+                                              [(ngModel)]="newAttributeAP.x"
+                                              name="newAttributeAProduced"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeY"
+                                              [(ngModel)]="newAttributeAP.y"
+                                              name="newAttributeAProduced"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <div class="text-nowrap">
+                                              <button
+                                                type="button"
+                                                class="
+                                                  btn btn-sm btn-outline-success
+                                                  border-0
+                                                "
+                                                (click)="addProducedValue()"
+                                              >
+                                                <i
+                                                  class="
+                                                    bi bi-plus-square
+                                                    fs-lg
+                                                  "
+                                                ></i>
+                                              </button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div
+                                  class="tab-pane pt-2 fade"
+                                  id="tabRestauration"
+                                  role="tabpanel"
+                                  aria-labelledby="restauration-tab"
+                                >
+                                  <div class="row mb-3">
+                                    <label for="formFileSm" class="form-label"
+                                      >Carga shapefile Area de
+                                      restauración</label
+                                    >
+                                    <div class="col-md-8">
+                                      <form
+                                        enctype="multipart/form-data"
+                                        method="post"
+                                        id="uploadForm3"
+                                        (change)="eventFormListener3($event)"
+                                      >
+                                        <input
+                                          class="form-control form-control-sm"
+                                          id="formFileConservation"
+                                          type="file"
+                                          name="file"
+                                        />
+                                      </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadRestauration($event)"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <span
+                                        class="file-upload-status"
+                                        style="opacity: 1"
+                                        id="upload-status3"
+                                      ></span>
+                                      <div id="fileInfo3"></div>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive tableFixHead">
+                                    <table class="table tableCustom">
+                                      <thead>
+                                        <tr>
+                                          <td>Vértice</td>
+                                          <td>Este(x)</td>
+                                          <td>Norte(y)</td>
+                                          <td>Opción</td>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          *ngFor="
+                                            let aConservation of aConservations;
+                                            index as idx
+                                          "
+                                        >
+                                          <td>{{ idx + 1 }}</td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aConservation.x"
+                                              [(ngModel)]="aConservation.x"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Este(x)"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aConservation.y"
+                                              [(ngModel)]="aConservation.y"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Norte(y)"
+                                              disabled
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <!-- <button
+                                          *ngIf="!field.edit"
+                                          class="
+                                            btn btn-sm btn-outline-info
+                                            border-0
+                                          "
+                                          type="button"
+                                          (click)="editFieldValue(field)"
+                                        >
+                                          <i class="bi bi-pencil fs-lg"></i>
+                                        </button> -->
+                                            <!-- <button
+                                          *ngIf="field.edit"
+                                          class="
+                                            btn btn-sm btn-outline-success
+                                            border-0
+                                          "
+                                          type="button"
+                                          (click)="saveFieldValue(field, i)"
+                                        >
+                                          <i class="bi bi-check-lg"></i>
+                                        </button> -->
+                                            <button
+                                              class="
+                                                btn btn-sm btn-outline-danger
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="
+                                                deleteConservationValue(i)
+                                              "
+                                            >
+                                              <i
+                                                class="bi bi-dash-square fs-lg"
+                                              ></i>
+                                            </button>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeCX"
+                                              [(ngModel)]="newAttributeAC.x"
+                                              name="newAttributeAConservation"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeY"
+                                              [(ngModel)]="newAttributeAC.y"
+                                              name="newAttributeAConservation"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <div class="text-nowrap">
+                                              <button
+                                                type="button"
+                                                class="
+                                                  btn btn-sm btn-outline-success
+                                                  border-0
+                                                "
+                                                (click)="addConservationValue()"
+                                              >
+                                                <i
+                                                  class="
+                                                    bi bi-plus-square
+                                                    fs-lg
+                                                  "
+                                                ></i>
+                                              </button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div
+                                  class="tab-pane pt-2 fade"
+                                  id="tabVigilance"
+                                  role="tabpanel"
+                                  aria-labelledby="vigilance-tab"
+                                >
+                                  <div class="row mb-3">
+                                    <label for="formFileSm" class="form-label"
+                                      >Carga shapefile Area de vigilancia y
+                                      control</label
+                                    >
+                                    <div class="col-md-8">
+                                      <form
+                                        enctype="multipart/form-data"
+                                        method="post"
+                                        id="uploadForm4"
+                                        (change)="eventFormListener4($event)"
+                                      >
+                                        <input
+                                          class="form-control form-control-sm"
+                                          id="formFileVigilance"
+                                          type="file"
+                                          name="file"
+                                        />
+                                      </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadVigilance($event)"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <span
+                                        class="file-upload-status"
+                                        style="opacity: 1"
+                                        id="upload-status4"
+                                      ></span>
+                                      <div id="fileInfo4"></div>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive tableFixHead">
+                                    <table class="table tableCustom">
+                                      <thead>
+                                        <tr>
+                                          <td>Vértice</td>
+                                          <td>Este(x)</td>
+                                          <td>Norte(y)</td>
+                                          <td>Opción</td>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          *ngFor="
+                                            let aVigilance of aVigilances;
+                                            index as idx
+                                          "
+                                        >
+                                          <td>{{ idx + 1 }}</td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aVigilance.x"
+                                              [(ngModel)]="aVigilance.x"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Este(x)"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              [value]="aVigilance.y"
+                                              [(ngModel)]="aVigilance.y"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                              placeholder="Norte(y)"
+                                              disabled
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <!-- <button
+                                        *ngIf="!field.edit"
+                                        class="
+                                          btn btn-sm btn-outline-info
+                                          border-0
+                                        "
+                                        type="button"
+                                        (click)="editFieldValue(field)"
+                                      >
+                                        <i class="bi bi-pencil fs-lg"></i>
+                                      </button> -->
+                                            <!-- <button
+                                        *ngIf="field.edit"
+                                        class="
+                                          btn btn-sm btn-outline-success
+                                          border-0
+                                        "
+                                        type="button"
+                                        (click)="saveFieldValue(field, i)"
+                                      >
+                                        <i class="bi bi-check-lg"></i>
+                                      </button> -->
+                                            <button
+                                              class="
+                                                btn btn-sm btn-outline-danger
+                                                border-0
+                                              "
+                                              type="button"
+                                              (click)="deleteVigilanceValue(i)"
+                                            >
+                                              <i
+                                                class="bi bi-dash-square fs-lg"
+                                              ></i>
+                                            </button>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="text"
+                                              disabled
+                                            />
+                                          </td>
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeAVX"
+                                              [(ngModel)]="newAttributeAV.x"
+                                              name="newAttributeAVigilance"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <input
+                                              class="form-control"
+                                              type="number"
+                                              id="newAttributeAVY"
+                                              [(ngModel)]="newAttributeAV.y"
+                                              name="newAttributeAVigilance"
+                                              [ngModelOptions]="{
+                                                standalone: true
+                                              }"
+                                            />
+                                          </td>
+
+                                          <td>
+                                            <div class="text-nowrap">
+                                              <button
+                                                type="button"
+                                                class="
+                                                  btn btn-sm btn-outline-success
+                                                  border-0
+                                                "
+                                                (click)="addVigilanceValue()"
+                                              >
+                                                <i
+                                                  class="
+                                                    bi bi-plus-square
+                                                    fs-lg
+                                                  "
+                                                ></i>
+                                              </button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div *ngIf="!isPolygon">
+                              <div class="row mb-3">
+                                <label for="formFileSm" class="form-label"
+                                  >Carga shapefile</label
+                                >
+                                <div class="col-md-8">
+                                  <form
+                                    enctype="multipart/form-data"
+                                    method="post"
+                                    id="uploadForm5"
+                                    (change)="eventFormListener5($event)"
+                                  >
+                                    <input
+                                      class="form-control form-control-sm"
+                                      id="formFilePoint"
+                                      type="file"
+                                      name="file"
+                                    />
+                                  </form>
+                                </div>
+                                <div class="col-md-4">
+                                  <button
+                                    class="btn btn-primary btn-sm"
+                                    (click)="uploadPoint($event)"
+                                  >
+                                    <i class="bi bi-cloud-upload"></i>
+                                    Subir
+                                  </button>
+                                </div>
+                                <div class="col-md-12">
+                                  <span
+                                    class="file-upload-status"
+                                    style="opacity: 1"
+                                    id="upload-status5"
+                                  ></span>
+                                  <div id="fileInfo5"></div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">Este(x)</span>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  [(ngModel)]="aPoint.eastx"
+                                  [ngModelOptions]="{
+                                    standalone: true
+                                  }"
+                                />
+                              </div>
+
+                              <div class="input-group">
+                                <span class="input-group-text">Norte(y)</span>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  [(ngModel)]="aPoint.northy"
+                                  [ngModelOptions]="{
+                                    standalone: true
+                                  }"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1979,7 +2886,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
     </div>
   </div>
 </div>
-<div id="mainWindow">
+<!-- <div id="mainWindow">
   <div>
     <div style="padding-left: 4px" class="container">
       <p>Carga de shapefile del área del ámbito del acuerdo de conservación</p>
@@ -2004,8 +2911,8 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       <div id="fileInfo"></div>
     </div>
   </div>
-</div>
-<div id="mainWindow2">
+</div> -->
+<!-- <div id="mainWindow2">
   <div>
     <div style="padding-left: 4px" class="container">
       <p>
@@ -2032,8 +2939,8 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       <div id="fileInfo2"></div>
     </div>
   </div>
-</div>
-<div id="mainWindow3">
+</div> -->
+<!-- <div id="mainWindow3">
   <div>
     <div style="padding-left: 4px" class="container">
       <p>Carga de shapefile del área de restauración</p>
@@ -2041,12 +2948,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
         <div class="field">
           <label class="file-upload form-label">
             <span><strong>Agregar shapefile</strong></span>
-            <input
-              type="file"
-              name="file"
-              id="inFile3"
-              
-            />
+            <input type="file" name="file" id="inFile3" />
           </label>
         </div>
       </form>
@@ -2057,5 +2959,5 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
       ></span>
       <div id="fileInfo3"></div>
     </div>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->

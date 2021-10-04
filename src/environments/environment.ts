@@ -100,7 +100,7 @@ export const environment = {
     {
       name: 'Ámbito de Acuerdo de Conservación Punto',
       url2: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/FeatureServer/1',
-      url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/FeatureServer/0',
+      url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/FeatureServer/1',
       disabled: false,
     },
   ],

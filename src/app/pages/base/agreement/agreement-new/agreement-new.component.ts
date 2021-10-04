@@ -26,6 +26,7 @@ import { AlertService } from '@app/_services/base/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExcelService } from '@app/_services/report/excel.service';
 import * as _ from 'lodash';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-agreement-new',
@@ -34,6 +35,7 @@ import * as _ from 'lodash';
 })
 export class AgreementNewComponent implements OnInit, OnDestroy {
   selectedAnp: number = 0;
+  isPolygon: boolean = true;
   obsQuery = new BehaviorSubject({ item: '' });
   anp: Object[] = [];
   form: FormGroup;
@@ -68,42 +70,123 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   layersGraphic: any[] = [
     {
       attributes: {
-        codigo: '',
-        nombre: environment.conservationAgreements[0].name,
-        areatotal: 0,
-        comunidad: '',
-        anexo: '',
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '01',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: '',
+        ac_nbene: 0,
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
         url: environment.conservationAgreements[0].url,
         sended: false,
         id: 'ambito',
+        position: 1,
       },
       geometry: {},
     },
     {
       attributes: {
-        codigo: '',
-        nombre: environment.conservationAgreements[1].name,
-        areatotal: 0,
-        comunidad: '',
-        anexo: '',
-        url: environment.conservationAgreements[1].url,
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '02',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: 0,
+        ac_nbene: '',
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
+
+        url: environment.conservationAgreements[0].url,
         sended: false,
-        id: 'vigilancia',
+        id: 'productivo',
+        position: 2,
       },
       geometry: {},
-    }/*,
+    },
     {
       attributes: {
-        codigo: '',
-        nombre: environment.conservationAgreements[2].name,
-        areatotal: 0,
-        productor: '',
-        url: environment.conservationAgreements[2].url,
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '03',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: '',
+        ac_nbene: 0,
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
+
+        url: environment.conservationAgreements[0].url,
         sended: false,
         id: 'restauracion',
+        position: 3,
       },
       geometry: {},
-    },*/
+    },
+    {
+      attributes: {
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '04',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: '',
+        ac_nbene: 0,
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
+
+        url: environment.conservationAgreements[0].url,
+        sended: false,
+        id: 'vigilancia',
+        position: 4,
+      },
+      geometry: {},
+    },
+    {
+      attributes: {
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '05',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: '',
+        ac_nbene: 0,
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
+
+        url: environment.conservationAgreements[1].url,
+        sended: false,
+        id: 'restauracion',
+        position: 5,
+      },
+      geometry: {},
+    },
   ];
   esriJsons: Graphic[] = [];
 
@@ -128,6 +211,22 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   commitmentExternalId: number = 0;
   formCreateCommitmentsExternal: FormGroup;
   closeRegisterObserver: Subscription;
+
+  aPolygons: Array<any> = [];
+  aProduceds: Array<any> = [];
+  aConservations: Array<any> = [];
+  aVigilances: Array<any> = [];
+  aPoint: any = {
+    eastx: 0,
+    northy: 0,
+  };
+  fieldArrayTotalTemp: any[] = [];
+  newAttributeA: any = {};
+  newAttributeAP: any = {};
+  newAttributeAC: any = {};
+  newAttributeAV: any = {};
+  editAttribute: any = {};
+  upLoadDisable: boolean = false;
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -137,7 +236,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private masterPlanService: MasterPlanService,
     private anpService: AnpService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -225,97 +325,123 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.map = map;
     this.view = view;
 
-    this.addExpand();
-    this.eventListener();
+    // this.addExpand();
+    // this.eventListener();
   }
-  eventListener() {
-    document
-      .getElementById('uploadForm')
-      .addEventListener('change', (event) => {
-        const fileName = (event.target as HTMLFormElement).value.toLowerCase();
-        const htmlStatus = document.getElementById('upload-status');
-        if (fileName.indexOf('.zip') !== -1) {
-          //is file a zip - if not notify user
+  eventFormListener1(event) {
+    const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+    const htmlStatus = document.getElementById('upload-status1');
+    if (fileName.indexOf('.zip') !== -1) {
+      //is file a zip - if not notify user
 
-          const htmlForm = document.getElementById(
-            'uploadForm'
-          ) as HTMLFormElement;
-          this.attributes.type = 1;
-          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
-        } else {
-          htmlStatus.innerHTML =
-            '<p style="color:red">Add shapefile as .zip file</p>';
-        }
-      });
-    document
-      .getElementById('uploadForm2')
-      .addEventListener('change', (event) => {
-        const fileName = (event.target as HTMLFormElement).value.toLowerCase();
-        const htmlStatus = document.getElementById('upload-status2');
-        if (fileName.indexOf('.zip') !== -1) {
-          //is file a zip - if not notify user
-
-          const htmlForm = document.getElementById(
-            'uploadForm2'
-          ) as HTMLFormElement;
-          this.attributes.type = 2;
-          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
-        } else {
-          htmlStatus.innerHTML =
-            '<p style="color:red">Add shapefile as .zip file</p>';
-        }
-      });
-    document
-      .getElementById('uploadForm3')
-      .addEventListener('change', (event) => {
-        const fileName = (event.target as HTMLFormElement).value.toLowerCase();
-        const htmlStatus = document.getElementById('upload-status3');
-        if (fileName.indexOf('.zip') !== -1) {
-          //is file a zip - if not notify user
-
-          const htmlForm = document.getElementById(
-            'uploadForm3'
-          ) as HTMLFormElement;
-
-          this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
-        } else {
-          htmlStatus.innerHTML =
-            '<p style="color:red">Add shapefile as .zip file</p>';
-        }
-      });
+      const htmlForm = document.getElementById(
+        'uploadForm1'
+      ) as HTMLFormElement;
+      this.attributes.type = 1;
+      this.spinner.show();
+      this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
+    } else {
+      htmlStatus.innerHTML =
+        '<p style="color:red">Add shapefile as .zip file</p>';
+    }
   }
+  eventFormListener2(event) {
+    const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+    const htmlStatus = document.getElementById('upload-status2');
+    if (fileName.indexOf('.zip') !== -1) {
+      //is file a zip - if not notify user
+
+      const htmlForm = document.getElementById(
+        'uploadForm2'
+      ) as HTMLFormElement;
+      this.attributes.type = 2;
+      this.spinner.show();
+      this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
+    } else {
+      htmlStatus.innerHTML =
+        '<p style="color:red">Add shapefile as .zip file</p>';
+    }
+  }
+  eventFormListener3(event) {
+    const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+    const htmlStatus = document.getElementById('upload-status3');
+    if (fileName.indexOf('.zip') !== -1) {
+      //is file a zip - if not notify user
+
+      const htmlForm = document.getElementById(
+        'uploadForm3'
+      ) as HTMLFormElement;
+      this.spinner.show();
+      this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
+    } else {
+      htmlStatus.innerHTML =
+        '<p style="color:red">Add shapefile as .zip file</p>';
+    }
+  }
+  eventFormListener4(event) {
+    const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+    const htmlStatus = document.getElementById('upload-status4');
+    if (fileName.indexOf('.zip') !== -1) {
+      //is file a zip - if not notify user
+
+      const htmlForm = document.getElementById(
+        'uploadForm4'
+      ) as HTMLFormElement;
+      this.spinner.show();
+      this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 3);
+    } else {
+      htmlStatus.innerHTML =
+        '<p style="color:red">Add shapefile as .zip file</p>';
+    }
+  }
+  eventFormListener5(event) {
+    const fileName = (event.target as HTMLFormElement).value.toLowerCase();
+    const htmlStatus = document.getElementById('upload-status5');
+    if (fileName.indexOf('.zip') !== -1) {
+      //is file a zip - if not notify user
+
+      const htmlForm = document.getElementById(
+        'uploadForm5'
+      ) as HTMLFormElement;
+      this.spinner.show();
+      this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 4);
+    } else {
+      htmlStatus.innerHTML =
+        '<p style="color:red">Add shapefile as .zip file</p>';
+    }
+  }
+
   addExpand() {
-    const fileForm = document.getElementById('mainWindow');
-    const expand = new Expand({
-      expandIconClass: 'esri-icon-upload',
-      view: this.view,
-      content: fileForm,
-      expandTooltip: 'área del ámbito del acuerdo de conservación',
-      group: 'fileform',
-      id: 'fileform',
-    });
-    const fileForm2 = document.getElementById('mainWindow2');
-    const expand2 = new Expand({
-      expandIconClass: 'esri-icon-polygon',
-      view: this.view,
-      content: fileForm2,
-      expandTooltip: 'área de vigilancia del acuerdo de conservación',
-      group: 'fileform',
-      id: 'fileform2',
-    });
-    const fileForm3 = document.getElementById('mainWindow3');
-    const expand3 = new Expand({
-      expandIconClass: 'esri-icon-pan2',
-      view: this.view,
-      content: fileForm3,
-      expandTooltip: 'área de restauración',
-      group: 'fileform',
-      id: 'fileform3',
-    });
-
-    this.view.ui.add(expand, 'top-right');
-    this.view.ui.add(expand2, 'top-right');
-    this.view.ui.add(expand3, 'top-right');
+    // const fileForm = document.getElementById('mainWindow');
+    // const expand = new Expand({
+    //   expandIconClass: 'esri-icon-upload',
+    //   view: this.view,
+    //   content: fileForm,
+    //   expandTooltip: 'área del ámbito del acuerdo de conservación',
+    //   group: 'fileform',
+    //   id: 'fileform',
+    // });
+    // const fileForm2 = document.getElementById('mainWindow2');
+    // const expand2 = new Expand({
+    //   expandIconClass: 'esri-icon-polygon',
+    //   view: this.view,
+    //   content: fileForm2,
+    //   expandTooltip: 'área de vigilancia del acuerdo de conservación',
+    //   group: 'fileform',
+    //   id: 'fileform2',
+    // });
+    // const fileForm3 = document.getElementById('mainWindow3');
+    // const expand3 = new Expand({
+    //   expandIconClass: 'esri-icon-pan2',
+    //   view: this.view,
+    //   content: fileForm3,
+    //   expandTooltip: 'área de restauración',
+    //   group: 'fileform',
+    //   id: 'fileform3',
+    // });
+    // this.view.ui.add(expand, 'top-right');
+    // this.view.ui.add(expand2, 'top-right');
+    // this.view.ui.add(expand3, 'top-right');
   }
 
   generateFeatureCollection(
@@ -371,6 +497,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
           htmlStatus,
           layerId
         );
+        this.spinner.hide();
       })
       .catch(this.errorHandler);
   }
@@ -491,14 +618,26 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
       // this.graphics.push(geometry);
       this.layersGraphic[layerId].geometry = geometry;
-      this.layerId = layerId;
-      this.layersGraphic[layerId].attributes.areatotal =
+      // this.layerId = layerId;
+
+      (this.layersGraphic[layerId].attributes.ac_codi =
+        this.form.get('code').value),
+        (this.layersGraphic[layerId].attributes.anp_codi =
+          this.form.get('code').value),
+        (this.layersGraphic[layerId].attributes.ac_susc = '');
+      this.layersGraphic[layerId].attributes.ac_sup =
         this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_codi =
-        this.form.get('code').value;
+      this.layersGraphic[layerId].attributes.ac_teco = '';
       this.layersGraphic[layerId].attributes.ac_deno =
         this.form.get('name').value;
-      sourceGraphics = sourceGraphics.concat(graphics);
+      (this.layersGraphic[layerId].attributes.ac_bene = ''),
+        (this.layersGraphic[layerId].attributes.ac_nbene = 0),
+        (this.layersGraphic[layerId].attributes.ac_fesus = '2021-09-20'),
+        (this.layersGraphic[layerId].attributes.ac_vigen = 0),
+        (this.layersGraphic[layerId].attributes.ac_dep = ''),
+        (this.layersGraphic[layerId].attributes.ac_prov = ''),
+        (this.layersGraphic[layerId].attributes.ac_dist = ''),
+        (sourceGraphics = sourceGraphics.concat(graphics));
       const featureLayer = new FeatureLayer({
         objectIdField: 'FID',
         source: graphics,
@@ -522,6 +661,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
   errorHandler(error) {
     console.log(error);
+    this.spinner.hide();
     // this.alertService.error(
     //   'Error al subir shapefile :' + error.message,
     //   'Error',
@@ -564,7 +704,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       firm: [''],
       partMen: [0],
       partWomen: [0],
-      numPart: [0],
+      numPart: [{ value: 0, disabled: true }],
       benPerson: [''],
       benIndirect: [''],
       numFamily: [0],
@@ -725,7 +865,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   getWorkPlan(id) {
     console.log(id);
   }
-  addFeatureToService() {
+  addFeatureToService(id) {
+    this.spinner.show();
+    this.upLoadDisable = true;
     this.buildEsriJson();
 
     if (this.esriJsons.length === 0) {
@@ -745,33 +887,90 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
     this.disabled = true;
 
-    this.esriJsons.forEach((graphic, index) => {
-      const edits = {
-        addFeatures: [graphic],
-      };
-      const featureLayer = new FeatureLayer({
-        url: graphic.attributes.url,
-        outFields: ['*'],
-        popupEnabled: true,
-        id: 'featureLayer',
+    let graphics = this.esriJsons.filter((x) => x.attributes.position === id);
+    console.log(graphics);
+
+    if (graphics[0].geometry === null) {
+      graphics = this.validatingVertices(id);
+      if (graphics === null) {
+        this.upLoadDisable = false;
+        this.spinner.hide();
+        this.alertService.error('No se encontro el ámbito', 'Error', {
+          autoCLose: true,
+        });
+        return;
+      }
+    }
+    if (graphics[0].attributes.sended) {
+      this.upLoadDisable = false;
+      this.spinner.hide();
+      this.alertService.error('Ya se subió el archivo', 'Error', {
+        autoCLose: true,
+      });
+      return;
+    }
+    //si es punto
+    // if (event.mapPoint) {
+    //   let point = event.mapPoint.clone();
+    //   point.z = undefined;
+    //   point.hasZ = false;
+
+    //   // Crea una estrella de hotel como elemento económico
+    //   thiss.editFeature = new Graphic({
+    //     geometry: point,
+    //     attributes: {
+    //       hotelstar: 'Economía',
+    //     },
+    //   });
+    const edits = {
+      addFeatures: graphics,
+    };
+
+    const featureLayer = new FeatureLayer({
+      url: graphics[0].attributes.url,
+      outFields: ['*'],
+      popupEnabled: true,
+      id: 'featureLayer',
+    });
+    console.log(edits);
+
+    featureLayer
+      .applyEdits(edits)
+      .then((editsResult) => {
+        console.log(editsResult);
+
+        if (editsResult.addFeatureResults.length > 0) {
+          if (editsResult.addFeatureResults[0].error) {
+            this.alertService.error(
+              'Error al subir el shapefile' +
+                editsResult.addFeatureResults[0].error.message,
+              'Error',
+              {
+                autoClose: true,
+              }
+            );
+          } else {
+            this.layersGraphic[id - 1].attributes.sended = true;
+            this.alertService.success(
+              'Se subió correctamente el archivo',
+
+              'Ok',
+              {
+                autoClose: true,
+              }
+            );
+          }
+        }
+        this.spinner.hide();
+        this.upLoadDisable = false;
+      })
+      .catch((error) => {
+        this.disabled = false;
+        console.log(error);
+        this.spinner.hide();
+        this.upLoadDisable = false;
       });
 
-      featureLayer
-        .applyEdits(edits)
-        .then((editsResult) => {
-          console.log(editsResult);
-          if (editsResult.addFeatureResults.length > 0) {
-            this.layersGraphic[index].attributes.sended = true;
-            if (index === 2) {
-              this.disabled = false;
-            }
-          }
-        })
-        .catch((error) => {
-          this.disabled = false;
-          console.log(error);
-        });
-    });
     // this.featureLayer
     //   .applyEdits(edits)
     //   .then(function (editsResult) {
@@ -1476,7 +1675,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       return;
     }
     const result = this.formatToExport();
-    console.log(result);
+
     console.log(this.commitmentsList);
     // return;
     this.excelService.exportAsExcelFile(
@@ -1507,8 +1706,158 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         'active',
         'id',
         'stateName',
-        'description'
+        'description',
       ]);
     });
+  }
+  activateMonitoring($event) {
+    const checked = $event.target.checked;
+    const value = $event.target.value;
+    if (value === 'polygon' && checked) {
+      this.isPolygon = true;
+    } else {
+      this.isPolygon = false;
+    }
+  }
+
+  addApolygonValue() {
+    this.aPolygons.push({ ...this.newAttributeA, type: 1 });
+    this.newAttributeA = {};
+  }
+  deleteApolygonValue(index) {
+    this.aPolygons.splice(index, 1);
+  }
+  addProducedValue() {
+    this.aProduceds.push(this.newAttributeAP);
+    this.newAttributeAP = {};
+  }
+  deleteProducedValue(index) {
+    this.aProduceds.splice(index, 1);
+  }
+  addConservationValue() {
+    this.aConservations.push(this.newAttributeAC);
+    this.newAttributeAC = {};
+  }
+  deleteConservationValue(index) {
+    this.aConservations.splice(index, 1);
+  }
+  addVigilanceValue() {
+    this.aVigilances.push(this.newAttributeAV);
+    this.newAttributeAV = {};
+  }
+  deleteVigilanceValue(index) {
+    this.aVigilances.splice(index, 1);
+  }
+  uploadVigilance(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.addFeatureToService(4);
+  }
+  uploadRestauration(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.addFeatureToService(3);
+  }
+  uploadProduced(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.addFeatureToService(2);
+  }
+  uploadConservation(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.addFeatureToService(1);
+  }
+  uploadPoint(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.addFeatureToService(5);
+  }
+  validatingVertices(id): Graphic[] {
+    const arrayGraphics: Graphic[] = [];
+    console.log(id);
+    let rings: any[] = [];
+    let jsonGraphic = {};
+    switch (id) {
+      case 1:
+        this.aPolygons.map((item) => {
+          rings.push([item.x, item.y]);
+        });
+        jsonGraphic = {
+          attributes: this.layersGraphic[0].attributes,
+          geometry: {
+            rings: rings,
+          },
+        };
+        break;
+      case 2:
+        console.log(id);
+        console.log(this.aProduceds);
+        this.aProduceds.map((item) => {
+          rings.push([item.x, item.y]);
+        });
+        jsonGraphic = {
+          attributes: this.layersGraphic[1].attributes,
+          geometry: {
+            rings: rings,
+          },
+        };
+
+        break;
+      case 3:
+        this.aConservations.map((item) => {
+          rings.push([item.x, item.y]);
+        });
+        jsonGraphic = {
+          attributes: this.layersGraphic[2].attributes,
+          geometry: {
+            rings: rings,
+          },
+        };
+
+        break;
+      case 4:
+        this.aVigilances.map((item) => {
+          rings.push([item.x, item.y]);
+        });
+        jsonGraphic = {
+          attributes: this.layersGraphic[3].attributes,
+          geometry: {
+            rings: rings,
+          },
+        };
+
+        break;
+      case 5:
+        if (this.aPoint.eastx !== 0 && this.aPoint.northy !== 0) {
+          let point = {
+            type: 'point',
+            longitude: this.aPoint.eastx,
+            latitude: this.aPoint.northy,
+            z: undefined,
+            hasZ: false,
+          };
+          let markerSymbol = {
+            type: 'simple-marker',
+            color: [226, 119, 40],
+          };
+          jsonGraphic = {
+            geometry: point,
+            // symbol: markerSymbol,
+            attributes: this.layersGraphic[4].attributes,
+          };
+        }
+
+        break;
+      default:
+        break;
+    }
+
+    if (jsonGraphic['geometry'].length === 0) {
+      return null;
+    }
+    console.log(jsonGraphic);
+    arrayGraphics.push(Graphic.fromJSON(jsonGraphic));
+    return arrayGraphics;
   }
 }

@@ -28,3 +28,22 @@
   display: block;
   padding: 0.1em;
 }
+.tableFixHead {
+  overflow: auto;
+  height: 230px;
+}
+.tableFixHead thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+/* .tableFixHead thead tr td {
+  border-bottom: 2px solid black;
+} */
+
+/* Just common table stuff. Really. */
+.tableCustom {
+  border-collapse: separate;
+  width: 100%;
+}
