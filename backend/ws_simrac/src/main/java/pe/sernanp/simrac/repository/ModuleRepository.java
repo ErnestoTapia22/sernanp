@@ -8,11 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import pe.sernanp.simrac.dto.AnpDTO;
 import pe.sernanp.simrac.model.AnpModel;
+import pe.sernanp.simrac.model.ModuleModel;
 
 
-public interface AnpRepository extends JpaRepository<AnpModel, Integer>{
+public interface ModuleRepository extends JpaRepository<ModuleModel, Integer>{
 		
-	@Query(value="select * from v_gdb_anp_plan where anp_codi ilike %?1% and anp_nomb ilike %?2%", nativeQuery=true)
-	Page<AnpModel> findAll(@Param("code") String pcode, @Param("name")String pname, Pageable page);
-	// 
+	
 }

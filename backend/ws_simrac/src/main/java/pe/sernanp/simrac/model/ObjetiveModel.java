@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,11 +19,13 @@ public class ObjetiveModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	//@Column (name= "int_planmaestroid", columnDefinition="INTEGER")
-	//private MasterPlanModel planMaster ;
+	@JoinColumn(name= "int_planmaestroid")
+	@ManyToOne
+	private MasterPlanModel masterPlan;
 	
-	//@Column (name= "int_componentid", columnDefinition="INTEGER")
-	//private ComponentModel componente;
+	@JoinColumn(name= "int_componenteid")
+	@ManyToOne
+	private ComponentModel component;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
 	private String description;
@@ -32,7 +36,7 @@ public class ObjetiveModel {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;
 	
-	@Column (name= "var_cod", length = 50, columnDefinition="CHARACTER VARYING")
+	@Column (name= "var_cod", length = 50)
 	private String code;
 
 	public int getId() {
@@ -43,21 +47,21 @@ public class ObjetiveModel {
 		this.id = id;
 	}
 
-	/* public MasterPlanModel getPlanMaster() {
-		return planMaster;
+	public MasterPlanModel getMasterPlan() {
+		return masterPlan;
 	}
 
-	public void setPlanMaster(MasterPlanModel planMaster) {
-		this.planMaster = planMaster;
+	public void setMasterPlan(MasterPlanModel planMaster) {
+		this.masterPlan = planMaster;
 	}
 
-	public ComponentModel getComponente() {
-		return componente;
+	public ComponentModel getComponent() {
+		return component;
 	}
 
-	public void setComponente(ComponentModel componente) {
-		this.componente = componente;
-	} */
+	public void setComponent(ComponentModel componente) {
+		this.component = componente;
+	}
 
 	public String getDescription() {
 		return description;

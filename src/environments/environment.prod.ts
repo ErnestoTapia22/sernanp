@@ -100,10 +100,12 @@ export const environment = {
   ],
   searchWidget:[
     {
-      url:"https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0"
+      url2:"https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0",
+      url:"http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0"
     },
     {
-      url:"https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0"
+      url2:"https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0",
+      url:"http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/MapServer/0"
     }
   ]
 };
