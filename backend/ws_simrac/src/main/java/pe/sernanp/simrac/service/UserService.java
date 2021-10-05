@@ -37,8 +37,7 @@ public class UserService {
 			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
 			LoginModel login = this._loginRepository.validate(id);
 			UserModel item = this._repository.findById(login.getUserId()).get();
-			//List<ModuleModel> items = this._repositoryModule.search(login.getSystemId(), login.getUserId());	
-			List<ModuleModel> items = this._repositoryModule.search(27, 1374);
+			List<ModuleModel> items = this._repositoryModule.search(27, login.getUserId());
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(item.getId());
 			userDTO.setName(item.getUserName());
