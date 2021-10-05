@@ -65,7 +65,7 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<?> save(@RequestBody UserModel item) throws IOException {
+	public ResponseEntity<?> save(@RequestBody UserDTO item) throws IOException {
 		try {
 			ResponseEntity<?> response = this._service.save(item);
 			return response;
