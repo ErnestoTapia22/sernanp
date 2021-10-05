@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.sernanp.simrac.dto.AnpDTO;
+import pe.sernanp.simrac.dto.UserDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
@@ -24,13 +25,13 @@ import pe.sernanp.simrac.service.UserService;
 public class UserController extends BaseController {
 	
 	@Autowired
-	private UserService _service;	
+	private UserService _service;
 	
 	@RequestMapping(value = "/validate/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<UserModel> validate(@PathVariable("id") String id) throws IOException {
+	public ResponseEntity<UserDTO> validate(@PathVariable("id") String id) throws IOException {
 		try {
-			ResponseEntity<UserModel> response = this._service.validate(id);
+			ResponseEntity<UserDTO> response = this._service.validate(id);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);

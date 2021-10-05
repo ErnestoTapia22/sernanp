@@ -5,13 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import pe.sernanp.simrac.dto.UserDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
+import pe.sernanp.simrac.model.LoginModel;
 import pe.sernanp.simrac.model.MasterPlanModel;
 import pe.sernanp.simrac.model.ModuleModel;
 import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.repository.AnpRepository;
+import pe.sernanp.simrac.repository.LoginRepository;
 import pe.sernanp.simrac.repository.ModuleRepository;
 import pe.sernanp.simrac.repository.UserRepository;
 
@@ -22,15 +26,24 @@ public class UserService {
 	private UserRepository _repository;
 	
 	@Autowired
+	private LoginRepository _loginRepository;
+	
+	@Autowired
 	private ModuleRepository _repositoryModule;
 
-	public ResponseEntity<UserModel> validate(String id) throws Exception {
+	public ResponseEntity<UserDTO> validate(String id) throws Exception {
 		try {
-		
 			boolean success = true;
-			ResponseEntity<UserModel> response = new ResponseEntity<UserModel>();
-			UserModel item = this._repository.validate(id);
-			//List<ModuleModel> items = this._repositoryModule.search(item.getSystem(), item.getId());				
+			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
+			LoginModel login = this._loginRepository.validate(id);
+			UserModel item = this._repository.findById(login.getUserId()).get();
+			List<ModuleModel> items = this._repositoryModule.search(login.getSystemId(), login.getUserId());	
+			
+			UserDTO userDTO = new UserDTO();
+			userDTO.setId(item.getId());
+			userDTO.setName(item.getUserName());
+			userDTO.setSystem(login.getSystemId());
+			userDTO.setModules(items);
 			//item.setModules(items);
 			
 			// Add token
@@ -41,7 +54,7 @@ public class UserService {
 			// End add token
 			
 			response.setSuccess(success);
-			response.setItem(item);
+			response.setItem(userDTO);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
