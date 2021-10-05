@@ -15,6 +15,6 @@ public interface ModuleRepository extends JpaRepository<ModuleModel, Integer>{
 			+ "	inner join sernanp.rolmodulo as rm on rm.idmodulo=m.idmodulo "
 			+ "	inner join sernanp.rol as r on r.idrol= rm.idrol "
 			+ "	inner join sernanp.usuariorol as ur on ur.idrol = r.idrol "
-			+ "	where r.idsistema = 27 and ur.idusuario = 1 and m.flagmodulo = 1374", nativeQuery=true)
-	List<ModuleModel> search(@Param(":psystem") int system, @Param(":puserid")int userId);
+			+ "	where r.idsistema = :psystem and ur.idusuario = :puserid and m.flagmodulo = :puserid", nativeQuery=true)
+	List<ModuleModel> search(@Param("psystem") int system, @Param("puserid")int userId);
 }
