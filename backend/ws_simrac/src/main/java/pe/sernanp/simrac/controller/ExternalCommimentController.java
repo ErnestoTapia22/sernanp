@@ -1,4 +1,5 @@
 package pe.sernanp.simrac.controller;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import pe.sernanp.simrac.model.ExternalCommimentModel;
 import pe.sernanp.simrac.service.ExternalCommimentService;
 
 @RestController
-@RequestMapping ("/api/externanlcommiment")
+@RequestMapping ("/api/externalcommitment")
 public class ExternalCommimentController extends BaseController {
 
 
@@ -62,5 +63,16 @@ public class ExternalCommimentController extends BaseController {
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}	
+	}
+	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ExternalCommimentModel> search(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ExternalCommimentModel> response = this._service.searchByAgreement(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

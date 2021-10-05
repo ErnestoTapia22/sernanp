@@ -47,7 +47,7 @@ public class ActionLineModel {
 		return _objetive;
 	}
 
-	public void setObjetiveId(ObjetiveModel objetive) {
+	public void setObjetive(ObjetiveModel objetive) {
 		this._objetive = objetive;
 	}
 

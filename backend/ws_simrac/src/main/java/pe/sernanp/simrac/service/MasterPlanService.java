@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.MasterPlanModel;
+import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.repository.MasterPlanRepository;
+import pe.sernanp.simrac.repository.ObjetiveRepository;
 
 @Service
 public class MasterPlanService {
 	@Autowired
 	private MasterPlanRepository _repository;
+	
+	@Autowired
+	private ObjetiveRepository _repository2;
 	
 	public ResponseEntity save (MasterPlanModel item) throws Exception{
 		try {
@@ -17,7 +22,7 @@ public class MasterPlanService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			this._repository.updatePlanActive(item.getAnp().getId());
 			if (id == 0) {
 				MasterPlanModel item2 = this._repository.save(item);
 				id = item2.getId();
@@ -82,4 +87,36 @@ public class MasterPlanService {
 			throw new Exception(ex.getMessage());
 		}
 	}		
+	
+	public ResponseEntity<ObjetiveModel> searchObjetives(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ObjetiveModel> response = new ResponseEntity<ObjetiveModel>();
+			List<ObjetiveModel> item= this._repository2.searchObjetives(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public ResponseEntity<MasterPlanModel> searchByANP(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<MasterPlanModel> response = new ResponseEntity<MasterPlanModel>();
+			MasterPlanModel item = this._repository.searchByANP(id);
+			response.setSuccess(success);
+			response.setItem(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

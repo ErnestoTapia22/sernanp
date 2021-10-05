@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "48865b5f-f692-42d7-a76b-9c0727117d31",
+		"_postman_id": "44f6c7d8-e3f0-4f0c-8d2f-098b68d07f1a",
 		"name": "SERNANP Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -210,7 +210,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"otros\",\r\n    \"description\": \"Descripcion4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"22aa\",\r\n    \"description\": \"Descripcion4\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -494,7 +494,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"1\" },\r\n    \"source\": { \"id\": \"3\" },\r\n    \"districtId\": 10,\r\n\r\n    \"name\": \"pppppp\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": 10.2,\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": true,\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 0,\r\n\r\n    \"anp\": { \"id\": \"1\" },\r\n    \"agreementState\": { \"id\": \"3\" },\r\n    \"source\": { \"id\": \"26\" },\r\n    \"districtId\": 15,\r\n\r\n    \"name\": \"aaaaa\",\r\n    \"description\": \"onori\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2040-20-20\",\r\n    \"code\": \"0011\",\r\n    \"vigency\": 2015,\r\n    \"firm\": \"2020-20-20\",\r\n    \"partMen\": 2,\r\n    \"partWomen\": 22,\r\n    \"benPerson\": \"aaa\",\r\n    \"benIndirect\": \"bbb\",\r\n    \"numFamily\": 11,\r\n    \"benFamily\": \"xxyyx\",\r\n    \"areaAmbitc\": 10.5,\r\n    \"producedArea\": 10.5,\r\n    \"detalleProduction\": \"yyyy\",\r\n    \"resthect\": 10.2,\r\n    \"restdet\": \"prueba\",\r\n    \"sectnom\": \"prueba\",\r\n    \"secthect\": \"123\",\r\n    \"territorymod\": \"prueba\",\r\n    \"finanapa\": true,\r\n    \"finannum\": \"1234\",\r\n    \"comtxt\": \"prueba\",\r\n    \"genobj\": \"prueba\",\r\n    \"finanmod\": \"prueba\",\r\n    \"fondname\": \"prueba\",\r\n    \"allied\": true\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -578,15 +578,6 @@
 		{
 			"name": "Allied",
 			"item": [
-				{
-					"name": "AlliedDetail",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8050/simrac/api/allied/detail/3"
-					},
-					"response": []
-				},
 				{
 					"name": "AlliedDelete",
 					"request": {
@@ -741,15 +732,6 @@
 			"name": "Commitment",
 			"item": [
 				{
-					"name": "CommitmentDetail",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8050/simrac/api/commitment/detail/5"
-					},
-					"response": []
-				},
-				{
 					"name": "CommitmentDelete",
 					"request": {
 						"method": "GET",
@@ -803,15 +785,6 @@
 			"name": "ExternalCommitment",
 			"item": [
 				{
-					"name": "ExternalCommitmentDetail",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "http://localhost:8050/simrac/api/externalcommitment/detail/2"
-					},
-					"response": []
-				},
-				{
 					"name": "ExternalCommitmentDelete",
 					"request": {
 						"method": "GET",
@@ -827,7 +800,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"objetive\":\"SSS\",\r\n    \"actionLine\": \"AAAA\"\r\n\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"21\"  },\r\n    \r\n    \"description\": \"prueba22\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"objetive\":\"SSS2\",\r\n    \"actionLine\": \"AAAA\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -855,7 +828,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/externalcommitment/search/105"
+						"url": "http://localhost:8050/simrac/api/externalcommitment/search/21"
 					},
 					"response": []
 				}
@@ -1102,7 +1075,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{              \r\n    \"id\": 0,\r\n    \"name\": \"prueba\",\r\n    \"category\": \"Refugio X\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"xx\",\r\n    \"registrationDate\": \"2021-09-20\",\r\n    \"state\": true,\r\n    \"district\": \"X\"\r\n }",
+							"raw": "{              \r\n    \"id\": 0,\r\n    \"name\": \"paaaaarueba\",\r\n    \"category\": \"Refugio X\",\r\n    \"description\": \"\",\r\n            \r\n    \"code\": \"axx\",\r\n    \"registrationDate\": \"2021-09-20\",\r\n    \"state\": true,\r\n    \"district\": \"X\"\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1220,7 +1193,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/masterplan/detail/2"
+						"url": "http://localhost:8050/simrac/api/masterplan/detail/5"
 					},
 					"response": []
 				},
@@ -1252,7 +1225,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/masterplan/searchbyanp/1"
+						"url": "http://localhost:8050/simrac/api/masterplan/searchbyanp/2"
 					},
 					"response": []
 				},
@@ -1263,7 +1236,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":1 },\r\n    \"name\":\"Plan Maestro 1\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
+							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":2 },\r\n    \"name\":\"Plan Maestro 5\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1291,7 +1264,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/masterplan/searchobjetives/2"
+						"url": "http://localhost:8050/simrac/api/masterplan/searchobjetives/5"
 					},
 					"response": []
 				}
@@ -1307,7 +1280,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":0, \r\n    \"masterPlan\" : { \"id\":2 },\r\n    \"component\" : { \"id\":1 },\r\n    \"description\":\"Objetivo 1\",\r\n    \"state\":true\r\n}",
+							"raw": "{\r\n    \"id\":0, \r\n    \"masterPlan\" : { \"id\":5 },\r\n    \"component\" : { \"id\":6 },\r\n    \"description\":\"Objetivo 1\",\r\n    \"code\":\"Ob  1\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1335,7 +1308,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/objetive/searchactionlines/1"
+						"url": "http://localhost:8050/simrac/api/objetive/searchactionlines/20"
 					},
 					"response": []
 				}
@@ -1351,7 +1324,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":0, \r\n    \"objetive\" : { \"id\":1 },\r\n    \"name\":\"Seguridad\",\r\n    \"description\":\"11111111111111111\",\r\n    \"state\":true\r\n}",
+							"raw": "{\r\n    \"id\":0, \r\n    \"objetive\" : { \"id\":8 },\r\n    \"name\":\"nanme11\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

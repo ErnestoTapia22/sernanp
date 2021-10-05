@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +18,10 @@ public class ExternalCommimentModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	@ManyToOne
+	private ConservationAgreementModel conservationAgreement;
 	
-	@Column (name= "int_acuerdoid", length=50, unique=true, nullable=false)
-	private int agreementid;
-		
 	@Column (name= "txt_des", columnDefinition="TEXT")
 	private String description;
 	
@@ -33,7 +35,7 @@ public class ExternalCommimentModel {
 	private String objetive;
 	
 	@Column (name= "txt_lineaaccion", columnDefinition="TEXT")
-	private String actionline;	
+	private String actionLine;	
 	
 	public int getId() {
 		return id;
@@ -65,16 +67,17 @@ public class ExternalCommimentModel {
 	public void setObjetive(String objetive) {
 		this.objetive = objetive;
 	}
-	public String getActionline() {
-		return actionline;
+	public String getActionLine() {
+		return actionLine;
 	}
-	public void setActionline(String actionline) {
-		this.actionline = actionline;
+	public void setActionLine(String actionline) {
+		this.actionLine = actionline;
 	}
-	public int getAgreementid() {
-		return agreementid;
+	public ConservationAgreementModel getConservationAgreement() {
+		return conservationAgreement;
 	}
-	public void setAgreementid(int agreementid) {
-		this.agreementid = agreementid;
-	}	
+	public void setConservationAgreement(ConservationAgreementModel conservationAgreement) {
+		this.conservationAgreement = conservationAgreement;
+	}
+	
 }

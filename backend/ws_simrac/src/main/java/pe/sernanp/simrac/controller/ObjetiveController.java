@@ -1,4 +1,6 @@
 package pe.sernanp.simrac.controller;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.ActionLineModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.service.ObjetiveService;
 
@@ -61,5 +64,18 @@ public class ObjetiveController extends BaseController {
 		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
-	}	
+	}
+		
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/searchactionlines/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ActionLineModel> searchActionLines(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ActionLineModel> response = this._service.searchActionLines(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
 }

@@ -3,6 +3,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.AlliedModel;
 import pe.sernanp.simrac.model.ExternalCommimentModel;
 import pe.sernanp.simrac.repository.ExternalCommimentRepository;
 
@@ -83,4 +84,20 @@ public class ExternalCommimentService {
 			throw new Exception(ex.getMessage());
 		}
 	}		
+	
+	public ResponseEntity<ExternalCommimentModel> searchByAgreement(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ExternalCommimentModel> response = new ResponseEntity<ExternalCommimentModel>();
+			List<ExternalCommimentModel> item = this._repository.searchByAgreement(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

@@ -3,7 +3,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.ActionLineModel;
+import pe.sernanp.simrac.model.MasterPlanModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
+import pe.sernanp.simrac.repository.ActionLineRepository;
 import pe.sernanp.simrac.repository.ObjetiveRepository;
 
 @Service
@@ -11,6 +14,9 @@ public class ObjetiveService {
 
 	@Autowired
 	private ObjetiveRepository _repository;
+	
+	@Autowired
+	private ActionLineRepository _repository2;
 	
 	public ResponseEntity save (ObjetiveModel item) throws Exception{
 		try {
@@ -82,5 +88,21 @@ public class ObjetiveService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}		
+	}	
+	
+	public ResponseEntity<ActionLineModel> searchActionLines(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ActionLineModel> response = new ResponseEntity<ActionLineModel>();
+			List<ActionLineModel> item = this._repository2.searchActionLines(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }
