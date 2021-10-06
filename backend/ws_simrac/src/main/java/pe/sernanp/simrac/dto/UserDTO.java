@@ -10,6 +10,10 @@ public class UserDTO {
 	
 	private String name;
 	
+	private String userName;
+
+	private String lastName;
+	
 	private List<ModuleModel> modules;	
 	
 	private int system;
@@ -18,7 +22,7 @@ public class UserDTO {
 	
 	private Date registrationDate;	
 
-	private int roleId;
+	private RoleDTO role;
 	
 	public int getId() {
 		return id;
@@ -68,11 +72,27 @@ public class UserDTO {
 		this.registrationDate = registrationDate;
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public RoleDTO getRole() {
+		return role;
 	}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(RoleDTO role) {
+		this.role = role;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

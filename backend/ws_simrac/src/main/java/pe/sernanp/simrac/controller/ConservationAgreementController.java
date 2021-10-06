@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import pe.sernanp.simrac.dto.ConservationAgreementDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
@@ -72,7 +74,7 @@ public class ConservationAgreementController extends BaseController {
 	public ResponseEntity<ConservationAgreementModel> search(@RequestParam("item") String item) throws IOException {
 		try {
 			PaginatorEntity paginator = super.setPaginator();
-			ConservationAgreementModel item2 = super.fromJson(item, ConservationAgreementModel.class);
+			ConservationAgreementDTO item2 = super.fromJson(item, ConservationAgreementDTO.class);
 			ResponseEntity<ConservationAgreementModel> response = this._service.search(item2, paginator);
 			return response;
 		} catch (Exception ex) {			

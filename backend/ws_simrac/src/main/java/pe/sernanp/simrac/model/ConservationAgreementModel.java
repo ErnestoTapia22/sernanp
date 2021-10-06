@@ -1,8 +1,9 @@
 package pe.sernanp.simrac.model;
+
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,13 +23,13 @@ public class ConservationAgreementModel {
 	
 	@JoinColumn (name= "int_estadoacuerdoid", referencedColumnName = "srl_id", nullable=true)
 	@ManyToOne
-	private AgreementStateModel _agreementState;
+	private AgreementStateModel _agreementState;	
 	
 	@JoinColumn (name= "int_fuenteid", referencedColumnName = "srl_id", nullable=true)
 	@ManyToOne
 	private SourceModel source;
 	
-	@JoinColumn (name= "int_anpid", nullable=true)
+	@JoinColumn (name= "int_anpid", nullable=true, foreignKey = @ForeignKey(javax.persistence.ConstraintMode.NO_CONSTRAINT))
 	@ManyToOne
 	private AnpModel anp;
 	

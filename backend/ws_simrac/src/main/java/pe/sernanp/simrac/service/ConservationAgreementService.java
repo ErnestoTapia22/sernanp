@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import pe.sernanp.simrac.dto.ConservationAgreementDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
@@ -89,11 +90,13 @@ public class ConservationAgreementService {
 		}
 	}	
 	
-	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator) throws Exception{
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getDescription(), item.getName(), page);
+			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
+													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
+													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), page);
 			List<ConservationAgreementModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());
 			response.setItems(items);

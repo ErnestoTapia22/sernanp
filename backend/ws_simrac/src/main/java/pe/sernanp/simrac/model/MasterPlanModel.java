@@ -1,7 +1,9 @@
 package pe.sernanp.simrac.model;
+
 import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +39,7 @@ public class MasterPlanModel {
 	@Column (name= "bol_activo")	
 	private Boolean active;
 	
-	@JoinColumn (name= "int_anpid", nullable=false)
+	@JoinColumn (name= "int_anpid", nullable=false, foreignKey = @ForeignKey(javax.persistence.ConstraintMode.NO_CONSTRAINT))
 	@ManyToOne
 	private AnpModel anp;
 

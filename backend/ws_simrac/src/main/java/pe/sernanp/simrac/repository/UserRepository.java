@@ -14,7 +14,17 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 	@Query(value="select idusuario,usuario from sernanp.login where idlogin=173323", nativeQuery=true)
 	UserModel validate(@Param("code") String pcode);
 	
-	@Query(value="select u.idusuario, u.usuario from sernanp.sistema as s "
+	//@Query(value="select u.* from sernanp.usuario as u "
+	//		+ "			inner join sernanp.usuariorol as sr on sr.idusuario=u.idusuario "
+	//		+ "			inner join sernanp.rol as r on sr.idrol = r.idrol "
+	//		+ "			inner join sernanp.sistema as s on r.idsistema=s.idsistema "
+	//		+ "			inner join sernanp.persona as p on p.idpersona = u.idpersona "
+	//		+ "			inner join sernanp.personanatural as per on per.idpersona = u.idpersona ",
+	//		nativeQuery=true)
+	//Page<UserModel> search(@Param("pname") String pname, @Param("pusername") String pusername, @Param("plastname") String plastname,
+	//		@Param("psystem") int psystem, @Param("proleid") int proleid, Pageable page);
+	
+	@Query(value="select u.* from sernanp.sistema as s "
 			+ "	inner join sernanp.rol as r  on r.idsistema=s.idsistema "
 			+ "	inner join sernanp.usuariorol as sr on sr.idrol = r.idrol "
 			+ "	inner join sernanp.usuario as u on sr.idusuario=u.idusuario "

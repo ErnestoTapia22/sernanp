@@ -58,15 +58,15 @@ public class UserService {
 		}
 	}
 	
-	public ResponseEntity<UserModel> search(UserModel item, PaginatorEntity paginator) throws Exception{
+	public ResponseEntity<UserModel> search(UserDTO item, PaginatorEntity paginator) throws Exception{
 		try {			
 			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<UserModel> pag = this._repository.search(item.getUserName(), item.getUserName(), item.getUserName(), item.getId(), item.getId(), page);
+			Page<UserModel> pag = this._repository.search(item.getName(), item.getUserName(), item.getLastName(), item.getSystem(), item.getRole().getId(), page);
 			List<UserModel> items = pag.getContent();
 			ResponseEntity<UserModel> response = new ResponseEntity<UserModel>();
 			response.setItems(items);
 			response.setPaginator(paginator);
-			return response;			
+			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
@@ -87,12 +87,13 @@ public class UserService {
 		}
 	}
 	
+	@Transactional
 	public ResponseEntity save(UserDTO item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
-			this._repository.insert(item.getRoleId(), item.getId(), item.getRegistrationDate());			
+			this._repository.insert(item.getRole().getId(), item.getId(), item.getRegistrationDate());			
 			message += " Se guardaron sus datos de manera correcta";
 			success = (id == 0) ? false : true;			
 			ResponseEntity response = new ResponseEntity();

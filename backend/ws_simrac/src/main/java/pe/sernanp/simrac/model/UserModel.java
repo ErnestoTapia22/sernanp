@@ -3,6 +3,8 @@ package pe.sernanp.simrac.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Immutable;
 
@@ -19,10 +21,11 @@ public class UserModel {
 	private String userName;
 	
 	@Column (name= "idpersonal")
-	private int _idPersonal;	
+	private int _idPersonal;
 	
-	@Column (name= "idpersona")
-	private int _idPersona;
+	@JoinColumn (name= "idpersona", referencedColumnName = "idpersonanatural", nullable=true)
+	@OneToOne
+	private PersonNaturalModel person;
 
 	public int getId() {
 		return id;
@@ -48,12 +51,12 @@ public class UserModel {
 		this._idPersonal = _idPersonal;
 	}
 
-	public int getIdPersona() {
-		return _idPersona;
+	public PersonNaturalModel getPerson() {
+		return person;
 	}
 
-	public void setIdPersona(int _idPersona) {
-		this._idPersona = _idPersona;
+	public void setPerson(PersonNaturalModel person) {
+		this.person = person;
 	}
 	
 }

@@ -44,7 +44,7 @@ public class UserController extends BaseController {
 	public ResponseEntity<UserModel> search(@RequestParam("item") String item) throws IOException {
 		try {
 			PaginatorEntity paginador = super.setPaginator();
-			UserModel item2 = super.fromJson(item, UserModel.class);
+			UserDTO item2 = super.fromJson(item, UserDTO.class);
 			ResponseEntity<UserModel> response = this._service.search(item2, paginador);
 			return response;
 		} catch (Exception ex) {
