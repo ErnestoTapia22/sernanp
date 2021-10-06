@@ -2,6 +2,9 @@ package pe.sernanp.simrac.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -10,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -43,7 +48,7 @@ public class MasterPlanModel {
 	@JoinColumn (name= "int_anpid", nullable=false, foreignKey = @ForeignKey(javax.persistence.ConstraintMode.NO_CONSTRAINT))
 	@ManyToOne
 	private AnpModel anp;
-
+	
 	public int getId() {
 		return id;
 	}
