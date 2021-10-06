@@ -2,6 +2,7 @@ package pe.sernanp.simrac.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -23,7 +24,7 @@ public class UserModel {
 	@Column (name= "idpersonal")
 	private int _idPersonal;
 	
-	@JoinColumn (name= "idpersona", referencedColumnName = "idpersonanatural", nullable=true)
+	@JoinColumn (name= "idpersona", referencedColumnName = "idpersonanatural", nullable=true, foreignKey = @ForeignKey(javax.persistence.ConstraintMode.NO_CONSTRAINT))
 	@OneToOne
 	private PersonNaturalModel person;
 
