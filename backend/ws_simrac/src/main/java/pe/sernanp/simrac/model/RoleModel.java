@@ -1,7 +1,7 @@
 package pe.sernanp.simrac.model;
 
+import java.util.Calendar;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.annotations.Immutable;
 
 @Entity
 @Table (name = "rol", schema="sernanp")
@@ -50,7 +49,8 @@ public class RoleModel {
 	}
 
 	public Date getRegistrationDate() {
-		return _registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date _registrationDate) {

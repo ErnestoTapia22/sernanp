@@ -1,5 +1,7 @@
 package pe.sernanp.simrac.service;
 import java.util.List;
+
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
@@ -16,12 +18,14 @@ public class MasterPlanService {
 	@Autowired
 	private ObjetiveRepository _repository2;
 	
+	@Transactional
 	public ResponseEntity save (MasterPlanModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
+			item.setRegistrationDate(item.getRegistrationDate());
 			this._repository.updatePlanActive(item.getAnp().getId());
 			if (id == 0) {
 				MasterPlanModel item2 = this._repository.save(item);
@@ -41,11 +45,9 @@ public class MasterPlanService {
 			response.setSuccess(success);
 			return response;
 		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-			
+			throw new Exception(ex.getMessage());			
 		}
-	}
-	
+	}	
 
 	public ResponseEntity<MasterPlanModel> list() throws Exception{
 		try {
@@ -57,8 +59,7 @@ public class MasterPlanService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}
-	
+	}	
 	
 	public ResponseEntity delete (int id) throws Exception  {
 		try {

@@ -18,7 +18,7 @@ public class AgreementPlanService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			item.setRegistrationDate(item.getRegistrationDate());
 			if (id == 0) {
 				AgreementPlanModel item2 = this._repository.save(item);
 				id = 0;
@@ -31,14 +31,13 @@ public class AgreementPlanService {
 				success = (id == 0) ? false : true;
 			}
 			
-			ResponseEntity respuesta = new ResponseEntity();
-			respuesta.setExtra(id.toString());
-			respuesta.setMessage(message);
-			respuesta.setSuccess(success);
-			return respuesta;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
 		} catch (Exception ex) {
-			return null;
-			
+			return null;			
 		}
 	}
 	
@@ -48,8 +47,7 @@ public class AgreementPlanService {
 			ResponseEntity<AgreementPlanModel> response = new ResponseEntity<AgreementPlanModel>();
 			List<AgreementPlanModel> items = _repository.findAll();
 			response.setItems(items);
-			return response;
-			
+			return response;			
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}

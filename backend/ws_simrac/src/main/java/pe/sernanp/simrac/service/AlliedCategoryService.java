@@ -20,7 +20,7 @@ public class AlliedCategoryService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			item.setRegistrationDate(item.getRegistrationDate());
 			if (id == 0) {
 				AlliedCategoryModel item2 = this._repository.save(item);
 				id = item2.getId();
@@ -33,11 +33,11 @@ public class AlliedCategoryService {
 				success = (id == 0) ? false : true;
 			}
 			
-			ResponseEntity respuesta = new ResponseEntity();
-			respuesta.setExtra(id.toString());
-			respuesta.setMessage(message);
-			respuesta.setSuccess(success);
-			return respuesta;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 			

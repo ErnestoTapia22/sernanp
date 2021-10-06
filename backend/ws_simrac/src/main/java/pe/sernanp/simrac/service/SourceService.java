@@ -18,7 +18,7 @@ public class SourceService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			item.setRegistrationDate(item.getRegistrationDate());
 			if (id == 0) {
 				SourceModel item2 = this._repository.save(item);
 				id = item2.getId();
