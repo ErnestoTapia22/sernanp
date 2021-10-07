@@ -1,4 +1,5 @@
 package pe.sernanp.simrac.service;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class ConservationAgreementService {
 			boolean success = false;
 			int rowsAffected = 0;
 			item.setRegistrationDate(item.getRegistrationDate());
+			if (item.getSource().getId() == 0)
+				item.setSource(null);
+			
+			SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
+	        String currentYear = getYearFormat.format(item.getFirm());
+	        List<ConservationAgreementModel> itemmmm = this._repository.searchByDepartment(item.getDistrictId().substring(0, 2));
+			item.setCode("AC" + currentYear + item.getDistrictId().substring(0, 2) + String.format("%1$4s", itemmmm.size()+1) );
 			if (id == 0) {
 				ConservationAgreementModel item2 = this._repository.save(item);
 				id = item2.getId();

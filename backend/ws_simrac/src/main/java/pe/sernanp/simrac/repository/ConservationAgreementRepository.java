@@ -1,10 +1,13 @@
 package pe.sernanp.simrac.repository;
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 
 public interface ConservationAgreementRepository extends JpaRepository<ConservationAgreementModel, Integer> {
@@ -27,5 +30,10 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 			nativeQuery=true)
 	Page<ConservationAgreementModel> findAll(String code, String name, int anpId, int agreementStateId, 
 											String departmentId, String provinceId, String districtId, Date firm, Date firmEnd, Pageable page);
+	
+	@Query(value="select t_ac.*, SUBSTRING(t_ac.var_distritoid,1,2) FROM simrac.t_acuerdo_conservacion t_ac "
+			+ "		where SUBSTRING(t_ac.var_distritoid,1,2) = :pdepartment" ,
+			nativeQuery=true)
+	List<ConservationAgreementModel> searchByDepartment(@Param("pdepartment") String pdepartment);
 	
 }

@@ -65,7 +65,7 @@ public class ConservationAgreementModel {
 	private int  partwomen;
 	
 	@Column (name= "txt_det_ben_per", columnDefinition="TEXT")
-	private String benindirect;
+	private String benPerson;
 	
 	@Column (name= "int_num_familia")	
 	private int numfamily;
@@ -74,7 +74,7 @@ public class ConservationAgreementModel {
 	private String benfamily;
 	
 	@Column (name= "txt_ben_ind", columnDefinition="TEXT")
-	private String beneficyind;
+	private String benindirect;
 	
 	@Column (name= "num_hect_amb", columnDefinition="NUMERIC (12,4)")
 	private double areaambitc;
@@ -204,52 +204,52 @@ public class ConservationAgreementModel {
 	public void setFirm(Date firmEnd) {
 		this.firm= firmEnd;
 	}
-	public int getPartmen() {
+	public int getPartMen() {
 		return partmen;
 	}
-	public void setPartmen(int partmen) {
+	public void setPartMen(int partmen) {
 		this.partmen = partmen;
 	}
-	public int getPartwomen() {
+	public int getPartWomen() {
 		return partwomen;
 	}
-	public void setPartwomen(int partwomen) {
+	public void setPartWomen(int partwomen) {
 		this.partwomen = partwomen;
 	}
-	public String getBenindirect() {
+	public String getBenPerson() {
+		return benPerson;
+	}
+	public void setBenPerson(String beneficyind) {
+		this.benPerson = beneficyind;
+	}
+	public String getBenIndirect() {
 		return benindirect;
 	}
-	public void setBenindirect(String benindirect) {
+	public void setBenIndirect(String benindirect) {
 		this.benindirect = benindirect;
 	}
-	public int getNumfamily() {
+	public int getNumFamily() {
 		return numfamily;
 	}
-	public void setNumfamily(int numfamily) {
+	public void setNumFamily(int numfamily) {
 		this.numfamily = numfamily;
 	}
-	public String getBenfamily() {
+	public String getBenFamily() {
 		return benfamily;
 	}
-	public void setBenfamily(String benfamily) {
+	public void setBenFamily(String benfamily) {
 		this.benfamily = benfamily;
 	}
-	public String getBeneficyind() {
-		return beneficyind;
-	}
-	public void setBeneficyind(String beneficyind) {
-		this.beneficyind = beneficyind;
-	}
-	public double getAreaambitc() {
+	public double getAreaAmbitc() {
 		return areaambitc;
 	}
-	public void setAreaambitc(double areaambitc) {
+	public void setAreaAmbitc(double areaambitc) {
 		this.areaambitc = areaambitc;
 	}
-	public double getProducedarea() {
+	public double getProducedArea() {
 		return producedarea;
 	}
-	public void setProducedarea(double producedarea) {
+	public void setProducedArea(double producedarea) {
 		this.producedarea = producedarea;
 	}
 	public String getDetailProduction() {
@@ -258,10 +258,10 @@ public class ConservationAgreementModel {
 	public void setDetailProduction(String detailProduction) {
 		this.detailProduction = detailProduction;
 	}
-	public double getResthect() {
+	public double getRestHect() {
 		return resthect;
 	}
-	public void setResthect(double resthect) {
+	public void setRestHect(double resthect) {
 		this.resthect = resthect;
 	}
 	public String getRestdet() {
@@ -270,40 +270,40 @@ public class ConservationAgreementModel {
 	public void setRestdet(String restdet) {
 		this.restdet = restdet;
 	}
-	public String getSectnom() {
+	public String getSectNom() {
 		return sectnom;
 	}
-	public void setSectnom(String sectnom) {
+	public void setSectNom(String sectnom) {
 		this.sectnom = sectnom;
 	}
-	public double getSecthect() {
+	public double getSectHect() {
 		return secthect;
 	}
-	public void setSecthect(double secthect) {
+	public void setSectHect(double secthect) {
 		this.secthect = secthect;
 	}
-	public String getSectdet() {
+	public String getSectDet() {
 		return sectdet;
 	}
-	public void setSectdet(String sectdet) {
+	public void setSectDet(String sectdet) {
 		this.sectdet = sectdet;
 	}
-	public String getTerritorymod() {
+	public String getTerritoryMod() {
 		return territorymod;
 	}
-	public void setTerritorymod(String territorymod) {
+	public void setTerritoryMod(String territorymod) {
 		this.territorymod = territorymod;
 	}
-	public boolean isFinanapa() {
+	public boolean isFinanApa() {
 		return finanapa;
 	}
-	public void setFinanapa(boolean finanapa) {
+	public void setFinanApa(boolean finanapa) {
 		this.finanapa = finanapa;
 	}
-	public double getFinannum() {
+	public double getFinanNum() {
 		return finannum;
 	}
-	public void setFinannum(double finannum) {
+	public void setFinanNum(double finannum) {
 		this.finannum = finannum;
 	}
 	public String getComment() {
@@ -312,22 +312,22 @@ public class ConservationAgreementModel {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public String getGenobj() {
+	public String getGenObj() {
 		return genobj;
 	}
-	public void setGenobj(String genobj) {
+	public void setGenObj(String genobj) {
 		this.genobj = genobj;
 	}
-	public String getFinanmod() {
+	public String getFinanMod() {
 		return finanmod;
 	}
-	public void setFinanmod(String finanmod) {
+	public void setFinanMod(String finanmod) {
 		this.finanmod = finanmod;
 	}
-	public String getFondname() {
+	public String getFondName() {
 		return fondname;
 	}
-	public void setFondname(String fondname) {
+	public void setFondName(String fondname) {
 		this.fondname = fondname;
 	}
 	public boolean isAllied() {
