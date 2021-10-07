@@ -7,14 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import pe.sernanp.simrac.dto.RoleDTO;
 import pe.sernanp.simrac.dto.UserDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.LoginModel;
 import pe.sernanp.simrac.model.ModuleModel;
+import pe.sernanp.simrac.model.RoleModel;
 import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.repository.LoginRepository;
 import pe.sernanp.simrac.repository.ModuleRepository;
+import pe.sernanp.simrac.repository.RoleRepository;
 import pe.sernanp.simrac.repository.UserRepository;
 
 @Service
@@ -24,23 +28,31 @@ public class UserService {
 	private UserRepository _repository;
 	
 	@Autowired
-	private LoginRepository _loginRepository;
+	private LoginRepository _repositoryLogin;
 	
 	@Autowired
 	private ModuleRepository _repositoryModule;
+	
+	@Autowired
+	private RoleRepository _repositoryRole;
 
 	public ResponseEntity<UserDTO> validate(String id) throws Exception {
 		try {
 			boolean success = true;
 			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
-			LoginModel login = this._loginRepository.validate(id);
+			LoginModel login = this._repositoryLogin.validate(id);
 			UserModel item = this._repository.findById(login.getUserId()).get();
-			List<ModuleModel> items = this._repositoryModule.search(27, login.getUserId());
+			List<ModuleModel> items = this._repositoryModule.search(login.getSystemId(), login.getUserId());
+			RoleModel role = this._repositoryRole.active(item.getId(), items.get(0).getId());
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(item.getId());
 			userDTO.setName(item.getUserName());
 			userDTO.setSystem(login.getSystemId());
 			userDTO.setModules(items);
+			RoleDTO roleDTO = new RoleDTO();
+			roleDTO.setId(role.getId());
+			roleDTO.setName(role.getName());
+			userDTO.setRole(roleDTO);
 			//item.setModules(items);
 			
 			// Add token

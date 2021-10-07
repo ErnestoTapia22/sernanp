@@ -8,6 +8,8 @@ public class RoleDTO {
 	
 	private int id;	
 	
+	private String name;	
+	
 	private List<ModuleModel> modules;
 	
 	private Date registrationDate;
@@ -18,6 +20,14 @@ public class RoleDTO {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<ModuleModel> getModules() {
