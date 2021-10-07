@@ -1078,7 +1078,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             fondName: response.item.fondName,
             allied: response.item.allied,
             anp: { id: response.item.anp.id || 0 },
-            source: { id: response.item.source.id || 0 },
+            source: { id: response.item.source == null ? 0:  response.item.source.id },
             ecosystemType: { id: 0 },
             localization: '',
             districtId: response.item.districtId,
