@@ -9,7 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @SpringBootApplication
 public class WsSimracApplication extends SpringBootServletInitializer {
 
-	@Override
+	@Override//comentar para desarrollo local
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		System.out.println("inicio de aplicación");
 		return application.sources(WsSimracApplication.class);
@@ -17,10 +17,5 @@ public class WsSimracApplication extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(WsSimracApplication.class, args);
-	}
-
-	@Override//comentar para desarrollo local
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(WsSimracApplication.class);
 	}
 }
