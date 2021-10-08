@@ -747,7 +747,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"105\"  },\r\n    \"allied\": { \"id\": \"3\"  },\r\n    \"actionLine\": { \"id\":\"1\" },   \r\n\r\n    \"description\": \"prueba1\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"SSS\",\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"39\"  },\r\n    \"allied\": { \"id\": \"52\"  },\r\n    \"actionLine\": { \"id\":\"13\" },   \r\n\r\n    \"description\": \"prueba2\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"SSS\",\r\n    \"active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -775,7 +775,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/commitment/search/105"
+						"url": "http://localhost:8050/simrac/api/commitment/search/39"
 					},
 					"response": []
 				}
@@ -1193,7 +1193,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8050/simrac/api/masterplan/detail/5"
+						"url": "http://localhost:8050/simrac/api/masterplan/detail/37"
 					},
 					"response": []
 				},
@@ -1236,7 +1236,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":2 },\r\n    \"name\":\"Plan Maestro 5\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
+							"raw": "{\r\n    \"id\":0, \r\n    \"anp\" : { \"id\":2 },\r\n    \"name\":\"Plan Maestro 6\",\r\n    \"description\":\"Periodo 2018-2023\",\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"state\":true,\r\n    \"version\":1,\r\n    \"active\":true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1345,7 +1345,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8050/simrac/api/workplan/searchbyagreement/100"
+						"url": "http://localhost:8050/simrac/api/workplan/searchbyagreement/26"
 					},
 					"response": []
 				},
@@ -1357,6 +1357,24 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\": 0,\r\n    \"conservationAgreement\": {\"id\":100},\r\n    \"year\": 2020,\r\n    \"activities\" : [\r\n        {\r\n            \"name\":\"Nuevo Valores1\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":19},\r\n            \"semester\":\"1\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores2\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":20},\r\n            \"semester\":\"2\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores3\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":21},\r\n            \"semester\":\"1,2\"\r\n        }\r\n    ]\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/workplan/save2"
+					},
+					"response": []
+				},
+				{
+					"name": "WorkPlanSave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"conservationAgreement\" : { \"id\":26 },\r\n    \"name\":\"name222\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"year\":2020,\r\n    \"version\":2222,\r\n    \"active\":true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1378,6 +1396,24 @@
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:8050/simrac/api/activity/searchbycommitment/20"
+					},
+					"response": []
+				},
+				{
+					"name": "ActivitySave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":0, \r\n    \"commiment\" : { \"id\":54 },\r\n    \"workPlan\" : { \"id\":46 },\r\n    \"name\":\"name11\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/activity/save"
 					},
 					"response": []
 				}
