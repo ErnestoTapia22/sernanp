@@ -1,13 +1,15 @@
 package pe.sernanp.simrac.model;
-
 import java.util.Date;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,11 +21,13 @@ public class ActivityModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	//@Column (name= "int_compromisoid", columnDefinition="INTEGER")
-	//private CommitmentModel commiment;
+	@JoinColumn (name= "int_compromisoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_actividad_compromiso"))
+	@ManyToOne
+	private CommitmentModel commiment;
 	
-	//@Column (name= "int_plantrabajoid", columnDefinition="INTEGER")
-	//private WorkPlanModel workPlan;
+	@JoinColumn (name= "int_plantrabajoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_actividad_plantrabajo"))
+	@ManyToOne
+	private WorkPlanModel workPlan;	
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)
 	private String name;
@@ -42,6 +46,20 @@ public class ActivityModel {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public CommitmentModel getCommiment() {
+		return commiment;
+	}
+	public void setCommiment(CommitmentModel commiment) {
+		this.commiment = commiment;
+	}
+	
+	public WorkPlanModel getWorkPlan() {
+		return workPlan;
+	}
+	public void setWorkPlan(WorkPlanModel workPlan) {
+		this.workPlan = workPlan;
 	}
 	public String getName() {
 		return name;
