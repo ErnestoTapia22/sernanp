@@ -29,23 +29,20 @@ public class ConservationAgreementService {
 			int rowsAffected = 0;
 			item.setRegistrationDate(item.getRegistrationDate());
 			if (item.getSource().getId() == 0)
-				item.setSource(null);
-			
-			SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
-	        String currentYear = getYearFormat.format(item.getFirm());
-	        List<ConservationAgreementModel> itemmmm = this._repository.searchByDepartment(item.getDistrictId().substring(0, 2));
-			item.setCode("AC" + currentYear + item.getDistrictId().substring(0, 2) + String.format("%1$4s", itemmmm.size()+1) );
+				item.setSource(null);		
 			if (id == 0) {
+				SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
+		        String currentYear = getYearFormat.format(item.getFirm());
+		        List<ConservationAgreementModel> itemmmm = this._repository.searchByDepartment(item.getDistrictId().substring(0, 2));
+				item.setCode("AC" + currentYear + item.getDistrictId().substring(0, 2) + String.format("%04d", itemmmm.size()+1) );
 				ConservationAgreementModel item2 = this._repository.save(item);
 				id = item2.getId();
-				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
-						: " Se guardaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
+				message += "Se guardaron sus datos de manera correcta";
 			} else {
+				message += "Se actualizaron sus datos de manera correcta";	
 				this._repository.save(item);
-				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
 			}			
+			success = true;
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);

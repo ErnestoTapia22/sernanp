@@ -128,7 +128,10 @@ public class ConservationAgreementModel {
 	private String localization;
 	
 	@Column (name= "num_superficie_a", columnDefinition="NUMERIC (12,4)")
-	private double surface;		
+	private double surfaceAmbito;
+	
+	@Column (name= "txt_superfice_intervencion", columnDefinition="TEXT")
+	private String surfaceIntervention;
 	
 	public int getId() {
 		return id;
@@ -342,11 +345,16 @@ public class ConservationAgreementModel {
 	public void setLocalization(String location) {
 		this.localization = location;
 	}
-	public double getSurface() {
-		return surface;
+	public double getSurfaceAmbito() {
+		return surfaceAmbito;
 	}
-	public void setSurface(double surface) {
-		this.surface = surface;
+	public void setSurfaceAmbito(double surface) {
+		this.surfaceAmbito = surface;
 	}
-	
+	public String getSurfaceIntervention() {
+		return surfaceIntervention;
+	}
+	public void setSurfaceIntervention(String surfaceIntervention) {
+		this.surfaceIntervention = surfaceIntervention;
+	}
 }

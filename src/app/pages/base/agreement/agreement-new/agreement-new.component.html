@@ -76,7 +76,7 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label for="txtCode" class="form-label">Código (*)</label>
-                    <input
+                    <input disabled
                       id="txtCode"
                       type="text"
                       class="form-control"
@@ -179,6 +179,7 @@
                     <textarea
                       id="txtaGoal"
                       class="form-control"
+                      formControlName="genObj"
                       rows="2"
                     ></textarea>
                   </div>
@@ -975,7 +976,7 @@
                           type="text"
                           min="0"
                           class="form-control"
-                          id="numbInterventionA"
+                          id="surfaceIntervention"
                           value=""
                         />
                       </div>
@@ -1086,7 +1087,7 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label"
+                        <label for="surfaceAmbito" class="form-label"
                           >Superficie del Ámbito de control</label
                         >
                         <div class="input-group">
@@ -1094,8 +1095,8 @@
                             type="number"
                             min="0"
                             class="form-control"
-                            id="numbAreaVC"
-                            formControlName="sectHect"
+                            id="surfaceAmbito"
+                            formControlName="surfaceAmbito"
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
@@ -2227,7 +2228,7 @@
             }"
           />
         </div>
-        <div class="col-md-3 col-lg-12">
+        <div class="col-md-3 col-lg-12 d-none">
           <label class="form-label">Descripción</label>
           <input
             type="text"

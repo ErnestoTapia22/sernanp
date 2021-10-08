@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pe.sernanp.simrac.model.UserModel;
@@ -37,6 +38,7 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 			+ "		where s.idsistema=:psystem)", nativeQuery=true)
 	List <UserModel> searchWithoutLogin(@Param("pdni") String pdni, @Param("psystem") int psystem);
 	
-	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (proleid, pid, 1, pregistrationdate)", nativeQuery=true)
-	void insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
+	@Modifying
+	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (:proleid, :pid, 1, :pregistrationdate)", nativeQuery=true)
+	int insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
 }

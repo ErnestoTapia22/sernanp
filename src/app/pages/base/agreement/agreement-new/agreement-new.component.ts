@@ -696,7 +696,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       description: [''],
       state: [true],
       registrationDate: [''],
-      code: [{ value: '', disabled: true }],
+      code: [''],
       vigency: [
         0,
         Validators.compose([Validators.required, Validators.min(1)]),
@@ -725,6 +725,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       fondName: [''],
       allied: true,
       sectDet: [''],
+      surfaceAmbito: [0],
+      surfaceIntervention: [''],
       agreementState: this.fb.group({
         id: [0, Validators.min(1)],
       }),
@@ -1080,7 +1082,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             anp: { id: response.item.anp.id || 0 },
             source: { id: response.item.source == null ? 0:  response.item.source.id },
             ecosystemType: { id: 0 },
-            localization: '',
+            localization: response.item.localization,
+            surfaceAmbito: response.item.surfaceAmbito,
+            surfaceIntervention: response.item.surfaceIntervention,
             districtId: response.item.districtId,
             department: 0,
             province: 0,
