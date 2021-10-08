@@ -3,7 +3,7 @@ package pe.sernanp.simrac.dto;
 import java.sql.Date;
 import pe.sernanp.simrac.model.AgreementStateModel;
 
-public class ConservationAgreementDTO {
+public class ConservationAgreementDTO implements java.io.Serializable {
 	
 	private String code;
 	
