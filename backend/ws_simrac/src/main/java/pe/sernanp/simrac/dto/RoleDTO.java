@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import pe.sernanp.simrac.model.ModuleModel;
 
-public class RoleDTO {
+public class RoleDTO implements java.io.Serializable {
 	
 	private int id;	
 	
