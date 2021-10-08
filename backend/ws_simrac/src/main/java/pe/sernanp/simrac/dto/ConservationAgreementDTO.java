@@ -1,6 +1,8 @@
 package pe.sernanp.simrac.dto;
 
-import java.sql.Date;
+
+import java.util.Date;
+
 import pe.sernanp.simrac.model.AgreementStateModel;
 
 public class ConservationAgreementDTO implements java.io.Serializable {

@@ -1,13 +1,12 @@
 package pe.sernanp.simrac.repository;
-import java.sql.Date;
-import java.util.List;
 
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 
 public interface ConservationAgreementRepository extends JpaRepository<ConservationAgreementModel, Integer> {
@@ -24,13 +23,13 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 			+ "	and case when ?5 <> '' then SUBSTRING(t_ac.var_distritoid,1,2) = ?5 else 1 = 1 end "	
 			+ "	and case when ?6 <> '' then SUBSTRING(t_ac.var_distritoid,1,4) = ?6 else 1 = 1 end "
 			+ "	and case when ?7 <> '' then t_ac.var_distritoid = ?7 else 1 = 1 end "
-			+ "	and (t_ac.dte_fec_firma >= ?8) "
-			+ "	and (t_ac.dte_fec_firma <= ?9) ",
+			+ "	and case when ?10 > 0 then t_ac.dte_fec_firma >= ?8 else 1 = 1 end "
+			+ "	and case when ?10 > 0 then t_ac.dte_fec_firma <= ?9 else 1 = 1 end ",
 			//+ "			  and case when pstate = false then 1 = 1 /*t_ac.bol_flg = pstate*/ else 1 = 1 end;",
 			nativeQuery=true)
-	Page<ConservationAgreementModel> findAll(String code, String name, int anpId, int agreementStateId, 
-											String departmentId, String provinceId, String districtId, 
-											@Param("pfirm")Date firm, @Param("pfirmEnd")Date firmEnd, Pageable page);
+	Page<ConservationAgreementModel> findAll(String code, String name, int anpId, int agreementStateId,
+											String departmentId, String provinceId, String districtId,
+											Date firm, Date firmEnd, int id, Pageable page);
 	
 	@Query(value="select t_ac.*, SUBSTRING(t_ac.var_distritoid,1,2) FROM simrac.t_acuerdo_conservacion t_ac "
 			+ "		where SUBSTRING(t_ac.var_distritoid,1,2) = :pdepartment" ,

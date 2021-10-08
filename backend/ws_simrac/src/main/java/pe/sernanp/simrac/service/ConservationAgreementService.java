@@ -1,6 +1,7 @@
 package pe.sernanp.simrac.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -99,9 +100,17 @@ public class ConservationAgreementService {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
+			System.out.println(item.getDateFirm());
+			System.out.println(item.getDateFirmEnd());
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(Calendar.getInstance().getTime());
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(Calendar.getInstance().getTime());
 			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
 													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
-													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), page);
+													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), 
+													value, page);
 			List<ConservationAgreementModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());
 			response.setItems(items);
