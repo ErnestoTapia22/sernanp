@@ -1,11 +1,17 @@
 package pe.sernanp.simrac.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import pe.sernanp.simrac.model.ModuleModel;
 
-public class UserDTO {
+public class UserDTO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int id;
 	
 	private String name;

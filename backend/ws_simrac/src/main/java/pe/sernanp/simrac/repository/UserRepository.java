@@ -42,4 +42,10 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 	
 	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (proleid, pid, 1, pregistrationdate)", nativeQuery=true)
 	void insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
+	
+	//METODO PARA OBTENER UN TOKEN Y SETEARLO AL USUARIO
+	/*@Query(value = "SELECT substr(encode(TOKEN, 'escape'), position('bearer' in encode(TOKEN, 'escape')) +9,\r\n"
+			+ " LENGTH(encode(TOKEN, 'escape'))) as TOKEN\r\n"
+			+ "	from oauth_access_token limit 1", nativeQuery=true)
+	String getToken();*/
 }
