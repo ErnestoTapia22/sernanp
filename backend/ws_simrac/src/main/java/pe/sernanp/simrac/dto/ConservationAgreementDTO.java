@@ -1,7 +1,6 @@
 package pe.sernanp.simrac.dto;
 
-
-import java.util.Date;
+import java.sql.Date;
 
 import pe.sernanp.simrac.model.AgreementStateModel;
 

@@ -1,4 +1,5 @@
 package pe.sernanp.simrac.service;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,14 +100,12 @@ public class ConservationAgreementService {
 	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator) throws Exception{
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			System.out.println(item.getDateFirm());
-			System.out.println(item.getDateFirmEnd());
+			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());			
 			int value = item.getFirm() == null ? 0 : 1;
 			if (item.getFirm() == null)
-				item.setFirm(Calendar.getInstance().getTime());
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			if (item.getFirmEnd() == null)
-				item.setFirmEnd(Calendar.getInstance().getTime());
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
 													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
 													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), 
