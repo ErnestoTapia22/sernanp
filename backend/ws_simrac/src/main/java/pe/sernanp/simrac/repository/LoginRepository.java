@@ -7,7 +7,8 @@ import pe.sernanp.simrac.model.LoginModel;
 
 public interface LoginRepository extends JpaRepository<LoginModel, Integer>{
 		
-	@Query(value="select * from sernanp.login where idlogin=173323", nativeQuery=true)
+	@Query(value="select idlogin,clave,usuario,27 as idsistema,idusuario,fecha "
+			+ " from sernanp.login where clave = '1610987247778' ", nativeQuery=true)
 	LoginModel validate(@Param("code") String pcode);
 	
 }

@@ -1,6 +1,7 @@
 package pe.sernanp.simrac.dto;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import pe.sernanp.simrac.model.ModuleModel;
@@ -16,6 +17,10 @@ public class UserDTO implements Serializable{
 	
 	private String name;
 	
+	private String userName;
+
+	private String lastName;
+	
 	private List<ModuleModel> modules;	
 	
 	private int system;
@@ -24,7 +29,7 @@ public class UserDTO implements Serializable{
 	
 	private Date registrationDate;	
 
-	private int roleId;
+	private RoleDTO role;
 	
 	public int getId() {
 		return id;
@@ -67,18 +72,35 @@ public class UserDTO implements Serializable{
 	}
 	
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public RoleDTO getRole() {
+		return role;
 	}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(RoleDTO role) {
+		this.role = role;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

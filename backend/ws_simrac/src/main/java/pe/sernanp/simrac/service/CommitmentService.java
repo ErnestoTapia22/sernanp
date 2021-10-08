@@ -18,7 +18,7 @@ public class CommitmentService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-	
+			item.setRegistrationDate(item.getRegistrationDate());
 			if (id == 0) {
 				CommitmentModel item2 = this._repository.save(item);
 				id = item2.getId();
@@ -31,11 +31,11 @@ public class CommitmentService {
 				success = (id == 0) ? false : true;
 			}
 			
-			ResponseEntity respuesta = new ResponseEntity();
-			respuesta.setExtra(id.toString());
-			respuesta.setMessage(message);
-			respuesta.setSuccess(success);
-			return respuesta;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 			
@@ -82,5 +82,21 @@ public class CommitmentService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}		
+	}	
+	
+	public ResponseEntity<CommitmentModel> search(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentModel>();
+			List<CommitmentModel> item = this._repository.searchByAgreement(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

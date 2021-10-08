@@ -5,16 +5,14 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pe.sernanp.simrac.model.UserModel;
 
 public interface UserRepository extends JpaRepository<UserModel, Integer>{
-		
-	@Query(value="select idusuario,usuario from sernanp.login where idlogin=173323", nativeQuery=true)
-	UserModel validate(@Param("code") String pcode);
-	
-	@Query(value="select u.idusuario, u.usuario from sernanp.sistema as s "
+				
+	@Query(value="select u.* from sernanp.sistema as s "
 			+ "	inner join sernanp.rol as r  on r.idsistema=s.idsistema "
 			+ "	inner join sernanp.usuariorol as sr on sr.idrol = r.idrol "
 			+ "	inner join sernanp.usuario as u on sr.idusuario=u.idusuario "
@@ -39,8 +37,8 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 			+ "		inner join sernanp.usuario as u on sr.idusuario=u.idusuario "
 			+ "		where s.idsistema=:psystem)", nativeQuery=true)
 	List <UserModel> searchWithoutLogin(@Param("pdni") String pdni, @Param("psystem") int psystem);
-	
-	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (proleid, pid, 1, pregistrationdate)", nativeQuery=true)
+
+	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (:proleid, :pid, 1, :pregistrationdate)", nativeQuery=true)
 	void insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
 	
 	//METODO PARA OBTENER UN TOKEN Y SETEARLO AL USUARIO
@@ -48,4 +46,5 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 			+ " LENGTH(encode(TOKEN, 'escape'))) as TOKEN\r\n"
 			+ "	from oauth_access_token limit 1", nativeQuery=true)
 	String getToken();*/
+
 }

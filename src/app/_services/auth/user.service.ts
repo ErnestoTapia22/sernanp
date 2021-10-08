@@ -89,7 +89,7 @@ export class UserService {
   }
   userSave(item): Observable<any> {
     return this.apiBaseService.post(
-      `${environment.apiUrl}/${this.segmentUserSave}`,
+      `${environment.apiUrl}${this.segmentUserSave}`,
       item,
       null
     );

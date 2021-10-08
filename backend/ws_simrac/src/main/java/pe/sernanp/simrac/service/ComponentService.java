@@ -12,14 +12,13 @@ public class ComponentService {
 	@Autowired
 	private ComponentRepository _repository;
 
-
 	public ResponseEntity save (ComponentModel item) throws Exception{
 		try {
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			item.setRegistrationDate(item.getRegistrationDate());
 			if (id == 0) {
 				ComponentModel item2 = this._repository.save(item);
 				id = item2.getId();
@@ -32,17 +31,15 @@ public class ComponentService {
 				success = (id == 0) ? false : true;
 			}
 			
-			ResponseEntity respuesta = new ResponseEntity();
-			respuesta.setExtra(id.toString());
-			respuesta.setMessage(message);
-			respuesta.setSuccess(success);
-			return respuesta;
+			ResponseEntity response = new ResponseEntity();
+			response.setExtra(id.toString());
+			response.setMessage(message);
+			response.setSuccess(success);
+			return response;
 		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-			
+			throw new Exception(ex.getMessage());			
 		}
-	}
-	
+	}	
 
 	public ResponseEntity<ComponentModel> list() throws Exception{
 		try {
@@ -54,8 +51,7 @@ public class ComponentService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}
-	
+	}	
 	
 	public ResponseEntity delete (int id) throws Exception  {
 		try {

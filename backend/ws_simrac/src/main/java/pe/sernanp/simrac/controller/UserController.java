@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.service.AnpService;
 import pe.sernanp.simrac.service.UserService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/user")
 public class UserController extends BaseController {
@@ -48,7 +50,7 @@ public class UserController extends BaseController {
 	public ResponseEntity<UserModel> search(@RequestParam("item") String item) throws IOException {
 		try {
 			PaginatorEntity paginador = super.setPaginator();
-			UserModel item2 = super.fromJson(item, UserModel.class);
+			UserDTO item2 = super.fromJson(item, UserDTO.class);
 			ResponseEntity<UserModel> response = this._service.search(item2, paginador);
 			return response;
 		} catch (Exception ex) {

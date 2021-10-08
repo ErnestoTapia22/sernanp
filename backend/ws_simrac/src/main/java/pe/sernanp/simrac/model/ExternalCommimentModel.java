@@ -1,13 +1,18 @@
 package pe.sernanp.simrac.model;
-import java.sql.Date;
+
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +23,8 @@ public class ExternalCommimentModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_compromisoexterno_ac"))
 	@ManyToOne
 	private ConservationAgreementModel conservationAgreement;
 	
@@ -50,7 +56,8 @@ public class ExternalCommimentModel {
 		this.description = description;
 	}
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;

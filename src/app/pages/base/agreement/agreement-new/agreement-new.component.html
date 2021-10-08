@@ -76,7 +76,7 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label for="txtCode" class="form-label">Código (*)</label>
-                    <input
+                    <input disabled
                       id="txtCode"
                       type="text"
                       class="form-control"
@@ -179,6 +179,7 @@
                     <textarea
                       id="txtaGoal"
                       class="form-control"
+                      formControlName="genObj"
                       rows="2"
                     ></textarea>
                   </div>
@@ -307,40 +308,38 @@
                         class="form-check-input"
                         type="checkbox"
                         id="chkArticulated"
-                        value="option3"
+                        formControlName="hasMasterPlan"
                       />
                       <label for="chkArticulated" class="form-label"
-                        >Plan maestro (*)</label
-                      >
+                        >Plan maestro (*)</label>
                     </div>
                     <div class="form-check form-switch form-check-inline">
                       <input
                         class="form-check-input"
                         type="checkbox"
                         id="chkLocalDevelopment"
-                        value="option3"
+                        formControlName="hasDevelopmentPlan"
                       />
                       <label class="form-check-label" for="chkLocalDevelopment"
-                        >Plan de desarrollo local</label
-                      >
+                        >Plan de desarrollo local</label>
                     </div>
                     <div class="">
                       <label for="detalle" class="form-label"
                         >Detalle del/los municipios del ADC</label
                       >
-                      <input type="text" class="form-control" id="detalle" />
+                      <input type="text" formControlName="detailMunicipality"
+                      class="form-control" id="detalle" />
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label"
-                      >Plan de vida de las comunidades</label
-                    >
+                    <label class="form-label">Plan de vida de las comunidades</label>
                     <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
                         name="chkComunityL"
                         id="yes"
+                        value="1"
                       />
                       <label class="form-check-label" for="yes">Sí</label>
                     </div>
@@ -350,6 +349,7 @@
                         type="radio"
                         name="chkComunityL"
                         id="not"
+                        value="2"
                       />
                       <label class="form-check-label" for="not">No</label>
                     </div>
@@ -358,50 +358,13 @@
                         class="form-check-input"
                         type="radio"
                         name="chkComunityL"
-                        id="ecaNotApply"
-                      />
-                      <label class="form-check-label" for="ecaNotApply"
-                        >No aplica</label
-                      >
+                        value="3"
+                        id="ecaNotApply"/>
+                      <label class="form-check-label" for="ecaNotApply">No aplica</label >
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label"
-                      >Plan de vida institucional (ECA)</label
-                    >
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaYes"
-                      />
-                      <label class="form-check-label" for="ecaYes">Sí</label>
-                    </div>
-
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaNot"
-                      />
-                      <label class="form-check-label" for="ecaNot">No</label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="notApply"
-                      />
-                      <label class="form-check-label" for="notApply"
-                        >No aplica</label
-                      >
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Zonificación Forestal</label>
+                    <label class="form-label">Plan de vida institucional (ECA)</label>
                     <div class="form-check">
                       <input
                         class="form-check-input"
@@ -412,13 +375,14 @@
                       />
                       <label class="form-check-label" for="ecaYes">Sí</label>
                     </div>
+
                     <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
                         name="chkEcaComunityL"
                         id="ecaNot"
-                        value="0"
+                        value="2"
                       />
                       <label class="form-check-label" for="ecaNot">No</label>
                     </div>
@@ -428,11 +392,42 @@
                         type="radio"
                         name="chkEcaComunityL"
                         id="notApply"
+                        value="3"
+                      />
+                      <label class="form-check-label" for="notApply">No aplica</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Zonificación Forestal</label>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkZoning"
+                        id="ecaYes"
+                        value="1"
+                      />
+                      <label class="form-check-label" for="ecaYes">Sí</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkZoning"
+                        id="ecaNot"
                         value="2"
                       />
-                      <label class="form-check-label" for="notApply"
-                        >No aplica</label
-                      >
+                      <label class="form-check-label" for="ecaNot">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="chkZoning"
+                        id="notApply"
+                        value="3"
+                      />
+                      <label class="form-check-label" for="notApply">No aplica</label>
                     </div>
                   </div>
                 </div>
@@ -973,10 +968,9 @@
                         ></i>
                         <input
                           type="text"
-                          min="0"
                           class="form-control"
-                          id="numbInterventionA"
-                          value=""
+                          id="surfaceIntervention"
+                          formControlName="surfaceIntervention"
                         />
                       </div>
                       <div class="col-md-3">
@@ -1086,7 +1080,7 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label"
+                        <label for="surfaceAmbito" class="form-label"
                           >Superficie del Ámbito de control</label
                         >
                         <div class="input-group">
@@ -1094,8 +1088,8 @@
                             type="number"
                             min="0"
                             class="form-control"
-                            id="numbAreaVC"
-                            formControlName="sectHect"
+                            id="surfaceAmbito"
+                            formControlName="surfaceAmbito"
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
@@ -2227,7 +2221,7 @@
             }"
           />
         </div>
-        <div class="col-md-3 col-lg-12">
+        <div class="col-md-3 col-lg-12 d-none">
           <label class="form-label">Descripción</label>
           <input
             type="text"

@@ -1,5 +1,8 @@
 package pe.sernanp.simrac.model;
-import java.sql.Date;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -72,7 +75,8 @@ public class ObjetiveModel {
 	}
 
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date registrationDate) {

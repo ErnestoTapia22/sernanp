@@ -2,6 +2,7 @@ package pe.sernanp.simrac.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import pe.sernanp.simrac.model.MasterPlanModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.service.MasterPlanService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/masterplan")
 public class MasterPlanController extends BaseController {

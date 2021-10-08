@@ -1,5 +1,8 @@
 package pe.sernanp.simrac.service;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import pe.sernanp.simrac.dto.ConservationAgreementDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
@@ -25,18 +29,22 @@ public class ConservationAgreementService {
 			String message = "";
 			boolean success = false;
 			int rowsAffected = 0;
-
+			item.setRegistrationDate(item.getRegistrationDate());
+			if (item.getSource().getId() == 0)
+				item.setSource(null);		
 			if (id == 0) {
+				SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
+		        String currentYear = getYearFormat.format(item.getFirm());
+		        List<ConservationAgreementModel> itemmmm = this._repository.searchByDepartment(item.getDistrictId().substring(0, 2));
+				item.setCode("AC" + currentYear + item.getDistrictId().substring(0, 2) + String.format("%04d", itemmmm.size()+1) );
 				ConservationAgreementModel item2 = this._repository.save(item);
 				id = item2.getId();
-				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
-						: " Se guardaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
+				message += "Se guardaron sus datos de manera correcta";
 			} else {
+				message += "Se actualizaron sus datos de manera correcta";	
 				this._repository.save(item);
-				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
 			}			
+			success = true;
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);
@@ -89,11 +97,19 @@ public class ConservationAgreementService {
 		}
 	}	
 	
-	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementModel item, PaginatorEntity paginator) throws Exception{
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator) throws Exception{
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getDescription(), item.getName(), page);
+			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());			
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
+													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
+													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), 
+													value, page);
 			List<ConservationAgreementModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());
 			response.setItems(items);

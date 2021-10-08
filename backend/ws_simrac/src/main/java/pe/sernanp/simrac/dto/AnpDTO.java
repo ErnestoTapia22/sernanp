@@ -14,11 +14,11 @@ public class AnpDTO {
 	
 	private int _withMasterPlan;
 	
-	public int getAnp_Id() {
+	public int getId() {
 		return anp_id;
 	}
 
-	public void setAnp_Id(int anp_id) {
+	public void setId(int anp_id) {
 		this.anp_id = anp_id;
 	}
 
@@ -60,5 +60,5 @@ public class AnpDTO {
 
 	public void setWithMasterPlan(int _withMasterPlan) {
 		this._withMasterPlan = _withMasterPlan;
-	}	
+	}
 }

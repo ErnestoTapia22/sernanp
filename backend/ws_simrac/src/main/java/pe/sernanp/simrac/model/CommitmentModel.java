@@ -1,11 +1,16 @@
 package pe.sernanp.simrac.model;
-import java.sql.Date;
+
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ForeignKey;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,14 +22,17 @@ public class CommitmentModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	/*@Column (name= "int_acuerdoid", columnDefinition="INTEGER")
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_acuerdo"))
+	@ManyToOne
 	private ConservationAgreementModel ConservationAgreement;
 	
-	@Column (name= "int_aliadoid", columnDefinition="INTEGER")
+	@JoinColumn (name= "int_aliadoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_aliado"))
+	@ManyToOne
 	private AlliedModel allied;
 	
-	@Column (name= "int_lineaacionid", columnDefinition="INTEGER")
-	private ActionLineModel actionLine;*/
+	@JoinColumn (name= "int_lineaacionid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_la"))
+	@ManyToOne
+	private ActionLineModel actionLine;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
 	private String description;
@@ -49,7 +57,7 @@ public class CommitmentModel {
 		this.id = id;
 	}
 
-	/*public ConservationAgreementModel getConservationAgreement() {
+	public ConservationAgreementModel getConservationAgreement() {
 		return ConservationAgreement;
 	}
 
@@ -71,7 +79,7 @@ public class CommitmentModel {
 
 	public void setActionLine(ActionLineModel actionLine) {
 		this.actionLine = actionLine;
-	} */
+	}
 
 	public String getDescription() {
 		return description;
@@ -82,7 +90,8 @@ public class CommitmentModel {
 	}
 
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date registrationDate) {

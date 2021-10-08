@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AlliedCategoryModel;
 import pe.sernanp.simrac.service.AlliedCategoryService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/alliedcategory")
 public class AlliedCategoryController extends BaseController {

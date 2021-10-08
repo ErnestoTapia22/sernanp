@@ -2,6 +2,7 @@ package pe.sernanp.simrac.controller;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
 import pe.sernanp.simrac.service.AnpService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/anp")
 public class AnpController extends BaseController {

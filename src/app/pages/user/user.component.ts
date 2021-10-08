@@ -352,7 +352,7 @@ export class UserComponent implements OnInit, OnDestroy {
           if (response && response.items.length > 0) {
             this.userList = response.items;
             this.formAddRole.patchValue({
-              role: { id: response.items[0].role.id || 0 },
+              role: { id: response.items[0].role == null ? 0 : response.items[0].role.id },
             });
           }
           else this.alertService.error('No se encontraron resultados para la búsqueda', 'Error', {

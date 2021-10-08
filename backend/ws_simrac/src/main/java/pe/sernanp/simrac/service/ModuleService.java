@@ -13,8 +13,7 @@ public class ModuleService {
 	private ModuleRepository _repository;
 		
 	public ResponseEntity<ModuleModel> search(int id, int id2) throws Exception {
-		try {
-		
+		try {		
 			boolean success = true;
 			ResponseEntity<ModuleModel> response = new ResponseEntity<ModuleModel>();
 			List <ModuleModel>  item  = this._repository.search(id, id2);

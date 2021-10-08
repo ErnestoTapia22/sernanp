@@ -1,11 +1,16 @@
 package pe.sernanp.simrac.model;
-import java.sql.Date;
+
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,8 +22,9 @@ public class WorkPlanModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	/*@Column (name= "int_acuerdoid", columnDefinition="INTEGER")
-	private ConservationAgreementModel conservationAgreement;*/
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_acuerdo"))
+	@ManyToOne
+	private ConservationAgreementModel ConservationAgreement;
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)
 	private String name;
@@ -49,13 +55,13 @@ public class WorkPlanModel {
 		this.id = id;
 	}
 
-	/*public ConservationAgreementModel getConservationAgreement() {
-		return conservationAgreement;
+	public ConservationAgreementModel getConservationAgreement() {
+		return ConservationAgreement;
 	}
 
 	public void setConservationAgreement(ConservationAgreementModel conservationAgreement) {
-		this.conservationAgreement = conservationAgreement;
-	}*/
+		ConservationAgreement = conservationAgreement;
+	}
 
 	public String getName() {
 		return name;
@@ -74,7 +80,8 @@ public class WorkPlanModel {
 	}
 
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date registrationDate) {

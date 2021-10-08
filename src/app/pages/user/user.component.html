@@ -165,10 +165,11 @@
                     "
                   >
                     <td>{{ idx + 1 }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.lastName }}</td>
+                    <td>{{ item.person.name }}</td>
+                    <td>{{ item.person.lastName + ' ' + item.person.maindenName }}</td>
                     <td>{{ item.userName }}</td>
-                    <td>{{ item.role.name }}</td>
+                    <!--<td>{{ item.role.name }}</td>-->
+                    <td></td>
                     <td>
                       <div class="text-nowrap">
                         <button
@@ -339,9 +340,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of userList; index as idx">
-              <td>{{ item.documentNumber }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.lastName }}</td>
+              <td>{{ item.person.documentNumber }}</td>
+              <td>{{ item.person.name }}</td>
+              <td>{{ item.person.lastName + ' ' + item.person.maindenName }}</td>
               <td>{{ item.userName }}</td>
               <td formGroupName="role">
                 <select
