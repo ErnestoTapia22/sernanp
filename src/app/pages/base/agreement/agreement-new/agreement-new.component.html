@@ -2136,15 +2136,74 @@
                     ></i>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control clearable"
                       id="txtNameF"
-                      formControlName="fondName"
+                      formControlName="fondName" placeholder="Nombre del fondo"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Medios de verificacion</label>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasFirm" formControlName="hasFirm" />
+                      <label for="hasFirm" class="form-label">Acuerdo Fimado</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasWorkPlan" formControlName="hasWorkPlan"/>
+                      <label class="form-check-label" for="hasWorkPlan">Plan de Trabajo</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasActas" formControlName="hasActas"/>
+                      <label class="form-check-label" for="hasActas">Actas/Memorias reuniones previas</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasMap" formControlName="hasMap"/>
+                      <label class="form-check-label" for="hasMap">Mapas</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasShape" formControlName="hasShape"/>
+                      <label class="form-check-label" for="hasShape">Shapes</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="hasMonitoring" formControlName="hasMonitoring"/>
+                      <label class="form-check-label" for="hasMonitoring">Sistema de monitoreo</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="allied" formControlName="allied"/>
+                      <label class="form-check-label" for="allied">Perteneciente a la marca Aliado</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="card">
               <div class="card-body">
                 <div class="row g-3">
