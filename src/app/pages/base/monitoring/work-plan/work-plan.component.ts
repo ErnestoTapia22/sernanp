@@ -527,7 +527,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     });
     console.log(this.fieldArray);
     console.log(this.fieldArrayTotalTemp);
+
     this.fieldArray.map((activity) => {
+      debugger;
       activity.commitment = { id: this.commitmentId };
       activity.commitmentId = this.commitmentId;
       if (
@@ -623,6 +625,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       item.edit = false;
       return item;
     });
+    console.log(items);
     this.fieldArrayTotalTemp = items;
   }
   monitoringSave() {

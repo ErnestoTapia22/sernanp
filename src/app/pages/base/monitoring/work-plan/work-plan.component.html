@@ -464,8 +464,7 @@
                           </td>
                           <td>
                             {{
-                              activity.commitment.actionLine.name ||
-                                "sin datos"
+                              activity.commitment.actionLine.name || "sin datos"
                             }}
                           </td>
                           <td>
@@ -650,7 +649,7 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">Evaluación</label>                  
+                  <label class="mb-0 fw-bold">Evaluación</label>
                   <div>
                     <button
                       type="button"
@@ -706,18 +705,20 @@
                 </tr> -->
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of monitoringList; index as idx">
-                          <td>
+                        <tr
+                          *ngFor="let item of monitoringList; let first = first"
+                        >
+                          <td
+                            *ngIf="first"
+                            [attr.rowspan]="monitoringList.length"
+                          >
                             {{
                               item.commitment.actionLine.objetive.name ||
                                 "sin datos"
                             }}
                           </td>
                           <td>
-                            {{
-                              item.commitment.actionLine.name ||
-                                "sin datos"
-                            }}
+                            {{ item.commitment.actionLine.name || "sin datos" }}
                           </td>
                           <td>
                             {{ item.commitment.name }}
@@ -837,19 +838,34 @@
                       <i class="bi bi-display"></i>
                       Guardar monitoreo
                     </button> -->
-                  </div>                  
-                </div>              
+                  </div>
+                </div>
               </div>
               <div class="card">
                 <div class="col-md-12 row p-3">
-                  <label class="mb-0 fw-bold col-form-label col-sm-4 col-md-4 col-lg-4">Cobertura de Vigilancia y Control del AC.</label>
+                  <label
+                    class="
+                      mb-0
+                      fw-bold
+                      col-form-label col-sm-4 col-md-4 col-lg-4
+                    "
+                    >Cobertura de Vigilancia y Control del AC.</label
+                  >
                   <div class="col-sm-4 col-md-4 col-lg-4">
-                    <input type="text" class="form-control-plaintext " value="1000 (ha)">
+                    <input
+                      type="text"
+                      class="form-control-plaintext"
+                      value="1000 (ha)"
+                    />
                   </div>
                   <div class="col-sm-4 col-md-4 col-lg-4">
-                    <input class="form-control col-sm-4 col-md-4 col-lg-4" type="text" value="500"/>
-                  </div>                  
-                </div>                
+                    <input
+                      class="form-control col-sm-4 col-md-4 col-lg-4"
+                      type="text"
+                      value="500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -76,7 +76,7 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label for="txtCode" class="form-label">Código (*)</label>
-                    <input disabled
+                    <input
                       id="txtCode"
                       type="text"
                       class="form-control"
@@ -1260,12 +1260,66 @@
                                   role="tabpanel"
                                   aria-labelledby="agreement-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode1"
+                                          id="shapefile1"
+                                          (change)="
+                                            changeMode($event, 'polygon1')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile1"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode1"
+                                          id="vertix1"
+                                          (change)="
+                                            changeMode($event, 'point1')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix1"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon1"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile del área de
                                       conservación</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1280,16 +1334,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadConservation($event)"
-                                        [disabled]="upLoadDisable"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1299,7 +1344,10 @@
                                       <div id="fileInfo1"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point1"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1445,12 +1493,66 @@
                                   role="tabpanel"
                                   aria-labelledby="produced-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode2"
+                                          id="shapefile2"
+                                          (change)="
+                                            changeMode($event, 'polygon2')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile2"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode2"
+                                          id="vertix2"
+                                          (change)="
+                                            changeMode($event, 'point2')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix2"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon2"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile del area
                                       productiva</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1465,15 +1567,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadProduced($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1483,7 +1577,10 @@
                                       <div id="fileInfo2"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point2"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1629,12 +1726,66 @@
                                   role="tabpanel"
                                   aria-labelledby="restauration-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode3"
+                                          id="shapefile3"
+                                          (change)="
+                                            changeMode($event, 'polygon3')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile3"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode3"
+                                          id="vertix3"
+                                          (change)="
+                                            changeMode($event, 'point3')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix3"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon3"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile Area de
                                       restauración</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1649,15 +1800,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadRestauration($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1667,7 +1810,10 @@
                                       <div id="fileInfo3"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point3"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1815,12 +1961,66 @@
                                   role="tabpanel"
                                   aria-labelledby="vigilance-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode4"
+                                          id="shapefile4"
+                                          (change)="
+                                            changeMode($event, 'polygon4')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile1"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode4"
+                                          id="vertix4"
+                                          (change)="
+                                            changeMode($event, 'point4')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix4"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon4"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile Area de vigilancia y
                                       control</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1835,15 +2035,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadVigilance($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1853,7 +2045,10 @@
                                       <div id="fileInfo4"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point4"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
