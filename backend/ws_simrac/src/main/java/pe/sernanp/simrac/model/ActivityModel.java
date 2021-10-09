@@ -23,7 +23,7 @@ public class ActivityModel {
 	
 	@JoinColumn (name= "int_compromisoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_actividad_compromiso"))
 	@ManyToOne
-	private CommitmentModel commiment;
+	private CommitmentModel commitment;
 	
 	@JoinColumn (name= "int_plantrabajoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_actividad_plantrabajo"))
 	@ManyToOne
@@ -48,11 +48,11 @@ public class ActivityModel {
 		this.id = id;
 	}
 	
-	public CommitmentModel getCommiment() {
-		return commiment;
+	public CommitmentModel getCommitment() {
+		return commitment;
 	}
-	public void setCommiment(CommitmentModel commiment) {
-		this.commiment = commiment;
+	public void setCommitment(CommitmentModel commitment) {
+		this.commitment = commitment;
 	}
 	
 	public WorkPlanModel getWorkPlan() {
