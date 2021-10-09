@@ -40,54 +40,63 @@ export const environment = {
       url: 'http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_ac/cbs_ac_ambito/MapServer',
       disabled: false,
       name: 'Acuerdos de Conservación',
+      visible:true
     },
     {
       id: 1,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
       disabled: false,
       name: 'Áreas de Naturales Protegidas',
+      visible:true
     },
     {
       id: 2,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
       disabled: false,
       name: 'Áreas de Conservación Regional',
+      visible:false
     },
     {
       id: 3,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
       disabled: false,
       name: 'Áreas de Conservación Privada',
+      visible:false
     },
     {
       id: 4,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000501/MapServer',
       disabled: false,
       name: 'Límite Departamental',
+      visible:false
     },
     {
       id: 5,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000502/MapServer',
       disabled: false,
       name: 'Límite Provincial',
+      visible:false
     },
     {
       id: 6,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000503/MapServer',
       disabled: false,
       name: 'Límite Distrital',
+      visible:false
     },
     {
       id: 7,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000504/MapServer',
       disabled: false,
       name: 'Capitales',
+      visible:false
     },
     {
       id: 8,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_cultura_000201/MapServer',
       disabled: false,
       name: 'Comunidades',
+      visible:false
     },
   ],
   conservationAgreements: [

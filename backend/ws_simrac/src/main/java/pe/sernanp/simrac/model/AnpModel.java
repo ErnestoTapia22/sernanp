@@ -77,4 +77,8 @@ public class AnpModel {
 	public void setWithMasterPlan(int withMasterPlan) {
 		_withMasterPlan = withMasterPlan;
 	}
+	
+	public String getFullName() {
+		return _category + " " + name;
+	}
 }

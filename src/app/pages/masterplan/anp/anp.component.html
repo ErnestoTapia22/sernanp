@@ -85,8 +85,6 @@
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Ubigeo</th>
-                  <th>Categoria</th>
-                  <th>Estado</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -114,10 +112,8 @@
                   >
                     <td>{{ idx + 1 }}</td>
                     <td>{{ item.code }}</td>
-                    <td>{{ item.name }}</td>
+                    <td>{{ item.fullName }}</td>
                     <td>{{ item.district }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.stateName }}</td>
                     <td>
                       <div class="text-nowrap">
                         <button
