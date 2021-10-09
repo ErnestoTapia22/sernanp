@@ -729,9 +729,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       surfaceIntervention: [''],
       hasMasterPlan: true,
       hasDevelopmentPlan: true,
-      livePlan: [0],
-      institutionalPlan:[0],
-      forestZoning: [0],
+      livePlan: [''],
+      institutionalPlan:[''],
+      forestZoning: [''],
       detailMunicipality: [''],
       agreementState: this.fb.group({
         id: [0, Validators.min(1)],
@@ -1051,7 +1051,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log(response);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1094,9 +1093,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             districtId: response.item.districtId,
             hasMasterPlan: response.item.hasMasterPlan,
             hasDevelopmentPlan: response.item.hasDevelopmentPlan,
-            livePlan: response.item.livePlan,
-            institutionalPlan: response.item.institutionalPlan,
-            forestZoning: response.item.forestZoning,
+            livePlan: response.item.livePlan.toString(),
+            institutionalPlan: response.item.institutionalPlan.toString(),
+            forestZoning: response.item.forestZoning.toString(),
             detailMunicipality: response.item.detailMunicipality,
             department: 0,
             province: 0,

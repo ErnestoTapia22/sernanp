@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,15 +22,15 @@ public class AlliedModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_aliado_acuerdo"))
 	@ManyToOne
 	private ConservationAgreementModel conservationAgreement;
 	
-	@JoinColumn (name= "int_categoriaaliadoid", referencedColumnName = "srl_id", nullable=true)
+	@JoinColumn (name= "int_categoriaaliadoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_aliado_categorialiado"))
 	@ManyToOne
 	private AlliedCategoryModel  alliedCategory;	
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

@@ -81,7 +81,7 @@ public class ConservationAgreementDTO implements java.io.Serializable {
 	public void setDistrictId(String districtId) {
 		this.districtId = districtId;
 	}
-
+	
 	public Date getFirm() {
 		return firm;
 	}

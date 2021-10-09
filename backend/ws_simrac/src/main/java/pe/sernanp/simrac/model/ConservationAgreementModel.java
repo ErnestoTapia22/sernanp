@@ -12,10 +12,16 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table (name = "t_acuerdo_conservacion", indexes = {@Index(name = "idx_acuerdoconservacion", columnList = "srl_id",unique = true)})
-public class ConservationAgreementModel {
+public class ConservationAgreementModel implements java.io.Serializable {
 	
 	@Column (name= "srl_id")
 	@Id
@@ -55,6 +61,9 @@ public class ConservationAgreementModel {
 	@Column (name= "var_cod", length=20)	
 	private String code;
 	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column (name= "dte_fec_firma", columnDefinition= "DATE", nullable=false)
 	private Date firm;
 	
@@ -237,6 +246,8 @@ public class ConservationAgreementModel {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date getFirm() {
 		return firm;
 	}
