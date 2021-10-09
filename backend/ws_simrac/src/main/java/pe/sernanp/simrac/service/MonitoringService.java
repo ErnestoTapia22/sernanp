@@ -37,7 +37,8 @@ public class MonitoringService {
 			response.setSuccess(success);
 			return response;
 		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());			
+			throw new Exception(ex.getMessage());
+			
 		}
 	}
 	
