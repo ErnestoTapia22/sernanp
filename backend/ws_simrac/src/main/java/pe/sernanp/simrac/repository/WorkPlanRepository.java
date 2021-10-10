@@ -9,5 +9,5 @@ public interface WorkPlanRepository extends JpaRepository<WorkPlanModel, Integer
 
 	@Query(value="select * from simrac.t_plan_trabajo WHERE int_acuerdoid=:id", nativeQuery=true)
 	List<WorkPlanModel> searchByAgreement(@Param("id") int id);
-	
+		
 }
