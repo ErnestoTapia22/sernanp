@@ -268,6 +268,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       backdrop: 'static',
       centered: true,
     });
+    console.log(this.fieldArrayTotalTemp);
     this.commitmentId = id;
     this.activityListByCommitment();
   }
@@ -280,7 +281,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   addFieldValue() {
     console.log(this.newAttribute);
+    // this.newAttribute.commitment = { id: this.commitmentId };
+    // this.newAttribute.commitmentId = this.commitmentId;
+    // this.newAttribute.isNew = true;
     this.fieldArray.push(this.newAttribute);
+    // this.fieldArrayTotalTemp.push(this.newAttribute);
     this.newAttribute = {};
   }
   deleteFieldValue(index) {
@@ -465,10 +470,10 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const activitiesFound = this.fieldArrayTotalTemp.find(
-      (x) => x.commitmentId == this.commitmentId
-    );
-    console.log(activitiesFound);
+    // const activitiesFound = this.fieldArrayTotalTemp.find(
+    //   (x) => x.commitmentId == this.commitmentId
+    // );
+    // console.log(activitiesFound);
     // if (activitiesFound === undefined || activitiesFound === null) {
     // try {
     //   this.workPlanService
@@ -489,6 +494,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     //   );
     // }
     // } else {
+    debugger;
     this.fieldArray = this.fieldArrayTotalTemp.filter(
       (x) => x.commitmentId === this.commitmentId
     );
@@ -529,7 +535,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     console.log(this.fieldArrayTotalTemp);
 
     this.fieldArray.map((activity) => {
-      debugger;
       activity.commitment = { id: this.commitmentId };
       activity.commitmentId = this.commitmentId;
       if (
@@ -539,7 +544,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       ) {
         activity.isNew = true;
       }
-
+      debugger;
       this.fieldArrayTotalTemp.push(activity);
     });
     this.modalRef.close();
