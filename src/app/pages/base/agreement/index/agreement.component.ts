@@ -182,10 +182,7 @@ export class AgreementComponent implements OnInit {
     this.form = this.fb.group({
       code: ['', Validators.compose([Validators.maxLength(10)])],
       name: [''],
-      firm: [''],
-      firmEnd: [''],
-      state: [''],
-      pageSize: ['10'],
+      //state: [''],
       agreementState: this.fb.group({
         id: [0],
       }),
@@ -195,6 +192,9 @@ export class AgreementComponent implements OnInit {
       departmentId: [''],
       provinceId: [''],
       districtId: [''],
+      firm: [''],
+      firmEnd: [''],
+      pageSize: ['10'],
     });
   }
   ngOnDestroy() {
@@ -259,13 +259,13 @@ export class AgreementComponent implements OnInit {
   }
   clearForm() {
     this.form.reset({
+      code: '',
+      name: '',
       agreementState: { id: 0 },
       anp: { id: 0 },
       departmentId: '',
       provinceId: '',
       districtId: '',
-      code: '',
-      name: '',
       firm: '',
       firmEnd: '',
       pageSize: 10,
@@ -289,7 +289,7 @@ export class AgreementComponent implements OnInit {
       provinceId: '',
       districtId: '',
       firm: '',
-      firmEnd: '',
+      firmEnd: ''
     };
     this.queryObserver.next({
       item: JSON.stringify(item),

@@ -4,10 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,14 +21,16 @@ public class AnswerModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+		
+	@JoinColumn (name= "int_monitoreoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_respuesta_monitoreo"))
+	@ManyToOne
+	private MonitoringModel monitoring;
 	
-	/* @Column (name= "int_actividadid", columnDefinition="INTEGER")
+	@JoinColumn (name= "int_actividadid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_respuesta_actividad"))
+	@ManyToOne
 	private ActivityModel activity;
 	
-	@Column (name= "int_monitoreoid", columnDefinition="INTEGER")
-	private MonitoringModel monitoring;  */
-	
-	@Column (name= "int_valor", columnDefinition="INTEGER")
+	@Column (name= "int_valor")
 	private int value;
 	
 	@Column (name= "tsp_fec", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE", nullable=false)
@@ -41,15 +46,7 @@ public class AnswerModel {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	/*public ActivityModel getActivity() {
-		return activity;
-	}
-
-	public void setActivity(ActivityModel activity) {
-		this.activity = activity;
-	}
+	}	
 
 	public MonitoringModel getMonitoring() {
 		return monitoring;
@@ -57,7 +54,15 @@ public class AnswerModel {
 
 	public void setMonitoring(MonitoringModel monitoring) {
 		this.monitoring = monitoring;
-	}  */
+	}
+
+	public ActivityModel getActivity() {
+		return activity;
+	}
+
+	public void setActivity(ActivityModel activity) {
+		this.activity = activity;
+	}
 
 	public int getValue() {
 		return value;
@@ -83,5 +88,4 @@ public class AnswerModel {
 	public void setState(Boolean state) {
 		this.state = state;
 	}
-		
 }

@@ -1,6 +1,8 @@
 package pe.sernanp.simrac.service;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -98,16 +100,41 @@ public class ConservationAgreementService {
 	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator) throws Exception{
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
+			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());			
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			Page<ConservationAgreementModel> pag = this._repository.search(item.getCode(), item.getName(), 
 													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
-													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), page);
+													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), 
+													value, page);
 			List<ConservationAgreementModel> items = pag.getContent();
 			paginator.setTotal((int)pag.getTotalElements());
 			response.setItems(items);
 			response.setPaginator(paginator);
 			return response;
 			
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public ResponseEntity<ConservationAgreementModel> search2(ConservationAgreementDTO item) throws Exception {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			List<ConservationAgreementModel> items = this._repository.search(item.getCode(), item.getName(), 
+					item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
+					item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), 
+					value);
+			response.setItems(items);
+			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}

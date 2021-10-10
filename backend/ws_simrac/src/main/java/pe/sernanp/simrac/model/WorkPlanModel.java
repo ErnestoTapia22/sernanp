@@ -22,7 +22,7 @@ public class WorkPlanModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_acuerdo"))
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_plantrabajo_acuerdo"))
 	@ManyToOne
 	private ConservationAgreementModel ConservationAgreement;
 	

@@ -1,12 +1,27 @@
 package pe.sernanp.simrac.service;
+
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.AuthorizationRequest;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.stereotype.Service;
+import javax.sql.DataSource;
 
 import pe.sernanp.simrac.dto.RoleDTO;
 import pe.sernanp.simrac.dto.UserDTO;
@@ -33,6 +48,14 @@ public class UserService {
 	@Autowired
 	private ModuleRepository _repositoryModule;
 	
+	//Inicio Agregado
+	@Autowired	
+	private DataSource dataSource;
+	
+	@Value("${security.jwt.resource-ids}")
+	private String resourceIds;
+	
+	//Fin Agregado
 	@Autowired
 	private RoleRepository _repositoryRole;
 
@@ -57,9 +80,9 @@ public class UserService {
 			
 			// Add token
 			
-			//String token = getJWTToken(id);
-			//item.setToken(token);
-			
+			String token = this.getToken(userDTO, id); //this._repository.getToken();
+			userDTO.setToken(token);
+
 			// End add token
 			
 			response.setSuccess(success);
@@ -131,4 +154,46 @@ public class UserService {
 		}
 	}			
 
+	// Inicio TOKEN
+	private String getToken(UserDTO item, String id) {
+		
+		HashMap<String, String> authorizationParameters = new HashMap<String, String>();
+        authorizationParameters.put("scope", "read");
+        authorizationParameters.put("username", item.getName());
+        authorizationParameters.put("client_id", id);
+        authorizationParameters.put("grant", String.valueOf(item.getId()));
+
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(authorizationParameters, authorizationParameters, id, null, null, null, true, id, id, null);
+        //authorizationRequest.setApproved(true);
+
+        HashSet<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorizationRequest.setAuthorities(authorities);
+
+        HashSet<String> resource_Ids = new HashSet<String>();
+        resource_Ids.add(resourceIds);
+        authorizationRequest.setResourceIds(resource_Ids);
+
+        // Create principal and auth token
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(item, null, authorities) ;
+
+        OAuth2Authentication authenticationRequest = new OAuth2Authentication(authorizationRequest.createOAuth2Request(), authenticationToken);
+        authenticationRequest.setAuthenticated(true);
+        
+        TokenStore tokenStore = new JdbcTokenStore(this.dataSource);
+
+        // Token Enhancer
+        TokenEnhancerChain tokenEnhancer = new TokenEnhancerChain();
+
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenEnhancer(tokenEnhancer);
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setTokenStore(tokenStore);
+
+        OAuth2AccessToken accessToken = tokenServices.createAccessToken(authenticationRequest);
+        
+        return ("Bearer " + accessToken.getValue());
+	};
+	//Fin TOKEN
+	
 }

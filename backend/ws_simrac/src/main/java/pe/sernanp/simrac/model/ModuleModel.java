@@ -1,5 +1,7 @@
 package pe.sernanp.simrac.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,12 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table (name = "modulo", schema="sernanp")
-public class ModuleModel {	
+public class ModuleModel implements Serializable {	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Column (name= "idmodulo")
 	@Id

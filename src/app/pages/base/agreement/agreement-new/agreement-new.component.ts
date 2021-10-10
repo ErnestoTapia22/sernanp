@@ -733,10 +733,22 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       genObj: [''],
       finanMod: [''],
       fondName: [''],
-      allied: true,
+      allied: false,
       sectDet: [''],
       surfaceAmbito: [0],
       surfaceIntervention: [''],
+      hasMasterPlan: true,
+      hasDevelopmentPlan: true,
+      livePlan: [''],
+      institutionalPlan:[''],
+      forestZoning: [''],
+      detailMunicipality: [''],
+      hasFirm: true,
+      hasWorkPlan: true,
+      hasActas: true,
+      hasMap: true,
+      hasShape: true,
+      hasMonitoring: true,
       agreementState: this.fb.group({
         id: [0, Validators.min(1)],
       }),
@@ -1055,7 +1067,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log(response);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1099,6 +1110,18 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             surfaceIntervention:
               response.item.surfaceIntervention || 'Sin datos',
             districtId: response.item.districtId,
+            hasMasterPlan: response.item.hasMasterPlan,
+            hasDevelopmentPlan: response.item.hasDevelopmentPlan,
+            livePlan: response.item.livePlan.toString(),
+            institutionalPlan: response.item.institutionalPlan.toString(),
+            forestZoning: response.item.forestZoning.toString(),
+            detailMunicipality: response.item.detailMunicipality,
+            hasFirm: response.item.hasFirm,
+            hasWorkPlan: response.item.hasWorkPlan,
+            hasActas: response.item.hasActas,
+            hasMap: response.item.hasMap,
+            hasShape: response.item.hasShape,
+            hasMonitoring: response.item.hasMonitoring,
             department: 0,
             province: 0,
             district: 0,

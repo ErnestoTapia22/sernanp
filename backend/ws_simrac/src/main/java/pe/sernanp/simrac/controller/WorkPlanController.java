@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import pe.sernanp.simrac.dto.WorkPlanDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.WorkPlanModel;
 import pe.sernanp.simrac.service.WorkPlanService;
@@ -43,4 +45,14 @@ public class WorkPlanController extends BaseController {
 		}
 	}	
 	
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	@ResponseBody()
+	private ResponseEntity<?> save2 (@RequestBody WorkPlanDTO item) {
+		try {
+			ResponseEntity<?> response = this._service.save2(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}		
+	}
 }

@@ -37,8 +37,14 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 			+ "		inner join sernanp.usuario as u on sr.idusuario=u.idusuario "
 			+ "		where s.idsistema=:psystem)", nativeQuery=true)
 	List <UserModel> searchWithoutLogin(@Param("pdni") String pdni, @Param("psystem") int psystem);
-	
-	@Modifying
+
 	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (:proleid, :pid, 1, :pregistrationdate)", nativeQuery=true)
-	int insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
+	void insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
+	
+	//METODO PARA OBTENER UN TOKEN Y SETEARLO AL USUARIO
+	/*@Query(value = "SELECT substr(encode(TOKEN, 'escape'), position('bearer' in encode(TOKEN, 'escape')) +9,\r\n"
+			+ " LENGTH(encode(TOKEN, 'escape'))) as TOKEN\r\n"
+			+ "	from oauth_access_token limit 1", nativeQuery=true)
+	String getToken();*/
+
 }

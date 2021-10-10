@@ -2,7 +2,7 @@ package pe.sernanp.simrac.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import pe.sernanp.extension.JsonMapper;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import java.io.IOException;

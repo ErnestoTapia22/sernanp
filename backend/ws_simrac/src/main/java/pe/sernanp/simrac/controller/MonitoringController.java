@@ -1,7 +1,8 @@
 package pe.sernanp.simrac.controller;
+
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +19,7 @@ import pe.sernanp.simrac.service.MonitoringService;
 public class MonitoringController extends BaseController {
 
 	@Autowired
-	private MonitoringService _service;
-	
-	@RequestMapping(value = "/list")
-	@GetMapping
-	private ResponseEntity<MonitoringModel> List () {
-		ResponseEntity<MonitoringModel> response = new ResponseEntity<>();
-		try {
-			response = this._service.list();
-		} catch (Exception ex) {
-			response.setMessage(ex);
-		}
-		return response;	
-	}
+	private MonitoringService _service;	
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
@@ -43,24 +32,14 @@ public class MonitoringController extends BaseController {
 		}		
 	}
 		
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/searchbyagreement/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	private ResponseEntity<?> delete (@PathVariable("id") int id) {
+	public ResponseEntity<MonitoringModel> searchByAgreement(@PathVariable("id") int id) throws IOException {
 		try {
-			ResponseEntity<?> response = this._service.delete(id);
+			ResponseEntity<MonitoringModel> response = this._service.searchByAgreement(id);
 			return response;
 		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}
-	}
-		
-	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	@ResponseBody()
-	private ResponseEntity<MonitoringModel> detail (@PathVariable ("id") int id) {
-		try {
-			ResponseEntity<MonitoringModel> response = this._service.detail(id);
-			return response;
-		} catch(Exception ex) {
 			return super.getJSON(ex);
 		}
 	}	
