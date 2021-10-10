@@ -33,17 +33,21 @@ import pe.gisriv.entity.ResponseEntity;
 import pe.gisriv.extension.spatial.Reader;
 import pe.gisriv.extension.spatial.ShapeFileReader;
 import pe.sernanp.simrac.model.BaseGeometryEntity;
+import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.model.EconomicActivityModel;
 import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.model.SpatialReferenceEntity;
 import pe.sernanp.simrac.repository.ConservationAgreementRepository;
+import pe.sernanp.simrac.service.CommitmentService;
 
 @Service
 public class ConservationAgreementService extends BaseService<ConservationAgreementModel> {
 
 	@Autowired
 	private ConservationAgreementRepository _repository;
+	@Autowired
+	private CommitmentService _commitmentService;
 
 	@Override
 	public ResponseEntity<ConservationAgreementModel> list() throws Exception {
@@ -276,14 +280,17 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 	public org.springframework.http.ResponseEntity<byte[]> generatePdf(int id) throws Exception, JRException {
 
 		ConservationAgreementModel agreementDetail = this._repository.detail(this._dataSource, id);
+		ResponseEntity<CommitmentModel> comitments = this._commitmentService.search(id);
 
-		JRBeanCollectionDataSource beanCollectorDatasource = new JRBeanCollectionDataSource(
-				Collections.singletonList("Invoice"));
+		// JRBeanCollectionDataSource beanCollectorDatasource = new
+		// JRBeanCollectionDataSource(
+		// Collections.singletonList("Invoice"));
+		JRBeanCollectionDataSource beanCollectorDatasource = new JRBeanCollectionDataSource(comitments.getItems());
 		JasperReport compileReport = JasperCompileManager
 				.compileReport(new FileInputStream("src/main/resources/ReportAgreementDetail.jrxml"));
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("code", agreementDetail.getCode());
-		map.put("anp", agreementDetail.getAnp().getId());
+		map.put("anp", agreementDetail.getAnp().getName());
 		map.put("state", agreementDetail.getState());
 		JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectorDatasource);
 		byte[] data = JasperExportManager.exportReportToPdf(report);
