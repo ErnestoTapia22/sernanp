@@ -22,7 +22,6 @@ public class WorkPlanService {
 	
 	@Autowired
 	private ActivityRepository _activityRepository;
-	private ActivityRepository _repository2;
 
 	public ResponseEntity save (WorkPlanModel item) throws Exception{
 		try {
@@ -92,7 +91,7 @@ public class WorkPlanService {
 				activity.getWorkPlan().setId(item2.getId());
 				activity.setRegistrationDate(activity.getRegistrationDate());
 				try {
-					this._repository2.save(activity);
+					this._activityRepository.save(activity);
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
