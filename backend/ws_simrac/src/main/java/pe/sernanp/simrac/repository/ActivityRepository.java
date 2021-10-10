@@ -9,7 +9,10 @@ import pe.sernanp.simrac.model.ActivityModel;
 
 public interface ActivityRepository extends JpaRepository<ActivityModel, Integer> {
 	
-
-	@Query(value="select * from simrac.t_actividad WHERE 1=1", nativeQuery=true)
-    List<ActivityModel> searchByMonitoringAndAgreement(@Param("id") int id);
+		
+	@Query(value="select a.* from simrac.t_actividad as a "
+			+ "	inner join simrac.t_plan_trabajo as pt on pt.srl_id = a.int_plantrabajoid and pt.bol_activo = true "
+			+ "	where pt.int_acuerdoid=:pagreementid "
+			+ "	order by a.srl_id", nativeQuery=true)
+    List<ActivityModel> searchByAgreement(@Param("pagreementid") int id);
 }

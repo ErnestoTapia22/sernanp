@@ -3,7 +3,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.ActivityModel;
 import pe.sernanp.simrac.model.WorkPlanModel;
+import pe.sernanp.simrac.repository.ActivityRepository;
 import pe.sernanp.simrac.repository.WorkPlanRepository;
 
 @Service
@@ -11,6 +13,9 @@ public class WorkPlanService {
 	
 	@Autowired
 	private WorkPlanRepository _repository;
+	
+	@Autowired
+	private ActivityRepository _activityRepository;
 
 	public ResponseEntity save (WorkPlanModel item) throws Exception{
 		try {
@@ -48,10 +53,12 @@ public class WorkPlanService {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<WorkPlanModel> response = new ResponseEntity<WorkPlanModel>();
-			List<WorkPlanModel> item = this._repository.searchByAgreement(id);
+			ResponseEntity<WorkPlanModel> response = new ResponseEntity<WorkPlanModel>();			
+			List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
+			WorkPlanModel item = new WorkPlanModel();
+			//item.setActivities(items);
 			response.setSuccess(success);
-			response.setItems(item);
+			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
