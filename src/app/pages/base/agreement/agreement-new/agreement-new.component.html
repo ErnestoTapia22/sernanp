@@ -109,7 +109,7 @@
                           alliedForm.get('anp.id').errors?.pattern) -->
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
-                        {{ item.name }}
+                        {{ item.fullName }}
                       </option>
                     </select>
                     <!-- <ng-select

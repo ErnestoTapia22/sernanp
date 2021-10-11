@@ -140,7 +140,7 @@
                     <select id="ddAnp" class="form-select" formControlName="id">
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
-                        {{ item.name }}
+                        {{ item.fullName }}
                       </option>
                     </select>
                   </div>

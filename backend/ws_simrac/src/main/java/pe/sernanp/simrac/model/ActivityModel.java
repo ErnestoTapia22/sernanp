@@ -27,9 +27,9 @@ public class ActivityModel {
 	
 	@JoinColumn (name= "int_plantrabajoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_actividad_plantrabajo"))
 	@ManyToOne
-	private WorkPlanModel workPlan;	
+	private WorkPlanModel workPlan;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=50, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

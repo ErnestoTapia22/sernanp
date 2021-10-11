@@ -1,4 +1,5 @@
 package pe.sernanp.simrac.dto;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import pe.sernanp.simrac.model.ActivityModel;
@@ -48,7 +49,8 @@ public class WorkPlanDTO {
 		this.description = description;
 	}
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;

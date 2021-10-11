@@ -71,7 +71,7 @@
                   <select class="form-select" formControlName="id">
                     <option selected value="0">SELECCIONE</option>
                     <option *ngFor="let item of anps" [value]="item.id">
-                      {{ item.name }}
+                      {{ item.fullName }}
                     </option>
                   </select>
                 </div>

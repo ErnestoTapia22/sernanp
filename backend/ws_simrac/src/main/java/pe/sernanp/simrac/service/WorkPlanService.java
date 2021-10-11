@@ -111,16 +111,16 @@ public class WorkPlanService {
 	
 	
 	
-	public ResponseEntity<WorkPlanModel> search(int id) throws Exception {
+	public ResponseEntity<WorkPlanDTO> search(int id) throws Exception {
 		try {
 			if (id == 0) {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<WorkPlanModel> response = new ResponseEntity<WorkPlanModel>();			
+			ResponseEntity<WorkPlanDTO> response = new ResponseEntity<WorkPlanDTO>();			
 			List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
-			WorkPlanModel item = new WorkPlanModel();
-			//item.setActivities(items);
+			WorkPlanDTO item = new WorkPlanDTO();
+			item.setActivities(items);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;
