@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f5612997-1cd5-4f6d-87db-9598214c101a",
+		"_postman_id": "8a4e9c8c-b2b6-4a3c-8271-6e62916a6643",
 		"name": "SERNANP Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -726,7 +726,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"39\"  },\r\n    \"allied\": { \"id\": \"52\"  },\r\n    \"actionLine\": { \"id\":\"13\" },   \r\n\r\n    \"description\": \"prueba2\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"SSS\",\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \r\n    \"id\": 0,\r\n   \r\n    \"conservationAgreement\": { \"id\": \"78\"  },\r\n    \"allied\": { \"id\": \"84\"  },\r\n    \"actionLine\": { \"id\":\"13\" },   \r\n\r\n    \"description\": \"prueba2\",\r\n    \"registrationDate\": \"2018-10-20\" ,\r\n    \"state\": true,\r\n    \"indicator\":\"aaaaaaa\",\r\n    \"active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1335,7 +1335,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"conservationAgreement\": {\"id\":100},\r\n    \"year\": 2020,\r\n    \"activities\" : [\r\n        {\r\n            \"name\":\"Nuevo Valores1\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":19},\r\n            \"semester\":\"1\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores2\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":20},\r\n            \"semester\":\"2\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores3\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":21},\r\n            \"semester\":\"1,2\"\r\n        }\r\n    ]\r\n }",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"conservationAgreement\": {\"id\":78},\r\n    \"name\":\"name222\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"year\":2020,\r\n    \"version\":2222,\r\n    \"active\":true,\r\n\r\n    \"activities\" : [\r\n        {\r\n            \"name\":\"Nuevo Valores1\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":175},\r\n            \"semester\":\"1\",\r\n            \"registrationDate\": \"2018-10-20\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores2\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":89},\r\n            \"semester\":\"2\",\r\n            \"registrationDate\": \"2018-10-20\"\r\n        },\r\n        {\r\n            \"name\":\"Nuevo Valores3\",\r\n            \"description\":\"\",\r\n            \"goal\":100,\r\n            \"indicator\":\"Nº Valor\",\r\n            \"active\":true,\r\n            \"commitment\":{\"id\":89},\r\n            \"semester\":\"1,2\",\r\n            \"registrationDate\": \"2018-10-20\"\r\n        }\r\n    ]\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1385,7 +1385,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":0, \r\n    \"commiment\" : { \"id\":54 },\r\n    \"workPlan\" : { \"id\":46 },\r\n    \"name\":\"name11\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\"\r\n}",
+							"raw": "{\r\n    \"id\":0, \r\n    \"commitment\" : { \"id\":175 },\r\n    \"workPlan\" : { \"id\":176 },\r\n    \"name\":\"name11\",\r\n    \"description\":\"aaaa\",\r\n    \"state\":true,\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"goal\":\"1111\",\r\n    \"semester\":\"aaaa\",\r\n    \"active\":true,\r\n    \"indicator\":\"aaaa\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1417,7 +1417,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\":\"se comenta que\",\r\n    \"recommendation\":\"se recomienda\",\r\n    \"evaluation\":\"apto\",\r\n    \"description\":\"\",\r\n    \"achievement\":\"ssss\",\r\n    \"activities\" : [\r\n        {\r\n            \"id\":10,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":11,\r\n            \"value\":100\r\n        },\r\n        {\r\n            \"id\":12,\r\n            \"value\":100\r\n        }\r\n    ]\r\n }",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"description\":\"description\",\r\n    \"state\": true,\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"comment\":\"se comenta que\",    \r\n    \"achievement\":\"ssss\",\r\n    \"recommendation\":\"se recomienda\",\r\n    \"evaluation\":\"apto\",\r\n    \"active\":\"true\"    \r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1425,6 +1425,47 @@
 							}
 						},
 						"url": "http://localhost:8050/simrac/api/monitoring/save"
+					},
+					"response": []
+				},
+				{
+					"name": "MonitoringInsert2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\":\"se comenta que\",\r\n    \"recommendation\":\"se recomienda\",\r\n    \"evaluation\":\"apto\",\r\n    \"description\":\"\",\r\n    \"achievement\":\"ssss\",\r\n    \"activities\" : [\r\n        {\r\n            \"id\":177,\r\n            \"value\":100\r\n        }    \r\n    ]\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/monitoring/save2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Answer",
+			"item": [
+				{
+					"name": "AnswerInsert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"activity\" : { \"id\":68 },\r\n    \"monitoring\" : { \"id\":79 },\r\n    \"value\": 100,\r\n    \"recommendation\":\"se recomienda\",\r\n    \"registrationDate\": \"2018-10-20\",\r\n    \"state\": \"true\"\r\n        \r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8050/simrac/api/answer/save"
 					},
 					"response": []
 				}

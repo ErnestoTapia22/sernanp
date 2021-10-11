@@ -1,5 +1,4 @@
 package pe.sernanp.simrac.controller;
-
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import pe.sernanp.simrac.dto.MonitoringDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.MonitoringModel;
 import pe.sernanp.simrac.service.MonitoringService;
@@ -32,6 +33,17 @@ public class MonitoringController extends BaseController {
 		}		
 	}
 		
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	@ResponseBody()
+	private ResponseEntity<?> save2 (@RequestBody MonitoringDTO item) {
+		try {
+			ResponseEntity<?> response = this._service.save2(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}		
+	}	
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/searchbyagreement/{id}", method = RequestMethod.GET)
 	@ResponseBody()
@@ -42,5 +54,5 @@ public class MonitoringController extends BaseController {
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
-	}	
+	}		
 }

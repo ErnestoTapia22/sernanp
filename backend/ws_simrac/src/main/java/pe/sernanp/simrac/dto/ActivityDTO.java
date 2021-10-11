@@ -18,33 +18,18 @@ import pe.sernanp.simrac.model.WorkPlanModel;
 
 public class ActivityDTO {	
 	
-	private int id;
-	
-	private String name;
-	
-	private CommitmentModel commitment;
-	
-	
-	private WorkPlanModel workPlan;	
-	
-	
-	private String description;
-	
-	
-	private Date registrationDate;
-	
-	
+	private int id;	
+	private String name;	
+	private CommitmentModel commitment;	
+	private WorkPlanModel workPlan;			
+	private String description;	
+	private Date registrationDate;	
 	private Boolean state;	
-	
-	
-	private int meta;	
-	
-	
-	private Boolean active;	
-	
-	
-	private String semester;		
-	
+	private int goal;	
+	private Boolean active;		
+	private String semester;
+	private int value;
+
 		
 	public int getId() {
 		return id;
@@ -92,11 +77,11 @@ public class ActivityDTO {
 		this.state = state;
 	}	
 	
-	public int getMeta() {
-		return meta;
+	public int getGoal() {
+		return goal;
 	}
-	public void setMeta(int meta) {
-		this.meta = meta;
+	public void setGoal(int meta) {
+		this.goal = meta;
 	}
 	public Boolean getActive() {
 		return active;
@@ -110,4 +95,11 @@ public class ActivityDTO {
 	public void setSemester(String semester) {
 		this.semester = semester;
 	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
+	}
+	
 }

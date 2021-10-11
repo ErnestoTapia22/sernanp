@@ -43,8 +43,8 @@ public class CommitmentModel {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;
 	
-	@Column (name= "var_indicador", length=50, columnDefinition= "CHARACTER VARYING")
-	private String name;
+	@Column (name= "var_indicador", columnDefinition="TEXT", nullable=true)
+	private String indicator;
 	
 	@Column (name= "bol_activo", nullable=false)	
 	private Boolean active;
@@ -106,12 +106,12 @@ public class CommitmentModel {
 		this.state = state;
 	}
 
-	public String getName() {
-		return name;
+	public String getIndicator() {
+		return indicator;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setIndicator(String _indicator) {
+		this.indicator = _indicator;
 	}
 
 	public Boolean getActive() {

@@ -29,7 +29,7 @@ public class ActivityModel {
 	@ManyToOne
 	private WorkPlanModel workPlan;
 	
-	@Column (name= "var_nom", length=200, nullable=false)
+	@Column (name= "var_nom", columnDefinition="TEXT", nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
@@ -42,12 +42,15 @@ public class ActivityModel {
 	private Boolean state;	
 	
 	@Column (name= "int_meta")	
-	private int meta;	
+	private int goal;	
 	
 	@Column (name= "bol_activo")	
 	private Boolean active;	
 	
-	@Column (name= "var_semestre")	
+	@Column (name= "var_indicador", length=200)
+	private String indicator;
+	
+	@Column (name= "var_semestre", length=50)	
 	private String semester;	
 		
 	public int getId() {
@@ -95,11 +98,11 @@ public class ActivityModel {
 	public void setState(Boolean state) {
 		this.state = state;
 	}	
-	public int getMeta() {
-		return meta;
+	public int getGoal() {
+		return goal;
 	}
-	public void setMeta(int meta) {
-		this.meta = meta;
+	public void setGoal(int goal) {
+		this.goal = goal;
 	}
 	public Boolean getActive() {
 		return active;
@@ -113,4 +116,11 @@ public class ActivityModel {
 	public void setSemester(String semester) {
 		this.semester = semester;
 	}
+	public String getIndicator() {
+		return indicator;
+	}
+	public void setIndicator(String indicator) {
+		this.indicator = indicator;
+	}
+	
 }

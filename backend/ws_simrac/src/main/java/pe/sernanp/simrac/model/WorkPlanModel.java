@@ -118,7 +118,6 @@ public class WorkPlanModel {
 
 	public void setActive(Boolean active) {
 		this.active = active;
-	}
-	
+	}	
 	
 }
