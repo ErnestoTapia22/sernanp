@@ -18,6 +18,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { query } from '@angular/animations';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { debug } from 'console';
 @Component({
   selector: 'app-work-plan',
   templateUrl: './work-plan.component.html',
@@ -270,6 +271,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     });
     console.log(this.fieldArrayTotalTemp);
     this.commitmentId = id;
+
     this.activityListByCommitment();
   }
   onCreateEvaluationModal(content) {
@@ -494,7 +496,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     //   );
     // }
     // } else {
-    debugger;
+
     this.fieldArray = this.fieldArrayTotalTemp.filter(
       (x) => x.commitmentId === this.commitmentId
     );
@@ -544,7 +546,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       ) {
         activity.isNew = true;
       }
-      debugger;
+
       this.fieldArrayTotalTemp.push(activity);
     });
     this.modalRef.close();

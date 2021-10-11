@@ -291,7 +291,27 @@ public class ConservationAgreementService extends BaseService<ConservationAgreem
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("code", agreementDetail.getCode());
 		map.put("anp", agreementDetail.getAnp().getName());
-		map.put("state", agreementDetail.getState());
+		map.put("state", agreementDetail.getState() == true?"Activo":"Inactivo");
+		map.put("vigency", agreementDetail.getVigency());
+		map.put("name", agreementDetail.getName());
+		map.put("firm", agreementDetail.getFirm());
+		map.put("observations", agreementDetail.getObservation());
+
+		map.put("hombres", agreementDetail.getPartMen());
+		map.put("mujeres", agreementDetail.getPartWomen());
+		map.put("numfamily", agreementDetail.getNumFamily());
+		map.put("famdetalle", agreementDetail.getBenFamily());
+		map.put("benedetalle", agreementDetail.getBenPerson());
+		map.put("beneindirect", agreementDetail.getBenIndirect());
+		map.put("producearea", agreementDetail.getAreaAmbitc());
+		map.put("superintervencion", agreementDetail.getProducedArea());
+		map.put("supdetalle", agreementDetail.getDetailProduction());
+		map.put("suprestauracion", agreementDetail.getRestHect());
+		map.put("supcontrol", agreementDetail.getSectHect());
+		map.put("supdetallerestauracion", agreementDetail.getRestdet());
+		map.put("sectorvc", agreementDetail.getSectNom());
+		map.put("supvcdetalle", agreementDetail.getSectDet());
+		map.put("modgestionadc", agreementDetail.getTerritoryMod());
 		JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectorDatasource);
 		byte[] data = JasperExportManager.exportReportToPdf(report);
 		HttpHeaders headers = new HttpHeaders();
