@@ -2,6 +2,8 @@ package pe.sernanp.simrac.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import pe.sernanp.simrac.dto.ActivityDTO;
 
 @Entity
 @Table (name = "t_monitoreo", indexes = {@Index(name = "idx_monitoreo", columnList = "srl_id",unique = true)})
@@ -42,6 +47,9 @@ public class MonitoringModel {
 	
 	@Column (name= "txt_evaluacion", columnDefinition="TEXT")
 	private String evaluation;
+	
+	@Transient
+	private List<ActivityDTO> activities;
 
 	public int getId() {
 		return id;
@@ -114,5 +122,13 @@ public class MonitoringModel {
 
 	public void setEvaluation(String evaluation) {
 		this.evaluation = evaluation;
-	}			
+	}	
+	
+	public List<ActivityDTO> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<ActivityDTO> activities) {
+		this.activities = activities;
+	}
 }

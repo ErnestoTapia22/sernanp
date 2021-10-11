@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import pe.sernanp.simrac.dto.ActivityDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ActivityModel;
 import pe.sernanp.simrac.model.AnswerModel;
@@ -55,35 +57,22 @@ public class MonitoringService {
 			}
 			boolean success = true;
 			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
-			List<AnswerModel> activities = this._answerRepository.searchByMonitoringAndAgreement(id);
-			List<Integer> monitoringIds = new ArrayList<Integer>();
-			//activities.forEach(activity -> {
-			//	if (!monitoringIds.contains(activity.getMonitoring().getId2()))
-			//		monitoringIds.add(activity.getMonitoring().getId2());
-			//});
-			//List<MonitoringModel> items = new ArrayList<MonitoringModel>();
-			//for (int monitoringId : monitoringIds) {
-			//	MonitoringModel item = this._repository.findById(monitoringId).get();
-			//	items.add(item);
-			//}
-			//for (MonitoringModel item : items) {
-			//	List<ActivityModel> activitiesFound = new ArrayList<ActivityModel>();
-			//	int values = 0;
-			//	int goals = 0;
-			//	for (ActivityModel activity : activities) {
-			//		if (activity.getMonitoring().getId2() == item.getId2()) {
-			//			values += activity.getValue();
-			//			goals += activity.getGoal();
-			//			activitiesFound.add(activity);
-			//		}
-			//	}
-			//	for (ActivityModel activity : activities) {
-			//		activity.getCommitment().setProgress(values, goals);
-			//	}
-			//	item.setActivities(activitiesFound);
-			//}
+			List<MonitoringModel> items = this._repository.searchByMonitoringAndAgreement(id);
+			items.forEach(item -> {
+				List<AnswerModel> activities = this._answerRepository.searchByMonitoringAndAgreement(id);
+				
+				List<ActivityDTO> items2 = new ArrayList<ActivityDTO>();
+				activities.forEach(t -> {
+					ActivityDTO itemActivity = new ActivityDTO();
+					itemActivity.setState(t.getState());
+					itemActivity.setMeta(t.getActivity().getMeta());
+					itemActivity.setSemester(t.getActivity().getSemester());					
+					items2.add(itemActivity);
+				});				
+				item.setActivities(items2);
+			});
 			response.setSuccess(success);
-			//response.setItems(items);
+			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
