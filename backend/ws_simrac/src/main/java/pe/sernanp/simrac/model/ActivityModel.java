@@ -40,6 +40,17 @@ public class ActivityModel {
 	
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;	
+	
+	@Column (name= "int_meta")	
+	private int meta;	
+	
+	@Column (name= "bol_activo")	
+	private Boolean active;	
+	
+	@Column (name= "var_semestre")	
+	private int semester;	
+	
+	
 		
 	public int getId() {
 		return id;
