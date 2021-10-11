@@ -81,15 +81,16 @@ export class AgreementComponent implements OnInit {
             this.page = data.paginator.offset;
             this.pageSize = data.paginator.limit;
             this.isLoading = false;
-            this.spinner.hide();
+
             this.setTableHeight(this.pageSize, data.items.length);
           } else {
             this.isLoading = false;
-            this.spinner.hide();
+
             this.alertService.info('No se encontraron elementos', 'Ok', {
               autoClose: true,
             });
           }
+          this.spinner.hide();
         });
     } catch (error) {
       this.isLoading = false;
@@ -256,7 +257,7 @@ export class AgreementComponent implements OnInit {
       );
     }
   }
-  clearForm() {   
+  clearForm() {
     this.form.reset({
       code: '',
       name: '',
@@ -267,12 +268,12 @@ export class AgreementComponent implements OnInit {
       districtId: '',
       firm: '',
       firmEnd: '',
-      pageSize : 10
+      pageSize: 10,
     });
     this.initQuery();
     this.onSearch();
   }
-  initQuery() {    
+  initQuery() {
     let paginator = {
       limit: this.pageSize,
       offset: '1',

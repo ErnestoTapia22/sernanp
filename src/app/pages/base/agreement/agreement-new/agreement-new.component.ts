@@ -227,6 +227,16 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   newAttributeAV: any = {};
   editAttribute: any = {};
   upLoadDisable: boolean = false;
+  geometryMode: any = {
+    polygon1: true,
+    point1: false,
+    polygon2: true,
+    point2: false,
+    polygon3: true,
+    point3: false,
+    polygon4: true,
+    point4: false,
+  };
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -696,7 +706,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       description: [''],
       state: [true],
       registrationDate: [''],
-      code: [''],
+      code: [{ value: '', disabled: true }],
       vigency: [
         0,
         Validators.compose([Validators.required, Validators.min(1)]),
@@ -1087,12 +1097,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             finanMod: response.item.finanMod,
             fondName: response.item.fondName,
             allied: response.item.allied,
-            anp: { id: response.item.anp.id || 0 },
-            source: { id: response.item.source == null ? 0:  response.item.source.id },
-            //ecosystemType: { id: 0 },
-            localization: '',//response.item.localization,
-            surfaceAmbito: '',//response.item.surfaceAmbito,
-            surfaceIntervention: '',//response.item.surfaceIntervention,
+            anp: { id: response.item.anp.id || 0 },            
+            localization: response.item.localization || 'Sin datos',
+            surfaceAmbito: response.item.surfaceAmbito || 'Sin datos',
+            surfaceIntervention: response.item.surfaceIntervention || 'Sin datos',
             districtId: response.item.districtId,
             hasMasterPlan: '',//response.item.hasMasterPlan,
             hasDevelopmentPlan: '',//response.item.hasDevelopmentPlan,
@@ -1594,24 +1602,27 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
-    this.layersGraphic.forEach((layer, index) => {
-      const featureLayer = new FeatureLayer({
-        url: layer.attributes.url,
-        id: layer.attributes.id,
-        popupEnabled: true,
-        outFields: ['*'],
-        definitionExpression: `ac_codi = '${agreementCode}'`,
-      });
-      // featureLayer.when((loaded) => {
-      //   console.log(loaded);
-      // });
-      this.map.add(featureLayer);
-      if (index == 1) {
-        this.zoomToLayer(featureLayer);
-      }
-      // this.addGraphics(featureLayer);
+
+    const featureLayer = new FeatureLayer({
+      url: this.layersGraphic[0].attributes.url,
+      id: this.layersGraphic[0].attributes.id,
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `ac_codi = '${agreementCode}'`,
     });
-    // this.zoomToLayer;
+    // featureLayer.when((loaded) => {
+    //   console.log(loaded);
+    // });
+
+    // debugger;
+
+    this.map.add(featureLayer);
+
+    this.zoomToLayer(featureLayer);
+
+    // this.addGraphics(featureLayer);
+
+    //  this.zoomToLayer;
   }
   zoomToLayer(layer: FeatureLayer) {
     layer
@@ -1883,5 +1894,19 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     console.log(jsonGraphic);
     arrayGraphics.push(Graphic.fromJSON(jsonGraphic));
     return arrayGraphics;
+  }
+  changeMode($event, variable: string) {
+    const checked = $event.target.checked;
+    const fisrtpart = variable.substring(0, 3);
+    const lastChar = variable.substr(variable.length - 1);
+    if (checked) {
+      if (fisrtpart === 'pol') {
+        this.geometryMode[`point${lastChar}`] = false;
+        this.geometryMode[variable] = true;
+      } else {
+        this.geometryMode[`polygon${lastChar}`] = false;
+        this.geometryMode[variable] = true;
+      }
+    }
   }
 }

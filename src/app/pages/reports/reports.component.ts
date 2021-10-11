@@ -74,7 +74,7 @@ export class ReportsComponent implements OnInit {
     this.mapViewProperties = {
       center: [-75.744, -8.9212],
       zoom: 9,
-    };    
+    };
 
     this.buildForm();
     this.fillSelects();
@@ -112,7 +112,7 @@ export class ReportsComponent implements OnInit {
     const q = this.queryObserver.getValue();
     q.item = JSON.stringify(filters);
     console.log(q.item);
-    this.queryObserver.next(q);    
+    this.queryObserver.next(q);
 
     this.onSearch();
   }
@@ -190,7 +190,7 @@ export class ReportsComponent implements OnInit {
     if (id == 0) {
       this.provinces = [];
       return;
-    }    
+    }
     this.districts = [];
     try {
       this.agreementService
@@ -214,7 +214,7 @@ export class ReportsComponent implements OnInit {
     if (id == 0) {
       this.districts = [];
       return;
-    }    
+    }
     try {
       this.agreementService.searchDistricts(id).subscribe((response) => {
         if (response && response.items.length > 0) {
@@ -433,6 +433,7 @@ export class ReportsComponent implements OnInit {
         .subscribe((response) => {
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
+            console.log(this.commitmentsList);
           }
         });
     } catch (error) {
@@ -441,7 +442,7 @@ export class ReportsComponent implements OnInit {
       });
     }
   }
-  clearForm() {   
+  clearForm() {
     this.form.reset({
       agreementState: { id: 0 },
       anp: { id: 0 },
@@ -452,12 +453,12 @@ export class ReportsComponent implements OnInit {
       name: '',
       firm: '',
       firmEnd: '',
-      pageSize : 10
+      pageSize: 10,
     });
     this.initQuery();
     this.onSearch();
   }
-  initQuery() {    
+  initQuery() {
     let paginator = {
       limit: this.pageSize,
       offset: '1',
