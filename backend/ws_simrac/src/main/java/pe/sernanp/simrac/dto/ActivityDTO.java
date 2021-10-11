@@ -43,7 +43,7 @@ public class ActivityDTO {
 	private Boolean active;	
 	
 	
-	private int semester;		
+	private String semester;		
 	
 		
 	public int getId() {
@@ -104,10 +104,10 @@ public class ActivityDTO {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
 	}
-	public void setSemester(int semester) {
+	public void setSemester(String semester) {
 		this.semester = semester;
 	}
 }

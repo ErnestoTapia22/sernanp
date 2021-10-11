@@ -48,9 +48,7 @@ public class ActivityModel {
 	private Boolean active;	
 	
 	@Column (name= "var_semestre")	
-	private int semester;	
-	
-	
+	private String semester;	
 		
 	public int getId() {
 		return id;
@@ -109,10 +107,10 @@ public class ActivityModel {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
 	}
-	public void setSemester(int semester) {
+	public void setSemester(String semester) {
 		this.semester = semester;
 	}
 }
