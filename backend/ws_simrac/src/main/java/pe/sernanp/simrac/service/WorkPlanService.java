@@ -21,7 +21,7 @@ public class WorkPlanService {
 	private WorkPlanRepository _repository;
 	
 	@Autowired
-	private ActivityRepository _repository2;
+	private ActivityRepository _activityRepository;
 
 	public ResponseEntity save (WorkPlanModel item) throws Exception{
 		try {
@@ -91,7 +91,7 @@ public class WorkPlanService {
 				activity.getWorkPlan().setId(item2.getId());
 				activity.setRegistrationDate(activity.getRegistrationDate());
 				try {
-					this._repository2.save(activity);
+					this._activityRepository.save(activity);
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -117,10 +117,12 @@ public class WorkPlanService {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<WorkPlanModel> response = new ResponseEntity<WorkPlanModel>();
-			List<WorkPlanModel> item = this._repository.searchByAgreement(id);
+			ResponseEntity<WorkPlanModel> response = new ResponseEntity<WorkPlanModel>();			
+			List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
+			WorkPlanModel item = new WorkPlanModel();
+			//item.setActivities(items);
 			response.setSuccess(success);
-			response.setItems(item);
+			response.setItem(item);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

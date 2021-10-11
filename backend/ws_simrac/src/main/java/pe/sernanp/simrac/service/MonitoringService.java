@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ActivityModel;
+import pe.sernanp.simrac.model.AnswerModel;
 import pe.sernanp.simrac.model.MonitoringModel;
 import pe.sernanp.simrac.repository.ActivityRepository;
+import pe.sernanp.simrac.repository.AnswerRepository;
 import pe.sernanp.simrac.repository.MonitoringRepository;
 
 @Service
@@ -16,7 +18,7 @@ public class MonitoringService {
 	private MonitoringRepository _repository;
 	
 	@Autowired
-	private ActivityRepository _activityRepository;
+	private AnswerRepository _answerRepository;
 	
 	public ResponseEntity save (MonitoringModel item) throws Exception{
 		try {
@@ -52,12 +54,12 @@ public class MonitoringService {
 				throw new Exception("No existe el elemento");
 			}
 			boolean success = true;
-			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();			
-			List<ActivityModel> activities = this._activityRepository.searchByMonitoringAndAgreement(id);
+			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
+			List<AnswerModel> activities = this._answerRepository.searchByMonitoringAndAgreement(id);
 			List<Integer> monitoringIds = new ArrayList<Integer>();
 			//activities.forEach(activity -> {
 			//	if (!monitoringIds.contains(activity.getMonitoring().getId2()))
-			//		monitoringIds.add(activity.getMonitoring().getId2());				
+			//		monitoringIds.add(activity.getMonitoring().getId2());
 			//});
 			//List<MonitoringModel> items = new ArrayList<MonitoringModel>();
 			//for (int monitoringId : monitoringIds) {

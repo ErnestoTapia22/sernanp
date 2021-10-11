@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -180,8 +182,11 @@ public class UserService {
         OAuth2Authentication authenticationRequest = new OAuth2Authentication(authorizationRequest.createOAuth2Request(), authenticationToken);
         authenticationRequest.setAuthenticated(true);
         
+        
+        //JdbcTemplate jdbcTemplate = new JdbcTemplate(this.dataSource);
+        
         TokenStore tokenStore = new JdbcTokenStore(this.dataSource);
-
+        //TokenStore tokenStore = new JdbcTokenStore(jdbcTemplate.getDataSource());
         // Token Enhancer
         TokenEnhancerChain tokenEnhancer = new TokenEnhancerChain();
 
@@ -189,7 +194,7 @@ public class UserService {
         tokenServices.setTokenEnhancer(tokenEnhancer);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(tokenStore);
-
+        
         OAuth2AccessToken accessToken = tokenServices.createAccessToken(authenticationRequest);
         
         return ("Bearer " + accessToken.getValue());
