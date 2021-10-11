@@ -1,4 +1,6 @@
 package pe.sernanp.simrac.service;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.sernanp.simrac.entity.ResponseEntity;
@@ -38,6 +40,22 @@ public class ActivityService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 			
+		}
+	}
+	
+	public ResponseEntity<ActivityModel> searchByCommitment(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<ActivityModel> response = new ResponseEntity<ActivityModel>();			
+			List<ActivityModel> items = this._repository.searchByCommitment(id);
+			response.setSuccess(success);
+			response.setItems(items);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
 		}
 	}
 }

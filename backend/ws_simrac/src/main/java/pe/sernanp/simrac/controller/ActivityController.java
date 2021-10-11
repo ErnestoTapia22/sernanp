@@ -1,6 +1,9 @@
 package pe.sernanp.simrac.controller;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,5 +31,17 @@ public class ActivityController extends BaseController {
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/searchbycommitment/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<ActivityModel> searchByCommitment(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<ActivityModel> response = this._service.searchByCommitment(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
 	}
 }

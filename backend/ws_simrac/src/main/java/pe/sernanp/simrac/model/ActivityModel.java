@@ -29,7 +29,7 @@ public class ActivityModel {
 	@ManyToOne
 	private WorkPlanModel workPlan;
 	
-	@Column (name= "var_nom", length=50, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
