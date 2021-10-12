@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,7 +22,8 @@ public class MonitoringModel {
 	
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_monitoreo_srl_id_seq")
+	@SequenceGenerator(name="t_monitoreo_srl_id_seq", sequenceName="t_monitoreo_srl_id_seq", allocationSize=1)
 	private int id;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

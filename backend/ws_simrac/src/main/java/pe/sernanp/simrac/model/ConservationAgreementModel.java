@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +26,8 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_acuerdo_conservacion_srl_id_seq")
+	@SequenceGenerator(name="t_acuerdo_conservacion_srl_id_seq", sequenceName="t_acuerdo_conservacion_srl_id_seq", allocationSize=1)
 	private int id;
 	
 	@JoinColumn (name= "int_estadoacuerdoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_acuerdo_estado"))

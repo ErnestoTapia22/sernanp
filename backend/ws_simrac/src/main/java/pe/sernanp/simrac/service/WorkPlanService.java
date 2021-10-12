@@ -28,8 +28,9 @@ public class WorkPlanService {
 			Integer id = item.getId();
 			String message = "";
 			boolean success = false;
-			int rowsAffected = 0;
+			int rowsAffected = 0;			
 			item.setRegistrationDate(item.getRegistrationDate());
+			this._repository.updatePlanActive(item.getConservationAgreement().getId());
 			if (id == 0) {
 				WorkPlanModel item2 = this._repository.save(item);
 				id = item2.getId();

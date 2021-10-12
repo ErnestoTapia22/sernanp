@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,9 +73,11 @@ public class ConservationAgreementService {
 		}
 	}
 
+	@Transactional
 	public ResponseEntity delete(int id) throws Exception {
 		try {
-			this._repository.deleteById(id);
+			
+			this._repository.updateState(id);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);

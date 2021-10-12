@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
@@ -55,5 +56,9 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 			+ "		where SUBSTRING(t_ac.var_distritoid,1,2) = :pdepartment" ,
 			nativeQuery=true)
 	List<ConservationAgreementModel> searchByDepartment(@Param("pdepartment") String pdepartment);
+	
+	@Modifying
+	@Query(value="update simrac.t_acuerdo_conservacion set bol_flg = false where srl_id = :psrl_id", nativeQuery=true)
+    int updateState(@Param("psrl_id") int id);
 	
 }

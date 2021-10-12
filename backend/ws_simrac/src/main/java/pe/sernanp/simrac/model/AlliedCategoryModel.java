@@ -21,7 +21,7 @@ public class AlliedCategoryModel {
 	@SequenceGenerator(name="t_categoria_aliado_srl_id_seq", sequenceName="t_categoria_aliado_srl_id_seq", allocationSize=1)
 	private int id;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, unique=true, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")
