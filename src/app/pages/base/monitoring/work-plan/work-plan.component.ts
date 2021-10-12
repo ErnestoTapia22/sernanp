@@ -230,15 +230,13 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           this.vigency = response.item.vigency;
           this.form.setValue({
             name: response.item.name,
-
             code: response.item.code,
             vigency: response.item.vigency,
             firm: response.item.firm,
-
             agreementState: { id: response.item.agreementState.id || 0 },
             objective: '',
             anp: { id: response.item.anp.id || 0 },
-            localization: '',
+            localization: response.item.localization || 'Sin datos',
             districtId: response.item.districtId,
             department: 0,
             province: 0,

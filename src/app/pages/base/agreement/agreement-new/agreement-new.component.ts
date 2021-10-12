@@ -617,7 +617,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // collection in local storage by serializing the layer using featureLayer.toJson()
     // see the 'Feature Collection in Local Storage' sample for an example of how to work with local storage
     let sourceGraphics = [];
-
+    debugger;
     const layers = featureCollection.layers.map((layer) => {
       const graphics = layer.featureSet.features.map((feature) => {
         return Graphic.fromJSON(feature);
@@ -630,24 +630,24 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi =
-        this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.anp_codi =
-          this.form.get('code').value),
+      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value),
+        (this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
         (this.layersGraphic[layerId].attributes.ac_susc = '');
-      this.layersGraphic[layerId].attributes.ac_sup =
-        this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_teco = '';
-      this.layersGraphic[layerId].attributes.ac_deno =
-        this.form.get('name').value;
+      this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
+      this.layersGraphic[layerId].attributes.ac_teco = this.form.get("areaAmbitc").value;
+      console.log(this.provinces);
+      console.log(this.provinces.find(t => t.code == this.form.get("province").value));
+      console.log(this.provinces.find(t => t.code == this.form.get("province").value).name);
+      this.layersGraphic[layerId].attributes.ac_deno = this.form.get('name').value;
       (this.layersGraphic[layerId].attributes.ac_bene = ''),
-        (this.layersGraphic[layerId].attributes.ac_nbene = 0),
-        (this.layersGraphic[layerId].attributes.ac_fesus = '2021-09-20'),
-        (this.layersGraphic[layerId].attributes.ac_vigen = 0),
-        (this.layersGraphic[layerId].attributes.ac_dep = ''),
-        (this.layersGraphic[layerId].attributes.ac_prov = ''),
-        (this.layersGraphic[layerId].attributes.ac_dist = ''),
+        (this.layersGraphic[layerId].attributes.ac_nbene = this.form.get("numPart").value),
+        (this.layersGraphic[layerId].attributes.ac_fesus = this.form.get("firm").value),
+        (this.layersGraphic[layerId].attributes.ac_vigen = this.form.get("vigency").value),
+        //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
+        //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
+        //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
         (sourceGraphics = sourceGraphics.concat(graphics));
+
       const featureLayer = new FeatureLayer({
         objectIdField: 'FID',
         source: graphics,
@@ -671,7 +671,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
   errorHandler(error) {
     console.log(error);
-    this.spinner.hide();
+    if (this.spinner)
+      this.spinner.hide();
     // this.alertService.error(
     //   'Error al subir shapefile :' + error.message,
     //   'Error',
@@ -1103,18 +1104,18 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             surfaceAmbito: response.item.surfaceAmbito || 'Sin datos',
             surfaceIntervention: response.item.surfaceIntervention || 'Sin datos',
             districtId: response.item.districtId,
-            hasMasterPlan: '',//response.item.hasMasterPlan,
-            hasDevelopmentPlan: '',//response.item.hasDevelopmentPlan,
+            hasMasterPlan: response.item.hasMasterPlan,
+            hasDevelopmentPlan: response.item.hasDevelopmentPlan,
             livePlan: response.item.livePlan != null ? response.item.livePlan.toString() : '',
             institutionalPlan: response.item.institutionalPlan != null ? response.item.institutionalPlan.toString() : '',
             forestZoning: response.item.forestZoning != null ? response.item.forestZoning.toString() : '',
-            detailMunicipality: '',//response.item.detailMunicipality,
-            hasFirm: '',//response.item.hasFirm,
-            hasWorkPlan: '',//response.item.hasWorkPlan,
-            hasActas: '',//response.item.hasActas,
-            hasMap: '',//response.item.hasMap,
-            hasShape: '',//response.item.hasShape,
-            hasMonitoring: '',//response.item.hasMonitoring,
+            detailMunicipality: response.item.detailMunicipality,
+            hasFirm: response.item.hasFirm,
+            hasWorkPlan: response.item.hasWorkPlan,
+            hasActas: response.item.hasActas,
+            hasMap: response.item.hasMap,
+            hasShape: response.item.hasShape,
+            hasMonitoring: response.item.hasMonitoring,
             department: 0,
             province: 0,
             district: 0,
@@ -1817,12 +1818,12 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     switch (id) {
       case 1:
         this.aPolygons.map((item) => {
-          rings.push([item.x, item.y]);
+          rings.push([item.y, item.x]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[0].attributes,
           geometry: {
-            rings: rings,
+            rings: [[rings]],
           },
         };
         break;
