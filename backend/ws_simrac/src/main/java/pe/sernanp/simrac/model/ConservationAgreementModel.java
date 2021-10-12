@@ -88,16 +88,16 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	private String benindirect;
 	
 	@Column (name= "num_hect_amb", columnDefinition="NUMERIC (12,4)")
-	private double areaambitc;
+	private double areaambitc = 0.0;
 	
 	@Column (name= "num_hect_prod", columnDefinition="NUMERIC (12,4)")
-	private double producedarea;
+	private double producedarea = 0.0;
 	
 	@Column (name= "txt_det_prod", columnDefinition="TEXT")
 	private String detailProduction;
 	
 	@Column (name= "num_hect_rest", columnDefinition="NUMERIC (12,4)")
-	private double resthect;
+	private double resthect= 0.0;
 	
 	@Column (name= "txt_det_rest", columnDefinition="TEXT")
 	private String restdet;
@@ -106,7 +106,7 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	private String sectnom;
 	
 	@Column (name= "num_hect_sect", columnDefinition="NUMERIC (12,4)")
-	private double secthect;
+	private double secthect = 0.0;
 	
 	@Column (name= "txt_det_sect", columnDefinition="TEXT")
 	private String sectdet;
@@ -118,7 +118,7 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	private boolean finanapa;
 	
 	@Column (name= "num_finan", columnDefinition="NUMERIC (12,4)")
-	private double finannum;
+	private double finannum = 0.0;
 	
 	@Column (name= "txt_com", columnDefinition="TEXT")
 	private String comment;
@@ -139,7 +139,7 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	private String localization;
 	
 	@Column (name= "num_superficie_a", columnDefinition="NUMERIC (12,4)")
-	private double surfaceAmbito;
+	private double surfaceAmbito = 0.0;
 	
 	@Column (name= "txt_superfice_intervencion", columnDefinition="TEXT")
 	private String surfaceIntervention;
