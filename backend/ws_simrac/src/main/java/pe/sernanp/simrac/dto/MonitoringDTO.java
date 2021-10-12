@@ -66,11 +66,11 @@ public class MonitoringDTO {
 		this.achievement = achievement;
 	}
 
-	public String getRecomendation() {
+	public String getRecommendation() {
 		return recomendation;
 	}
 
-	public void setRecomendation(String recomendation) {
+	public void setRecommendation(String recomendation) {
 		this.recomendation = recomendation;
 	}
 

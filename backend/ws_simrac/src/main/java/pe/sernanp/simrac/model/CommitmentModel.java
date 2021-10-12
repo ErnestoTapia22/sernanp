@@ -13,10 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import pe.sernanp.extension.CustomDoubleSerializer;
 
 @Entity
 @Table (name = "t_compromiso", indexes = {@Index(name = "idx_compromiso", columnList = "srl_id",unique = true)})
-public class CommitmentModel {
+public class CommitmentModel implements java.io.Serializable {
 
 	@Column (name= "srl_id")
 	@Id
@@ -50,6 +56,9 @@ public class CommitmentModel {
 	
 	@Column (name= "bol_activo", nullable=false)	
 	private Boolean active;
+	
+	@Transient	
+	private Double progress = 0.0;
 
 	public int getId() {
 		return id;
@@ -122,6 +131,17 @@ public class CommitmentModel {
 
 	public void setActive(Boolean active) {
 		this.active = active;
-	}		
+	}
+	@JsonFormat(pattern=".##")
+	public double getProgress () {
+		return progress;
+	}
 	
+	public void setProgress (int value, int goal) {
+		progress = ((value * 100.00 ) / goal);
+	}
+	
+	public void setProgress (double value) {
+		progress = value;
+	}
 }

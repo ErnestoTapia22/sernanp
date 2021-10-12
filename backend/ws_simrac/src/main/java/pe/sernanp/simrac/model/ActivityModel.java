@@ -12,10 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import pe.sernanp.extension.CustomDoubleSerializer;
 
 @Entity
 @Table (name = "t_actividad", indexes = {@Index(name = "idx_actividad", columnList = "srl_id",unique = true)})
-public class ActivityModel {
+public class ActivityModel implements java.io.Serializable {
 	
 	@Column (name= "srl_id")
 	@Id
@@ -44,7 +50,7 @@ public class ActivityModel {
 	private Boolean state;	
 	
 	@Column (name= "int_meta")	
-	private int goal;	
+	private int goal;
 	
 	@Column (name= "bol_activo")	
 	private Boolean active;	
@@ -54,6 +60,9 @@ public class ActivityModel {
 	
 	@Column (name= "var_semestre", length=50)	
 	private String semester;	
+	
+	@Transient	
+	private Double progress = 0.0;
 		
 	public int getId() {
 		return id;
@@ -125,4 +134,12 @@ public class ActivityModel {
 		this.indicator = indicator;
 	}
 	
+	@JsonFormat(pattern=".##")
+	public double getProgress() {
+		int value = 0;
+		if (this.goal != 0 && value != 0)
+			return (value * 100.00 ) / this.goal;
+		else 
+			return 0;
+	}
 }

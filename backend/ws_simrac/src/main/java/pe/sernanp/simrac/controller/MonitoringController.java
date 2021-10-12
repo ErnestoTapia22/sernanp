@@ -22,7 +22,7 @@ public class MonitoringController extends BaseController {
 	@Autowired
 	private MonitoringService _service;	
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
 	@ResponseBody()
 	private ResponseEntity<?> save (@RequestBody MonitoringModel item) {
 		try {
@@ -33,7 +33,7 @@ public class MonitoringController extends BaseController {
 		}		
 	}
 		
-	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()
 	private ResponseEntity<?> save2 (@RequestBody MonitoringDTO item) {
 		try {

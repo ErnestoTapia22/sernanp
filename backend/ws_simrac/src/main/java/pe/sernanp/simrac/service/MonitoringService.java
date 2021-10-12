@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.service;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.bouncycastle.math.raw.Mod;
@@ -13,6 +14,7 @@ import pe.sernanp.simrac.dto.WorkPlanDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ActivityModel;
 import pe.sernanp.simrac.model.AnswerModel;
+import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.model.MonitoringModel;
 import pe.sernanp.simrac.model.WorkPlanModel;
 import pe.sernanp.simrac.repository.ActivityRepository;
@@ -74,7 +76,7 @@ public class MonitoringService {
 				model2.setState(true);
 				model2.setComment(item.getComment());
 				model2.setAchievement(item.getAchievement());
-				model2.setRecomendation(item.getRecomendation());
+				model2.setRecommendation(item.getRecommendation());
 				model2.setActive(true);
 				model2.setEvaluation(item.getEvaluation());
 				
@@ -124,18 +126,34 @@ public class MonitoringService {
 			boolean success = true;
 			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
 			List<MonitoringModel> items = this._repository.searchByMonitoringAndAgreement(id);
-			items.forEach(item -> {
-				List<AnswerModel> activities = this._answerRepository.searchByMonitoringAndAgreement(id);
-				
+			items.forEach(item -> {				
+				List<AnswerModel> activities = this._answerRepository.searchByMonitoring(item.getId());				
 				List<ActivityDTO> items2 = new ArrayList<ActivityDTO>();
+				List<CommitmentModel> itemsC = new ArrayList<CommitmentModel>();
+				LinkedHashMap<String,Double> s = new LinkedHashMap<String, Double>();
 				activities.forEach(t -> {
 					ActivityDTO itemActivity = new ActivityDTO();
+					itemActivity.setId(t.getActivity().getId());
 					itemActivity.setState(t.getState());
+					itemActivity.setName(t.getActivity().getName());
+					itemActivity.setIndicator(t.getActivity().getIndicator());
 					itemActivity.setGoal(t.getActivity().getGoal());
-					itemActivity.setSemester(t.getActivity().getSemester());					
+					itemActivity.setSemester(t.getActivity().getSemester());
+					itemActivity.setValue(t.getValue());
+					itemActivity.setCommitment(t.getActivity().getCommitment());
+					//itemActivity.getCommitment().setProgress( t.getValue(), t.getActivity().getGoal() );					
+					itemActivity.setId(t.getActivity().getId());
 					items2.add(itemActivity);
-				});				
-				item.setActivities(items2);
+					if (s.containsKey("activity"+t.getActivity().getCommitment().getId()))
+						s.put("activity"+ t.getActivity().getCommitment().getId(), (s.get("activity"+ t.getActivity().getCommitment().getId()).doubleValue() +  itemActivity.getProgress() ) /2);
+					else 
+						s.put("activity"+ t.getActivity().getCommitment().getId(), itemActivity.getProgress());
+				});	
+				items2.forEach(t -> {
+					double value = s.get("activity"+ t.getCommitment().getId()).doubleValue();					
+					t.getCommitment().setProgress(value);
+				});			
+				item.setActivities(items2);				
 			});
 			response.setSuccess(success);
 			response.setItems(items);

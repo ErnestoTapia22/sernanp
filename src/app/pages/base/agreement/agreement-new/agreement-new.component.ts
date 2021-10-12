@@ -771,7 +771,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
           0,
           Validators.compose([
             Validators.required,
-            Validators.pattern('[^0]+'),
+            Validators.min(1)
           ]),
         ],
       }),
@@ -799,7 +799,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
           0,
           Validators.compose([
             Validators.required,
-            Validators.pattern('[^0]+'),
+            Validators.min(1)
           ]),
         ],
       }),
@@ -808,7 +808,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
           0,
           Validators.compose([
             Validators.required,
-            Validators.pattern('[^0]+'),
+            Validators.min(1)
           ]),
         ],
       }),
@@ -1098,6 +1098,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             fondName: response.item.fondName,
             allied: response.item.allied,
             anp: { id: response.item.anp.id || 0 },            
+            source: { id: response.item.source == null ? 0 : response.item.source.id },       
             localization: response.item.localization || 'Sin datos',
             surfaceAmbito: response.item.surfaceAmbito || 'Sin datos',
             surfaceIntervention: response.item.surfaceIntervention || 'Sin datos',

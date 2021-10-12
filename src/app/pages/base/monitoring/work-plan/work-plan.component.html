@@ -458,7 +458,7 @@
                         >
                           <td>
                             {{
-                              activity.commitment.actionLine.objetive.name ||
+                              activity.commitment.actionLine.objetive.description ||
                                 "sin datos"
                             }}
                           </td>
@@ -468,7 +468,7 @@
                             }}
                           </td>
                           <td>
-                            {{ activity.commitment.name }}
+                            {{ activity.commitment.description }}
                           </td>
                           <td>
                             {{ activity.name }}
@@ -708,12 +708,9 @@
                         <tr
                           *ngFor="let item of monitoringList; let first = first"
                         >
-                          <td
-                            *ngIf="first"
-                            [attr.rowspan]="monitoringList.length"
-                          >
+                          <td>                          
                             {{
-                              item.commitment.actionLine.objetive.name ||
+                              item.commitment.actionLine.objetive.description ||
                                 "sin datos"
                             }}
                           </td>
@@ -721,7 +718,7 @@
                             {{ item.commitment.actionLine.name || "sin datos" }}
                           </td>
                           <td>
-                            {{ item.commitment.name }}
+                            {{ item.commitment.description }}
                           </td>
                           <td>
                             {{ item.name }}

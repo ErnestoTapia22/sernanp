@@ -91,6 +91,7 @@ public class WorkPlanService {
 				activity.setWorkPlan(new WorkPlanModel());
 				activity.getWorkPlan().setId(item2.getId());
 				activity.setRegistrationDate(activity.getRegistrationDate());
+				activity.setActive(true);
 				try {
 					this._activityRepository.save(activity);
 					

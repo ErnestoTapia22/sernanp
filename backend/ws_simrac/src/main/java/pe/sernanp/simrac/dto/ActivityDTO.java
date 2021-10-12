@@ -1,17 +1,12 @@
 package pe.sernanp.simrac.dto;
-import java.util.Date;
-import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Calendar;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import pe.sernanp.extension.CustomDoubleSerializer;
 import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.model.WorkPlanModel;
 
@@ -29,8 +24,11 @@ public class ActivityDTO {
 	private Boolean active;		
 	private String semester;
 	private int value;
-
-		
+	
+	private Double progress = 0.0;
+	
+	private String indicator;
+	private List<CommitmentModel> commitments;	
 	public int getId() {
 		return id;
 	}
@@ -75,8 +73,7 @@ public class ActivityDTO {
 	}
 	public void setState(Boolean state) {
 		this.state = state;
-	}	
-	
+	}		
 	public int getGoal() {
 		return goal;
 	}
@@ -101,5 +98,18 @@ public class ActivityDTO {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	public String getIndicator() {
+		return indicator;
+	}
+	public void setIndicator(String indicator) {
+		this.indicator = indicator;
+	}
 	
+	@JsonFormat(pattern=".##")
+	public double getProgress() {		
+		if (this.goal != 0 && this.value != 0)
+			return (this.value * 100.00 ) / this.goal;
+		else 
+			return 0;
+	}
 }

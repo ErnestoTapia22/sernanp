@@ -159,6 +159,10 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   saveGoals() {
     try {
       this.submitted = true;
+      this.insertGoals.patchValue({
+        state: true,
+      });
+      console.log(this.insertGoals.value);
       if (this.insertGoals.invalid) {
         return;
       }
@@ -167,8 +171,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       });
       this.insertGoals.patchValue({
         component: { id: this.insertGoals.get('component').value },
-      });
-
+      });      
       this.masterPlanService
         .goalsInsert(JSON.stringify(this.insertGoals.value))
         .subscribe((response) => {
@@ -283,6 +286,9 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   }
   saveLineAction() {
     try {
+      this.insertLineAction.patchValue({
+        state: true,
+      });
       this.submitted = true;
       if (this.insertLineAction.invalid) {
         return;
