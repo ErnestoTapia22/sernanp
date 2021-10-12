@@ -256,8 +256,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       ground: 'world-elevation',
     };
     this.mapViewProperties = {
-      center: [-75.744, -8.9212],
-      zoom: 9,
+      center: [-74.481, -10.053727],
+      zoom: 6,
     };
     this.buildForm();
     if (
@@ -738,18 +738,18 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       sectDet: [''],
       surfaceAmbito: [0],
       surfaceIntervention: [''],
-      hasMasterPlan: true,
-      hasDevelopmentPlan: true,
+      hasMasterPlan: false,
+      hasDevelopmentPlan: false,
       livePlan: [''],
       institutionalPlan:[''],
       forestZoning: [''],
       detailMunicipality: [''],
-      hasFirm: true,
-      hasWorkPlan: true,
-      hasActas: true,
-      hasMap: true,
-      hasShape: true,
-      hasMonitoring: true,
+      hasFirm: false,
+      hasWorkPlan: false,
+      hasActas: false,
+      hasMap: false,
+      hasShape: false,
+      hasMonitoring: false,
       agreementState: this.fb.group({
         id: [0, Validators.min(1)],
       }),
@@ -888,6 +888,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     console.log(id);
   }
   addFeatureToService(id) {
+    console.log(id);
     this.spinner.show();
     this.upLoadDisable = true;
     this.buildEsriJson();
@@ -911,7 +912,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
     let graphics = this.esriJsons.filter((x) => x.attributes.position === id);
     console.log(graphics);
-
     if (graphics[0].geometry === null) {
       graphics = this.validatingVertices(id);
       if (graphics === null) {
@@ -1818,7 +1818,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     switch (id) {
       case 1:
         this.aPolygons.map((item) => {
-          rings.push([item.y, item.x]);
+          rings.push([item.x, item.y]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[0].attributes,

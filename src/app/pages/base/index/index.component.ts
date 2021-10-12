@@ -181,7 +181,7 @@ export class IndexComponent implements OnInit {
       const initialLayers = environment.initialLayers;
       if (initialLayers.length > 0) {
         initialLayers.forEach(async (layer) => {
-          console.log(layer);
+          //console.log(layer);
           if (!layer.disabled) {
             const uuid = `layer_${this.baseService.newUUID()}`;
             const mapImageLayer = new MapImageLayer({

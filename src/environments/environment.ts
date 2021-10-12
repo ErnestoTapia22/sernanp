@@ -54,42 +54,42 @@ export const environment = {
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010203/MapServer',
       disabled: false,
       name: 'Áreas de Conservación Regional',
-      visible:false
+      visible:true
     },
     {
       id: 3,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010204/MapServer',
       disabled: false,
       name: 'Áreas de Conservación Privada',
-      visible:false
+      visible:true
     },
     {
       id: 4,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000501/MapServer',
       disabled: false,
       name: 'Límite Departamental',
-      visible:false
+      visible:true
     },
     {
       id: 5,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000502/MapServer',
       disabled: false,
       name: 'Límite Provincial',
-      visible:false
+      visible:true
     },
     {
       id: 6,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000503/MapServer',
       disabled: false,
       name: 'Límite Distrital',
-      visible:false
+      visible:true
     },
     {
       id: 7,
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_peru/peru_inei_000504/MapServer',
       disabled: false,
       name: 'Capitales',
-      visible:false
+      visible:true
     },
     {
       id: 8,
@@ -115,8 +115,8 @@ export const environment = {
   ],
   searchWidget: [
     {
-      url2:"https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0",
-      url:"http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0"
+      url:"https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0",
+      url2:"http://desarrollo.sernanp.gob.pe:6080/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0"
     },
     {
       url2: 'https://geoservicios.sernanp.gob.pe/desarrollo/rest/services/ac/Acuerdo_Conservacion/MapServer/0',

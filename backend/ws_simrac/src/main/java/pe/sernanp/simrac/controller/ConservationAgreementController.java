@@ -95,4 +95,12 @@ public class ConservationAgreementController extends BaseController {
 			return super.getJSON(ex);
 		}
 	}
+	
+	@RequestMapping(value = "/reportpdf/{id}", method = RequestMethod.GET)
+	public org.springframework.http.ResponseEntity<byte[]> reportPdf(@PathVariable("id") int id) throws Exception {
+
+		org.springframework.http.ResponseEntity<byte[]> response = this._service.generatePdf(id);
+		return response;
+
+	}
 }
