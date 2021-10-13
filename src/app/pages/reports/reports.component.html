@@ -371,7 +371,7 @@
                   <label class="form-label col-6">ANP</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.code
+                    anps[0].fullName
                   }}</label>
                   <label class="form-label col-6">Estado</label>
 
@@ -423,7 +423,7 @@
                   <label class="form-label col-6">Observaciones</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.observation || "Observacion"
+                    agreementDetail.observation || ""
                   }}</label>
                 </div>
               </div>
@@ -630,7 +630,7 @@
                 </div>
               </div>
             </div>
-            <div class="container square top20 bottom20">
+            <div class="container square top20 bottom20 d-none">
               <div class="col-12">
                 <h6>Mapa</h6>
               </div>
@@ -653,14 +653,13 @@
                   <label class="form-label col-6">Plan maestro</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end"
-                    >Si</label
-                  >
+                    >No</label>
                   <label class="form-label col-6"
                     >Plan de desarrollo local</label
                   >
 
                   <label class="form-label form-label col-6 fw-bold text-end"
-                    >si</label
+                    >No</label
                   >
                   <label class="form-label col-6"
                     >Plan de vida de las comunidades</label
@@ -679,7 +678,7 @@
                   <label class="form-label col-6">Zonificación forestal </label>
 
                   <label class="form-label form-label col-6 fw-bold text-end"
-                    >Si</label
+                    >No</label
                   >
                 </div>
               </div>
