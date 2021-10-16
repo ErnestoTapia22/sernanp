@@ -194,6 +194,7 @@ public class UserService {
         tokenServices.setTokenEnhancer(tokenEnhancer);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(tokenStore);
+        //tokenServices.setRefreshTokenValiditySeconds(60); -- probar para expireación de token
         
         OAuth2AccessToken accessToken = tokenServices.createAccessToken(authenticationRequest);
         
