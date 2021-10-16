@@ -401,7 +401,7 @@
                 type="button"
                 role="tab"
               >
-                Nro. {{ i + 1 }}
+                Monitoreo N° {{ i + 1 }}
               </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -427,7 +427,7 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">Monitoreo</label>
+                  <label class="mb-0 fw-bold">{{ item.activities[0].workPlan.name }}</label>
                   <div></div>
                 </div>
                 <div class="card-body">
@@ -662,7 +662,7 @@
                     </button>
                     <button
                       type="button"
-                      class="btn btn-sm btn-outline-danger mx-2 d-none"
+                      class="btn btn-sm btn-outline-danger mx-2"
                       [disabled]="!monitoringReady"
                       (click)="deActivateMonitoring()"
                     >
