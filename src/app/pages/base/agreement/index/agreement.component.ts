@@ -180,7 +180,10 @@ export class AgreementComponent implements OnInit {
   }
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', Validators.compose([Validators.maxLength(10)])],
+      code: [
+        { value: '', disabled: true },
+        Validators.compose([Validators.maxLength(10)]),
+      ],
       name: [''],
       //state: [''],
       agreementState: this.fb.group({
@@ -289,7 +292,7 @@ export class AgreementComponent implements OnInit {
       provinceId: '',
       districtId: '',
       firm: '',
-      firmEnd: ''
+      firmEnd: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),

@@ -61,16 +61,16 @@ export class EsriMapService {
     });
   }
 
-  addLayer(layer: Layer, clearLayers?: boolean): void {
-    if (clearLayers) {
-      this.view.map.removeAll();
-    }
-    this.view.map.add(layer);
-  }
-  addWidget(
-    component: string | HTMLElement | Widget | any[],
-    position: Position
-  ): void {
-    this.view.ui.add(component, position);
-  }
+  // addLayer(layer: Layer, clearLayers?: boolean): void {
+  //   if (clearLayers) {
+  //     this.view.map.removeAll();
+  //   }
+  //   this.view.map.add(layer);
+  // }
+  // addWidget(
+  //   component: string | HTMLElement | Widget | any[],
+  //   position: Position
+  // ): void {
+  //   this.view.ui.add(component, position);
+  // }
 }
