@@ -141,6 +141,7 @@ public class MonitoringService {
 					itemActivity.setSemester(t.getActivity().getSemester());
 					itemActivity.setValue(t.getValue());
 					itemActivity.setCommitment(t.getActivity().getCommitment());
+					itemActivity.setWorkPlan(t.getActivity().getWorkPlan());
 					//itemActivity.getCommitment().setProgress( t.getValue(), t.getActivity().getGoal() );					
 					itemActivity.setId(t.getActivity().getId());
 					items2.add(itemActivity);
