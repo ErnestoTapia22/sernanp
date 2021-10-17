@@ -57,6 +57,9 @@ public class UserService {
 	@Value("${security.jwt.resource-ids}")
 	private String resourceIds;
 	
+	@Value("${security.jwt.ExpirationDateInMs}")
+	private Integer expirationDateToken;
+	
 	//Fin Agregado
 	@Autowired
 	private RoleRepository _repositoryRole;
@@ -192,9 +195,9 @@ public class UserService {
 
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenEnhancer(tokenEnhancer);
-        tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(tokenStore);
-        //tokenServices.setRefreshTokenValiditySeconds(60); -- probar para expireación de token
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setAccessTokenValiditySeconds(expirationDateToken); // probar para expireación de token
         
         OAuth2AccessToken accessToken = tokenServices.createAccessToken(authenticationRequest);
         

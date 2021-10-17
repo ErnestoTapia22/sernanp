@@ -11,8 +11,11 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 @Configuration
@@ -37,6 +40,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Value("${security.jwt.resource-ids}")
 	private String resourceIds;
 
+	@Value("${security.jwt.ExpirationDateInMs}")
+	private Integer expirationDateToken;
+	
 	@Autowired
 	private TokenStore tokenStore;
 
@@ -80,6 +86,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.accessTokenConverter(accessTokenConverter)
 		.tokenEnhancer(enhancerChain)
 		.authenticationManager(authenticationManager);
+		
+		endpoints.tokenServices(customTokenServices());
+		
 		//.exceptionTranslator(loggingExceptionTranslator());		//AÑADIDO PARA DEBUG	
 	}
+	
+	public AuthorizationServerTokenServices customTokenServices()
+	{
+		 //TokenStore tokenStore = new JdbcTokenStore(this.dataSource);
+		  DefaultTokenServices tokenServices = new DefaultTokenServices();
+		  //tokenServices.setReuseAccessToken(reuseAccessToken);
+		  tokenServices.setTokenStore(tokenStore);
+		  tokenServices.setSupportRefreshToken(true);
+		  tokenServices.setAccessTokenValiditySeconds(expirationDateToken);
+		  //tokenServices.setClientDetailsService(clientDetailsService);
+		  return tokenServices;
+	}
+	
 }
