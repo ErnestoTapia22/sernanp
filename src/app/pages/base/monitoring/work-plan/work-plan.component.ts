@@ -42,6 +42,8 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   fieldArrayList: any[] = [];
   fieldArray: Array<any> = [];
   fieldArrayTotalTemp: any[] = [];
+  fieldArrayMonitoringList: any[] = [];
+
   newAttribute: any = {};
   editAttribute: any = {};
   anpForm: FormGroup;
@@ -281,12 +283,26 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   addFieldValue() {
     console.log(this.newAttribute);
-    // this.newAttribute.commitment = { id: this.commitmentId };
-    // this.newAttribute.commitmentId = this.commitmentId;
-    // this.newAttribute.isNew = true;
+    //prettier-ignore
+    if (
+      (!this.existKey('goal', this.newAttribute) || this.newAttribute.goal === 0)||
+        (!this.existKey('name', this.newAttribute) || this.newAttribute.name === "")||
+        (!this.existKey('indicator', this.newAttribute) || this.newAttribute.indicator === "")||
+        ((!this.existKey('trim1', this.newAttribute) || this.newAttribute.trim1 === false)&&(!this.existKey('trim2', this.newAttribute) || this.newAttribute.trim2 === false) )
+         
+    ) {
+      this.alertService.error('Complete los campos requeridos', 'Error', {
+        autoClose: true,
+      });
+      return;
+    }
+
     this.fieldArray.push(this.newAttribute);
-    // this.fieldArrayTotalTemp.push(this.newAttribute);
+
     this.newAttribute = {};
+  }
+  existKey(key: string, obj: Object) {
+    return obj.hasOwnProperty(key);
   }
   deleteFieldValue(index) {
     this.fieldArray.splice(index, 1);
@@ -535,7 +551,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     console.log(this.fieldArrayTotalTemp);
 
     this.fieldArray.map((activity) => {
-      activity.commitment = { id: this.commitmentId };
+      activity.commitment = {
+        id: this.commitmentId,
+        actionLine: { objetive: { description: '' } },
+        progress: 0,
+      };
       activity.commitmentId = this.commitmentId;
       if (
         activity.id === undefined ||
@@ -625,13 +645,33 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     }
   }
   setTemporaryField(items: any[]) {
-    items = items.map((item) => {
+    let count = 0;
+
+    let rowLength = items.length;
+    items = items.map((item, index) => {
       item.commitmentId = item.commitment.id;
       item.edit = false;
+      item['rowSpan'] = 1;
+      item['found'] = false;
+      if (rowLength === index + 1) {
+      } else {
+        if (
+          item.commitment.actionLine.objetive.description ===
+          items[index + 1].commitment.actionLine.objetive.description
+        ) {
+          item['rowSpan'] += 1;
+          item['found'] = false;
+        } else {
+          item['rowSpan'] = 1;
+          count = 0;
+        }
+      }
+
       return item;
     });
     console.log(items);
     this.fieldArrayTotalTemp = items;
+    this.fieldArrayMonitoringList = items;
   }
   monitoringSave() {
     this.submitted = true;

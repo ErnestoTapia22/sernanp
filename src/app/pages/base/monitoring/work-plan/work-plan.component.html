@@ -427,7 +427,9 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">{{ item.activities[0].workPlan.name }}</label>
+                  <label class="mb-0 fw-bold">{{
+                    item.activities[0].workPlan.name
+                  }}</label>
                   <div></div>
                 </div>
                 <div class="card-body">
@@ -458,8 +460,8 @@
                         >
                           <td>
                             {{
-                              activity.commitment.actionLine.objetive.description ||
-                                "sin datos"
+                              activity.commitment.actionLine.objetive
+                                .description || "sin datos"
                             }}
                           </td>
                           <td>
@@ -706,9 +708,16 @@
                       </thead>
                       <tbody>
                         <tr
-                          *ngFor="let item of monitoringList; let first = first"
+                          *ngFor="
+                            let item of fieldArrayMonitoringList;
+                            let index = idx
+                          "
                         >
-                          <td>                          
+                        <!-- *ngIf="item.rowSpan > 0"
+                        [attr.rowspan]="item.rowSpan " -->
+                          <td
+                          
+                          >
                             {{
                               item.commitment.actionLine.objetive.description ||
                                 "sin datos"
@@ -962,7 +971,7 @@
                   <td>
                     <input
                       class="form-control"
-                      type="text"
+                      type="number"
                       [value]="field.goal"
                       [(ngModel)]="field.goal"
                       [disabled]="!field.edit"
@@ -1068,7 +1077,7 @@
                   <td>
                     <input
                       class="form-control"
-                      type="text"
+                      type="number"
                       id="newAttributePrice"
                       [(ngModel)]="newAttribute.goal"
                       name="newAttributeGoal"
