@@ -713,20 +713,31 @@
                             let index = idx
                           "
                         >
-                        <!-- *ngIf="item.rowSpan > 0"
+                          <!-- *ngIf="item.rowSpan > 0"
                         [attr.rowspan]="item.rowSpan " -->
                           <td
-                          
+                            *ngIf="
+                              item.commitment.actionLine.objetive.rowspan > 0
+                            "
+                            [attr.rowspan]="
+                              item.commitment.actionLine.objetive.rowspan
+                            "
                           >
                             {{
                               item.commitment.actionLine.objetive.description ||
                                 "sin datos"
                             }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="item.commitment.actionLine.rowspan > 0"
+                            [attr.rowspan]="item.commitment.actionLine.rowspan"
+                          >
                             {{ item.commitment.actionLine.name || "sin datos" }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="item.commitment.rowspan > 0"
+                            [attr.rowspan]="item.commitment.rowspan"
+                          >
                             {{ item.commitment.description }}
                           </td>
                           <td>
