@@ -617,7 +617,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // collection in local storage by serializing the layer using featureLayer.toJson()
     // see the 'Feature Collection in Local Storage' sample for an example of how to work with local storage
     let sourceGraphics = [];
-    debugger;
+
     const layers = featureCollection.layers.map((layer) => {
       const graphics = layer.featureSet.features.map((feature) => {
         return Graphic.fromJSON(feature);
@@ -625,24 +625,37 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       const geometry = layer.featureSet.features.map((feature) => {
         return feature.geometry;
       });
-
+      console.log(geometry);
       // this.graphics.push(geometry);
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
+      (this.layersGraphic[layerId].attributes.ac_codi =
+        this.form.get('code').value),
+        (this.layersGraphic[layerId].attributes.anp_codi =
+          this.form.get('code').value),
         (this.layersGraphic[layerId].attributes.ac_susc = '');
-      this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_teco = this.form.get("areaAmbitc").value;
+      this.layersGraphic[layerId].attributes.ac_sup =
+        this.form.get('areaAmbitc').value;
+      this.layersGraphic[layerId].attributes.ac_teco =
+        this.form.get('areaAmbitc').value;
       console.log(this.provinces);
-      console.log(this.provinces.find(t => t.code == this.form.get("province").value));
-      console.log(this.provinces.find(t => t.code == this.form.get("province").value).name);
-      this.layersGraphic[layerId].attributes.ac_deno = this.form.get('name').value;
+      console.log(
+        this.provinces.find((t) => t.code == this.form.get('province').value)
+      );
+      console.log(
+        this.provinces.find((t) => t.code == this.form.get('province').value)
+          .name
+      );
+      this.layersGraphic[layerId].attributes.ac_deno =
+        this.form.get('name').value;
       (this.layersGraphic[layerId].attributes.ac_bene = ''),
-        (this.layersGraphic[layerId].attributes.ac_nbene = this.form.get("numPart").value),
-        (this.layersGraphic[layerId].attributes.ac_fesus = this.form.get("firm").value),
-        (this.layersGraphic[layerId].attributes.ac_vigen = this.form.get("vigency").value),
+        (this.layersGraphic[layerId].attributes.ac_nbene =
+          this.form.get('numPart').value),
+        (this.layersGraphic[layerId].attributes.ac_fesus =
+          this.form.get('firm').value),
+        (this.layersGraphic[layerId].attributes.ac_vigen =
+          this.form.get('vigency').value),
         //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
         //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
         //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
@@ -671,8 +684,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
   errorHandler(error) {
     console.log(error);
-    if (this.spinner)
-      this.spinner.hide();
+    if (this.spinner) this.spinner.hide();
     // this.alertService.error(
     //   'Error al subir shapefile :' + error.message,
     //   'Error',
@@ -741,7 +753,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       hasMasterPlan: false,
       hasDevelopmentPlan: false,
       livePlan: [''],
-      institutionalPlan:[''],
+      institutionalPlan: [''],
       forestZoning: [''],
       detailMunicipality: [''],
       hasFirm: false,
@@ -768,13 +780,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.alliedForm = this.fb.group({
       id: [0],
       alliedCategory: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.min(1)
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
       conservationAgreement: this.fb.group({
         id: [this.agreementId],
@@ -796,22 +802,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       }),
 
       allied: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.min(1)
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
       actionLine: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.min(1)
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
     });
     this.anpForm = this.fb.group({
@@ -888,33 +882,19 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     console.log(id);
   }
   addFeatureToService(id) {
-    console.log(id);
     this.spinner.show();
     this.upLoadDisable = true;
-    this.buildEsriJson();
+    let graphics: Graphic[];
 
-    if (this.esriJsons.length === 0) {
-      this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
-      return;
-    }
-    // const edits = {
-    //   addFeatures: this.esriJsons,
-    // };
-    console.log(this.esriJsons);
-    // this.featureLayer = new FeatureLayer({
-    //   url: environment.conservationAgreements[this.layerId].url,
-    //   outFields: ['*'],
-    //   popupEnabled: true,
-    //   id: 'featureTest',
-    // });
+    if (this.geometryMode[`polygon${id}`]) {
+      this.buildEsriJson();
+      if (this.esriJsons.length === 0) {
+        this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
+        return;
+      }
+      graphics = this.esriJsons.filter((x) => x.attributes.position === id);
 
-    this.disabled = true;
-
-    let graphics = this.esriJsons.filter((x) => x.attributes.position === id);
-    console.log(graphics);
-    if (graphics[0].geometry === null) {
-      graphics = this.validatingVertices(id);
-      if (graphics === null) {
+      if (graphics[0].geometry === null) {
         this.upLoadDisable = false;
         this.spinner.hide();
         this.alertService.error('No se encontro el ámbito', 'Error', {
@@ -922,6 +902,16 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         });
         return;
       }
+    } else {
+      graphics = this.validatingVertices(id);
+    }
+    if (graphics === null) {
+      this.upLoadDisable = false;
+      this.spinner.hide();
+      this.alertService.error('No se encontro el ámbito', 'Error', {
+        autoCLose: true,
+      });
+      return;
     }
     if (graphics[0].attributes.sended) {
       this.upLoadDisable = false;
@@ -931,19 +921,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    //si es punto
-    // if (event.mapPoint) {
-    //   let point = event.mapPoint.clone();
-    //   point.z = undefined;
-    //   point.hasZ = false;
 
-    //   // Crea una estrella de hotel como elemento económico
-    //   thiss.editFeature = new Graphic({
-    //     geometry: point,
-    //     attributes: {
-    //       hotelstar: 'Economía',
-    //     },
-    //   });
+    this.disabled = true;
+
     const edits = {
       addFeatures: graphics,
     };
@@ -1030,7 +1010,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // comunidad: '',
     // anexo: '',
     // productor: '',
-
     this.layersGraphic.forEach((layer) => {
       if (layer.geometry !== {}) {
         this.esriJsons.push(
@@ -1098,17 +1077,29 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             finanMod: response.item.finanMod,
             fondName: response.item.fondName,
             allied: response.item.allied,
-            anp: { id: response.item.anp.id || 0 },            
-            source: { id: response.item.source == null ? 0 : response.item.source.id },       
+            anp: { id: response.item.anp.id || 0 },
+            source: {
+              id: response.item.source == null ? 0 : response.item.source.id,
+            },
             localization: response.item.localization || 'Sin datos',
             surfaceAmbito: response.item.surfaceAmbito || 0.0,
-            surfaceIntervention: response.item.surfaceIntervention || 'Sin datos',
+            surfaceIntervention:
+              response.item.surfaceIntervention || 'Sin datos',
             districtId: response.item.districtId,
             hasMasterPlan: response.item.hasMasterPlan,
             hasDevelopmentPlan: response.item.hasDevelopmentPlan,
-            livePlan: response.item.livePlan != null ? response.item.livePlan.toString() : '',
-            institutionalPlan: response.item.institutionalPlan != null ? response.item.institutionalPlan.toString() : '',
-            forestZoning: response.item.forestZoning != null ? response.item.forestZoning.toString() : '',
+            livePlan:
+              response.item.livePlan != null
+                ? response.item.livePlan.toString()
+                : '',
+            institutionalPlan:
+              response.item.institutionalPlan != null
+                ? response.item.institutionalPlan.toString()
+                : '',
+            forestZoning:
+              response.item.forestZoning != null
+                ? response.item.forestZoning.toString()
+                : '',
             detailMunicipality: response.item.detailMunicipality,
             hasFirm: response.item.hasFirm,
             hasWorkPlan: response.item.hasWorkPlan,
@@ -1137,6 +1128,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
+    this.form.get('code').disable();
     //this.form.get('code').disable();
   }
   addFieldValue() {
@@ -1812,36 +1804,37 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   validatingVertices(id): Graphic[] {
     const arrayGraphics: Graphic[] = [];
-    console.log(id);
     let rings: any[] = [];
     let jsonGraphic = {};
     switch (id) {
       case 1:
+        this.setAttributesPolygon(0);
         this.aPolygons.map((item) => {
           rings.push([item.x, item.y]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[0].attributes,
           geometry: {
-            rings: [[rings]],
+            rings: [rings],
           },
         };
+
         break;
       case 2:
-        console.log(id);
-        console.log(this.aProduceds);
+        this.setAttributesPolygon(1);
         this.aProduceds.map((item) => {
           rings.push([item.x, item.y]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[1].attributes,
           geometry: {
-            rings: rings,
+            rings: [rings],
           },
         };
 
         break;
       case 3:
+        this.setAttributesPolygon(2);
         this.aConservations.map((item) => {
           rings.push([item.x, item.y]);
         });
@@ -1854,6 +1847,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
         break;
       case 4:
+        this.setAttributesPolygon(3);
         this.aVigilances.map((item) => {
           rings.push([item.x, item.y]);
         });
@@ -1866,6 +1860,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
         break;
       case 5:
+        this.setAttributesPolygon(4);
         if (this.aPoint.eastx !== 0 && this.aPoint.northy !== 0) {
           let point = {
             type: 'point',
@@ -1893,7 +1888,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     if (jsonGraphic['geometry'].length === 0) {
       return null;
     }
-    console.log(jsonGraphic);
     arrayGraphics.push(Graphic.fromJSON(jsonGraphic));
     return arrayGraphics;
   }
@@ -1910,5 +1904,22 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         this.geometryMode[variable] = true;
       }
     }
+  }
+  setAttributesPolygon(index) {
+    //prettier-ignore
+    this.layersGraphic[index].attributes.ac_codi = this.form.get('code').value;
+    this.layersGraphic[index].attributes.anp_codi = this.form.get('code').value;
+    this.layersGraphic[index].attributes.ac_susc = '';
+    this.layersGraphic[index].attributes.ac_sup =
+      this.form.get('areaAmbitc').value;
+    this.layersGraphic[index].attributes.ac_teco =
+      this.form.get('areaAmbitc').value;
+    this.layersGraphic[index].attributes.ac_deno = this.form.get('name').value;
+    this.layersGraphic[index].attributes.ac_bene = '';
+    this.layersGraphic[index].attributes.ac_nbene =
+      this.form.get('numPart').value;
+    this.layersGraphic[index].attributes.ac_fesus = this.form.get('firm').value;
+    this.layersGraphic[index].attributes.ac_vigen =
+      this.form.get('vigency').value;
   }
 }

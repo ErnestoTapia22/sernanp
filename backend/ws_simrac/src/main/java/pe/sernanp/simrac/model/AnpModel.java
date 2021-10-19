@@ -9,7 +9,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table (name = "v_gdb_anp_plan")
-public class AnpModel {	
+public class AnpModel implements java.io.Serializable {	
 
 	@Column (name= "anp_id")
 	@Id

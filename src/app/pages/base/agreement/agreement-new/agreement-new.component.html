@@ -82,7 +82,6 @@
                       class="form-control"
                       placeholder="Código"
                       formControlName="code"
-                      disabled
                     />
                   </div>
                   <div class="col-md-6">
@@ -312,7 +311,8 @@
                         formControlName="hasMasterPlan"
                       />
                       <label for="chkArticulated" class="form-label"
-                        >Plan maestro (*)</label>
+                        >Plan maestro (*)</label
+                      >
                     </div>
                     <div class="form-check form-switch form-check-inline">
                       <input
@@ -322,85 +322,142 @@
                         formControlName="hasDevelopmentPlan"
                       />
                       <label class="form-check-label" for="chkLocalDevelopment"
-                        >Plan de desarrollo local</label>
+                        >Plan de desarrollo local</label
+                      >
                     </div>
                     <div class="">
                       <label for="detalle" class="form-label"
                         >Detalle del/los municipios del ADC</label
                       >
-                      <input type="text" formControlName="detailMunicipality"
-                      class="form-control" id="detalle" />
+                      <input
+                        type="text"
+                        formControlName="detailMunicipality"
+                        class="form-control"
+                        id="detalle"
+                      />
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label">Plan de vida de las comunidades</label>
+                    <label class="form-label"
+                      >Plan de vida de las comunidades</label
+                    >
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="livePlan"
-                        value=1 formControlName="livePlan" id="yes"
+                        class="form-check-input"
+                        type="radio"
+                        name="livePlan"
+                        value="1"
+                        formControlName="livePlan"
+                        id="yes"
                       />
                       <label class="form-check-label" for="yes">Sí</label>
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="livePlan"
-                        value=2 formControlName="livePlan" id="not"
+                        class="form-check-input"
+                        type="radio"
+                        name="livePlan"
+                        value="2"
+                        formControlName="livePlan"
+                        id="not"
                       />
                       <label class="form-check-label" for="not">No</label>
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="livePlan"
-                        value=3 formControlName="livePlan"id="notApply"/>
-                      <label class="form-check-label" for="notApply">No aplica</label>
+                        class="form-check-input"
+                        type="radio"
+                        name="livePlan"
+                        value="3"
+                        formControlName="livePlan"
+                        id="notApply"
+                      />
+                      <label class="form-check-label" for="notApply"
+                        >No aplica</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label">Plan de vida institucional (ECA)</label>
+                    <label class="form-label"
+                      >Plan de vida institucional (ECA)</label
+                    >
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="institutionalPlan"
-                        value=1 formControlName="institutionalPlan" id="ecaYes"
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="institutionalPlan"
+                        value="1"
+                        formControlName="institutionalPlan"
+                        id="ecaYes"
                       />
                       <label class="form-check-label" for="ecaYes">Sí</label>
                     </div>
 
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="institutionalPlan"
-                        value=2 formControlName="institutionalPlan" id="ecaNot"
+                        class="form-check-input"
+                        type="radio"
+                        name="institutionalPlan"
+                        value="2"
+                        formControlName="institutionalPlan"
+                        id="ecaNot"
                       />
                       <label class="form-check-label" for="ecaNot">No</label>
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="institutionalPlan"
-                        value=3 formControlName="institutionalPlan" id="ecanotApply"
+                        class="form-check-input"
+                        type="radio"
+                        name="institutionalPlan"
+                        value="3"
+                        formControlName="institutionalPlan"
+                        id="ecanotApply"
                       />
-                      <label class="form-check-label" for="ecanotApply">No aplica</label>
+                      <label class="form-check-label" for="ecanotApply"
+                        >No aplica</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-3">
                     <label class="form-label">Zonificación Forestal</label>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="forestZoning"
-                        value=1 formControlName="forestZoning" id="zonningYes"
+                        class="form-check-input"
+                        type="radio"
+                        name="forestZoning"
+                        value="1"
+                        formControlName="forestZoning"
+                        id="zonningYes"
                       />
-                      <label class="form-check-label" for="zonningYes">Sí</label>
+                      <label class="form-check-label" for="zonningYes"
+                        >Sí</label
+                      >
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="forestZoning"
-                        value=2 formControlName="forestZoning" id="zonningNot"
+                        class="form-check-input"
+                        type="radio"
+                        name="forestZoning"
+                        value="2"
+                        formControlName="forestZoning"
+                        id="zonningNot"
                       />
-                      <label class="form-check-label" for="zonningNot">No</label>
+                      <label class="form-check-label" for="zonningNot"
+                        >No</label
+                      >
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input" type="radio" name="forestZoning"
-                        value=3 formControlName="forestZoning" id="zonningNotApply"
+                        class="form-check-input"
+                        type="radio"
+                        name="forestZoning"
+                        value="3"
+                        formControlName="forestZoning"
+                        id="zonningNotApply"
                       />
-                      <label class="form-check-label" for="zonningNotApply">No aplica</label>
+                      <label class="form-check-label" for="zonningNotApply"
+                        >No aplica</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -2334,7 +2391,8 @@
                       type="text"
                       class="form-control clearable"
                       id="txtNameF"
-                      formControlName="fondName" placeholder="Nombre del fondo"
+                      formControlName="fondName"
+                      placeholder="Nombre del fondo"
                     />
                   </div>
                 </div>
@@ -2357,44 +2415,91 @@
                 <div class="row g-3">
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasFirm" formControlName="hasFirm" />
-                      <label for="hasFirm" class="form-label">Acuerdo Fimado</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasFirm"
+                        formControlName="hasFirm"
+                      />
+                      <label for="hasFirm" class="form-label"
+                        >Acuerdo Fimado</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasWorkPlan" formControlName="hasWorkPlan"/>
-                      <label class="form-check-label" for="hasWorkPlan">Plan de Trabajo</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasWorkPlan"
+                        formControlName="hasWorkPlan"
+                      />
+                      <label class="form-check-label" for="hasWorkPlan"
+                        >Plan de Trabajo</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasActas" formControlName="hasActas"/>
-                      <label class="form-check-label" for="hasActas">Actas/Memorias reuniones previas</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasActas"
+                        formControlName="hasActas"
+                      />
+                      <label class="form-check-label" for="hasActas"
+                        >Actas/Memorias reuniones previas</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasMap" formControlName="hasMap"/>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasMap"
+                        formControlName="hasMap"
+                      />
                       <label class="form-check-label" for="hasMap">Mapas</label>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasShape" formControlName="hasShape"/>
-                      <label class="form-check-label" for="hasShape">Shapes</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasShape"
+                        formControlName="hasShape"
+                      />
+                      <label class="form-check-label" for="hasShape"
+                        >Shapes</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="hasMonitoring" formControlName="hasMonitoring"/>
-                      <label class="form-check-label" for="hasMonitoring">Sistema de monitoreo</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasMonitoring"
+                        formControlName="hasMonitoring"
+                      />
+                      <label class="form-check-label" for="hasMonitoring"
+                        >Sistema de monitoreo</label
+                      >
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-check form-switch form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="allied" formControlName="allied"/>
-                      <label class="form-check-label" for="allied">Perteneciente a la marca Aliado</label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="allied"
+                        formControlName="allied"
+                      />
+                      <label class="form-check-label" for="allied"
+                        >Perteneciente a la marca Aliado</label
+                      >
                     </div>
                   </div>
                 </div>
@@ -2933,7 +3038,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                 <td>
                   <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     [value]="field.goal"
                   />
                 </td>
@@ -3025,9 +3130,10 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                   />
                 </td>
                 <td>
+                  d
                   <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     id="newAttributePrice"
                     [(ngModel)]="newAttribute.goal"
                     name="newAttributeGoal"
