@@ -87,7 +87,14 @@ export class ReportsComponent implements OnInit {
   }
 
   downloadPdf(content, append: boolean, delimiter) {
-    this.pdfService.makePDF(content);
+    // this.pdfService.makePDF(content);
+    this.agreementService
+      .agreementPdf(this.agreementId)
+      .subscribe((response) => {
+        const file = new Blob([response], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      });
     // this.pdfService.sendToPdf('ResportePDF', this.agreementId, content);
     // const domClone = content.cloneNode(true);
     // let $printSection = document.getElementById('printSection');
@@ -374,9 +381,12 @@ export class ReportsComponent implements OnInit {
             });
           }
         });
+      console.log(districtId.substring(0, 4));
+      console.log(districtId);
       this.agreementService
         .searchDistricts(districtId.substring(0, 4))
         .subscribe((response) => {
+          console.log(response);
           if (
             response &&
             response.items !== undefined &&
