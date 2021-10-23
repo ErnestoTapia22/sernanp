@@ -458,18 +458,34 @@
                         <tr
                           *ngFor="let activity of item.activities; index as idx"
                         >
-                          <td>
+                          <td
+                            *ngIf="
+                              activity.commitment.actionLine.objetive.rowspan >
+                              0
+                            "
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.objetive.rowspan
+                            "
+                          >
                             {{
                               activity.commitment.actionLine.objetive
                                 .description || "sin datos"
                             }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="activity.commitment.actionLine.rowspan > 0"
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.rowspan
+                            "
+                          >
                             {{
                               activity.commitment.actionLine.name || "sin datos"
                             }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="activity.commitment.rowspan > 0"
+                            [attr.rowspan]="activity.commitment.rowspan"
+                          >
                             {{ activity.commitment.description }}
                           </td>
                           <td>

@@ -590,7 +590,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             response.item !== null &&
             response.item.activities.length > 0
           ) {
-            
             let reponseFake = {
               id: 0,
               conservationAgreement: null,
@@ -2121,28 +2120,28 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     let count = 0;
 
     let rowLength = items.length;
-    items = items.map((item, index) => {
-      item.commitmentId = item.commitment.id;
-      item.edit = false;
-      item['rowSpan'] = 1;
-      item['found'] = false;
-      if (rowLength === index + 1) {
-      } else {
-        if (
-          item.commitment.actionLine.objetive.description ===
-          items[index + 1].commitment.actionLine.objetive.description
-        ) {
-          item['rowSpan'] += 1;
-          item['found'] = false;
-        } else {
-          item['rowSpan'] = 1;
-          count = 0;
-        }
-      }
+    // items = items.map((item, index) => {
+    //   item.commitmentId = item.commitment.id;
+    //   item.edit = false;
+    //   item['rowSpan'] = 1;
+    //   item['found'] = false;
+    //   if (rowLength === index + 1) {
+    //   } else {
+    //     if (
+    //       item.commitment.actionLine.objetive.description ===
+    //       items[index + 1].commitment.actionLine.objetive.description
+    //     ) {
+    //       item['rowSpan'] += 1;
+    //       item['found'] = false;
+    //     } else {
+    //       item['rowSpan'] = 1;
+    //       count = 0;
+    //     }
+    //   }
 
-      return item;
-    });
-    console.log(items);
+    //   return item;
+    // });
+    //console.log(items);
     this.fieldArrayTotalTemp = items;
     this.fieldArrayMonitoringList = items;
   }
