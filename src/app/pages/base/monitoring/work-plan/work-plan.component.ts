@@ -590,6 +590,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             response.item !== null &&
             response.item.activities.length > 0
           ) {
+            
             let reponseFake = {
               id: 0,
               conservationAgreement: null,
@@ -888,9 +889,9 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
                   progress: 0,
                   trim1: true,
                   commitmentId: 1,
-                  edit: false,
-                  rowSpan: 2,
-                  found: false,
+                  //edit: false,
+                  //rowSpan: 2,
+                  //found: false,
                 },
                 {
                   id: 2,
@@ -2057,10 +2058,13 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
                 },
               ],
             };
+
             // this.monitoringList = this.setCheckBoxes(response.item.activities);
             // this.setTemporaryField(
             //   this.setCheckBoxes(response.item.activities)
             // );
+            reponseFake = response.item;
+            console.log(reponseFake);
             this.monitoringList = this.setCheckBoxes(reponseFake.activities);
             this.setTemporaryField(this.setCheckBoxes(reponseFake.activities));
           }

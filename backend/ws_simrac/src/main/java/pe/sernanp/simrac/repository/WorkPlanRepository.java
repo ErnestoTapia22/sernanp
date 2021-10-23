@@ -14,4 +14,7 @@ public interface WorkPlanRepository extends JpaRepository<WorkPlanModel, Integer
 	@Modifying
 	@Query(value="update simrac.t_plan_trabajo set bol_activo = false where int_acuerdoid = :pagreementeid", nativeQuery=true)
     int updatePlanActive(@Param("pagreementeid") int id);
+	
+	@Query(value="select * from simrac.t_plan_trabajo WHERE int_acuerdoid=:id and bol_activo = true", nativeQuery=true)
+	WorkPlanModel searchActive(@Param("id") int id);
 }

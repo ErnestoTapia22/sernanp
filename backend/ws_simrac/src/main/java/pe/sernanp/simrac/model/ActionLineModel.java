@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table (name = "t_linea_accion", indexes = {@Index(name = "idx_lineaaccion", columnList = "srl_id",unique = true)})
@@ -40,6 +41,9 @@ public class ActionLineModel {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;
 
+	@Transient	
+	private int rowspan;
+	
 	public int getId() {
 		return id;
 	}
@@ -87,5 +91,13 @@ public class ActionLineModel {
 
 	public void setState(Boolean state) {
 		this.state = state;
-	}		
+	}
+	
+	public int getRowspan () {
+		return rowspan;
+	}
+	
+	public void setRowspan (int value) {
+		rowspan = value;
+	}
 }

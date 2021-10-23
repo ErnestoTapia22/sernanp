@@ -1,66 +1,34 @@
-package pe.sernanp.simrac.model;
+package pe.sernanp.simrac.dto;
 
 import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ForeignKey;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import pe.sernanp.simrac.model.ActionLineModel;
+import pe.sernanp.simrac.model.AlliedModel;
+import pe.sernanp.simrac.model.ConservationAgreementModel;
 
-import pe.sernanp.extension.CustomDoubleSerializer;
-
-@Entity
-@Table (name = "t_compromiso", indexes = {@Index(name = "idx_compromiso", columnList = "srl_id",unique = true)})
-public class CommitmentModel implements java.io.Serializable {
-
-	@Column (name= "srl_id")
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_compromiso_srl_id_seq")
-	@SequenceGenerator(name="t_compromiso_srl_id_seq", sequenceName="t_compromiso_srl_id_seq", allocationSize=1)
-	private int id;
+public class CommitmentDTO implements java.io.Serializable {
 	
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_acuerdo"))
-	@ManyToOne
-	private ConservationAgreementModel ConservationAgreement;
+	private int id;	
 	
-	@JoinColumn (name= "int_aliadoid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_aliado"))
-	@ManyToOne
-	private AlliedModel allied;
+	private ConservationAgreementModel ConservationAgreement;	
 	
-	@JoinColumn (name= "int_lineaacionid", referencedColumnName = "srl_id", nullable=false, foreignKey = @ForeignKey(name="fk_compromiso_la"))
-	@ManyToOne
+	private AlliedModel allied;	
+	
 	private ActionLineModel actionLine;
 	
-	@Column (name= "txt_des", columnDefinition="TEXT")
 	private String description;
 	
-	@Column (name= "tsp_fec", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE", nullable=false)
 	private Date registrationDate;
 	
-	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;
 	
-	@Column (name= "var_indicador", columnDefinition="TEXT", nullable=true)
-	private String indicator;
+	private String indicator;	
 	
-	@Column (name= "bol_activo", nullable=false)	
-	private Boolean active;
+	private Boolean active;	
 	
-	@Transient	
 	private Double progress = 0.0;
 	
-	@Transient	
 	private int rowspan;
 
 	public int getId() {
@@ -135,6 +103,7 @@ public class CommitmentModel implements java.io.Serializable {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	
 	@JsonFormat(pattern=".##")
 	public double getProgress () {
 		return progress;
@@ -148,11 +117,12 @@ public class CommitmentModel implements java.io.Serializable {
 		progress = value;
 	}
 	
-	public int getRowspan () {
+	public double getRowspan () {
 		return rowspan;
 	}
 	
 	public void setRowspan (int value) {
 		rowspan = value;
 	}
+	
 }
