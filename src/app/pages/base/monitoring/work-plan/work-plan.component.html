@@ -552,7 +552,10 @@
                               >
                             </div>
                           </td>
-                          <td>
+                          <td
+                            *ngIf="activity.commitment.rowspan > 0"
+                            [attr.rowspan]="activity.commitment.rowspan"
+                          >
                             <div
                               class="circle"
                               [ngClass]="{
@@ -711,7 +714,7 @@
                           <td>Meta</td>
                           <td style="width: 85px">Valor actual</td>
                           <td>Progreso (Actividad)</td>
-                          <td>Progreso (Compromiso)</td>
+                          <!-- <td>Progreso (Compromiso)</td> -->
                           <!-- <td rowspan="2">Meta</td>
                   <td rowspan="2">Resultados</td> -->
                         </tr>
@@ -826,7 +829,7 @@
                               >
                             </div>
                           </td>
-                          <td>
+                          <!-- <td>
                             <div
                               class="circle"
                               [ngClass]="{
@@ -847,7 +850,7 @@
                                 >{{ item.commitment.progress.toFixed(1) }}</span
                               >
                             </div>
-                          </td>
+                          </td> -->
                         </tr>
                       </tbody>
                     </table>
