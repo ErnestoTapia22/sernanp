@@ -18,6 +18,7 @@ import Zoom from '@arcgis/core/widgets/Zoom';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import MapView from '@arcgis/core/views/MapView';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -57,6 +58,8 @@ export class ReportsComponent implements OnInit {
   agreementStateList: any[] = [];
   alliedList: any[] = [];
   anps: any[] = [];
+  view: MapView;
+  photoUrl: string = '';
   constructor(
     public sanitizer: DomSanitizer,
     private agreementService: AgreementService,
@@ -89,6 +92,7 @@ export class ReportsComponent implements OnInit {
   }
   onMapInit({ map, view }) {
     view.ui.remove('zoom');
+    this.view = view;
   }
 
   downloadPdf(content, append: boolean, delimiter) {
@@ -316,6 +320,11 @@ export class ReportsComponent implements OnInit {
     this.commitmentsList = [];
     this.alliedList = [];
     this.getDetail();
+    this.modalRef.shown.subscribe(() => {
+      setTimeout(() => {
+        this.takeScreenShot();
+      }, 1000);
+    });
   }
   getDetail() {
     if (
@@ -497,6 +506,7 @@ export class ReportsComponent implements OnInit {
     });
   }
   generatePDF() {
+    // this.takeScreenShot();
     var d = new Date();
     const month = d.toLocaleString('default', { month: 'long' });
     var archivo =
@@ -1388,6 +1398,39 @@ export class ReportsComponent implements OnInit {
             ],
           },
         },
+        {
+          table: {
+            widths: '*',
+            body: [
+              [
+                {
+                  border: [false, false, false, false],
+                  style: 'subtitle',
+                  text: 'Mapa',
+                },
+                {
+                  border: [false, false, false, false],
+                  text: '',
+                },
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [false, false, false, false],
+                  columns: [
+                    {
+                      image: this.photoUrl,
+
+                      width: 550,
+                    },
+                  ],
+                },
+              ],
+            ],
+            keepWithHeaderRows: 2,
+            headerRows: 2,
+          },
+        },
       ],
       styles: {
         header: {
@@ -1464,5 +1507,10 @@ export class ReportsComponent implements OnInit {
   }
   tiempoConCeros(tiempo) {
     return (tiempo < 10 ? '0' : '') + tiempo;
+  }
+  takeScreenShot() {
+    this.view.takeScreenshot().then((screenShot) => {
+      this.photoUrl = screenShot.dataUrl;
+    });
   }
 }
