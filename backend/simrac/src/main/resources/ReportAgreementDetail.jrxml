@@ -77,6 +77,7 @@
 	</queryString>
 	<field name="description" class="java.lang.String"/>
 	<field name="allied" class="java.lang.String"/>
+	<field name="suscriptorname" class="java.lang.String"/>
 	<variable name="ANP" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -375,12 +376,11 @@
 					</textElement>
 					<text><![CDATA[Suscriptores]]></text>
 				</staticText>
-				<line>
-					<reportElement x="139" y="39" width="51" height="1" uuid="136e6fe5-f478-455b-b2c3-53dddb839862"/>
-				</line>
-				<line>
-					<reportElement x="320" y="38" width="53" height="1" uuid="5a163d84-954a-4752-bb74-fc65e176bfee"/>
-				</line>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="116" y="21" width="143" height="18" isPrintWhenDetailOverflows="true" uuid="6be43151-93fd-4606-b19f-8bdb0a8aac4f"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 		<band height="677">
