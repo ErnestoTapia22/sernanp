@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.service;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,10 +13,12 @@ import pe.sernanp.simrac.dto.ActivityDTO;
 import pe.sernanp.simrac.dto.MonitoringDTO;
 import pe.sernanp.simrac.dto.WorkPlanDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.ActionLineModel;
 import pe.sernanp.simrac.model.ActivityModel;
 import pe.sernanp.simrac.model.AnswerModel;
 import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.model.MonitoringModel;
+import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.model.WorkPlanModel;
 import pe.sernanp.simrac.repository.ActivityRepository;
 import pe.sernanp.simrac.repository.AnswerRepository;
@@ -127,34 +130,111 @@ public class MonitoringService {
 			ResponseEntity<MonitoringModel> response = new ResponseEntity<MonitoringModel>();
 			List<MonitoringModel> items = this._repository.searchByMonitoringAndAgreement(id);
 			items.forEach(item -> {				
-				List<AnswerModel> activities = this._answerRepository.searchByMonitoring(item.getId());				
-				List<ActivityDTO> items2 = new ArrayList<ActivityDTO>();
-				List<CommitmentModel> itemsC = new ArrayList<CommitmentModel>();
-				LinkedHashMap<String,Double> s = new LinkedHashMap<String, Double>();
-				activities.forEach(t -> {
+				List<AnswerModel> activities = this._answerRepository.searchByMonitoring(item.getId());	
+				
+				LinkedHashMap<String,Integer> commitmentMap = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> actionLineMap = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> objetiveMap = new LinkedHashMap<String, Integer>();
+				
+				Collections.sort(activities, (f1, f2)->{
+					return f1.getActivity().getCommitment().getActionLine().getObjetive().getDescription().compareTo( f2.getActivity().getCommitment().getActionLine().getObjetive().getDescription() );
+				});
+				
+				
+				
+				List<ActivityDTO> itemActivies = new ArrayList<ActivityDTO>();
+				
+				LinkedHashMap<String,Double> commitmetProgress = new LinkedHashMap<String, Double>();
+				
+				activities.forEach(activity -> {
 					ActivityDTO itemActivity = new ActivityDTO();
-					itemActivity.setId(t.getActivity().getId());
-					itemActivity.setState(t.getState());
-					itemActivity.setName(t.getActivity().getName());
-					itemActivity.setIndicator(t.getActivity().getIndicator());
-					itemActivity.setGoal(t.getActivity().getGoal());
-					itemActivity.setSemester(t.getActivity().getSemester());
-					itemActivity.setValue(t.getValue());
-					itemActivity.setCommitment(t.getActivity().getCommitment());
-					itemActivity.setWorkPlan(t.getActivity().getWorkPlan());
-					//itemActivity.getCommitment().setProgress( t.getValue(), t.getActivity().getGoal() );					
-					itemActivity.setId(t.getActivity().getId());
-					items2.add(itemActivity);
-					if (s.containsKey("activity"+t.getActivity().getCommitment().getId()))
-						s.put("activity"+ t.getActivity().getCommitment().getId(), (s.get("activity"+ t.getActivity().getCommitment().getId()).doubleValue() +  itemActivity.getProgress() ) /2);
+					itemActivity.setId(activity.getActivity().getId());
+					itemActivity.setState(activity.getState());
+					itemActivity.setName(activity.getActivity().getName());
+					itemActivity.setIndicator(activity.getActivity().getIndicator());
+					itemActivity.setGoal(activity.getActivity().getGoal());
+					itemActivity.setSemester(activity.getActivity().getSemester());
+					itemActivity.setValue(activity.getValue());
+					itemActivity.setCommitment(activity.getActivity().getCommitment());
+					itemActivity.setWorkPlan(activity.getActivity().getWorkPlan());				
+					itemActivity.setId(activity.getActivity().getId());
+					
+					CommitmentModel commitment = new CommitmentModel();
+					commitment.setId(activity.getActivity().getCommitment().getId());
+					commitment.setDescription(activity.getActivity().getCommitment().getDescription());
+					commitment.setActionLine(new ActionLineModel());
+					commitment.getActionLine().setId(activity.getActivity().getCommitment().getActionLine().getId());
+					commitment.getActionLine().setName(activity.getActivity().getCommitment().getActionLine().getName());
+					commitment.getActionLine().setObjetive(new ObjetiveModel());
+					commitment.getActionLine().getObjetive().setId(activity.getActivity().getCommitment().getActionLine().getObjetive().getId());
+					commitment.getActionLine().getObjetive().setDescription(activity.getActivity().getCommitment().getActionLine().getObjetive().getDescription());
+										
+					if (commitmetProgress.containsKey("activity"+activity.getActivity().getCommitment().getId()))
+						commitmetProgress.put("activity"+ activity.getActivity().getCommitment().getId(), (commitmetProgress.get("activity"+ activity.getActivity().getCommitment().getId()).doubleValue() +  itemActivity.getProgress() ) /2);
 					else 
-						s.put("activity"+ t.getActivity().getCommitment().getId(), itemActivity.getProgress());
-				});	
-				items2.forEach(t -> {
-					double value = s.get("activity"+ t.getCommitment().getId()).doubleValue();					
-					t.getCommitment().setProgress(value);
+						commitmetProgress.put("activity"+ activity.getActivity().getCommitment().getId(), itemActivity.getProgress());
+					
+					if (commitmentMap.containsKey(""+activity.getActivity().getCommitment().getId()))
+						commitmentMap.put(""+ activity.getActivity().getCommitment().getId(), (commitmentMap.get(""+ activity.getActivity().getCommitment().getId()).intValue() +  1 ));
+					else
+						commitmentMap.put(""+activity.getActivity().getCommitment().getId(), 1);	
+					
+					if (actionLineMap.containsKey(""+activity.getActivity().getCommitment().getActionLine().getId()))
+						actionLineMap.put(""+ activity.getActivity().getCommitment().getActionLine().getId(), (actionLineMap.get(""+ activity.getActivity().getCommitment().getActionLine().getId()).intValue() +  1 ));
+					else
+						actionLineMap.put(""+activity.getActivity().getCommitment().getActionLine().getId(), 1);
+					
+					if (objetiveMap.containsKey(""+activity.getActivity().getCommitment().getActionLine().getObjetive().getId()))
+						objetiveMap.put(""+ activity.getActivity().getCommitment().getActionLine().getObjetive().getId(), (objetiveMap.get(""+ activity.getActivity().getCommitment().getActionLine().getObjetive().getId()).intValue() +  1 ));
+					else
+						objetiveMap.put(""+activity.getActivity().getCommitment().getActionLine().getObjetive().getId(), 1);
+					
+					itemActivity.setCommitment(commitment);
+					itemActivies.add(itemActivity);
+					
+				});		
+				System.out.println("commitment");
+				commitmentMap.forEach((k,v) -> 
+					System.out.println("Key: " + k + ": Value: " + v)
+				);
+				System.out.println("action line");
+				actionLineMap.forEach((k,v) -> 
+					System.out.println("Key: " + k + ": Value: " + v)
+				);
+				System.out.println("objetive");
+				objetiveMap.forEach((k,v) -> 
+					System.out.println("Key: " + k + ": Value: " + v)
+				);
+				LinkedHashMap<String,Integer> commitmentMap2 = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> actionLineMap2 = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> objetiveMap2 = new LinkedHashMap<String, Integer>();
+				
+				itemActivies.forEach(activity -> {
+					
+					double value = commitmetProgress.get("activity"+ activity.getCommitment().getId()).doubleValue();					
+					activity.getCommitment().setProgress(value);
+					
+					if (commitmentMap.containsKey(""+activity.getCommitment().getId())) {
+						if (!commitmentMap2.containsKey(""+activity.getCommitment().getId())) {
+							activity.getCommitment().setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());
+							commitmentMap2.put(""+activity.getCommitment().getId(), activity.getCommitment().getId());
+						}
+					}
+					if (actionLineMap.containsKey(""+activity.getCommitment().getActionLine().getId())) {
+						if (!actionLineMap2.containsKey(""+activity.getCommitment().getActionLine().getId())) {
+							activity.getCommitment().getActionLine().setRowspan(actionLineMap.get(""+ activity.getCommitment().getActionLine().getId()).intValue());
+							actionLineMap2.put(""+activity.getCommitment().getActionLine().getId(), activity.getCommitment().getActionLine().getId());
+						}
+					}
+					if (objetiveMap.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {
+						if (!objetiveMap2.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {						
+							activity.getCommitment().getActionLine().getObjetive().setRowspan(objetiveMap.get(""+ activity.getCommitment().getActionLine().getObjetive().getId()).intValue());
+							objetiveMap2.put(""+activity.getCommitment().getActionLine().getObjetive().getId(), activity.getCommitment().getActionLine().getObjetive().getId());
+						}
+					}	
+					
 				});			
-				item.setActivities(items2);				
+				item.setActivities(itemActivies);				
 			});
 			response.setSuccess(success);
 			response.setItems(items);

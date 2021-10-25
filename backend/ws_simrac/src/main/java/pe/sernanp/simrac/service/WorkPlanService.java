@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.service;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -15,8 +16,10 @@ import net.sf.jasperreports.engine.export.data.BooleanTextValue;
 import pe.sernanp.simrac.dto.ActivityDTO;
 import pe.sernanp.simrac.dto.WorkPlanDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;
+import pe.sernanp.simrac.model.ActionLineModel;
 import pe.sernanp.simrac.model.ActivityModel;
 import pe.sernanp.simrac.model.CommitmentModel;
+import pe.sernanp.simrac.model.ObjetiveModel;
 import pe.sernanp.simrac.model.WorkPlanModel;
 import pe.sernanp.simrac.repository.ActivityRepository;
 import pe.sernanp.simrac.repository.WorkPlanRepository;
@@ -129,14 +132,18 @@ public class WorkPlanService {
 			ResponseEntity<WorkPlanDTO> response = new ResponseEntity<WorkPlanDTO>();			
 			List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
 			WorkPlanDTO item = new WorkPlanDTO();
-			WorkPlanModel item2 = this._repository.searchActive(id);
-			item.setName(item2.getName());
-			item.setVersion(item2.getVersion());
-			item.setYear(item2.getYear());			
+			WorkPlanModel itemWorkPlan = this._repository.searchActive(id);
 			
 			LinkedHashMap<String,Integer> commitmentMap = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String,Integer> actionLineMap = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String,Integer> objetiveMap = new LinkedHashMap<String, Integer>();
+			
+			Collections.sort(items, (f1, f2)->{
+				return f1.getCommitment().getActionLine().getObjetive().getDescription().compareTo( f2.getCommitment().getActionLine().getObjetive().getDescription() );
+			});
+			item.setName(itemWorkPlan.getName());
+			item.setVersion(itemWorkPlan.getVersion());
+			item.setYear(itemWorkPlan.getYear());			
 			items.forEach(activity -> {			
 				if (commitmentMap.containsKey(""+activity.getCommitment().getId()))
 					commitmentMap.put(""+ activity.getCommitment().getId(), (commitmentMap.get(""+ activity.getCommitment().getId()).intValue() +  1 ));
@@ -169,43 +176,45 @@ public class WorkPlanService {
 			LinkedHashMap<String,Integer> actionLineMap2 = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String,Integer> objetiveMap2 = new LinkedHashMap<String, Integer>();
 
-			List<ActivityModel> items222 = new ArrayList<ActivityModel>();
+			List<ActivityModel> itemsActivies = new ArrayList<ActivityModel>();
 			for (ActivityModel activity : items) {
-				ActivityModel items22 = new ActivityModel();
-				items22 = activity;
-				CommitmentModel co = activity.getCommitment();			
-				
-				if (commitmentMap.containsKey(""+activity.getCommitment().getId())) {					
+				ActivityModel activityModel = new ActivityModel();
+				activityModel.setId(activity.getId());
+				activityModel.setIndicator(activity.getIndicator());
+				activityModel.setName(activity.getName());
+				activityModel.setSemester(activity.getSemester());
+				activityModel.setGoal(activity.getGoal());
+				activityModel.setWorkPlan(activity.getWorkPlan());
+				CommitmentModel commitment = new CommitmentModel();
+				commitment.setId(activity.getCommitment().getId());
+				commitment.setDescription(activity.getCommitment().getDescription());
+				commitment.setActionLine(new ActionLineModel());
+				commitment.getActionLine().setName(activity.getCommitment().getActionLine().getName());
+				commitment.getActionLine().setObjetive(new ObjetiveModel());
+				commitment.getActionLine().getObjetive().setDescription(activity.getCommitment().getActionLine().getObjetive().getDescription());
+								
+				if (commitmentMap.containsKey(""+activity.getCommitment().getId())) {
 					if (!commitmentMap2.containsKey(""+activity.getCommitment().getId())) {
-						items22.getCommitment().setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());	
-						co.setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());
+						commitment.setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());
 						commitmentMap2.put(""+activity.getCommitment().getId(), activity.getCommitment().getId());
 					}
-					else 
-						co.setRowspan(100);
-					//else
-					//	activity.getCommitment().setRowspan(0);
 				}
 				if (actionLineMap.containsKey(""+activity.getCommitment().getActionLine().getId())) {
 					if (!actionLineMap2.containsKey(""+activity.getCommitment().getActionLine().getId())) {
-						items22.getCommitment().getActionLine().setRowspan(actionLineMap.get(""+ activity.getCommitment().getActionLine().getId()).intValue());
+						commitment.getActionLine().setRowspan(actionLineMap.get(""+ activity.getCommitment().getActionLine().getId()).intValue());
 						actionLineMap2.put(""+activity.getCommitment().getActionLine().getId(), activity.getCommitment().getActionLine().getId());
 					}
-					//else 
-					//	activity.getCommitment().getActionLine().setRowspan(0);
 				}
 				if (objetiveMap.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {
 					if (!objetiveMap2.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {						
-						items22.getCommitment().getActionLine().getObjetive().setRowspan(objetiveMap.get(""+ activity.getCommitment().getActionLine().getObjetive().getId()).intValue());
+						commitment.getActionLine().getObjetive().setRowspan(objetiveMap.get(""+ activity.getCommitment().getActionLine().getObjetive().getId()).intValue());
 						objetiveMap2.put(""+activity.getCommitment().getActionLine().getObjetive().getId(), activity.getCommitment().getActionLine().getObjetive().getId());
 					}
-					//else
-					//	activity.getCommitment().getActionLine().getObjetive().setRowspan(0);
 				}	
-				items22.setCommitment(co);
-				items222.add(items22);
+				activityModel.setCommitment(commitment);
+				itemsActivies.add(activityModel);
 			}
-			item.setActivities(items222);
+			item.setActivities(itemsActivies);
 			response.setSuccess(success);
 			response.setItem(item);
 			return response;

@@ -142,4 +142,9 @@ public class ActivityModel implements java.io.Serializable {
 		else 
 			return 0;
 	}
+	
+	@JsonFormat(pattern=".##")
+	public void setProgress(double value) {
+		this.progress = value;
+	}
 }

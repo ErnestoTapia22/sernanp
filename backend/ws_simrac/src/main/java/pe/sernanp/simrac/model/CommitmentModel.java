@@ -155,4 +155,11 @@ public class CommitmentModel implements java.io.Serializable {
 	public void setRowspan (int value) {
 		rowspan = value;
 	}
+	
+	public CommitmentModel(int id) {
+		this.id = id;
+	}
+	
+	public CommitmentModel() {		
+	}
 }
