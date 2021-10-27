@@ -126,6 +126,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['Administrador SIMRAC'], module: '/anp/index' },
   },
+
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: 'not-found' },
 ];

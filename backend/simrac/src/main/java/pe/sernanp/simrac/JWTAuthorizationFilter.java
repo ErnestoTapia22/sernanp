@@ -28,7 +28,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	private final SecretKey SECRET = SernanpApplication.key;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws ServletException, IOException {
 		try {
 			if (existeJWTToken(request, response)) {
 				Claims claims = validateToken(request);
@@ -38,7 +39,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 					SecurityContextHolder.clearContext();
 				}
 			} else {
-					SecurityContextHolder.clearContext();
+				SecurityContextHolder.clearContext();
 			}
 			chain.doFilter(request, response);
 		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
@@ -46,14 +47,17 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
 			return;
 		}
-	}	
+	}
 
 	private Claims validateToken(HttpServletRequest request) {
 		String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-		//return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jws).getBody().getSubject().equals("2");
+		// return
+		// Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jws).getBody().getSubject().equals("2");
 
 		return Jwts.parserBuilder().setSigningKey(SECRET).build().parseClaimsJws(jwtToken).getBody();
-		//return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody(); // antiguo
+		// return
+		// Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
+		// // antiguo
 	}
 
 	/**
@@ -77,5 +81,5 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			return false;
 		return true;
 	}
-	
+
 }

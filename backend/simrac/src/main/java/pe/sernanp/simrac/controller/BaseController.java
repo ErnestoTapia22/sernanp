@@ -17,15 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public abstract class BaseController<TEntity extends BaseModel, TService extends BaseService<TEntity>> {
-			
+
 	@Autowired
 	protected HttpServletRequest _request;
-	
+
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<TEntity> list() throws IOException {
 		return null;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	protected ResponseEntity getJSON(Exception ex) {
 		// _logger.error("Exception!!!", ex);
@@ -34,15 +34,15 @@ public abstract class BaseController<TEntity extends BaseModel, TService extends
 		response.setSuccess(false);
 		return response;
 	}
-	
+
 	protected PaginatorEntity setPaginator() throws Exception {
 		String[] valores = _request.getParameterValues("paginator");
 		if (valores != null && valores.length > 0)
-			return this.<PaginatorEntity> fromJson2(valores[0], PaginatorEntity.class);
+			return this.<PaginatorEntity>fromJson2(valores[0], PaginatorEntity.class);
 		else
 			return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected <TEntity2 extends BaseModel> TEntity2 fromJson(String json, Class<?> classs) throws IOException {
 		JsonMapper mapper = new JsonMapper();
