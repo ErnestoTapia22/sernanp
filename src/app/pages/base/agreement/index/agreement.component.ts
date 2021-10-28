@@ -180,10 +180,7 @@ export class AgreementComponent implements OnInit {
   }
   buildForm(): void {
     this.form = this.fb.group({
-      code: [
-        { value: '', disabled: true },
-        Validators.compose([Validators.maxLength(10)]),
-      ],
+      code: [''],
       name: [''],
       //state: [''],
       agreementState: this.fb.group({

@@ -1129,7 +1129,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('province').disable();
     this.form.get('district').disable();
     this.form.get('code').disable();
-    //this.form.get('code').disable();
+    this.form.get('anp').disable();
+    this.form.get('agreementState').disable();
+    this.form.get('firm').disable();
+    this.form.get('name').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
