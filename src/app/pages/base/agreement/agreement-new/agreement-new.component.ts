@@ -44,7 +44,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   mapViewProperties: any;
   fieldArray: Array<any> = [];
   newAttribute: any = {};
-
+  featureLayer : any = null;
   portalUrl = 'https://www.arcgis.com';
   view: MapView;
   map: Map;
@@ -339,6 +339,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // this.eventListener();
   }
   eventFormListener1(event) {
+    if (this.featureLayer != null)
+      this.map.removeMany(this.featureLayer);
+    this.featureLayer = null;
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status1');
     if (fileName.indexOf('.zip') !== -1) {
@@ -356,6 +359,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     }
   }
   eventFormListener2(event) {
+    if (this.featureLayer != null)
+      this.map.removeMany(this.featureLayer);
+    this.featureLayer = null;
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status2');
     if (fileName.indexOf('.zip') !== -1) {
@@ -373,6 +379,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     }
   }
   eventFormListener3(event) {
+    if (this.featureLayer != null)
+      this.map.removeMany(this.featureLayer);
+    this.featureLayer = null;
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status3');
     if (fileName.indexOf('.zip') !== -1) {
@@ -389,6 +398,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     }
   }
   eventFormListener4(event) {
+    if (this.featureLayer != null)
+      this.map.removeMany(this.featureLayer);
+    this.featureLayer = null;
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status4');
     if (fileName.indexOf('.zip') !== -1) {
@@ -405,6 +417,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     }
   }
   eventFormListener5(event) {
+    if (this.featureLayer != null)
+      this.map.removeMany(this.featureLayer);
+    this.featureLayer = null;
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status5');
     if (fileName.indexOf('.zip') !== -1) {
@@ -618,14 +633,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // see the 'Feature Collection in Local Storage' sample for an example of how to work with local storage
     let sourceGraphics = [];
 
-    const layers = featureCollection.layers.map((layer) => {
+    featureCollection.layers.map((layer) => {
       const graphics = layer.featureSet.features.map((feature) => {
         return Graphic.fromJSON(feature);
       });
       const geometry = layer.featureSet.features.map((feature) => {
         return feature.geometry;
       });
-      console.log(geometry);
+      //console.log(geometry);
       // this.graphics.push(geometry);
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
@@ -639,14 +654,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         this.form.get('areaAmbitc').value;
       this.layersGraphic[layerId].attributes.ac_teco =
         this.form.get('areaAmbitc').value;
-      console.log(this.provinces);
-      console.log(
-        this.provinces.find((t) => t.code == this.form.get('province').value)
-      );
-      console.log(
-        this.provinces.find((t) => t.code == this.form.get('province').value)
-          .name
-      );
+      //console.log(this.provinces);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //    .name
+      //);
       this.layersGraphic[layerId].attributes.ac_deno =
         this.form.get('name').value;
       (this.layersGraphic[layerId].attributes.ac_bene = ''),
@@ -661,18 +676,20 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
         (sourceGraphics = sourceGraphics.concat(graphics));
 
-      const featureLayer = new FeatureLayer({
+      this.featureLayer = new FeatureLayer({
         objectIdField: 'FID',
         source: graphics,
         fields: layer.layerDefinition.fields.map((field) => {
           return Field.fromJSON(field);
         }),
       });
-      return featureLayer;
+      //return this.featureLayer;
       // associate the feature with the popup on click to enable highlight and zoom to
     });
-
-    this.map.addMany(layers);
+    
+    console.log('this.featureLayer');
+    console.log(this.featureLayer);
+    this.map.add(this.featureLayer);
     this.view.goTo(sourceGraphics).catch((error) => {
       if (error.name != 'AbortError') {
         console.error(error);
