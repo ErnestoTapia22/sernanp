@@ -339,9 +339,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // this.eventListener();
   }
   eventFormListener1(event) {
-    if (this.featureLayer != null)
-      this.map.removeMany(this.featureLayer);
-    this.featureLayer = null;
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status1');
     if (fileName.indexOf('.zip') !== -1) {
@@ -355,13 +356,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener2(event) {
-    if (this.featureLayer != null)
-      this.map.removeMany(this.featureLayer);
-    this.featureLayer = null;
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status2');
     if (fileName.indexOf('.zip') !== -1) {
@@ -375,13 +377,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener3(event) {
-    if (this.featureLayer != null)
-      this.map.removeMany(this.featureLayer);
-    this.featureLayer = null;
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status3');
     if (fileName.indexOf('.zip') !== -1) {
@@ -394,13 +397,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener4(event) {
-    if (this.featureLayer != null)
-      this.map.removeMany(this.featureLayer);
-    this.featureLayer = null;
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status4');
     if (fileName.indexOf('.zip') !== -1) {
@@ -413,13 +417,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 3);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener5(event) {
-    if (this.featureLayer != null)
-      this.map.removeMany(this.featureLayer);
-    this.featureLayer = null;
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status5');
     if (fileName.indexOf('.zip') !== -1) {
@@ -432,7 +437,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 4);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
 
@@ -645,15 +650,13 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi =
-        this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.anp_codi =
-          this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.ac_susc = '');
-      this.layersGraphic[layerId].attributes.ac_sup =
-        this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_teco =
-        this.form.get('areaAmbitc').value;
+      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value);
+      
+      //(this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
+      //(this.layersGraphic[layerId].attributes.ac_susc = '');
+      //this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
+      //this.layersGraphic[layerId].attributes.ac_teco = this.form.get('areaAmbitc').value;
+      
       //console.log(this.provinces);
       //console.log(
       //  this.provinces.find((t) => t.code == this.form.get('province').value)
@@ -662,19 +665,18 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       //  this.provinces.find((t) => t.code == this.form.get('province').value)
       //    .name
       //);
-      this.layersGraphic[layerId].attributes.ac_deno =
-        this.form.get('name').value;
-      (this.layersGraphic[layerId].attributes.ac_bene = ''),
-        (this.layersGraphic[layerId].attributes.ac_nbene =
-          this.form.get('numPart').value),
-        (this.layersGraphic[layerId].attributes.ac_fesus =
-          this.form.get('firm').value),
-        (this.layersGraphic[layerId].attributes.ac_vigen =
-          this.form.get('vigency').value),
+
+      //this.layersGraphic[layerId].attributes.ac_deno = this.form.get('name').value;
+      //(this.layersGraphic[layerId].attributes.ac_bene = ''),
+      //(this.layersGraphic[layerId].attributes.ac_nbene = this.form.get('numPart').value),
+      //(this.layersGraphic[layerId].attributes.ac_fesus = this.form.get('firm').value),
+      //(this.layersGraphic[layerId].attributes.ac_vigen = this.form.get('vigency').value),
+      
         //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
         //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
         //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
-        (sourceGraphics = sourceGraphics.concat(graphics));
+      
+      (sourceGraphics = sourceGraphics.concat(graphics));
 
       this.featureLayer = new FeatureLayer({
         objectIdField: 'FID',
@@ -687,8 +689,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       // associate the feature with the popup on click to enable highlight and zoom to
     });
     
-    console.log('this.featureLayer');
-    console.log(this.featureLayer);
     this.map.add(this.featureLayer);
     this.view.goTo(sourceGraphics).catch((error) => {
       if (error.name != 'AbortError') {
@@ -1941,5 +1941,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.layersGraphic[index].attributes.ac_fesus = this.form.get('firm').value;
     this.layersGraphic[index].attributes.ac_vigen =
       this.form.get('vigency').value;
+  }
+  cleanLayer(){
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
   }
 }
