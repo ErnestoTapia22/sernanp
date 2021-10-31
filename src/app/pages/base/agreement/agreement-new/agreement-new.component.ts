@@ -1608,6 +1608,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   addAgreementLayers() {
     const agreementCode = this.form.get('code').value;
+    console.log(this.form.get('anp').value);
+    const anpCode = 'PN01';
     console.log(agreementCode);
     if (
       agreementCode === null ||
@@ -1624,6 +1626,13 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       outFields: ['*'],
       definitionExpression: `ac_codi = '${agreementCode}'`,
     });
+    const featureLayer2 = new FeatureLayer({
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer/0',
+      id: '111',
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `anp_codi = '${anpCode}'`,
+    });
     // featureLayer.when((loaded) => {
     //   console.log(loaded);
     // });
@@ -1631,9 +1640,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // debugger;
 
     this.map.add(featureLayer);
-
-    this.zoomToLayer(featureLayer);
-
+    this.map.add(featureLayer2);
+    //this.zoomToLayer(featureLayer);
+    this.zoomToLayer(featureLayer2);
     // this.addGraphics(featureLayer);
 
     //  this.zoomToLayer;
