@@ -5,6 +5,8 @@ import { AlertService } from '@app/_services/base/alert.service';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PdfService } from '@app/_services/report/pdf.service';
+import { environment } from 'src/environments/environment';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import {
   FormBuilder,
   FormControl,
@@ -19,6 +21,7 @@ import Zoom from '@arcgis/core/widgets/Zoom';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import MapView from '@arcgis/core/views/MapView';
+import Map from '@arcgis/core/Map';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -59,7 +62,33 @@ export class ReportsComponent implements OnInit {
   alliedList: any[] = [];
   anps: any[] = [];
   view: MapView;
+  map: Map;
   photoUrl: string = '';
+  layersGraphic: any[] = [
+    {
+      attributes: {
+        ac_codi: '',
+        anp_codi: '',
+        ac_tipo: '01',
+        ac_susc: '',
+        ac_sup: 0,
+        ac_teco: '',
+        ac_deno: '',
+        ac_bene: '',
+        ac_nbene: 0,
+        ac_fesus: '2021-09-20',
+        ac_vigen: 0,
+        ac_dep: '',
+        ac_prov: '',
+        ac_dist: '',
+        url: environment.conservationAgreements[0].url,
+        sended: false,
+        id: 'ambito',
+        position: 1,
+      },
+      geometry: {},
+    }
+  ];
   constructor(
     public sanitizer: DomSanitizer,
     private agreementService: AgreementService,
@@ -92,6 +121,7 @@ export class ReportsComponent implements OnInit {
   }
   onMapInit({ map, view }) {
     view.ui.remove('zoom');
+    this.map = map;
     this.view = view;
   }
 
@@ -348,10 +378,9 @@ export class ReportsComponent implements OnInit {
             this.agreementDetail['department'] = [{ name: '' }];
             this.agreementDetail['province'] = [{ name: '' }];
             this.agreementDetail['district'] = [{ name: '' }];
+            this.addAgreementLayers();
             this.fillSelects2(response.item.districtId);
-
             this.searchAllied();
-
             this.searchCommitments();
           }
         });
@@ -375,7 +404,6 @@ export class ReportsComponent implements OnInit {
           response.items !== null &&
           response.items.length > 0
         ) {
-          console.log(response);
           this.agreementDetail['department'] = response.items.filter((item) => {
             return item.code === districtId.substring(0, 2);
           });
@@ -395,8 +423,6 @@ export class ReportsComponent implements OnInit {
             });
           }
         });
-      console.log(districtId.substring(0, 4));
-      console.log(districtId);
       this.agreementService
         .searchDistricts(districtId.substring(0, 4))
         .subscribe((response) => {
@@ -410,7 +436,6 @@ export class ReportsComponent implements OnInit {
             this.agreementDetail['district'] = response.items.filter((item) => {
               return item.code === districtId;
             });
-            console.log(this.agreementDetail);
           }
         });
     } catch (error) {
@@ -531,7 +556,7 @@ export class ReportsComponent implements OnInit {
       this.tiempoConCeros(d.getSeconds());
     let docDefinition = {
       content: [
-        { text: 'Acuerdo Detalle', style: 'header' },
+        { text: 'Resumen Acuerdo', style: 'header' },
         {
           style: 'tableExample',
           table: {
@@ -557,7 +582,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['code'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -571,7 +596,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['vigency'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -587,7 +612,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['anp'].fullName,
                       alignment: 'right',
                       bold: true,
                     },
@@ -601,7 +626,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['department'][0].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -617,7 +642,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['agreementState'] == null ? '' : this.agreementDetail['agreementState'].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -631,7 +656,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['province'][0].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -647,7 +672,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['name'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -661,7 +686,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['district'][0].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -677,7 +702,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['firm'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -691,7 +716,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['localization'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -707,7 +732,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['genObj'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -721,7 +746,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['comment'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -881,7 +906,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['numFamily'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -895,7 +920,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['benPerson'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -911,7 +936,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['benFamily'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -925,7 +950,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['benIndirect'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -948,7 +973,7 @@ export class ReportsComponent implements OnInit {
                               alignment: 'left',
                             },
                             {
-                              text: '00001',
+                              text: this.agreementDetail['partMen'],
                               alignment: 'right',
                               bold: true,
                             },
@@ -962,7 +987,7 @@ export class ReportsComponent implements OnInit {
                               alignment: 'left',
                             },
                             {
-                              text: '00001',
+                              text: this.agreementDetail['partWomen'],
                               alignment: 'right',
                               bold: true,
                             },
@@ -976,7 +1001,7 @@ export class ReportsComponent implements OnInit {
                               alignment: 'left',
                             },
                             {
-                              text: '00001',
+                              text: this.agreementDetail['partMen'] + this.agreementDetail['partWomen'],
                               alignment: 'right',
                               bold: true,
                             },
@@ -1029,7 +1054,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['restdet'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1045,7 +1070,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['sectHect'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1059,7 +1084,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['sectNom'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1075,7 +1100,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['surfaceIntervention'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1089,7 +1114,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['sectHect'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1105,7 +1130,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['detailProduction'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1119,7 +1144,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['sectDet'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1135,7 +1160,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['restHect'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1149,7 +1174,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['territoryMod'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1165,7 +1190,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['surfaceAmbito'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1216,7 +1241,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['hasMasterPlan'] == true ? "Si" : "No",
                       alignment: 'right',
                       bold: true,
                     },
@@ -1233,7 +1258,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['hasDevelopmentPlan'] == true ? "Si" : "No",
                       alignment: 'right',
                       bold: true,
                     },
@@ -1250,7 +1275,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: '',
                       alignment: 'right',
                       bold: true,
                     },
@@ -1267,7 +1292,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: '',
                       alignment: 'right',
                       bold: true,
                     },
@@ -1320,7 +1345,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['finanApa'] == true ? "Si" : "No",
                       alignment: 'right',
                       bold: true,
                     },
@@ -1337,7 +1362,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['finanNum'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1354,7 +1379,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['source'] == null ? '' : this.agreementDetail['source'].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -1371,7 +1396,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['finanMod'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1388,7 +1413,7 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: '00001',
+                      text: this.agreementDetail['fondName'],
                       alignment: 'right',
                       bold: true,
                     },
@@ -1512,5 +1537,49 @@ export class ReportsComponent implements OnInit {
     this.view.takeScreenshot().then((screenShot) => {
       this.photoUrl = screenShot.dataUrl;
     });
+  }
+  addAgreementLayers() {
+    const agreementCode = this.agreementDetail['code'];
+    console.log(agreementCode);
+    if (
+      agreementCode === null ||
+      agreementCode === undefined ||
+      agreementCode === ''
+    ) {
+      return;
+    }
+
+    const featureLayer = new FeatureLayer({
+      url: this.layersGraphic[0].attributes.url,
+      id: this.layersGraphic[0].attributes.id,
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `ac_codi = '${agreementCode}'`,
+    });
+    // featureLayer.when((loaded) => {
+    //   console.log(loaded);
+    // });
+
+    // debugger;
+
+    this.map.add(featureLayer);
+
+    this.zoomToLayer(featureLayer);
+
+    // this.addGraphics(featureLayer);
+
+    //  this.zoomToLayer;
+  }
+  zoomToLayer(layer: FeatureLayer) {
+    layer
+      .queryExtent()
+      .then((response) => {
+        this.view.goTo(response.extent);
+      })
+      .catch((error) => {
+        this.alertService.error('Error al traer el extent' + error, 'error', {
+          autoClose: false,
+        });
+      });
   }
 }
