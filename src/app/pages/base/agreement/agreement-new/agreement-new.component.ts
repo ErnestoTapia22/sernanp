@@ -57,6 +57,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   districts: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
+  anpCode : null;
   attributes: any = {
     codigo: '',
     nombre: '',
@@ -1061,6 +1062,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
+          console.log('response.item');
+          console.log(response.item);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1128,6 +1131,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             province: 0,
             district: 0,
           });
+          this.anpCode = response.item.anp.code;
           this.addAgreementLayers();
           this.setLocalization(response.item.districtId);
           this.disableFields();
@@ -1222,7 +1226,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.agreementId === '' ||
       this.agreementId === null
     ) {
-      console.log(this.agreementId);
       return;
     }
 
@@ -1608,8 +1611,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   addAgreementLayers() {
     const agreementCode = this.form.get('code').value;
-    console.log(this.form.get('anp').value);
-    const anpCode = 'PN01';
     console.log(agreementCode);
     if (
       agreementCode === null ||
@@ -1626,12 +1627,17 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       outFields: ['*'],
       definitionExpression: `ac_codi = '${agreementCode}'`,
     });
+    this.map.add(featureLayer);
+    this.zoomToLayer(featureLayer);
+    if (this.anpCode === null || this.anpCode === '') {
+      return;
+    }
     const featureLayer2 = new FeatureLayer({
-      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer/0',
-      id: '111',
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0',
+      id: 'anp',
       popupEnabled: true,
       outFields: ['*'],
-      definitionExpression: `anp_codi = '${anpCode}'`,
+      definitionExpression: `anp_codi = '${this.anpCode}'`,
     });
     // featureLayer.when((loaded) => {
     //   console.log(loaded);
@@ -1639,10 +1645,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
     // debugger;
 
-    this.map.add(featureLayer);
+    
     this.map.add(featureLayer2);
     //this.zoomToLayer(featureLayer);
-    this.zoomToLayer(featureLayer2);
     // this.addGraphics(featureLayer);
 
     //  this.zoomToLayer;
