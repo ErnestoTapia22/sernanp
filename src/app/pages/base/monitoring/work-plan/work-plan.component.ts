@@ -208,7 +208,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.agreementService
         .commitmentsSearch(this.agreementId)
         .subscribe((response) => {
-          
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
           }
@@ -2139,7 +2138,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   monitoringSave() {
     this.submitted = true;
     this.disabled = true;
-    return;
+
     if (this.monitoringList.length === 0) {
       this.disabled = false;
       return;
@@ -2162,6 +2161,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           if (response && response.success) {
             this.searchMonitoring();
             this.monitoringSearchHistory();
+            this.monitoringReady = false;
             this.alertService.success(
               'Se guardó correctamente el monitoreo',
               'Ok',
