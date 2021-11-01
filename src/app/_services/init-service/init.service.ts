@@ -10,6 +10,7 @@ export class InitService {
   constructor(private apiBaseService: ApiBaseService) {}
 
   getAuthorization(): Observable<any> {
+    console.log('InitService.getAuthorization');
     if (
       environment.authUrl !== undefined &&
       environment.authCredentials !== undefined

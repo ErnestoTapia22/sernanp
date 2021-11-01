@@ -628,6 +628,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   monitoringSave() {
     this.submitted = true;
     this.disabled = true;
+    return;
     if (this.monitoringList.length === 0) {
       this.disabled = false;
       return;
