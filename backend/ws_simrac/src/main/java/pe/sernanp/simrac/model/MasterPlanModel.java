@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +25,8 @@ public class MasterPlanModel {
 	
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_plan_maestro_srl_id_seq")
+	@SequenceGenerator(name="t_plan_maestro_srl_id_seq", sequenceName="t_plan_maestro_srl_id_seq", allocationSize=1)
 	private int id;
 	
 	@Column (name= "var_nom", length=200, nullable=false)

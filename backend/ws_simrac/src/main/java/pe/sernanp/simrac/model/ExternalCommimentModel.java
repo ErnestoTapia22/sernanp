@@ -4,12 +4,16 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +22,11 @@ public class ExternalCommimentModel {
 
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_compromiso_externo_srl_id_seq")
+	@SequenceGenerator(name="t_compromiso_externo_srl_id_seq", sequenceName="t_compromiso_externo_srl_id_seq", allocationSize=1)
 	private int id;
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_compromisoexterno_ac"))
 	@ManyToOne
 	private ConservationAgreementModel conservationAgreement;
 	

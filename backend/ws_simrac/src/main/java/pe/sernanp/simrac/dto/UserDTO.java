@@ -1,11 +1,18 @@
 package pe.sernanp.simrac.dto;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import pe.sernanp.simrac.model.ModuleModel;
 
-public class UserDTO {
+public class UserDTO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int id;
 	
 	private String name;
@@ -65,7 +72,8 @@ public class UserDTO {
 	}
 	
 	public Date getRegistrationDate() {
-		return registrationDate;
+		Calendar calendar = Calendar.getInstance();
+		return calendar.getTime();
 	}
 
 	public void setRegistrationDate(Date registrationDate) {

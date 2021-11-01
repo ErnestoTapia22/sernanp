@@ -4,12 +4,14 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -18,18 +20,19 @@ public class AlliedModel {
 	
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_aliado_srl_id_seq")
+	@SequenceGenerator(name="t_aliado_srl_id_seq", sequenceName="t_aliado_srl_id_seq", allocationSize=1)
 	private int id;
 	
-	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true)
+	@JoinColumn (name= "int_acuerdoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_aliado_acuerdo"))
 	@ManyToOne
 	private ConservationAgreementModel conservationAgreement;
 	
-	@JoinColumn (name= "int_categoriaaliadoid", referencedColumnName = "srl_id", nullable=true)
+	@JoinColumn (name= "int_categoriaaliadoid", referencedColumnName = "srl_id", nullable=true, foreignKey = @ForeignKey(name="fk_aliado_categorialiado"))
 	@ManyToOne
 	private AlliedCategoryModel  alliedCategory;	
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

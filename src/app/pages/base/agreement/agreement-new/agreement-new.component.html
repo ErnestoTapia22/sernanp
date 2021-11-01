@@ -109,7 +109,7 @@
                           alliedForm.get('anp.id').errors?.pattern) -->
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
-                        {{ item.name }}
+                        {{ item.fullName }}
                       </option>
                     </select>
                     <!-- <ng-select
@@ -179,6 +179,7 @@
                     <textarea
                       id="txtaGoal"
                       class="form-control"
+                      formControlName="genObj"
                       rows="2"
                     ></textarea>
                   </div>
@@ -307,7 +308,7 @@
                         class="form-check-input"
                         type="checkbox"
                         id="chkArticulated"
-                        value="option3"
+                        formControlName="hasMasterPlan"
                       />
                       <label for="chkArticulated" class="form-label"
                         >Plan maestro (*)</label
@@ -318,7 +319,7 @@
                         class="form-check-input"
                         type="checkbox"
                         id="chkLocalDevelopment"
-                        value="option3"
+                        formControlName="hasDevelopmentPlan"
                       />
                       <label class="form-check-label" for="chkLocalDevelopment"
                         >Plan de desarrollo local</label
@@ -328,7 +329,12 @@
                       <label for="detalle" class="form-label"
                         >Detalle del/los municipios del ADC</label
                       >
-                      <input type="text" class="form-control" id="detalle" />
+                      <input
+                        type="text"
+                        formControlName="detailMunicipality"
+                        class="form-control"
+                        id="detalle"
+                      />
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -339,7 +345,9 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkComunityL"
+                        name="livePlan"
+                        value="1"
+                        formControlName="livePlan"
                         id="yes"
                       />
                       <label class="form-check-label" for="yes">Sí</label>
@@ -348,7 +356,9 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkComunityL"
+                        name="livePlan"
+                        value="2"
+                        formControlName="livePlan"
                         id="not"
                       />
                       <label class="form-check-label" for="not">No</label>
@@ -357,10 +367,12 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkComunityL"
-                        id="ecaNotApply"
+                        name="livePlan"
+                        value="3"
+                        formControlName="livePlan"
+                        id="notApply"
                       />
-                      <label class="form-check-label" for="ecaNotApply"
+                      <label class="form-check-label" for="notApply"
                         >No aplica</label
                       >
                     </div>
@@ -373,7 +385,9 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkEcaComunityL"
+                        name="institutionalPlan"
+                        value="1"
+                        formControlName="institutionalPlan"
                         id="ecaYes"
                       />
                       <label class="form-check-label" for="ecaYes">Sí</label>
@@ -383,7 +397,9 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkEcaComunityL"
+                        name="institutionalPlan"
+                        value="2"
+                        formControlName="institutionalPlan"
                         id="ecaNot"
                       />
                       <label class="form-check-label" for="ecaNot">No</label>
@@ -392,10 +408,12 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkEcaComunityL"
-                        id="notApply"
+                        name="institutionalPlan"
+                        value="3"
+                        formControlName="institutionalPlan"
+                        id="ecanotApply"
                       />
-                      <label class="form-check-label" for="notApply"
+                      <label class="form-check-label" for="ecanotApply"
                         >No aplica</label
                       >
                     </div>
@@ -406,32 +424,44 @@
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaYes"
+                        name="forestZoning"
                         value="1"
+                        formControlName="forestZoning"
+                        id="zonningYes"
                       />
-                      <label class="form-check-label" for="ecaYes">Sí</label>
+                      <label class="form-check-label" for="zonningYes"
+                        >Sí</label
+                      >
                     </div>
                     <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
-                        name="chkEcaComunityL"
-                        id="ecaNot"
-                        value="0"
-                      />
-                      <label class="form-check-label" for="ecaNot">No</label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="chkEcaComunityL"
-                        id="notApply"
+                        name="forestZoning"
                         value="2"
+                        formControlName="forestZoning"
+                        id="zonningNot"
                       />
-                      <label class="form-check-label" for="notApply"
-                        >No aplica</label
+                      <label class="form-check-label" for="zonningNot"
+                        >No
+                        </label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="forestZoning"
+                        value="3"
+                        formControlName="forestZoning"
+                        id="zonningNotApply"
+                      />
+                      <label class="form-check-label" for="zonningNotApply"
+                        >Proceso no desarrollado<i
+                        class="bi bi-info-circle mx-1"
+                        placement="top"
+                        ngbTooltip="Hace referencia a que el proceso de zonificación forestal no fue iniciada por la autoridad competente"
+                      ></i></label
                       >
                     </div>
                   </div>
@@ -756,7 +786,7 @@
                     ><i
                       class="bi bi-info-circle mx-1"
                       placement="top"
-                      ngbTooltip="Número de personas  participando del AdC"
+                      ngbTooltip="Número de personas participando del AdC"
                     ></i>
                     <div class="input-group">
                       <span class="input-group-text">H</span>
@@ -973,10 +1003,9 @@
                         ></i>
                         <input
                           type="text"
-                          min="0"
                           class="form-control"
-                          id="numbInterventionA"
-                          value=""
+                          id="surfaceIntervention"
+                          formControlName="surfaceIntervention"
                         />
                       </div>
                       <div class="col-md-3">
@@ -1086,7 +1115,7 @@
                         ></textarea>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbAreaVC" class="form-label"
+                        <label for="surfaceAmbito" class="form-label"
                           >Superficie del Ámbito de control</label
                         >
                         <div class="input-group">
@@ -1094,8 +1123,8 @@
                             type="number"
                             min="0"
                             class="form-control"
-                            id="numbAreaVC"
-                            formControlName="sectHect"
+                            id="surfaceAmbito"
+                            formControlName="surfaceAmbito"
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
@@ -1260,12 +1289,66 @@
                                   role="tabpanel"
                                   aria-labelledby="agreement-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode1"
+                                          id="shapefile1"
+                                          (change)="
+                                            changeMode($event, 'polygon1')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile1"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode1"
+                                          id="vertix1"
+                                          (change)="
+                                            changeMode($event, 'point1')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix1"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadConservation($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon1"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile del área de
                                       conservación</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1280,16 +1363,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadConservation($event)"
-                                        [disabled]="upLoadDisable"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1299,7 +1373,10 @@
                                       <div id="fileInfo1"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point1"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1445,12 +1522,66 @@
                                   role="tabpanel"
                                   aria-labelledby="produced-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode2"
+                                          id="shapefile2"
+                                          (change)="
+                                            changeMode($event, 'polygon2')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile2"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode2"
+                                          id="vertix2"
+                                          (change)="
+                                            changeMode($event, 'point2')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix2"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadProduced($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon2"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile del area
                                       productiva</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1465,15 +1596,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadProduced($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1483,7 +1606,10 @@
                                       <div id="fileInfo2"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point2"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1629,12 +1755,66 @@
                                   role="tabpanel"
                                   aria-labelledby="restauration-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode3"
+                                          id="shapefile3"
+                                          (change)="
+                                            changeMode($event, 'polygon3')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile3"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode3"
+                                          id="vertix3"
+                                          (change)="
+                                            changeMode($event, 'point3')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix3"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadRestauration($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>                                      
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon3"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile Area de
                                       restauración</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1649,15 +1829,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadRestauration($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1667,7 +1839,10 @@
                                       <div id="fileInfo3"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point3"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -1815,12 +1990,66 @@
                                   role="tabpanel"
                                   aria-labelledby="vigilance-tab"
                                 >
-                                  <div class="row mb-3">
+                                  <div class="form-group row mb-3 mt-2">
+                                    <div class="col-md-8">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode4"
+                                          id="shapefile4"
+                                          (change)="
+                                            changeMode($event, 'polygon4')
+                                          "
+                                          value="polygon"
+                                          checked
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="shapefile1"
+                                        >
+                                          Shapefile
+                                        </label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="geometryMode4"
+                                          id="vertix4"
+                                          (change)="
+                                            changeMode($event, 'point4')
+                                          "
+                                          value="point"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="vertix4"
+                                        >
+                                          Vértices
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <button
+                                        class="btn btn-primary btn-sm"
+                                        (click)="uploadVigilance($event)"
+                                        [disabled]="upLoadDisable"
+                                      >
+                                        <i class="bi bi-cloud-upload"></i>
+                                        Subir
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="row mb-3"
+                                    *ngIf="geometryMode.polygon4"
+                                  >
                                     <label for="formFileSm" class="form-label"
                                       >Carga shapefile Area de vigilancia y
                                       control</label
                                     >
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                       <form
                                         enctype="multipart/form-data"
                                         method="post"
@@ -1835,15 +2064,7 @@
                                         />
                                       </form>
                                     </div>
-                                    <div class="col-md-4">
-                                      <button
-                                        class="btn btn-primary btn-sm"
-                                        (click)="uploadVigilance($event)"
-                                      >
-                                        <i class="bi bi-cloud-upload"></i>
-                                        Subir
-                                      </button>
-                                    </div>
+
                                     <div class="col-md-12">
                                       <span
                                         class="file-upload-status"
@@ -1853,7 +2074,10 @@
                                       <div id="fileInfo4"></div>
                                     </div>
                                   </div>
-                                  <div class="table-responsive tableFixHead">
+                                  <div
+                                    class="table-responsive tableFixHead"
+                                    *ngIf="geometryMode.point4"
+                                  >
                                     <table class="table tableCustom">
                                       <thead>
                                         <tr>
@@ -2044,7 +2268,6 @@
                                   }"
                                 />
                               </div>
-
                               <div class="input-group">
                                 <span class="input-group-text">Norte(y)</span>
                                 <input
@@ -2056,6 +2279,15 @@
                                   }"
                                 />
                               </div>
+                            </div>
+                            <div class="card">
+                              <button type="button"
+                                class="btn btn-primary btn-block"
+                                (click)="cleanLayer()"
+                                placement="bottom"
+                                ngbTooltip="Eliminar gráfico del mapa">
+                                <i class="bi bi-trash" ></i>                                        
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -2170,15 +2402,122 @@
                     ></i>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control clearable"
                       id="txtNameF"
                       formControlName="fondName"
+                      placeholder="Nombre del fondo"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
+            <div class="card">
+              <div class="card-header">
+                <label class="mb-0 fw-bold">Medios de verificacion</label>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success mx-2"
+                  [disabled]="disabled"
+                >
+                  <i class="bi bi-save"></i>
+                  Guardar
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasFirm"
+                        formControlName="hasFirm"
+                      />
+                      <label for="hasFirm" class="form-label"
+                        >Acuerdo Fimado</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasWorkPlan"
+                        formControlName="hasWorkPlan"
+                      />
+                      <label class="form-check-label" for="hasWorkPlan"
+                        >Plan de Trabajo</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasActas"
+                        formControlName="hasActas"
+                      />
+                      <label class="form-check-label" for="hasActas"
+                        >Actas/Memorias reuniones previas</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasMap"
+                        formControlName="hasMap"
+                      />
+                      <label class="form-check-label" for="hasMap">Mapas</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasShape"
+                        formControlName="hasShape"
+                      />
+                      <label class="form-check-label" for="hasShape"
+                        >Shapes</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="hasMonitoring"
+                        formControlName="hasMonitoring"
+                      />
+                      <label class="form-check-label" for="hasMonitoring"
+                        >Sistema de monitoreo</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check form-switch form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="allied"
+                        formControlName="allied"
+                      />
+                      <label class="form-check-label" for="allied"
+                        >Perteneciente a la marca Aliado</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="card">
               <div class="card-body">
                 <div class="row g-3">
@@ -2227,7 +2566,7 @@
             }"
           />
         </div>
-        <div class="col-md-3 col-lg-12">
+        <div class="col-md-3 col-lg-12 d-none">
           <label class="form-label">Descripción</label>
           <input
             type="text"
@@ -2712,7 +3051,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                 <td>
                   <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     [value]="field.goal"
                   />
                 </td>
@@ -2804,9 +3143,10 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
                   />
                 </td>
                 <td>
+                  d
                   <input
                     class="form-control"
-                    type="text"
+                    type="number"
                     id="newAttributePrice"
                     [(ngModel)]="newAttribute.goal"
                     name="newAttributeGoal"

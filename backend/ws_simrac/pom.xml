@@ -37,6 +37,25 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-jwt</artifactId>
+			<!-- INI-CAMBIO PARA SPRING BOOT 2 -->
+			<version>1.0.9.RELEASE</version>
+			<!-- FIN-CAMBIO PARA SPRING BOOT 2 -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<!-- INI-CAMBIO PARA SPRING BOOT 2 -->
+			<version>2.3.3.RELEASE</version>
+			<!-- FIN-CAMBIO PARA SPRING BOOT 2 -->
+		</dependency>
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -60,6 +79,11 @@
 		  <groupId>org.apache.commons</groupId>
 		  <artifactId>commons-lang3</artifactId>
 		  <version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>6.17.0</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -1,20 +1,41 @@
 package pe.sernanp.simrac.service;
+
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.AuthorizationRequest;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.stereotype.Service;
+import javax.sql.DataSource;
+
+import pe.sernanp.simrac.dto.RoleDTO;
 import pe.sernanp.simrac.dto.UserDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.LoginModel;
 import pe.sernanp.simrac.model.ModuleModel;
+import pe.sernanp.simrac.model.RoleModel;
 import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.repository.LoginRepository;
 import pe.sernanp.simrac.repository.ModuleRepository;
+import pe.sernanp.simrac.repository.RoleRepository;
 import pe.sernanp.simrac.repository.UserRepository;
 
 @Service
@@ -24,30 +45,49 @@ public class UserService {
 	private UserRepository _repository;
 	
 	@Autowired
-	private LoginRepository _loginRepository;
+	private LoginRepository _repositoryLogin;
 	
 	@Autowired
 	private ModuleRepository _repositoryModule;
+	
+	//Inicio Agregado
+	@Autowired	
+	private DataSource dataSource;
+	
+	@Value("${security.jwt.resource-ids}")
+	private String resourceIds;
+	
+	@Value("${security.jwt.ExpirationDateInMs}")
+	private Integer expirationDateToken;
+	
+	//Fin Agregado
+	@Autowired
+	private RoleRepository _repositoryRole;
 
 	public ResponseEntity<UserDTO> validate(String id) throws Exception {
 		try {
 			boolean success = true;
 			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
-			LoginModel login = this._loginRepository.validate(id);
+			LoginModel login = this._repositoryLogin.validate(id);
 			UserModel item = this._repository.findById(login.getUserId()).get();
-			List<ModuleModel> items = this._repositoryModule.search(27, login.getUserId());
+			List<ModuleModel> items = this._repositoryModule.search(login.getSystemId(), login.getUserId());
+			RoleModel role = this._repositoryRole.active(item.getId(), items.get(0).getId());
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(item.getId());
 			userDTO.setName(item.getUserName());
 			userDTO.setSystem(login.getSystemId());
 			userDTO.setModules(items);
+			RoleDTO roleDTO = new RoleDTO();
+			roleDTO.setId(role.getId());
+			roleDTO.setName(role.getName());
+			userDTO.setRole(roleDTO);
 			//item.setModules(items);
 			
 			// Add token
 			
-			//String token = getJWTToken(id);
-			//item.setToken(token);
-			
+			String token = this.getToken(userDTO, id); //this._repository.getToken();
+			userDTO.setToken(token);
+
 			// End add token
 			
 			response.setSuccess(success);
@@ -119,4 +159,50 @@ public class UserService {
 		}
 	}			
 
+	// Inicio TOKEN
+	private String getToken(UserDTO item, String id) {
+		
+		HashMap<String, String> authorizationParameters = new HashMap<String, String>();
+        authorizationParameters.put("scope", "read");
+        authorizationParameters.put("username", item.getName());
+        authorizationParameters.put("client_id", id);
+        authorizationParameters.put("grant", String.valueOf(item.getId()));
+
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(authorizationParameters, authorizationParameters, id, null, null, null, true, id, id, null);
+        //authorizationRequest.setApproved(true);
+
+        HashSet<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorizationRequest.setAuthorities(authorities);
+
+        HashSet<String> resource_Ids = new HashSet<String>();
+        resource_Ids.add(resourceIds);
+        authorizationRequest.setResourceIds(resource_Ids);
+
+        // Create principal and auth token
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(item, null, authorities) ;
+
+        OAuth2Authentication authenticationRequest = new OAuth2Authentication(authorizationRequest.createOAuth2Request(), authenticationToken);
+        authenticationRequest.setAuthenticated(true);
+        
+        
+        //JdbcTemplate jdbcTemplate = new JdbcTemplate(this.dataSource);
+        
+        TokenStore tokenStore = new JdbcTokenStore(this.dataSource);
+        //TokenStore tokenStore = new JdbcTokenStore(jdbcTemplate.getDataSource());
+        // Token Enhancer
+        TokenEnhancerChain tokenEnhancer = new TokenEnhancerChain();
+
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenEnhancer(tokenEnhancer);
+        tokenServices.setTokenStore(tokenStore);
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setAccessTokenValiditySeconds(expirationDateToken); // probar para expireación de token
+        
+        OAuth2AccessToken accessToken = tokenServices.createAccessToken(authenticationRequest);
+        
+        return ("Bearer " + accessToken.getValue());
+	};
+	//Fin TOKEN
+	
 }

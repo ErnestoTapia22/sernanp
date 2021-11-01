@@ -53,7 +53,7 @@ export class ExcelService {
     worksheet['!cols'] = wscols;    
     worksheet.A1.v = 'Objetivo';
     worksheet.B1.v = 'compromiso';
-    worksheet.C1.v = 'Línea de Acción';
+    worksheet.C1.v = 'Estrategia';
     worksheet.D1.v = 'suscriptor';
     //console.log(worksheet);
     var range = XLSX2.utils.decode_range(worksheet['!ref']);

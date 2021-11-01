@@ -1,9 +1,10 @@
 package pe.sernanp.simrac.dto;
 
 import java.sql.Date;
+
 import pe.sernanp.simrac.model.AgreementStateModel;
 
-public class ConservationAgreementDTO {
+public class ConservationAgreementDTO implements java.io.Serializable {
 	
 	private String code;
 	
@@ -80,7 +81,7 @@ public class ConservationAgreementDTO {
 	public void setDistrictId(String districtId) {
 		this.districtId = districtId;
 	}
-
+	
 	public Date getFirm() {
 		return firm;
 	}

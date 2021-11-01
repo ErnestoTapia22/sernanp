@@ -1,7 +1,12 @@
 package pe.sernanp.simrac.controller;
 
 import java.io.IOException;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +25,7 @@ import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.service.AnpService;
 import pe.sernanp.simrac.service.UserService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/user")
 public class UserController extends BaseController {
@@ -83,5 +89,15 @@ public class UserController extends BaseController {
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
+	}
+	
+	@Resource(name = "tokenServices")
+	private ConsumerTokenServices tokenServices;// Es una clase de SPring Oauth
+
+	// el ":.*" es como una expresión regular para capturar todo el valor
+	// del token, ya que en su cadena de texto, existen puntos.
+	@GetMapping(value = "/anular/{tokenId:.*}") 
+	public void revokeToken(@PathVariable("tokenId") String token) {
+		tokenServices.revokeToken(token);
 	}
 }

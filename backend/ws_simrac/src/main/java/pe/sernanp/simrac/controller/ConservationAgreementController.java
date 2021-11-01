@@ -1,6 +1,8 @@
 package pe.sernanp.simrac.controller;
+
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import pe.sernanp.simrac.dto.ConservationAgreementDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
 import pe.sernanp.simrac.service.ConservationAgreementService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/conservationagreement")
 public class ConservationAgreementController extends BaseController {
@@ -80,5 +82,25 @@ public class ConservationAgreementController extends BaseController {
 		} catch (Exception ex) {			
 			return super.getJSON(ex);
 		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "unchecked" })
+	@RequestMapping(value = "/search2", method = RequestMethod.POST)
+	@ResponseBody()
+	public ResponseEntity<ConservationAgreementModel> search2(@RequestBody ConservationAgreementDTO item) throws IOException {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = this._service.search2(item);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
+	
+	@RequestMapping(value = "/reportpdf/{id}", method = RequestMethod.GET)
+	public org.springframework.http.ResponseEntity<byte[]> reportPdf(@PathVariable("id") int id) throws Exception {
+
+		org.springframework.http.ResponseEntity<byte[]> response = this._service.generatePdf(id);
+		return response;
+
 	}
 }

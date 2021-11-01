@@ -10,7 +10,6 @@ import { IndexComponent } from './pages/base/index/index.component';
 import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
 import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
 import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
-import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { UserComponent } from './pages/user/user.component';
 import { TestComponent } from './pages/base/test/test.component';
@@ -72,10 +71,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'index', pathMatch: 'full' },
       { path: 'index', component: MonitoringComponent },
-      {
-        path: 'detail/:id',
-        component: DetailComponent,
-      },
       {
         path: 'work-plan/:id',
         component: WorkPlanComponent,

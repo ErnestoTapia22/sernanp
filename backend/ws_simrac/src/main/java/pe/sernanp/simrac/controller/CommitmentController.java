@@ -1,5 +1,8 @@
 package pe.sernanp.simrac.controller;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +14,7 @@ import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.service.CommitmentService;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping ("/api/commitment")
 public class CommitmentController extends BaseController {
@@ -62,4 +66,15 @@ public class CommitmentController extends BaseController {
 			return super.getJSON(ex);
 		}
 	}	
+	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<CommitmentModel> search(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<CommitmentModel> response = this._service.search(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
+	}
 }

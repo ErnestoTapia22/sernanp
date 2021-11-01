@@ -82,5 +82,21 @@ public class CommitmentService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}		
+	}	
+	
+	public ResponseEntity<CommitmentModel> search(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<CommitmentModel> response = new ResponseEntity<CommitmentModel>();
+			List<CommitmentModel> item = this._repository.searchByAgreement(id);
+			response.setSuccess(success);
+			response.setItems(item);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

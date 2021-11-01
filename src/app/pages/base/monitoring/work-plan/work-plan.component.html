@@ -140,7 +140,7 @@
                     <select id="ddAnp" class="form-select" formControlName="id">
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
-                        {{ item.name }}
+                        {{ item.fullName }}
                       </option>
                     </select>
                   </div>
@@ -329,7 +329,7 @@
                       <tr>
                         <th>Componente</th>
                         <th>Objetivo</th>
-                        <th>Línea de Acción</th>
+                        <th>Estrategia</th>
                         <th>Compromiso</th>
                         <th>Suscriptor</th>
                         <th>Actividades</th>
@@ -401,7 +401,7 @@
                 type="button"
                 role="tab"
               >
-                Nro. {{ i + 1 }}
+                Monitoreo N° {{ i + 1 }}
               </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -427,7 +427,9 @@
             >
               <div class="card">
                 <div class="card-header">
-                  <label class="mb-0 fw-bold">Monitoreo</label>
+                  <label class="mb-0 fw-bold">{{
+                    item.activities[0].workPlan.name
+                  }}</label>
                   <div></div>
                 </div>
                 <div class="card-body">
@@ -438,7 +440,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
-                          <td>Línea de Acción</td>
+                          <td>Estrategia</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -456,19 +458,35 @@
                         <tr
                           *ngFor="let activity of item.activities; index as idx"
                         >
-                          <td>
+                          <td
+                            *ngIf="
+                              activity.commitment.actionLine.objetive.rowspan >
+                              0
+                            "
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.objetive.rowspan
+                            "
+                          >
                             {{
-                              activity.commitment.actionLine.objetive.name ||
-                                "sin datos"
+                              activity.commitment.actionLine.objetive
+                                .description || "sin datos"
                             }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="activity.commitment.actionLine.rowspan > 0"
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.rowspan
+                            "
+                          >
                             {{
                               activity.commitment.actionLine.name || "sin datos"
                             }}
                           </td>
-                          <td>
-                            {{ activity.commitment.name }}
+                          <td
+                            *ngIf="activity.commitment.rowspan > 0"
+                            [attr.rowspan]="activity.commitment.rowspan"
+                          >
+                            {{ activity.commitment.description }}
                           </td>
                           <td>
                             {{ activity.name }}
@@ -534,7 +552,10 @@
                               >
                             </div>
                           </td>
-                          <td>
+                          <td
+                            *ngIf="activity.commitment.rowspan > 0"
+                            [attr.rowspan]="activity.commitment.rowspan"
+                          >
                             <div
                               class="circle"
                               [ngClass]="{
@@ -648,8 +669,8 @@
               aria-labelledby="monitoringCurrent-tab"
             >
               <div class="card">
-                <div class="card-header">
-                  <label class="mb-0 fw-bold">Evaluación</label>
+                <div class="card-header">                  
+                  <label class="mb-0 fw-bold">Evaluación </label>
                   <div>
                     <button
                       type="button"
@@ -679,7 +700,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
-                          <td>Línea de Acción</td>
+                          <td>Estrategia</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -693,7 +714,7 @@
                           <td>Meta</td>
                           <td style="width: 85px">Valor actual</td>
                           <td>Progreso (Actividad)</td>
-                          <td>Progreso (Compromiso)</td>
+                          <!-- <td>Progreso (Compromiso)</td> -->
                           <!-- <td rowspan="2">Meta</td>
                   <td rowspan="2">Resultados</td> -->
                         </tr>
@@ -705,18 +726,38 @@
                 </tr> -->
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of monitoringList; index as idx">
-                          <td>
+                        <tr
+                          *ngFor="
+                            let item of fieldArrayMonitoringList;
+                            let index = idx
+                          "
+                        >
+                          <!-- *ngIf="item.rowSpan > 0"
+                        [attr.rowspan]="item.rowSpan " -->
+                          <td
+                            *ngIf="
+                              item.commitment.actionLine.objetive.rowspan > 0
+                            "
+                            [attr.rowspan]="
+                              item.commitment.actionLine.objetive.rowspan
+                            "
+                          >
                             {{
-                              item.commitment.actionLine.objetive.name ||
+                              item.commitment.actionLine.objetive.description ||
                                 "sin datos"
                             }}
                           </td>
-                          <td>
+                          <td
+                            *ngIf="item.commitment.actionLine.rowspan > 0"
+                            [attr.rowspan]="item.commitment.actionLine.rowspan"
+                          >
                             {{ item.commitment.actionLine.name || "sin datos" }}
                           </td>
-                          <td>
-                            {{ item.commitment.name }}
+                          <td
+                            *ngIf="item.commitment.rowspan > 0"
+                            [attr.rowspan]="item.commitment.rowspan"
+                          >
+                            {{ item.commitment.description }}
                           </td>
                           <td>
                             {{ item.name }}
@@ -788,7 +829,7 @@
                               >
                             </div>
                           </td>
-                          <td>
+                          <!-- <td>
                             <div
                               class="circle"
                               [ngClass]="{
@@ -809,7 +850,7 @@
                                 >{{ item.commitment.progress.toFixed(1) }}</span
                               >
                             </div>
-                          </td>
+                          </td> -->
                         </tr>
                       </tbody>
                     </table>
@@ -836,7 +877,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card">
+              <div class="card d-none">
                 <div class="col-md-12 row p-3">
                   <label
                     class="
@@ -960,7 +1001,7 @@
                   <td>
                     <input
                       class="form-control"
-                      type="text"
+                      type="number"
                       [value]="field.goal"
                       [(ngModel)]="field.goal"
                       [disabled]="!field.edit"
@@ -1066,7 +1107,7 @@
                   <td>
                     <input
                       class="form-control"
-                      type="text"
+                      type="number"
                       id="newAttributePrice"
                       [(ngModel)]="newAttribute.goal"
                       name="newAttributeGoal"

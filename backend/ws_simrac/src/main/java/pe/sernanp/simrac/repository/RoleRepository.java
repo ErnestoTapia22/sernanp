@@ -19,4 +19,13 @@ public interface RoleRepository extends JpaRepository<RoleModel, Integer>{
 	@Modifying
 	@Query(value="INSERT INTO sernanp.rolmodulo(idrol, idmodulo, pesorol, flagmodulodefault) VALUES (:pid, :pmoduleid, 1, 1)", nativeQuery=true)
 	int insert2(@Param("pid") int pid, @Param("pmoduleid") int pmoduleid);
+	
+	@Query(value=" select r.* from sernanp.rol r "
+			+ "inner join sernanp.rolmodulo rl on rl.idrol = r.idrol "
+			+ "where rl.idmodulo = :pmoduleId "
+			+ "and r.idrol in ( "
+			+ "	select idrol from sernanp.usuariorol where idusuario= :puserId "
+			+ ") "
+			+ "limit 1 ", nativeQuery=true)
+	RoleModel active(@Param("puserId") int puserId, @Param("pmoduleId") int pmoduleId);
 }

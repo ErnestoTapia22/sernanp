@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table (name = "t_objetivo", indexes = {@Index(name = "idx_objetivo", columnList = "srl_id",unique = true)})
@@ -19,7 +21,8 @@ public class ObjetiveModel {
 
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_objetivo_srl_id_seq")
+	@SequenceGenerator(name="t_objetivo_srl_id_seq", sequenceName="t_objetivo_srl_id_seq", allocationSize=1)
 	private int id;
 	
 	@JoinColumn(name= "int_planmaestroid")
@@ -42,6 +45,9 @@ public class ObjetiveModel {
 	@Column (name= "var_cod", length = 50)
 	private String code;
 
+	@Transient	
+	private int rowspan;
+	
 	public int getId() {
 		return id;
 	}
@@ -98,4 +104,12 @@ public class ObjetiveModel {
 	public void setCode(String code) {
 		this.code = code;
 	}	
+	
+	public int getRowspan () {
+		return rowspan;
+	}
+	
+	public void setRowspan (int value) {
+		rowspan = value;
+	}
 }

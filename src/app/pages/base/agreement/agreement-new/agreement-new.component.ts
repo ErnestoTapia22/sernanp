@@ -44,7 +44,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   mapViewProperties: any;
   fieldArray: Array<any> = [];
   newAttribute: any = {};
-
+  featureLayer : any = null;
   portalUrl = 'https://www.arcgis.com';
   view: MapView;
   map: Map;
@@ -57,6 +57,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   districts: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
+  anpCode : null;
   attributes: any = {
     codigo: '',
     nombre: '',
@@ -227,6 +228,16 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   newAttributeAV: any = {};
   editAttribute: any = {};
   upLoadDisable: boolean = false;
+  geometryMode: any = {
+    polygon1: true,
+    point1: false,
+    polygon2: true,
+    point2: false,
+    polygon3: true,
+    point3: false,
+    polygon4: true,
+    point4: false,
+  };
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -246,8 +257,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       ground: 'world-elevation',
     };
     this.mapViewProperties = {
-      center: [-75.744, -8.9212],
-      zoom: 9,
+      center: [-74.481, -10.053727],
+      zoom: 6,
     };
     this.buildForm();
     if (
@@ -329,6 +340,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // this.eventListener();
   }
   eventFormListener1(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status1');
     if (fileName.indexOf('.zip') !== -1) {
@@ -342,10 +357,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener2(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status2');
     if (fileName.indexOf('.zip') !== -1) {
@@ -359,10 +378,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener3(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status3');
     if (fileName.indexOf('.zip') !== -1) {
@@ -375,10 +398,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener4(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status4');
     if (fileName.indexOf('.zip') !== -1) {
@@ -391,10 +418,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 3);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener5(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status5');
     if (fileName.indexOf('.zip') !== -1) {
@@ -407,7 +438,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 4);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
 
@@ -608,48 +639,58 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // see the 'Feature Collection in Local Storage' sample for an example of how to work with local storage
     let sourceGraphics = [];
 
-    const layers = featureCollection.layers.map((layer) => {
+    featureCollection.layers.map((layer) => {
       const graphics = layer.featureSet.features.map((feature) => {
         return Graphic.fromJSON(feature);
       });
       const geometry = layer.featureSet.features.map((feature) => {
         return feature.geometry;
       });
-
+      //console.log(geometry);
       // this.graphics.push(geometry);
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi =
-        this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.anp_codi =
-          this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.ac_susc = '');
-      this.layersGraphic[layerId].attributes.ac_sup =
-        this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_teco = '';
-      this.layersGraphic[layerId].attributes.ac_deno =
-        this.form.get('name').value;
-      (this.layersGraphic[layerId].attributes.ac_bene = ''),
-        (this.layersGraphic[layerId].attributes.ac_nbene = 0),
-        (this.layersGraphic[layerId].attributes.ac_fesus = '2021-09-20'),
-        (this.layersGraphic[layerId].attributes.ac_vigen = 0),
-        (this.layersGraphic[layerId].attributes.ac_dep = ''),
-        (this.layersGraphic[layerId].attributes.ac_prov = ''),
-        (this.layersGraphic[layerId].attributes.ac_dist = ''),
-        (sourceGraphics = sourceGraphics.concat(graphics));
-      const featureLayer = new FeatureLayer({
+      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value);
+      
+      //(this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
+      //(this.layersGraphic[layerId].attributes.ac_susc = '');
+      //this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
+      //this.layersGraphic[layerId].attributes.ac_teco = this.form.get('areaAmbitc').value;
+      
+      //console.log(this.provinces);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //    .name
+      //);
+
+      //this.layersGraphic[layerId].attributes.ac_deno = this.form.get('name').value;
+      //(this.layersGraphic[layerId].attributes.ac_bene = ''),
+      //(this.layersGraphic[layerId].attributes.ac_nbene = this.form.get('numPart').value),
+      //(this.layersGraphic[layerId].attributes.ac_fesus = this.form.get('firm').value),
+      //(this.layersGraphic[layerId].attributes.ac_vigen = this.form.get('vigency').value),
+      
+        //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
+        //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
+        //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
+      
+      (sourceGraphics = sourceGraphics.concat(graphics));
+
+      this.featureLayer = new FeatureLayer({
         objectIdField: 'FID',
         source: graphics,
         fields: layer.layerDefinition.fields.map((field) => {
           return Field.fromJSON(field);
         }),
       });
-      return featureLayer;
+      //return this.featureLayer;
       // associate the feature with the popup on click to enable highlight and zoom to
     });
-
-    this.map.addMany(layers);
+    
+    this.map.add(this.featureLayer);
     this.view.goTo(sourceGraphics).catch((error) => {
       if (error.name != 'AbortError') {
         console.error(error);
@@ -661,7 +702,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
   errorHandler(error) {
     console.log(error);
-    this.spinner.hide();
+    if (this.spinner) this.spinner.hide();
     // this.alertService.error(
     //   'Error al subir shapefile :' + error.message,
     //   'Error',
@@ -696,7 +737,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       description: [''],
       state: [true],
       registrationDate: [''],
-      code: [{ value: '', disabled: true }],
+      code: [''],
       vigency: [
         0,
         Validators.compose([Validators.required, Validators.min(1)]),
@@ -723,8 +764,22 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       genObj: [''],
       finanMod: [''],
       fondName: [''],
-      allied: true,
+      allied: false,
       sectDet: [''],
+      surfaceAmbito: [0],
+      surfaceIntervention: [''],
+      hasMasterPlan: false,
+      hasDevelopmentPlan: false,
+      livePlan: [''],
+      institutionalPlan: [''],
+      forestZoning: [''],
+      detailMunicipality: [''],
+      hasFirm: false,
+      hasWorkPlan: false,
+      hasActas: false,
+      hasMap: false,
+      hasShape: false,
+      hasMonitoring: false,
       agreementState: this.fb.group({
         id: [0, Validators.min(1)],
       }),
@@ -735,9 +790,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       source: this.fb.group({
         id: [0],
       }),
-      ecosystemType: this.fb.group({
-        id: [0],
-      }),
       districtId: [''],
       department: [0, Validators.min(1)],
       province: [0, Validators.min(1)],
@@ -746,13 +798,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.alliedForm = this.fb.group({
       id: [0],
       alliedCategory: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.pattern('[^0]+'),
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
       conservationAgreement: this.fb.group({
         id: [this.agreementId],
@@ -774,22 +820,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       }),
 
       allied: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.pattern('[^0]+'),
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
       actionLine: this.fb.group({
-        id: [
-          0,
-          Validators.compose([
-            Validators.required,
-            Validators.pattern('[^0]+'),
-          ]),
-        ],
+        id: [0, Validators.compose([Validators.required, Validators.min(1)])],
       }),
     });
     this.anpForm = this.fb.group({
@@ -868,31 +902,17 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   addFeatureToService(id) {
     this.spinner.show();
     this.upLoadDisable = true;
-    this.buildEsriJson();
+    let graphics: Graphic[];
 
-    if (this.esriJsons.length === 0) {
-      this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
-      return;
-    }
-    // const edits = {
-    //   addFeatures: this.esriJsons,
-    // };
-    console.log(this.esriJsons);
-    // this.featureLayer = new FeatureLayer({
-    //   url: environment.conservationAgreements[this.layerId].url,
-    //   outFields: ['*'],
-    //   popupEnabled: true,
-    //   id: 'featureTest',
-    // });
+    if (this.geometryMode[`polygon${id}`]) {
+      this.buildEsriJson();
+      if (this.esriJsons.length === 0) {
+        this.alertService.info('Agregue shapefiles', 'Ok', { autoClose: true });
+        return;
+      }
+      graphics = this.esriJsons.filter((x) => x.attributes.position === id);
 
-    this.disabled = true;
-
-    let graphics = this.esriJsons.filter((x) => x.attributes.position === id);
-    console.log(graphics);
-
-    if (graphics[0].geometry === null) {
-      graphics = this.validatingVertices(id);
-      if (graphics === null) {
+      if (graphics[0].geometry === null) {
         this.upLoadDisable = false;
         this.spinner.hide();
         this.alertService.error('No se encontro el ámbito', 'Error', {
@@ -900,6 +920,16 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         });
         return;
       }
+    } else {
+      graphics = this.validatingVertices(id);
+    }
+    if (graphics === null) {
+      this.upLoadDisable = false;
+      this.spinner.hide();
+      this.alertService.error('No se encontro el ámbito', 'Error', {
+        autoCLose: true,
+      });
+      return;
     }
     if (graphics[0].attributes.sended) {
       this.upLoadDisable = false;
@@ -909,19 +939,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    //si es punto
-    // if (event.mapPoint) {
-    //   let point = event.mapPoint.clone();
-    //   point.z = undefined;
-    //   point.hasZ = false;
 
-    //   // Crea una estrella de hotel como elemento económico
-    //   thiss.editFeature = new Graphic({
-    //     geometry: point,
-    //     attributes: {
-    //       hotelstar: 'Economía',
-    //     },
-    //   });
+    this.disabled = true;
+
     const edits = {
       addFeatures: graphics,
     };
@@ -1008,7 +1028,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // comunidad: '',
     // anexo: '',
     // productor: '',
-
     this.layersGraphic.forEach((layer) => {
       if (layer.geometry !== {}) {
         this.esriJsons.push(
@@ -1043,7 +1062,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log(response);
+          console.log('response.item');
+          console.log(response.item);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1078,14 +1098,40 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             fondName: response.item.fondName,
             allied: response.item.allied,
             anp: { id: response.item.anp.id || 0 },
-            source: { id: response.item.source.id || 0 },
-            ecosystemType: { id: 0 },
-            localization: '',
+            source: {
+              id: response.item.source == null ? 0 : response.item.source.id,
+            },
+            localization: response.item.localization || 'Sin datos',
+            surfaceAmbito: response.item.surfaceAmbito || 0.0,
+            surfaceIntervention:
+              response.item.surfaceIntervention || 'Sin datos',
             districtId: response.item.districtId,
+            hasMasterPlan: response.item.hasMasterPlan,
+            hasDevelopmentPlan: response.item.hasDevelopmentPlan,
+            livePlan:
+              response.item.livePlan != null
+                ? response.item.livePlan.toString()
+                : '',
+            institutionalPlan:
+              response.item.institutionalPlan != null
+                ? response.item.institutionalPlan.toString()
+                : '',
+            forestZoning:
+              response.item.forestZoning != null
+                ? response.item.forestZoning.toString()
+                : '',
+            detailMunicipality: response.item.detailMunicipality,
+            hasFirm: response.item.hasFirm,
+            hasWorkPlan: response.item.hasWorkPlan,
+            hasActas: response.item.hasActas,
+            hasMap: response.item.hasMap,
+            hasShape: response.item.hasShape,
+            hasMonitoring: response.item.hasMonitoring,
             department: 0,
             province: 0,
             district: 0,
           });
+          this.anpCode = response.item.anp.code;
           this.addAgreementLayers();
           this.setLocalization(response.item.districtId);
           this.disableFields();
@@ -1103,7 +1149,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
-    //this.form.get('code').disable();
+    this.form.get('code').disable();
+    this.form.get('anp').disable();
+    this.form.get('agreementState').disable();
+    this.form.get('firm').disable();
+    this.form.get('name').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1176,7 +1226,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.agreementId === '' ||
       this.agreementId === null
     ) {
-      console.log(this.agreementId);
       return;
     }
 
@@ -1570,24 +1619,38 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
-    this.layersGraphic.forEach((layer, index) => {
-      const featureLayer = new FeatureLayer({
-        url: layer.attributes.url,
-        id: layer.attributes.id,
-        popupEnabled: true,
-        outFields: ['*'],
-        definitionExpression: `ac_codi = '${agreementCode}'`,
-      });
-      // featureLayer.when((loaded) => {
-      //   console.log(loaded);
-      // });
-      this.map.add(featureLayer);
-      if (index == 1) {
-        this.zoomToLayer(featureLayer);
-      }
-      // this.addGraphics(featureLayer);
+
+    const featureLayer = new FeatureLayer({
+      url: this.layersGraphic[0].attributes.url,
+      id: this.layersGraphic[0].attributes.id,
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `ac_codi = '${agreementCode}'`,
     });
-    // this.zoomToLayer;
+    this.map.add(featureLayer);
+    this.zoomToLayer(featureLayer);
+    if (this.anpCode === null || this.anpCode === '') {
+      return;
+    }
+    const featureLayer2 = new FeatureLayer({
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0',
+      id: 'anp',
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `anp_codi = '${this.anpCode}'`,
+    });
+    // featureLayer.when((loaded) => {
+    //   console.log(loaded);
+    // });
+
+    // debugger;
+
+    
+    this.map.add(featureLayer2);
+    //this.zoomToLayer(featureLayer);
+    // this.addGraphics(featureLayer);
+
+    //  this.zoomToLayer;
   }
   zoomToLayer(layer: FeatureLayer) {
     layer
@@ -1775,36 +1838,37 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   validatingVertices(id): Graphic[] {
     const arrayGraphics: Graphic[] = [];
-    console.log(id);
     let rings: any[] = [];
     let jsonGraphic = {};
     switch (id) {
       case 1:
+        this.setAttributesPolygon(0);
         this.aPolygons.map((item) => {
           rings.push([item.x, item.y]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[0].attributes,
           geometry: {
-            rings: rings,
+            rings: [rings],
           },
         };
+
         break;
       case 2:
-        console.log(id);
-        console.log(this.aProduceds);
+        this.setAttributesPolygon(1);
         this.aProduceds.map((item) => {
           rings.push([item.x, item.y]);
         });
         jsonGraphic = {
           attributes: this.layersGraphic[1].attributes,
           geometry: {
-            rings: rings,
+            rings: [rings],
           },
         };
 
         break;
       case 3:
+        this.setAttributesPolygon(2);
         this.aConservations.map((item) => {
           rings.push([item.x, item.y]);
         });
@@ -1817,6 +1881,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
         break;
       case 4:
+        this.setAttributesPolygon(3);
         this.aVigilances.map((item) => {
           rings.push([item.x, item.y]);
         });
@@ -1829,6 +1894,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
         break;
       case 5:
+        this.setAttributesPolygon(4);
         if (this.aPoint.eastx !== 0 && this.aPoint.northy !== 0) {
           let point = {
             type: 'point',
@@ -1856,8 +1922,44 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     if (jsonGraphic['geometry'].length === 0) {
       return null;
     }
-    console.log(jsonGraphic);
     arrayGraphics.push(Graphic.fromJSON(jsonGraphic));
     return arrayGraphics;
+  }
+  changeMode($event, variable: string) {
+    const checked = $event.target.checked;
+    const fisrtpart = variable.substring(0, 3);
+    const lastChar = variable.substr(variable.length - 1);
+    if (checked) {
+      if (fisrtpart === 'pol') {
+        this.geometryMode[`point${lastChar}`] = false;
+        this.geometryMode[variable] = true;
+      } else {
+        this.geometryMode[`polygon${lastChar}`] = false;
+        this.geometryMode[variable] = true;
+      }
+    }
+  }
+  setAttributesPolygon(index) {
+    //prettier-ignore
+    this.layersGraphic[index].attributes.ac_codi = this.form.get('code').value;
+    this.layersGraphic[index].attributes.anp_codi = this.form.get('code').value;
+    this.layersGraphic[index].attributes.ac_susc = '';
+    this.layersGraphic[index].attributes.ac_sup =
+      this.form.get('areaAmbitc').value;
+    this.layersGraphic[index].attributes.ac_teco =
+      this.form.get('areaAmbitc').value;
+    this.layersGraphic[index].attributes.ac_deno = this.form.get('name').value;
+    this.layersGraphic[index].attributes.ac_bene = '';
+    this.layersGraphic[index].attributes.ac_nbene =
+      this.form.get('numPart').value;
+    this.layersGraphic[index].attributes.ac_fesus = this.form.get('firm').value;
+    this.layersGraphic[index].attributes.ac_vigen =
+      this.form.get('vigency').value;
+  }
+  cleanLayer(){
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
   }
 }

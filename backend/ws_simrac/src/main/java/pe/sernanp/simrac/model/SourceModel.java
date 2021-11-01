@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +17,8 @@ public class SourceModel {
 
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_fuente_srl_id_seq")
+	@SequenceGenerator(name="t_fuente_srl_id_seq", sequenceName="t_fuente_srl_id_seq", allocationSize=1)
 	private int id;
 	
 	@Column (name= "var_nom", length=50, unique=true, nullable=false)

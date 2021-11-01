@@ -19,6 +19,7 @@ export class AgreementService {
   private segmentAgreementStateList;
   private segmentAgreementSourceList;
   private segmentAgreementInsert;
+  private segmentDelete;
   private segmentAlliedCategoryList;
   private segmentAlliedCategoryInsert;
   private segmentAlliedInsert;
@@ -30,6 +31,7 @@ export class AgreementService {
   private segmentCommitmentsExternalDelete;
   private segmentCommitmentsExternalSearch;
   private segmentCommitmentsExternalSave;
+  private segmentAgreementPdf;
 
   constructor(private apiService: ApiBaseService, private http: HttpClient) {
     this.segmentSearch = '/conservationagreement/search';
@@ -37,6 +39,7 @@ export class AgreementService {
     this.segmentAgreementStateList = '/agreementstate/list';
     this.segmentAgreementSourceList = '/source/list';
     this.segmentAgreementInsert = '/conservationagreement/save';
+    this.segmentDelete = '/conservationagreement/delete/';
     this.segmentAlliedCategoryList = '/alliedcategory/list';
     this.segmentAlliedCategoryInsert = '/alliedcategory/save';
     this.segmentAlliedSearch = '/allied/search/';
@@ -48,6 +51,7 @@ export class AgreementService {
     this.segmentCommitmentsExternalDelete = '/externalcommitment/delete/';
     this.segmentCommitmentsExternalSearch = '/externalcommitment/search/';
     this.segmentCommitmentsExternalSave = '/externalcommitment/save';
+    this.segmentAgreementPdf = '/conservationagreement/reportpdf/';
   }
   uploadShape(file: File) {
     const fd = new FormData();
@@ -155,6 +159,16 @@ export class AgreementService {
       `${environment.apiUrl}${this.segmentCommitmentsExternalSave}`,
       item,
       null
+    );
+  }
+  agreementPdf(id) {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentAgreementPdf}${id}`
+    );
+  }
+  delete(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentDelete}${id}`
     );
   }
 }

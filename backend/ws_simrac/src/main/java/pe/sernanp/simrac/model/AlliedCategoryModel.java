@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +17,11 @@ public class AlliedCategoryModel {
 	
 	@Column (name= "srl_id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="t_categoria_aliado_srl_id_seq")
+	@SequenceGenerator(name="t_categoria_aliado_srl_id_seq", sequenceName="t_categoria_aliado_srl_id_seq", allocationSize=1)
 	private int id;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, unique=true, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

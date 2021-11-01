@@ -32,7 +32,6 @@ import { BaseService } from './_services/base/base.service';
 import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { UserComponent } from './pages/user/user.component';
-import { DetailComponent } from './pages/base/monitoring/detail/detail.component';
 import { TestComponent } from './pages/base/test/test.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -70,7 +69,6 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
     MonitoringComponent,
     ReportsComponent,
     UserComponent,
-    DetailComponent,
     TestComponent,
     AdminComponent,
     AnpComponent,

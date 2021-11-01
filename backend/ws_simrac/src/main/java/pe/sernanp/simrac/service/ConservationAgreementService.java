@@ -1,17 +1,37 @@
 package pe.sernanp.simrac.service;
+
+import java.io.FileInputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.sernanp.simrac.dto.ConservationAgreementDTO;
 import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.AnpModel;
+import pe.sernanp.simrac.model.CommitmentModel;
 import pe.sernanp.simrac.model.ConservationAgreementModel;
+import pe.sernanp.simrac.repository.CommitmentRepository;
 import pe.sernanp.simrac.repository.ConservationAgreementRepository;
 
 @Service
@@ -20,6 +40,9 @@ public class ConservationAgreementService {
 	@Autowired
 	private ConservationAgreementRepository _repository;
 	
+	@Autowired
+	private CommitmentService _commitmentService;
+
 	public ResponseEntity save(ConservationAgreementModel item) throws Exception {
 		try {
 			Integer id = item.getId();
@@ -27,44 +50,50 @@ public class ConservationAgreementService {
 			boolean success = false;
 			int rowsAffected = 0;
 			item.setRegistrationDate(item.getRegistrationDate());
+			if (item.getSource().getId() == 0)
+				item.setSource(null);
 			if (id == 0) {
+				SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
+				String currentYear = getYearFormat.format(item.getFirm());
+				List<ConservationAgreementModel> itemmmm = this._repository
+						.searchByDepartment(item.getDistrictId().substring(0, 2));
+				item.setCode("AC" + currentYear + item.getDistrictId().substring(0, 2)
+						+ String.format("%04d", itemmmm.size() + 1));
 				ConservationAgreementModel item2 = this._repository.save(item);
 				id = item2.getId();
-				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
-						: " Se guardaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
+				message += "Se guardaron sus datos de manera correcta";
 			} else {
-				this._repository.save(item);
 				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
-			}			
+				this._repository.save(item);
+			}
+			success = true;
 			ResponseEntity response = new ResponseEntity();
 			response.setExtra(id.toString());
 			response.setMessage(message);
 			response.setSuccess(success);
 			return response;
 		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());			
+			throw new Exception(ex.getMessage());
 		}
 	}
-	
 
-	public ResponseEntity<ConservationAgreementModel> list() throws Exception{
+	public ResponseEntity<ConservationAgreementModel> list() throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
 			List<ConservationAgreementModel> items = _repository.findAll();
 			response.setItems(items);
 			return response;
-			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
-	
-	public ResponseEntity delete (int id) throws Exception  {
+
+	@Transactional
+	public ResponseEntity delete(int id) throws Exception {
 		try {
-			this._repository.deleteById(id);
+			
+			this._repository.updateState(id);
 			ResponseEntity response = new ResponseEntity();
 			response.setMessage("Se ha eliminado correctamente");
 			response.setSuccess(true);
@@ -73,7 +102,7 @@ public class ConservationAgreementService {
 			throw new Exception(ex.getMessage());
 		}
 	}
-	
+
 	public ResponseEntity<ConservationAgreementModel> detail(int id) throws Exception {
 		try {
 			if (id == 0) {
@@ -88,23 +117,91 @@ public class ConservationAgreementService {
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
-	}	
-	
-	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator) throws Exception{
+	}
+
+	public ResponseEntity<ConservationAgreementModel> search(ConservationAgreementDTO item, PaginatorEntity paginator)
+			throws Exception {
 		try {
 			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
-			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
-			Page<ConservationAgreementModel> pag = this._repository.findAll(item.getCode(), item.getName(), 
-													item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
-													item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), page);
+			Pageable page = PageRequest.of(paginator.getOffset() - 1, paginator.getLimit());
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			Page<ConservationAgreementModel> pag = this._repository.search(item.getCode(), item.getName(),
+					item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
+					item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), value, page);
 			List<ConservationAgreementModel> items = pag.getContent();
-			paginator.setTotal((int)pag.getTotalElements());
+			paginator.setTotal((int) pag.getTotalElements());
 			response.setItems(items);
 			response.setPaginator(paginator);
 			return response;
-			
+
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());
 		}
+	}
+
+	public ResponseEntity<ConservationAgreementModel> search2(ConservationAgreementDTO item) throws Exception {
+		try {
+			ResponseEntity<ConservationAgreementModel> response = new ResponseEntity<ConservationAgreementModel>();
+			int value = item.getFirm() == null ? 0 : 1;
+			if (item.getFirm() == null)
+				item.setFirm(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			if (item.getFirmEnd() == null)
+				item.setFirmEnd(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+			List<ConservationAgreementModel> items = this._repository.search(item.getCode(), item.getName(),
+					item.getAnp().getId(), item.getAgreementState().getId(), item.getDepartmentId(),
+					item.getProvinceId(), item.getDistrictId(), item.getFirm(), item.getFirmEnd(), value);
+			response.setItems(items);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public org.springframework.http.ResponseEntity<byte[]> generatePdf(int id) throws Exception, JRException {
+
+		ConservationAgreementModel agreementDetail = this._repository.findById(id).get();
+		ResponseEntity<CommitmentModel> comitments = this._commitmentService.search(id);
+
+		// JRBeanCollectionDataSource beanCollectorDatasource = new
+		// JRBeanCollectionDataSource(
+		// Collections.singletonList("Invoice"));
+		JRBeanCollectionDataSource beanCollectorDatasource = new JRBeanCollectionDataSource(comitments.getItems());
+		JasperReport compileReport = JasperCompileManager
+				.compileReport(new FileInputStream("src/main/resources/ReportAgreementDetail.jrxml"));
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("code", agreementDetail.getCode());
+		map.put("anp", agreementDetail.getAnp().getName());
+		map.put("state", agreementDetail.getState() == true?"Activo":"Inactivo");
+		map.put("vigency", agreementDetail.getVigency());
+		map.put("name", agreementDetail.getName());
+		map.put("firm", agreementDetail.getFirm());
+		map.put("observations", agreementDetail.getDescription());
+
+		map.put("hombres", agreementDetail.getPartMen());
+		map.put("mujeres", agreementDetail.getPartWomen());
+		map.put("numfamily", agreementDetail.getNumFamily());
+		map.put("famdetalle", agreementDetail.getBenFamily());
+		map.put("benedetalle", agreementDetail.getBenPerson());
+		map.put("beneindirect", agreementDetail.getBenIndirect());
+		map.put("producearea", agreementDetail.getAreaAmbitc());
+		map.put("superintervencion", agreementDetail.getProducedArea());
+		map.put("supdetalle", agreementDetail.getDetailProduction());
+		map.put("suprestauracion", agreementDetail.getRestHect());
+		map.put("supcontrol", agreementDetail.getSectHect());
+		map.put("supdetallerestauracion", agreementDetail.getRestdet());
+		map.put("sectorvc", agreementDetail.getSectNom());
+		map.put("supvcdetalle", agreementDetail.getSectDet());
+		map.put("modgestionadc", agreementDetail.getTerritoryMod());
+		JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectorDatasource);
+		byte[] data = JasperExportManager.exportReportToPdf(report);
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=ReporteAcuerdoDetalle.pdf");
+		return org.springframework.http.ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(data);
+
 	}
 }
