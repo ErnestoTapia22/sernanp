@@ -329,7 +329,7 @@
                       <tr>
                         <th>Componente</th>
                         <th>Objetivo</th>
-                        <th>Línea de Acción</th>
+                        <th>Estrategia</th>
                         <th>Compromiso</th>
                         <th>Suscriptor</th>
                         <th>Actividades</th>
@@ -440,7 +440,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
-                          <td>Línea de Acción</td>
+                          <td>Estrategia</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -669,8 +669,8 @@
               aria-labelledby="monitoringCurrent-tab"
             >
               <div class="card">
-                <div class="card-header">
-                  <label class="mb-0 fw-bold">Evaluación</label>
+                <div class="card-header">                  
+                  <label class="mb-0 fw-bold">Evaluación </label>
                   <div>
                     <button
                       type="button"
@@ -681,7 +681,7 @@
                       <i class="bi bi-play-circle"></i>
                       Iniciar Monitoreo
                     </button>
-                    <button
+                    <!-- <button
                       type="button"
                       class="btn btn-sm btn-outline-danger mx-2"
                       [disabled]="!monitoringReady"
@@ -689,7 +689,7 @@
                     >
                       <i class="bi bi-stop-circle"></i>
                       Finalizar Monitoreo
-                    </button>
+                    </button> -->
                   </div>
                 </div>
                 <div class="card-body">
@@ -700,7 +700,7 @@
                       <thead style="font-weight: bold">
                         <tr>
                           <td>Objetivo P.M.</td>
-                          <td>Línea de Acción</td>
+                          <td>Estrategia</td>
                           <td>Compromisos</td>
                           <td>Actividades</td>
                           <td>Indicadores</td>
@@ -1264,8 +1264,13 @@
         <button type="button" class="btn btn-secondary" (click)="modal.close()">
           Cancelar
         </button>
-        <button type="submit" class="btn btn-primary" [disabled]="disabled">
-          Guardar Monitoreo
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="disabled"
+          [disabled]="!monitoringReady"
+        >
+          Finalizar Monitoreo
         </button>
       </div>
     </form>

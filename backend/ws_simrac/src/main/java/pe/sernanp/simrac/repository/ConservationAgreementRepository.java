@@ -18,6 +18,7 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 			+ "	left join simrac.t_fuente as so on so.srl_id = t_ac.int_fuenteid "
 			+ "	left join sernanp.ubigeo as d on d.coddpto ||d.codprov || d.coddist = t_ac.var_distritoid "
 			+ "	where t_ac.var_cod ilike %?1% "
+			+ "	and t_ac.bol_flg = true "
 			+ "	and t_ac.var_nom ilike %?2% "
 			+ "	and case when ?3 > 0 then t_ac.int_anpid = ?3 else 1 = 1 end "
 			+ "	and case when ?4 > 0 then t_ac.int_estadoacuerdoid = ?4 else 1 = 1 end "

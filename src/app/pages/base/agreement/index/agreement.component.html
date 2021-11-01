@@ -246,9 +246,7 @@
                             type="button"
                             class="
                               btn btn-sm btn-outline-success
-                              border-0
-                              d-none
-                            "
+                              border-0 d-none"
                           >
                             <i class="bi bi-pencil fs-lg"></i>
                           </button>
@@ -256,9 +254,8 @@
                             type="button"
                             class="
                               btn btn-sm btn-outline-danger
-                              border-0
-                              d-none
-                            "
+                              border-0"
+                            (click)="onDeleteModal(contentDelete, item.id)"
                           >
                             <i class="bi bi-trash fs-lg"></i>
                           </button>
@@ -299,3 +296,35 @@
 <!-- ============================================================== -->
 <!-- End Container fluid  -->
 <!-- ============================================================== -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Eliminar Acuerdo</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      Esta acción no se puede deshacer.
+      <br />
+      ¿Estás seguro?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      (click)="delete()"
+      class="btn btn-primary"
+    >
+      Aceptar
+    </button>
+  </div>
+</ng-template>

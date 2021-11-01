@@ -208,7 +208,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       this.agreementService
         .commitmentsSearch(this.agreementId)
         .subscribe((response) => {
-          console.log(response);
+          
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
           }
@@ -309,7 +309,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   searchAnp() {
     try {
-      this.anpService.anpSearch(this.anpForm.value).subscribe((response) => {
+      this.anpService.anpList().subscribe((response) => {
         if (response && response.items.length > 0) {
           this.anpList = response.items;
         }
@@ -2128,14 +2128,18 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
 
       return item;
     });
+    console.log('items');
     console.log(items);
 
     this.fieldArrayTotalTemp = items;
+    console.log('this.fieldArrayMonitoringList');
+    console.log(this.fieldArrayMonitoringList);
     this.fieldArrayMonitoringList = items;
   }
   monitoringSave() {
     this.submitted = true;
     this.disabled = true;
+    return;
     if (this.monitoringList.length === 0) {
       this.disabled = false;
       return;

@@ -371,12 +371,12 @@
                   <label class="form-label col-6">ANP</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    anps[0].fullName
+                    agreementDetail.anp == null ? '' : agreementDetail.anp.name
                   }}</label>
                   <label class="form-label col-6">Estado</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end"
-                    >Activo</label
+                    >{{ agreementDetail.agreementState == null ? '' : agreementDetail.agreementState.name }}</label
                   >
                   <label class="form-label col-6">Nombre</label>
 
@@ -391,7 +391,7 @@
                   <label class="form-label col-6">Objetivo general</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.objetive
+                    agreementDetail.genObj
                   }}</label>
                 </div>
                 <div class="col-md-6">
@@ -418,12 +418,12 @@
                   <label class="form-label col-6">Localización</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.location || "localización"
+                    agreementDetail.localization || ""
                   }}</label>
                   <label class="form-label col-6">Observaciones</label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.observation || ""
+                    agreementDetail.comment || ""
                   }}</label>
                 </div>
               </div>
@@ -460,9 +460,9 @@
                     <thead class="fw-bold">
                       <tr>
                         <td>Compromiso</td>
+                        <td>Estrategia</td>
                         <td>Suscriptor</td>
-                        <td>fecha de registro</td>
-                        <td>Estado</td>
+                        <td>Fecha de registro</td>
                       </tr>
                     </thead>
                     <tbody>
@@ -471,14 +471,13 @@
                           {{ item.description }}
                         </td>
                         <td>
+                          {{ item.actionLine.name }}
+                        </td>
+                        <td>
                           {{ item.allied.name }}
                         </td>
                         <td>
                           {{ item.registrationDate | date: "dd/MM/yyyy" }}
-                        </td>
-
-                        <td>
-                          {{ item.state ? "Activo" : "Inactivo" }}
                         </td>
                       </tr>
                     </tbody>
@@ -698,7 +697,7 @@
                     agreementDetail.finanApa ? "Si" : "No"
                   }}</label>
                   <label class="form-label col-6"
-                    >financiamiento en soles</label
+                    >Financiamiento en soles</label
                   >
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
@@ -709,7 +708,7 @@
                   >
 
                   <label class="form-label form-label col-6 fw-bold text-end"
-                    >Privado</label
+                    >{{agreementDetail.source == null ? '' : agreementDetail.source.name}}</label
                   >
                   <label class="form-label col-6"
                     >Modalidad de financiamiento</label
@@ -721,7 +720,7 @@
                   <label class="form-label col-6">Nombre del fondo </label>
 
                   <label class="form-label form-label col-6 fw-bold text-end">{{
-                    agreementDetail.fondName || "Fondo"
+                    agreementDetail.fondName || ""
                   }}</label>
                 </div>
               </div>

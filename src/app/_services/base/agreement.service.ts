@@ -19,6 +19,7 @@ export class AgreementService {
   private segmentAgreementStateList;
   private segmentAgreementSourceList;
   private segmentAgreementInsert;
+  private segmentDelete;
   private segmentAlliedCategoryList;
   private segmentAlliedCategoryInsert;
   private segmentAlliedInsert;
@@ -38,6 +39,7 @@ export class AgreementService {
     this.segmentAgreementStateList = '/agreementstate/list';
     this.segmentAgreementSourceList = '/source/list';
     this.segmentAgreementInsert = '/conservationagreement/save';
+    this.segmentDelete = '/conservationagreement/delete/';
     this.segmentAlliedCategoryList = '/alliedcategory/list';
     this.segmentAlliedCategoryInsert = '/alliedcategory/save';
     this.segmentAlliedSearch = '/allied/search/';
@@ -162,6 +164,11 @@ export class AgreementService {
   agreementPdf(id) {
     return this.apiService.get(
       `${environment.apiUrl}${this.segmentAgreementPdf}${id}`
+    );
+  }
+  delete(id): Observable<any> {
+    return this.apiService.get(
+      `${environment.apiUrl}${this.segmentDelete}${id}`
     );
   }
 }

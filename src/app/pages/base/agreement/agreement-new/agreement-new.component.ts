@@ -44,7 +44,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   mapViewProperties: any;
   fieldArray: Array<any> = [];
   newAttribute: any = {};
-
+  featureLayer : any = null;
   portalUrl = 'https://www.arcgis.com';
   view: MapView;
   map: Map;
@@ -57,6 +57,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   districts: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
+  anpCode : null;
   attributes: any = {
     codigo: '',
     nombre: '',
@@ -339,6 +340,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // this.eventListener();
   }
   eventFormListener1(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status1');
     if (fileName.indexOf('.zip') !== -1) {
@@ -352,10 +357,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 0);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener2(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status2');
     if (fileName.indexOf('.zip') !== -1) {
@@ -369,10 +378,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 1);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener3(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status3');
     if (fileName.indexOf('.zip') !== -1) {
@@ -385,10 +398,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 2);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener4(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status4');
     if (fileName.indexOf('.zip') !== -1) {
@@ -401,10 +418,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 3);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
   eventFormListener5(event) {
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
     const htmlStatus = document.getElementById('upload-status5');
     if (fileName.indexOf('.zip') !== -1) {
@@ -417,7 +438,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.generateFeatureCollection(fileName, htmlStatus, htmlForm, 4);
     } else {
       htmlStatus.innerHTML =
-        '<p style="color:red">Add shapefile as .zip file</p>';
+        '<p style="color:red">Añade un shapefile como archivo .zip</p>';
     }
   }
 
@@ -618,61 +639,58 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // see the 'Feature Collection in Local Storage' sample for an example of how to work with local storage
     let sourceGraphics = [];
 
-    const layers = featureCollection.layers.map((layer) => {
+    featureCollection.layers.map((layer) => {
       const graphics = layer.featureSet.features.map((feature) => {
         return Graphic.fromJSON(feature);
       });
       const geometry = layer.featureSet.features.map((feature) => {
         return feature.geometry;
       });
-      console.log(geometry);
+      //console.log(geometry);
       // this.graphics.push(geometry);
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi =
-        this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.anp_codi =
-          this.form.get('code').value),
-        (this.layersGraphic[layerId].attributes.ac_susc = '');
-      this.layersGraphic[layerId].attributes.ac_sup =
-        this.form.get('areaAmbitc').value;
-      this.layersGraphic[layerId].attributes.ac_teco =
-        this.form.get('areaAmbitc').value;
-      console.log(this.provinces);
-      console.log(
-        this.provinces.find((t) => t.code == this.form.get('province').value)
-      );
-      console.log(
-        this.provinces.find((t) => t.code == this.form.get('province').value)
-          .name
-      );
-      this.layersGraphic[layerId].attributes.ac_deno =
-        this.form.get('name').value;
-      (this.layersGraphic[layerId].attributes.ac_bene = ''),
-        (this.layersGraphic[layerId].attributes.ac_nbene =
-          this.form.get('numPart').value),
-        (this.layersGraphic[layerId].attributes.ac_fesus =
-          this.form.get('firm').value),
-        (this.layersGraphic[layerId].attributes.ac_vigen =
-          this.form.get('vigency').value),
+      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value);
+      
+      //(this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
+      //(this.layersGraphic[layerId].attributes.ac_susc = '');
+      //this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
+      //this.layersGraphic[layerId].attributes.ac_teco = this.form.get('areaAmbitc').value;
+      
+      //console.log(this.provinces);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //);
+      //console.log(
+      //  this.provinces.find((t) => t.code == this.form.get('province').value)
+      //    .name
+      //);
+
+      //this.layersGraphic[layerId].attributes.ac_deno = this.form.get('name').value;
+      //(this.layersGraphic[layerId].attributes.ac_bene = ''),
+      //(this.layersGraphic[layerId].attributes.ac_nbene = this.form.get('numPart').value),
+      //(this.layersGraphic[layerId].attributes.ac_fesus = this.form.get('firm').value),
+      //(this.layersGraphic[layerId].attributes.ac_vigen = this.form.get('vigency').value),
+      
         //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
         //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
         //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
-        (sourceGraphics = sourceGraphics.concat(graphics));
+      
+      (sourceGraphics = sourceGraphics.concat(graphics));
 
-      const featureLayer = new FeatureLayer({
+      this.featureLayer = new FeatureLayer({
         objectIdField: 'FID',
         source: graphics,
         fields: layer.layerDefinition.fields.map((field) => {
           return Field.fromJSON(field);
         }),
       });
-      return featureLayer;
+      //return this.featureLayer;
       // associate the feature with the popup on click to enable highlight and zoom to
     });
-
-    this.map.addMany(layers);
+    
+    this.map.add(this.featureLayer);
     this.view.goTo(sourceGraphics).catch((error) => {
       if (error.name != 'AbortError') {
         console.error(error);
@@ -1044,6 +1062,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
+          console.log('response.item');
+          console.log(response.item);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1111,6 +1131,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             province: 0,
             district: 0,
           });
+          this.anpCode = response.item.anp.code;
           this.addAgreementLayers();
           this.setLocalization(response.item.districtId);
           this.disableFields();
@@ -1129,7 +1150,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('province').disable();
     this.form.get('district').disable();
     this.form.get('code').disable();
-    //this.form.get('code').disable();
+    this.form.get('anp').disable();
+    this.form.get('agreementState').disable();
+    this.form.get('firm').disable();
+    this.form.get('name').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1202,7 +1226,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.agreementId === '' ||
       this.agreementId === null
     ) {
-      console.log(this.agreementId);
       return;
     }
 
@@ -1604,16 +1627,27 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       outFields: ['*'],
       definitionExpression: `ac_codi = '${agreementCode}'`,
     });
+    this.map.add(featureLayer);
+    this.zoomToLayer(featureLayer);
+    if (this.anpCode === null || this.anpCode === '') {
+      return;
+    }
+    const featureLayer2 = new FeatureLayer({
+      url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/sernanp_visor/sernanp_busqueda/MapServer/0',
+      id: 'anp',
+      popupEnabled: true,
+      outFields: ['*'],
+      definitionExpression: `anp_codi = '${this.anpCode}'`,
+    });
     // featureLayer.when((loaded) => {
     //   console.log(loaded);
     // });
 
     // debugger;
 
-    this.map.add(featureLayer);
-
-    this.zoomToLayer(featureLayer);
-
+    
+    this.map.add(featureLayer2);
+    //this.zoomToLayer(featureLayer);
     // this.addGraphics(featureLayer);
 
     //  this.zoomToLayer;
@@ -1921,5 +1955,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.layersGraphic[index].attributes.ac_fesus = this.form.get('firm').value;
     this.layersGraphic[index].attributes.ac_vigen =
       this.form.get('vigency').value;
+  }
+  cleanLayer(){
+    if (this.featureLayer != null) {
+      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer = null;
+    }
   }
 }

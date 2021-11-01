@@ -443,7 +443,8 @@
                         id="zonningNot"
                       />
                       <label class="form-check-label" for="zonningNot"
-                        >No</label
+                        >No
+                        </label
                       >
                     </div>
                     <div class="form-check">
@@ -456,7 +457,11 @@
                         id="zonningNotApply"
                       />
                       <label class="form-check-label" for="zonningNotApply"
-                        >No aplica</label
+                        >Proceso no desarrollado<i
+                        class="bi bi-info-circle mx-1"
+                        placement="top"
+                        ngbTooltip="Hace referencia a que el proceso de zonificación forestal no fue iniciada por la autoridad competente"
+                      ></i></label
                       >
                     </div>
                   </div>
@@ -781,7 +786,7 @@
                     ><i
                       class="bi bi-info-circle mx-1"
                       placement="top"
-                      ngbTooltip="Número de personas  participando del AdC"
+                      ngbTooltip="Número de personas participando del AdC"
                     ></i>
                     <div class="input-group">
                       <span class="input-group-text">H</span>
@@ -1560,7 +1565,7 @@
                                     <div class="col-md-4">
                                       <button
                                         class="btn btn-primary btn-sm"
-                                        (click)="uploadConservation($event)"
+                                        (click)="uploadProduced($event)"
                                         [disabled]="upLoadDisable"
                                       >
                                         <i class="bi bi-cloud-upload"></i>
@@ -1793,12 +1798,12 @@
                                     <div class="col-md-4">
                                       <button
                                         class="btn btn-primary btn-sm"
-                                        (click)="uploadConservation($event)"
+                                        (click)="uploadRestauration($event)"
                                         [disabled]="upLoadDisable"
                                       >
                                         <i class="bi bi-cloud-upload"></i>
                                         Subir
-                                      </button>
+                                      </button>                                      
                                     </div>
                                   </div>
                                   <div
@@ -2028,7 +2033,7 @@
                                     <div class="col-md-4">
                                       <button
                                         class="btn btn-primary btn-sm"
-                                        (click)="uploadConservation($event)"
+                                        (click)="uploadVigilance($event)"
                                         [disabled]="upLoadDisable"
                                       >
                                         <i class="bi bi-cloud-upload"></i>
@@ -2263,7 +2268,6 @@
                                   }"
                                 />
                               </div>
-
                               <div class="input-group">
                                 <span class="input-group-text">Norte(y)</span>
                                 <input
@@ -2275,6 +2279,15 @@
                                   }"
                                 />
                               </div>
+                            </div>
+                            <div class="card">
+                              <button type="button"
+                                class="btn btn-primary btn-block"
+                                (click)="cleanLayer()"
+                                placement="bottom"
+                                ngbTooltip="Eliminar gráfico del mapa">
+                                <i class="bi bi-trash" ></i>                                        
+                              </button>
                             </div>
                           </div>
                         </div>

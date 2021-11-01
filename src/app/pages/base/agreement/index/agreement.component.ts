@@ -4,6 +4,8 @@ import { AgreementService } from '../../../../_services/base/agreement.service';
 import { AlertService } from '../../../../_services/base/alert.service';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import {
   FormBuilder,
   FormControl,
@@ -20,13 +22,17 @@ import { runInThisContext } from 'vm';
   templateUrl: './agreement.component.html',
   styleUrls: ['./agreement.component.css'],
 })
-export class AgreementComponent implements OnInit {
+export class AgreementComponent implements OnInit, OnDestroy {
   agreementList: any[];
   total: number;
   isLoading: boolean = false;
   pageSize: any;
   page: Number;
   form: FormGroup;
+  moduleContext: any = {};
+  modalRef: NgbModalRef;
+  id : 0;
+  closeRegisterObserver: Subscription;
   queryObserver = new BehaviorSubject({
     item: '',
     paginator: '',
@@ -40,6 +46,7 @@ export class AgreementComponent implements OnInit {
   anps: any[] = [];
 
   constructor(
+    private modalService: NgbModal,
     private agreementService: AgreementService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
@@ -180,10 +187,7 @@ export class AgreementComponent implements OnInit {
   }
   buildForm(): void {
     this.form = this.fb.group({
-      code: [
-        { value: '', disabled: true },
-        Validators.compose([Validators.maxLength(10)]),
-      ],
+      code: [''],
       name: [''],
       //state: [''],
       agreementState: this.fb.group({
@@ -202,6 +206,8 @@ export class AgreementComponent implements OnInit {
   }
   ngOnDestroy() {
     this.queryObserver.unsubscribe();
+    if (this.closeRegisterObserver !== undefined)
+      this.closeRegisterObserver.unsubscribe();
   }
   setTableHeight(rows, itemsLength?: number) {
     if (rows !== undefined && rows !== null) {
@@ -297,6 +303,36 @@ export class AgreementComponent implements OnInit {
     this.queryObserver.next({
       item: JSON.stringify(item),
       paginator: JSON.stringify(paginator),
+    });
+  }
+  delete() {
+    try {
+      this.agreementService.delete(this.id).subscribe((response) => {
+        if (response && response.success && response.success == true) {
+          this.initQuery();
+          this.onSearch();
+          this.modalRef.close();
+        }
+        else this.alertService.error('No se ha podido eliminar', 'Error', {
+          autoClose: true,
+        });
+      });
+    } catch (error) {
+      //this.submitted = false;
+      this.alertService.error('error :' + error, 'Error', {
+        autoClose: true,
+      });
+    }
+  }  
+  onDeleteModal(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      centered: true,
+      size: 'sm',
+      backdrop: 'static',
+    });
+    this.id = id;
+    this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
+      this.id = 0;
     });
   }
 }

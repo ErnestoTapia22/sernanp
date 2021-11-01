@@ -33,6 +33,7 @@ public class WorkPlanService {
 	@Autowired
 	private ActivityRepository _activityRepository;
 
+	@Transactional
 	public ResponseEntity save (WorkPlanModel item) throws Exception{
 		try {
 			Integer id = item.getId();
@@ -74,29 +75,30 @@ public class WorkPlanService {
 			String message = "";
 			boolean success = true;
 			int rowsAffected = 0;
+			this._repository.updatePlanActive(item.getConservationAgreement().getId());
 			List<WorkPlanModel> workPlans = this._repository.searchByAgreement(item.getConservationAgreement().getId());
 			item.setName("Plan de Trabajo N° " + (workPlans.size()+1));
-			item.setRegistrationDate(item.getRegistrationDate());
-			
-				WorkPlanModel model2 = new WorkPlanModel();
-				model2.setId(item.getId());
-				model2.setConservationAgreement(item.getConservationAgreement());
-				model2.setName(item.getName());
-				model2.setDescription(item.getDescription());
-				model2.setRegistrationDate(item.getRegistrationDate());
-				model2.setState(true);
-				model2.setYear(item.getYear());
-				model2.setVersion(workPlans.size()+1);
-				model2.setActive(true);				
-							
-				WorkPlanModel item2 = this._repository.save(model2);
-				id = item2.getId();
-				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
-						: " Se guardaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
-				id2 = item2.getId();
+			item.setRegistrationDate(item.getRegistrationDate());			
+			WorkPlanModel model2 = new WorkPlanModel();
+			model2.setId(item.getId());
+			model2.setConservationAgreement(item.getConservationAgreement());
+			model2.setName(item.getName());
+			model2.setDescription(item.getDescription());
+			model2.setRegistrationDate(item.getRegistrationDate());
+			model2.setState(true);
+			model2.setYear(item.getYear());
+			model2.setVersion(workPlans.size()+1);
+			model2.setActive(true);				
+						
+			WorkPlanModel item2 = this._repository.save(model2);
+			id = item2.getId();
+			message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
+					: " Se guardaron sus datos de manera correcta";
+			success = (id == 0) ? false : true;
+			id2 = item2.getId();
 						
 			item.getActivities().forEach( (activity) -> {
+				activity.setId(0);
 				activity.setState(true);
 				activity.setWorkPlan(new WorkPlanModel());
 				activity.getWorkPlan().setId(item2.getId());
@@ -133,7 +135,11 @@ public class WorkPlanService {
 			List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
 			WorkPlanDTO item = new WorkPlanDTO();
 			WorkPlanModel itemWorkPlan = this._repository.searchActive(id);
-			
+			if (itemWorkPlan == null)
+			{
+				response.setSuccess(false);
+				return response;
+			}
 			LinkedHashMap<String,Integer> commitmentMap = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String,Integer> actionLineMap = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String,Integer> objetiveMap = new LinkedHashMap<String, Integer>();
