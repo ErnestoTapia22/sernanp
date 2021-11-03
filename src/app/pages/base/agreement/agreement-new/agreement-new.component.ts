@@ -44,7 +44,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   mapViewProperties: any;
   fieldArray: Array<any> = [];
   newAttribute: any = {};
-  featureLayer : any = null;
+  featureLayer: any = null;
   portalUrl = 'https://www.arcgis.com';
   view: MapView;
   map: Map;
@@ -57,7 +57,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   districts: any[] = [];
   submitted: boolean = false;
   disabled: boolean = false;
-  anpCode : null;
+  anpCode: null;
   attributes: any = {
     codigo: '',
     nombre: '',
@@ -341,7 +341,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   eventFormListener1(event) {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
@@ -362,7 +362,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   eventFormListener2(event) {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
@@ -383,7 +383,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   eventFormListener3(event) {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
@@ -403,7 +403,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   eventFormListener4(event) {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
@@ -423,7 +423,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   eventFormListener5(event) {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
     const fileName = (event.target as HTMLFormElement).value.toLowerCase();
@@ -651,13 +651,14 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.layersGraphic[layerId].geometry = geometry;
       // this.layerId = layerId;
 
-      (this.layersGraphic[layerId].attributes.ac_codi = this.form.get('code').value);
-      
+      this.layersGraphic[layerId].attributes.ac_codi =
+        this.form.get('code').value;
+
       //(this.layersGraphic[layerId].attributes.anp_codi = this.form.get('code').value),
       //(this.layersGraphic[layerId].attributes.ac_susc = '');
       //this.layersGraphic[layerId].attributes.ac_sup = this.form.get('areaAmbitc').value;
       //this.layersGraphic[layerId].attributes.ac_teco = this.form.get('areaAmbitc').value;
-      
+
       //console.log(this.provinces);
       //console.log(
       //  this.provinces.find((t) => t.code == this.form.get('province').value)
@@ -672,12 +673,12 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       //(this.layersGraphic[layerId].attributes.ac_nbene = this.form.get('numPart').value),
       //(this.layersGraphic[layerId].attributes.ac_fesus = this.form.get('firm').value),
       //(this.layersGraphic[layerId].attributes.ac_vigen = this.form.get('vigency').value),
-      
-        //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
-        //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
-        //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
-      
-      (sourceGraphics = sourceGraphics.concat(graphics));
+
+      //(this.layersGraphic[layerId].attributes.ac_dep = this.departments.find(t => t.code == this.form.get("department").value).name),
+      //(this.layersGraphic[layerId].attributes.ac_prov = this.provinces.find(t => t.code == this.form.get("province").value).name),
+      //(this.layersGraphic[layerId].attributes.ac_dist = this.districts.find(t => t.code == this.form.get("district").value).name),
+
+      sourceGraphics = sourceGraphics.concat(graphics);
 
       this.featureLayer = new FeatureLayer({
         objectIdField: 'FID',
@@ -689,7 +690,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       //return this.featureLayer;
       // associate the feature with the popup on click to enable highlight and zoom to
     });
-    
+
     this.map.add(this.featureLayer);
     this.view.goTo(sourceGraphics).catch((error) => {
       if (error.name != 'AbortError') {
@@ -862,10 +863,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.form.patchValue({
         districtId: this.form.get('district').value,
       });
-      console.log(this.form.value);
+      console.log(this.form.getRawValue());
 
       this.agreementService
-        .agreementInsert(JSON.stringify(this.form.value))
+        .agreementInsert(JSON.stringify(this.form.getRawValue()))
         .subscribe((response) => {
           console.log(response);
           if (response && response.success === true) {
@@ -1645,7 +1646,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
     // debugger;
 
-    
     this.map.add(featureLayer2);
     //this.zoomToLayer(featureLayer);
     // this.addGraphics(featureLayer);
@@ -1956,9 +1956,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.layersGraphic[index].attributes.ac_vigen =
       this.form.get('vigency').value;
   }
-  cleanLayer(){
+  cleanLayer() {
     if (this.featureLayer != null) {
-      this.featureLayer.definitionExpression = "1=0";
+      this.featureLayer.definitionExpression = '1=0';
       this.featureLayer = null;
     }
   }
