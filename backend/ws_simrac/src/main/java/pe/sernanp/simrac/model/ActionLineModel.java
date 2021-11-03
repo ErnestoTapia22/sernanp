@@ -29,7 +29,7 @@ public class ActionLineModel {
 	@ManyToOne
 	private ObjetiveModel _objetive;
 	
-	@Column (name= "var_nom", length=50, nullable=false)
+	@Column (name= "var_nom", columnDefinition="TEXT", nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

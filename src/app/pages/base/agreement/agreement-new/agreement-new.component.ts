@@ -58,6 +58,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   disabled: boolean = false;
   anpCode : null;
+  isReady: boolean = false;
   attributes: any = {
     codigo: '',
     nombre: '',
@@ -101,8 +102,8 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         ac_sup: 0,
         ac_teco: '',
         ac_deno: '',
-        ac_bene: 0,
-        ac_nbene: '',
+        ac_bene: '',
+        ac_nbene: 0,
         ac_fesus: '2021-09-20',
         ac_vigen: 0,
         ac_dep: '',
@@ -793,7 +794,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       districtId: [''],
       department: [0, Validators.min(1)],
       province: [0, Validators.min(1)],
-      district: [0, Validators.min(1)],
+      district: [0, Validators.min(1)]
     });
     this.alliedForm = this.fb.group({
       id: [0],
@@ -867,7 +868,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {
-          console.log(response);
+          //console.log(response);
           if (response && response.success === true) {
             this.agreementExist = true;
 
@@ -901,7 +902,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   addFeatureToService(id) {
     this.spinner.show();
-    this.upLoadDisable = true;
+    //this.upLoadDisable = true;
     let graphics: Graphic[];
 
     if (this.geometryMode[`polygon${id}`]) {
@@ -952,12 +953,12 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       popupEnabled: true,
       id: 'featureLayer',
     });
-    console.log(edits);
+    //console.log(edits);
 
     featureLayer
       .applyEdits(edits)
       .then((editsResult) => {
-        console.log(editsResult);
+        //console.log(editsResult);
 
         if (editsResult.addFeatureResults.length > 0) {
           if (editsResult.addFeatureResults[0].error) {
@@ -979,6 +980,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
                 autoClose: true,
               }
             );
+            this.cleanLayer();
           }
         }
         this.spinner.hide();
@@ -1062,8 +1064,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     try {
       this.agreementService.agreementDetail(id).subscribe((response) => {
         if (response && response.item !== null) {
-          console.log('response.item');
-          console.log(response.item);
           this.form.setValue({
             id: response.item.id,
             name: response.item.name,
@@ -1101,10 +1101,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             source: {
               id: response.item.source == null ? 0 : response.item.source.id,
             },
-            localization: response.item.localization || 'Sin datos',
+            localization: response.item.localization || '',
             surfaceAmbito: response.item.surfaceAmbito || 0.0,
             surfaceIntervention:
-              response.item.surfaceIntervention || 'Sin datos',
+              response.item.surfaceIntervention || '',
             districtId: response.item.districtId,
             hasMasterPlan: response.item.hasMasterPlan,
             hasDevelopmentPlan: response.item.hasDevelopmentPlan,
@@ -1129,8 +1129,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             hasMonitoring: response.item.hasMonitoring,
             department: 0,
             province: 0,
-            district: 0,
+            district: 0
           });
+          this.isReady = true;
           this.anpCode = response.item.anp.code;
           this.addAgreementLayers();
           this.setLocalization(response.item.districtId);
@@ -1149,11 +1150,11 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
-    this.form.get('code').disable();
-    this.form.get('anp').disable();
-    this.form.get('agreementState').disable();
-    this.form.get('firm').disable();
-    this.form.get('name').disable();
+    //this.form.get('code').disable();
+    //this.form.get('anp').disable();
+    //this.form.get('agreementState').disable();
+    //this.form.get('firm').disable();
+    //this.form.get('name').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1611,7 +1612,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   addAgreementLayers() {
     const agreementCode = this.form.get('code').value;
-    console.log(agreementCode);
     if (
       agreementCode === null ||
       agreementCode === undefined ||
@@ -1627,6 +1627,10 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       outFields: ['*'],
       definitionExpression: `ac_codi = '${agreementCode}'`,
     });
+    //featureLayer.load().then(function(e){
+    //  console.log('load termino');
+    //  console.log(e);
+    //});
     this.map.add(featureLayer);
     this.zoomToLayer(featureLayer);
     if (this.anpCode === null || this.anpCode === '') {
@@ -1642,15 +1646,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     // featureLayer.when((loaded) => {
     //   console.log(loaded);
     // });
-
-    // debugger;
-
-    
     this.map.add(featureLayer2);
-    //this.zoomToLayer(featureLayer);
-    // this.addGraphics(featureLayer);
-
-    //  this.zoomToLayer;
   }
   zoomToLayer(layer: FeatureLayer) {
     layer
@@ -1950,8 +1946,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.form.get('areaAmbitc').value;
     this.layersGraphic[index].attributes.ac_deno = this.form.get('name').value;
     this.layersGraphic[index].attributes.ac_bene = '';
-    this.layersGraphic[index].attributes.ac_nbene =
-      this.form.get('numPart').value;
+    this.layersGraphic[index].attributes.ac_nbene = this.form.get('numPart').value;
     this.layersGraphic[index].attributes.ac_fesus = this.form.get('firm').value;
     this.layersGraphic[index].attributes.ac_vigen =
       this.form.get('vigency').value;
