@@ -744,14 +744,14 @@
                           >
                             {{
                               item.commitment.actionLine.objetive.description ||
-                                "sin datos"
+                                ""
                             }}
                           </td>
                           <td
                             *ngIf="item.commitment.actionLine.rowspan > 0"
                             [attr.rowspan]="item.commitment.actionLine.rowspan"
                           >
-                            {{ item.commitment.actionLine.name || "sin datos" }}
+                            {{ item.commitment.actionLine.name || "" }}
                           </td>
                           <td
                             *ngIf="item.commitment.rowspan > 0"

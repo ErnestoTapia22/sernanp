@@ -82,6 +82,7 @@
                       class="form-control"
                       placeholder="Código"
                       formControlName="code"
+                      disabled
                     />
                   </div>
                   <div class="col-md-6">
@@ -92,14 +93,16 @@
                       class="form-control"
                       placeholder="Nombre"
                       formControlName="name"
+                      [readonly] = "isReady"
                     />
                   </div>
                   <div class="col-md-3" formGroupName="anp">
                     <label for="ddAnp" class="form-label">ANP (*)</label>
-                    <select
+                    <select                      
                       id="ddAnp"
                       class="form-select"
                       formControlName="id"
+                      [disabled] = "isReady"
                       [ngClass]="{
                         'input-invalid':
                           submitted && form.get('anp.id').errors?.min
@@ -125,6 +128,7 @@
                     <div formGroupName="agreementState">
                       <label for="ddState" class="form-label">Estado (*)</label>
                       <select
+                        [disabled] = "!isReady"
                         id="ddState"
                         class="form-select"
                         formControlName="id"
@@ -153,6 +157,7 @@
                       class="form-control"
                       id="txtSuscriptionDate"
                       formControlName="firm"
+                      [readonly] = "isReady"
                     />
                   </div>
                   <div class="col-md-3">
@@ -165,6 +170,7 @@
                       class="form-control"
                       min="0"
                       formControlName="vigency"
+                      [readonly] = "isReady"
                       [ngClass]="{
                         'input-invalid':
                           (submitted && form.get('vigency').errors?.required) ||
@@ -603,7 +609,7 @@
                                 <tr>
                                   <td>Objetivo</td>
                                   <td>Compromiso</td>
-                                  <td>Línea de Acción</td>
+                                  <td>Estrategia</td>
                                   <td>Suscriptor</td>
                                   <td>Opciones</td>
                                 </tr>
@@ -718,7 +724,7 @@
                               <tr>
                                 <td>Objetivo</td>
                                 <td>Compromiso</td>
-                                <td>Línea de Acción</td>
+                                <td>Estrategia</td>
                                 <td>Opciones</td>
                               </tr>
                             </thead>
@@ -2384,6 +2390,15 @@
                     <label for="txtModF" class="form-label"
                       >Modalidad de financiamiento</label
                     >
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="Fondos concursables (no reembolsables)
+                      Fondos concursables (reembolsables)
+                      Préstamos
+                      Donaciones
+                      Otros"
+                    ></i>
                     <input
                       type="text"
                       class="form-control"
@@ -2671,7 +2686,7 @@
               </select>
             </div>
             <div class="col-md-12" formGroupName="actionLine">
-              <label class="form-label">Alineado a</label>
+              <label class="form-label">Estrategia: </label>
               <select
                 class="form-select"
                 formControlName="id"
@@ -2861,7 +2876,7 @@ OB 1 - Mantener la cobertura vegetal del Parque Nacional
               </div>
 
               <div class="col-md-12">
-                <label class="form-label">Alineado a: </label>
+                <label class="form-label">Estrategia: </label>
                 <input
                   type="text"
                   class="form-control"
