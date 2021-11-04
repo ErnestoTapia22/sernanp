@@ -17,6 +17,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import printPdf from '@app/print/pdf/index';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import Zoom from '@arcgis/core/widgets/Zoom';
+import { ExcelAcService } from '@app/_services/report/excelAc.service';
+import * as _ from 'lodash';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -99,7 +101,8 @@ export class ReportsComponent implements OnInit {
     private fb: FormBuilder,
     private pdfService: PdfService,
     private modalService: NgbModal,
-    private anpService: AnpService
+    private anpService: AnpService,
+    private excelService: ExcelAcService,
   ) {}
 
   ngOnInit(): void {
@@ -1547,5 +1550,87 @@ export class ReportsComponent implements OnInit {
           autoClose: false,
         });
       });
+  }
+  exportAsXLSX() {
+    console.log(this.agreementList);
+    if (this.agreementList.length === 0) {
+      return;
+    }
+    const result = this.formatToExport();
+
+    this.excelService.exportAsExcelFile(
+      result,
+      'Reporte AdC',
+      this.agreementId
+    );
+  }
+  formatToExport() {
+    return _.map(this.agreementList, (item) => {
+      item.a1 = item.code;
+      item.a2 = item.name;
+      item.a3 = item.anp.name;
+      item.a4 = item.agreementState.name;
+      item.a5 = item.vigency;
+      item.a6 = item.firm;
+      item.a7 = item.partMen + item.partWomen;
+      item.a8 = item.benPerson;
+      item.a9 = item.numFamily;
+      item.a10 = item.benFamily;
+      item.a11 = item.areaAmbitc;
+      item.a12 = item.finanApa == false ? "No" : "Si";
+      item.a12 = item.source != null ? item.source.name : "";
+      item.a13 = item.genObj;
+      return _.omit(item, [
+        'agreementState',
+        'allied',
+        'anp',
+        'areaAmbitc',
+        'benFamily',
+        'benIndirect',
+        'benPerson',
+        'code',
+        'comment',
+        'description',
+        'detailMunicipality',
+        'detailProduction',
+        'districtId',
+        'finanApa',
+        'finanMod',
+        'finanNum',
+        'firm',
+        'fondName',
+        'forestZoning',
+        'genObj',
+        'hasActas',
+        'hasDevelopmentPlan',
+        'hasFirm',
+        'hasMap',
+        'hasMasterPlan',
+        'hasMonitoring',
+        'hasShape',
+        'hasWorkPlan',
+        'id',
+        'institutionalPlan',
+        'livePlan',
+        'localization',
+        'name',
+        'numFamily',
+        'partMen',
+        'partWomen',
+        'producedArea',
+        'registrationDate',
+        'restHect',
+        'restdet',
+        'sectDet',
+        'sectHect',
+        'sectNom',
+        'source',
+        'state',
+        'surfaceAmbito',
+        'surfaceIntervention',
+        'vigency',
+        'territoryMod'
+      ]);
+    });
   }
 }

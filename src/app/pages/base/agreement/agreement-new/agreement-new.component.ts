@@ -1150,11 +1150,12 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.form.get('department').disable();
     this.form.get('province').disable();
     this.form.get('district').disable();
-    //this.form.get('code').disable();
-    //this.form.get('anp').disable();
-    //this.form.get('agreementState').disable();
-    //this.form.get('firm').disable();
-    //this.form.get('name').disable();
+    this.form.get('code').disable();
+    this.form.get('anp').disable();
+    this.form.get('agreementState').disable();
+    this.form.get('firm').disable();
+    this.form.get('name').disable();
+    this.form.get('vigency').disable();
   }
   addFieldValue() {
     console.log(this.newAttribute);
@@ -1670,7 +1671,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
               'Se elimino correctamente el compromiso',
               'Ok',
               {
-                autoClose: false,
+                autoClose: true,
               }
             );
             this.commitmentsList = [];
@@ -1735,8 +1736,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     }
     const result = this.formatToExport();
 
-    console.log(this.commitmentsList);
-    // return;
     this.excelService.exportAsExcelFile(
       result,
       'Reporte Compromisos',
