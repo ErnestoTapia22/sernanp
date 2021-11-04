@@ -237,7 +237,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             agreementState: { id: response.item.agreementState.id || 0 },
             objective: '',
             anp: { id: response.item.anp.id || 0 },
-            localization: response.item.localization || 'Sin datos',
+            localization: response.item.localization || '',
             districtId: response.item.districtId,
             department: 0,
             province: 0,
@@ -275,7 +275,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   onCreateEvaluationModal(content) {
     this.modalRef = this.modalService.open(content, {
-      size: 'sm',
+      size: 'md',
       backdrop: 'static',
       centered: true,
     });

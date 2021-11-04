@@ -70,15 +70,17 @@
               </button>
             </div>
             <hr />
-            <div class="col-md-12">
-              <label class="form-label">Agregar objetivos </label>
-              <button
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label class="form-label">Agregar objetivos </label>
+                <button
                 type="button"
                 class="btn btn-sm btn-primary d-flex"
                 (click)="onRegisterModal(contentRegister)"
               >
                 <i class="bi bi-plus-lg"></i>
               </button>
+              </div>
             </div>
             <div class="table-responsive">
               <table class="table">
@@ -233,7 +235,7 @@
     <div class="modal-body">
       <label class="form-label">Nombre</label>
       <div class="row g-3">
-        <div class="col-md-6">
+        <div class="col-md-10">
           <input
             type="text"
             class="form-control"

@@ -28,7 +28,7 @@ public class WorkPlanModel {
 	@ManyToOne
 	private ConservationAgreementModel ConservationAgreement;
 	
-	@Column (name= "var_nom", length=50, unique=true, nullable=false)
+	@Column (name= "var_nom", length=200, nullable=false)
 	private String name;
 	
 	@Column (name= "txt_des", columnDefinition="TEXT")

@@ -47,7 +47,7 @@ public class MasterPlanController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/searchobjetives/{id}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<ObjetiveModel> searchActionLines(@PathVariable("id") int id) throws IOException {
+	public ResponseEntity<ObjetiveModel> searchObjetives(@PathVariable("id") int id) throws IOException {
 		try {
 			ResponseEntity<ObjetiveModel> response = this._service.searchObjetives(id);
 			return response;

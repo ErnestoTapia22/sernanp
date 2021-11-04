@@ -1266,7 +1266,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   onContentCreateCommitmentsModal(content) {
     this.modalRef = this.modalService.open(content, {
-      size: 'sm',
+      size: 'md',
       backdrop: 'static',
       centered: true,
     });
@@ -1277,7 +1277,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   }
   onContentCreateCommitmentsExternalModal(content) {
     this.modalRef = this.modalService.open(content, {
-      size: 'sm',
+      size: 'md',
       backdrop: 'static',
       centered: true,
     });

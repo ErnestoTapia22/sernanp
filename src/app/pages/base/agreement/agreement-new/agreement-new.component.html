@@ -2681,7 +2681,7 @@
               <select class="form-select" (change)="searchActionLines($event)">
                 <option value="0">SELECCIONE</option>
                 <option *ngFor="let item of objectiveList" [value]="item.id">
-                  {{ item.description }}
+                  {{ item.code + ' ' + item.description }}
                 </option>
               </select>
             </div>

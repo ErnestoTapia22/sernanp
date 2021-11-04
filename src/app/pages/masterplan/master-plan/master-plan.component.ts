@@ -137,6 +137,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
     }
   }
   getGoalsList() {
+    this.goalsList = [];
     try {
       this.masterPlanService
         .masterPlanObjetiveList(this.form.get('id').value)
@@ -162,7 +163,6 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       this.insertGoals.patchValue({
         state: true,
       });
-      console.log(this.insertGoals.value);
       if (this.insertGoals.invalid) {
         return;
       }
@@ -193,8 +193,8 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
     this.submitted = true;
     try {
       this.masterPlanService.commitmentDelete(id).subscribe((response) => {
-        if (response && response.success && response.success == true) {
-          this.submitted = false;
+        this.submitted = false;
+        if (response && response.success == true) {          
           this.getGoalsList();
         }
         else this.alertService.error('No se ha podido eliminar', 'Error', {
@@ -211,7 +211,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   onRegisterModal(content) {
     this.modalRef = this.modalService.open(content, {
       centered: true,
-      size: 'sm',
+      size: 'md',
       backdrop: 'static',
     });
     this.insertGoals = this.fb.group({
@@ -244,7 +244,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
   onRegisterLineActionModal(content, id) {
     this.modalRef = this.modalService.open(content, {
       centered: true,
-      size: 'sm',
+      size: 'md',
       backdrop: 'static',
     });
 

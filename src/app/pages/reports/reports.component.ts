@@ -48,6 +48,7 @@ export class ReportsComponent implements OnInit {
   });
   agreementId: string = '0';
   commitmentsList: any[] = [];
+  commitmentsList2: any[] = [];
   mapProperties: any;
   mapViewProperties: any;
   agreementDetail: object = {
@@ -60,6 +61,7 @@ export class ReportsComponent implements OnInit {
   provinces: any[] = [];
   agreementStateList: any[] = [];
   alliedList: any[] = [];
+  alliedList2: any[] = [];
   anps: any[] = [];
   view: MapView;
   map: Map;
@@ -445,6 +447,7 @@ export class ReportsComponent implements OnInit {
     }
   }
   searchAllied() {
+    this.alliedList2 = [];
     if (
       this.agreementId === '0' ||
       this.agreementId === '' ||
@@ -460,7 +463,16 @@ export class ReportsComponent implements OnInit {
           console.log(response);
           if (response && response.items.length > 0) {
             this.alliedList = response.items;
-          }
+            response.items.forEach(item => {
+              this.alliedList2.push(
+                { 
+                  text: [{ text: item.name + '\n', decoration: 'underline', lineHeight: 1.5}, 
+                  {text:item.alliedCategory.name}],
+                  alignment: 'center'
+                }
+              );
+            });
+          }          
         });
     } catch (error) {
       this.alertService.error('Error al traer los suscriptores', 'error', {
@@ -469,6 +481,7 @@ export class ReportsComponent implements OnInit {
     }
   }
   searchCommitments() {
+    this.commitmentsList2 = [];
     if (
       this.agreementId === '' ||
       this.agreementId === null ||
@@ -483,6 +496,33 @@ export class ReportsComponent implements OnInit {
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
             console.log(this.commitmentsList);
+            this.commitmentsList2.push(
+              [
+                {
+                  text: 'Compromiso',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Suscriptor',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Fecha registro',
+                  style: 'tableHeader',
+                },
+                {
+                  text: 'Estado',
+                  style: 'tableHeader',
+                },
+              ]
+            );
+            response.items.forEach(item => {
+              this.commitmentsList2.push(
+                
+                  [ item.description, item.actionLine.name, item.allied.name, '03/11/2021' ]
+                
+              );
+            });
           }
         });
     } catch (error) {
@@ -771,30 +811,7 @@ export class ReportsComponent implements OnInit {
                 {
                   border: [true, false, true, true],
                   margin: [0, 0, 0, 10],
-                  columns: [
-                    {
-                      text: [
-                        {
-                          text: 'suscriptor 1 \n',
-                          decoration: 'underline',
-                          lineHeight: 1.5,
-                        },
-                        { text: 'Area 1' },
-                      ],
-                      alignment: 'center',
-                    },
-                    {
-                      text: [
-                        {
-                          text: 'suscriptor 2 \n',
-                          decoration: 'underline',
-                          lineHeight: 1.5,
-                        },
-                        { text: 'Area 2' },
-                      ],
-                      alignment: 'center',
-                    },
-                  ],
+                  columns: this.alliedList2
                 },
               ],
             ],
@@ -819,60 +836,9 @@ export class ReportsComponent implements OnInit {
                   table: {
                     widths: '*',
                     headerRows: 1,
-                    body: [
-                      [
-                        {
-                          text: 'Compromiso',
-                          style: 'tableHeader',
-                          alignment: 'center',
-                        },
-                        {
-                          text: 'Suscriptor',
-                          style: 'tableHeader',
-                          alignment: 'center',
-                        },
-                        {
-                          text: 'Fecha registro',
-                          style: 'tableHeader',
-                          alignment: 'center',
-                        },
-                        {
-                          text: 'Estado',
-                          style: 'tableHeader',
-                          alignment: 'center',
-                        },
-                      ],
-                      [
-                        'Sample value 1',
-                        'Sample value 2',
-                        'Sample value 3',
-                        'Sample value 4',
-                      ],
-                      [
-                        'Sample value 1',
-                        'Sample value 2',
-                        'Sample value 3',
-                        'Sample value 4',
-                      ],
-                      [
-                        'Sample value 1',
-                        'Sample value 2',
-                        'Sample value 3',
-                        'Sample value 4',
-                      ],
-                      [
-                        'Sample value 1',
-                        'Sample value 2',
-                        'Sample value 3',
-                        'Sample value 4',
-                      ],
-                      [
-                        'Sample value 1',
-                        'Sample value 2',
-                        'Sample value 3',
-                        'Sample value 4',
-                      ],
-                    ],
+                    body: 
+                      this.commitmentsList2
+                    ,
                     alignment: 'center',
                     keepWithHeaderRows: 1,
                   },

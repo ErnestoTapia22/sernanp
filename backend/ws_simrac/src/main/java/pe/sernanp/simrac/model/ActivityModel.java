@@ -49,13 +49,13 @@ public class ActivityModel implements java.io.Serializable {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;	
 	
-	@Column (name= "int_meta")	
+	@Column (name= "int_meta")
 	private int goal;
 	
-	@Column (name= "bol_activo")	
+	@Column (name= "bol_activo")
 	private Boolean active;	
 	
-	@Column (name= "var_indicador", length=200)
+	@Column (name= "var_indicador", columnDefinition="TEXT")
 	private String indicator;
 	
 	@Column (name= "var_semestre", length=50)	
