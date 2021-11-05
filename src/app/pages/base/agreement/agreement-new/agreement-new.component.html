@@ -781,91 +781,97 @@
                 </button>
               </div>
               <div class="card-body">
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <label class="form-label">Número de participantes </label
-                    ><i
-                      class="bi bi-info-circle mx-1"
-                      placement="top"
-                      ngbTooltip="Número de personas participando del AdC"
-                    ></i>
-                    <div class="input-group">
-                      <span class="input-group-text">H</span>
-                      <input
-                        type="number"
-                        min="0"
-                        id="numbMenQ"
-                        class="form-control"
-                        formControlName="partMen"
-                      />
-                      <span class="input-group-text">M</span>
-                      <input
-                        type="number"
-                        min="0"
-                        id="numbWomanQ"
-                        class="form-control"
-                        formControlName="partWomen"
-                      />
-                      <span class="input-group-text">Total</span>
-                      <input
-                        type="number"
-                        min="0"
-                        id="numbTotal"
-                        class="form-control"
-                        formControlName="numPart"
-                      />
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label class="form-label">Número de participantes </label
+                        ><i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Número de personas participando del AdC"
+                        ></i>
+                        <div class="input-group">
+                          <span class="input-group-text">H</span>
+                          <input
+                            type="number"
+                            min="0"
+                            id="numbMenQ"
+                            class="form-control"
+                            formControlName="partMen"
+                          />
+                          <span class="input-group-text">M</span>
+                          <input
+                            type="number"
+                            min="0"
+                            id="numbWomanQ"
+                            class="form-control"
+                            formControlName="partWomen"
+                          />
+                          <span class="input-group-text">Total</span>
+                          <input
+                            type="number"
+                            min="0"
+                            id="numbTotal"
+                            class="form-control"
+                            formControlName="numPart"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="numFamily" class="form-label"
+                          >Número de familias beneficiadas</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Número de familias beneficiadas (según el AdC firmado)"
+                        ></i>
+                        <input
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          id="numFamily"
+                          formControlName="numFamily"
+                        />
+                      </div>
                     </div>
+                    <div class="row mt-2">
+                      <div class="col-md-6">
+                        <label for="txtaDetailB" class="form-label"
+                          >Detalle del beneficiario</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Para el registro de beneficiarios a nivel de hombres y mujeres, se debe considerar el porcentaje de hombres y mujeres en función al último Censo Nacional, y de no existir se puede considerar una estimación a nivel de porcentaje. Ejemplo: 60% de varones y 40% de mujeres."
+                        ></i>
+                        <textarea
+                          id="txtaDetailB"
+                          class="form-control"
+                          rows="3"
+                          formControlName="benPerson"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="txtaDetailBF" class="form-label"
+                          >Detalle del beneficiario familia</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Precisar si estas familias pertenecen a un sector o cuenca específica de una comunidad o grupo poblacional específico. Ejemplo: 15 familias de productores pertenecientes a la Asociación de Productores PERSEMAX."
+                        ></i>
+                        <textarea
+                          id="txtaDetailBF"
+                          class="form-control"
+                          rows="3"
+                          formControlName="benFamily"
+                        ></textarea>
+                      </div>
+                    </div>                    
                   </div>
                   <div class="col-md-4">
-                    <label for="txtaDetailB" class="form-label"
-                      >Detalle del beneficiario</label
-                    >
-                    <i
-                      class="bi bi-info-circle mx-1"
-                      placement="top"
-                      ngbTooltip="Para el registro de beneficiarios a nivel de hombres y mujeres, se debe considerar el porcentaje de hombres y mujeres en función al último Censo Nacional, y de no existir se puede considerar una estimación a nivel de porcentaje. Ejemplo: 60% de varones y 40% de mujeres."
-                    ></i>
-                    <textarea
-                      id="txtaDetailB"
-                      class="form-control"
-                      rows="1"
-                      formControlName="benPerson"
-                    ></textarea>
-                  </div>
-                  <div class="col-md-4">
-                    <label for="numFamily" class="form-label"
-                      >Número de familias beneficiadas</label
-                    >
-                    <i
-                      class="bi bi-info-circle mx-1"
-                      placement="top"
-                      ngbTooltip="Número de familias beneficiadas (según el AdC firmado)"
-                    ></i>
-                    <input
-                      type="number"
-                      min="0"
-                      class="form-control"
-                      id="numFamily"
-                      formControlName="numFamily"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label for="txtaDetailBF" class="form-label"
-                      >Detalle del beneficiario familia</label
-                    >
-                    <i
-                      class="bi bi-info-circle mx-1"
-                      placement="top"
-                      ngbTooltip="Precisar si estas familias pertenecen a un sector o cuenca específica de una comunidad o grupo poblacional específico. Ejemplo: 15 familias de productores pertenecientes a la Asociación de Productores PERSEMAX."
-                    ></i>
-                    <textarea
-                      id="txtaDetailBF"
-                      class="form-control"
-                      rows="2"
-                      formControlName="benFamily"
-                    ></textarea>
-                  </div>
-                  <div class="col-md-6">
                     <label for="benIndirect" class="form-label"
                       >Beneficiarios indirectos</label
                     >
@@ -877,7 +883,7 @@
                     <textarea
                       id="benIndirect"
                       class="form-control"
-                      rows="2"
+                      rows="6"
                       formControlName="benIndirect"
                     ></textarea>
                   </div>
@@ -952,7 +958,7 @@
                     role="tabpanel"
                     aria-labelledby="datos-tab"
                   >
-                    <div class="row g-3">
+                    <div class="row mt-2">
                       <div class="col-md-3">
                         <label for="numbScope" class="form-label"
                           >Ámbito del ADC (Ha)</label
@@ -973,6 +979,8 @@
                           <span class="input-group-text">Ha</span>
                         </div>
                       </div>
+                    </div>
+                    <div class="row mt-2">
                       <div class="col-md-3">
                         <label for="numbProductiveA" class="form-label"
                           >Superficie de intervención (Ha)</label
@@ -994,38 +1002,6 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="numbInterventionA" class="form-label"
-                          >Ubicacion Superficie de intervención</label
-                        >
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"
-                        ></i>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="surfaceIntervention"
-                          formControlName="surfaceIntervention"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="detalleProduction" class="form-label"
-                          >Detalle superficie intervención
-                        </label>
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Precisar si la superficie productiva corresponde a una línea productiva en específica; por ejemplo: 20 Ha de café y 5 Ha de achiote, o de manera general; peces amazónicos, actividad maderera, turismo, entre otros."
-                        ></i>
-                        <textarea
-                          id="detalleProduction"
-                          class="form-control"
-                          rows="1"
-                          formControlName="detailProduction"
-                        ></textarea>
-                      </div>
-                      <div class="col-md-3">
                         <label for="restHect" class="form-label"
                           >Superficie bajo restauración (Ha)</label
                         >
@@ -1039,37 +1015,10 @@
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txtaIndirectB" class="form-label"
-                          >Detalle ámbito bajo restauración</label
-                        >
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Ejemplo: 15 Ha a reforestar."
-                        ></i>
-                        <textarea
-                          id="txtaDetailAR"
-                          class="form-control"
-                          rows="1"
-                          formControlName="restdet"
-                        ></textarea>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txtaSectorVC" class="form-label"
-                          >Nombre(s) del(os) sector(es) de V y C
-                        </label>
-                        <textarea
-                          id="txtaSectorVC"
-                          class="form-control"
-                          rows="1"
-                          formControlName="sectNom"
-                        ></textarea>
-                      </div>
+                      </div>                      
                       <div class="col-md-3">
                         <label for="numbAreaVC" class="form-label"
-                          >Superficie del(os) sector(es) de V y C (Ha)</label
+                          >Superficie del(os) sector(es) bajo V y C (Ha)</label
                         >
                         <div class="input-group">
                           <input
@@ -1081,39 +1030,6 @@
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txtaDetailSVC" class="form-label"
-                          >Detalle del (de los) sectores de vigilancia y control
-                        </label>
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Ejemplo: Sector Y donde 250 Ha están al interior del ANP y 100 Ha en ZA."
-                        ></i>
-                        <textarea
-                          id="txtaDetailSVC"
-                          class="form-control"
-                          rows="1"
-                          formControlName="sectDet"
-                        ></textarea>
-                      </div>
-                      <div class="col-md-3">
-                        <label for="txtaModeAdc" class="form-label"
-                          >Modalidad de gestión del territorio en el ADC
-                          <i
-                            class="bi bi-info-circle mx-1"
-                            placement="top"
-                            ngbTooltip="Puede considerarse otra modalidad de gestión del territorio que se implementa en el AdC siendo estos: Plan de Desarrollo Local Concertado, Plan Maestro del ANP, Plan de Vida de las CCNN, Plan de Vida Institucional del ECA, entre otros."
-                          ></i>
-                        </label>
-
-                        <textarea
-                          id="txtaModeAdc"
-                          class="form-control"
-                          rows="1"
-                          formControlName="territoryMod"
-                        ></textarea>
                       </div>
                       <div class="col-md-3">
                         <label for="surfaceAmbito" class="form-label"
@@ -1130,41 +1046,113 @@
                           <span class="input-group-text">Ha</span>
                         </div>
                       </div>
-                      <div class="col-md-3 d-none">
-                        <div class="mb-3">
-                          <label for="fileEnviromentArea" class="form-label"
-                            >Área del ámbito</label
-                          >
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="fileEnviromentArea"
-                          />
-                        </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-3">
+                        <label for="numbInterventionA" class="form-label"
+                          >Ubicacion Superficie de intervención</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"
+                        ></i>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="surfaceIntervention"
+                          formControlName="surfaceIntervention"
+                        />
                       </div>
-                      <div class="col-md-3 d-none">
-                        <div class="mb-3">
-                          <label for="fileSurveillanceArea" class="form-label"
-                            >Área de vigilancia</label
-                          >
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="fileSurveillanceArea"
-                          />
-                        </div>
+                      <div class="col-md-3">
+                        <label for="txtaIndirectB" class="form-label"
+                          >Detalle ámbito bajo restauración</label
+                        >
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Ejemplo: 15 Ha a reforestar."
+                        ></i>
+                        <textarea
+                          id="txtaDetailAR"
+                          class="form-control"
+                          rows="1"
+                          formControlName="restdet"
+                        ></textarea>
+                      </div>                       
+                      <div class="col-md-3">
+                        <label for="txtaSectorVC" class="form-label"
+                          >Nombre(s) del(os) sector(es) najo V y C
+                        </label>
+                        <textarea
+                          id="txtaSectorVC"
+                          class="form-control"
+                          rows="1"
+                          formControlName="sectNom"
+                        ></textarea>
                       </div>
-                      <div class="col-md-3 d-none">
-                        <div class="mb-3">
-                          <label for="formFile" class="form-label"
-                            >Área de restauración</label
-                          >
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="formFile"
-                          />
-                        </div>
+                      <div class="col-md-3">
+                        <label for="surfaceAmbito" class="form-label"
+                          >Nombre del Ámbito de control</label
+                        >
+                        <textarea
+                          id="txtaSectorVC"
+                          class="form-control"
+                          rows="1"
+                          formControlName="sectNom"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row mt-2">                                          
+                      <div class="col-md-3">
+                        <label for="detalleProduction" class="form-label"
+                          >Detalle superficie intervención
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Precisar si la superficie productiva corresponde a una línea productiva en específica; por ejemplo: 20 Ha de café y 5 Ha de achiote, o de manera general; peces amazónicos, actividad maderera, turismo, entre otros."
+                        ></i>
+                        <textarea
+                          id="detalleProduction"
+                          class="form-control"
+                          rows="2"
+                          formControlName="detailProduction"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-3 offset-md-3">
+                        <label for="txtaDetailSVC" class="form-label"
+                          >Detalle del(os) sector(es) bajo vigilancia y control
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Ejemplo: Sector Y donde 250 Ha están al interior del ANP y 100 Ha en ZA."
+                        ></i>
+                        <textarea
+                          id="txtaDetailSVC"
+                          class="form-control"
+                          rows="2"
+                          formControlName="sectDet"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-12">
+                        <label for="txtaModeAdc" class="form-label"
+                          >Modalidad de gestión del territorio en el ADC
+                          <i
+                            class="bi bi-info-circle mx-1"
+                            placement="top"
+                            ngbTooltip="Puede considerarse otra modalidad de gestión del territorio que se implementa en el AdC siendo estos: Plan de Desarrollo Local Concertado, Plan Maestro del ANP, Plan de Vida de las CCNN, Plan de Vida Institucional del ECA, entre otros."
+                          ></i>
+                        </label>
+                        <textarea
+                          id="txtaModeAdc"
+                          class="form-control"
+                          rows="2"
+                          formControlName="territoryMod"
+                        ></textarea>
                       </div>
                     </div>
                   </div>

@@ -116,7 +116,7 @@
               <form novalidate [formGroup]="form">
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label for="txtCode" class="form-label">Código </label>
+                    <label for="txtCode" class="form-label">Código (*)</label>
                     <input
                       id="txtCode"
                       type="text"
@@ -126,7 +126,7 @@
                     />
                   </div>
                   <div class="col-md-6">
-                    <label for="txtName" class="form-label">Nombre </label>
+                    <label for="txtName" class="form-label">Nombre (*)</label>
                     <input
                       id="txtName"
                       type="text"
@@ -136,7 +136,7 @@
                     />
                   </div>
                   <div class="col-md-3" formGroupName="anp">
-                    <label for="ddAnp" class="form-label">ANP</label>
+                    <label for="ddAnp" class="form-label">ANP (*)</label>
                     <select id="ddAnp" class="form-select" formControlName="id">
                       <option value="0">SELECCIONE</option>
                       <option *ngFor="let item of anpList" [value]="item.id">
@@ -146,7 +146,7 @@
                   </div>
                   <div class="col-md-3">
                     <div formGroupName="agreementState">
-                      <label for="ddState" class="form-label">Estado</label>
+                      <label for="ddState" class="form-label">Estado (*)</label>
                       <select
                         id="ddState"
                         class="form-select"
@@ -164,7 +164,7 @@
                   </div>
                   <div class="col-md-3">
                     <label for="txtSuscriptionDate" class="form-label"
-                      >Fecha de suscripción
+                      >Fecha de suscripción  (*)
                     </label>
                     <input
                       type="date"
@@ -175,7 +175,7 @@
                   </div>
                   <div class="col-md-3">
                     <label class="form-label" for="numbValidity"
-                      >Vigencia en años
+                      >Vigencia en años  (*)
                     </label>
                     <input
                       type="number"
@@ -273,7 +273,7 @@
                   </div>
                   <div class="col-md-3">
                     <label for="txtLocalization" class="form-label"
-                      >Localización (*)</label
+                      >Localización</label
                     >
                     <input
                       type="text"
@@ -445,10 +445,10 @@
                           <td>Actividades</td>
                           <td>Indicadores</td>
 
-                          <td>Sem. 1</td>
-                          <td>Sem. 2</td>
+                          <!--<td>Sem. 1</td>
+                          <td>Sem. 2</td>-->
 
-                          <td>Meta</td>
+                          <td>Meta Anual</td>
                           <td style="width: 85px">Valor actual</td>
                           <td>Progreso (Actividad)</td>
                           <td>Progreso (Compromiso)</td>
@@ -493,7 +493,7 @@
                           </td>
                           <td>{{ activity.indicator }}</td>
 
-                          <td>
+                          <!--<td>
                             <input
                               class="form-check-input"
                               type="checkbox"
@@ -508,7 +508,7 @@
                               [checked]="activity.trim2"
                               disabled
                             />
-                          </td>
+                          </td>-->
 
                           <td>{{ activity.goal }}</td>
                           <td>
@@ -707,11 +707,11 @@
 
                           <!-- <td colspan="2">Año 1</td>
                   <td colspan="2">Año 2</td> -->
-                          <td>Sem. 1</td>
-                          <td>Sem. 2</td>
+                          <!--<td>Sem. 1</td>
+                          <td>Sem. 2</td>-->
                           <!-- <td>Sem. 3</td>
-                    <td>Sem. 4</td> -->
-                          <td>Meta</td>
+                          <td>Sem. 4</td> -->
+                          <td>Meta Anual</td>
                           <td style="width: 85px">Valor actual</td>
                           <td>Progreso (Actividad)</td>
                           <!-- <td>Progreso (Compromiso)</td> -->
@@ -764,7 +764,7 @@
                           </td>
                           <td>{{ item.indicator }}</td>
 
-                          <td>
+                          <!--<td>
                             <input
                               class="form-check-input"
                               type="checkbox"
@@ -779,7 +779,7 @@
                               [checked]="item.trim2"
                               disabled
                             />
-                          </td>
+                          </td> -->
                           <!-- <td><input type="checkbox" /></td>
                     <td><input type="checkbox" /></td> -->
                           <td>{{ item.goal }}</td>
@@ -954,7 +954,7 @@
                   <td>Actividad</td>
                   <!-- <td>Tipo indicador</td> -->
                   <td>Indicador</td>
-                  <td>Meta</td>
+                  <td>Meta Anual</td>
                   <td>Semestre</td>
                   <td></td>
                   <td>Opción</td>
