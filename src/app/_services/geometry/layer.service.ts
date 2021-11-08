@@ -44,7 +44,13 @@ export class LayerService {
       if (layers$$ && layers$$.layers && layers$$.layers.length > 0) {
         const json = [];
         let item = layers$$;
-        item.layers.forEach((t) => (t.parentLayer = { id: t.parentLayerId }));
+        item.layers.forEach((t) => {
+          t.parentLayer = { id: t.parentLayerId };
+          t.defaultVisibility =
+            layer.visible === undefined || layer.visible === null
+              ? t.defaultVisibility
+              : layer.visible;
+        });
         item.layers.forEach((t) => {
           t.sublayers = item.layers.filter((t3) => t3.parentLayer.id === t.id);
         });
@@ -58,7 +64,8 @@ export class LayerService {
             t,
             json,
             layer.uuid,
-            legendLayers$$ ? legendLayers$$ : []
+            legendLayers$$ ? legendLayers$$ : [],
+            layer.visible
           );
         });
 
@@ -72,14 +79,20 @@ export class LayerService {
     return layer;
   }
 
-  _filterParents(item, json, parentId, legendLayers) {
+  _filterParents(item, json, parentId, legendLayers, visible) {
     let item2 = {
       id: item.id,
       title: item.name,
-      visible: item.defaultVisibility,
+      visible:
+        visible === undefined || visible === null
+          ? item.defaultVisibility
+          : visible,
       text: item.name,
       value: `${parentId}_${item.id}`,
-      checked: item.defaultVisibility,
+      checked:
+        visible === undefined || visible === null
+          ? item.defaultVisibility
+          : visible,
       collapsed: false,
       disabled: false,
       parentId: parentId,
@@ -91,7 +104,7 @@ export class LayerService {
     json.push(item2);
     if (item.sublayers.length > 0) {
       item.sublayers.forEach((t) => {
-        this._filterParents(t, item2.children, parentId, legendLayers);
+        this._filterParents(t, item2.children, parentId, legendLayers, visible);
       });
     }
   }

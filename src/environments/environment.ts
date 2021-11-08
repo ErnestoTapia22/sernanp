@@ -46,7 +46,7 @@ export const environment = {
       url: 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/representatividad/peru_sernanp_010200/MapServer',
       disabled: false,
       name: 'Áreas de Naturales Protegidas',
-      visible: true,
+      visible: false,
     },
     {
       id: 2,

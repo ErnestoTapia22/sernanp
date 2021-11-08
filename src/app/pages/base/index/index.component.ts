@@ -11,8 +11,8 @@ import Home from '@arcgis/core/widgets/Home';
 import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 import Expand from '@arcgis/core/widgets/Expand';
 import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import Search from "@arcgis/core/widgets/Search";
-import Locator from "@arcgis/core/tasks/Locator";
+import Search from '@arcgis/core/widgets/Search';
+import Locator from '@arcgis/core/tasks/Locator';
 import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
@@ -124,50 +124,52 @@ export class IndexComponent implements OnInit {
     const sources = [
       {
         layer: new FeatureLayer({
-            url: environment.searchWidget[0].url,
+          url: environment.searchWidget[0].url,
         }),
-        searchFields: ["anp_codi", "anp_nomb", "anp_cate", "anp_ubpo"],
-        displayField: "anp_nomb",
+        searchFields: ['anp_codi', 'anp_nomb', 'anp_cate', 'anp_ubpo'],
+        displayField: 'anp_nomb',
         exactMatch: false,
-        outFields: ["*"],
+        outFields: ['*'],
         name: 'Áreas Naturales Protegidas',
-        placeholder: "Código - Nombre",
+        placeholder: 'Código - Nombre',
       },
       {
         layer: new FeatureLayer({
-            url:  environment.searchWidget[1].url,
+          url: environment.searchWidget[1].url,
         }),
-        searchFields: ["ac_codi", "ac_deno"],
-        displayField: "ac_codi",
+        searchFields: ['ac_codi', 'ac_deno'],
+        displayField: 'ac_codi',
         exactMatch: false,
-        outFields: ["*"],
+        outFields: ['*'],
         name: 'Áreas de Conservación',
-        placeholder: "Código - Nombre",
+        placeholder: 'Código - Nombre',
       },
       {
-        locator: new Locator({ url: "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer" }),
-        singleLineFieldName: "SingleLine",
-        name: "Búsqueda General",
+        locator: new Locator({
+          url: '//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer',
+        }),
+        singleLineFieldName: 'SingleLine',
+        name: 'Búsqueda General',
         localSearchOptions: {
-            minScale: 300000,
-            distance: 50000
+          minScale: 300000,
+          distance: 50000,
         },
-        placeholder: "Búsqueda General",
+        placeholder: 'Búsqueda General',
         maxResults: 3,
         maxSuggestions: 6,
         suggestionsEnabled: true,
         minSuggestCharacters: 0,
-        countryCode: "PE"
-      }
+        countryCode: 'PE',
+      },
     ];
     const searchWidget = new Search({
       view: view,
-      allPlaceholder: "Código, Nombre",
+      allPlaceholder: 'Código, Nombre',
       searchAllEnabled: false,
       includeDefaultSources: false,
-      sources : sources
+      sources: sources,
     });
-    //adds    
+    //adds
     view.ui.add(searchWidget, 'top-right');
     view.ui.add(MeExpand, 'top-left');
     view.ui.add(bkExpand, 'top-left');
@@ -267,9 +269,16 @@ export class IndexComponent implements OnInit {
       this.unseLectedLayers.forEach((element) => {
         let arr = element.split('_');
         const parentLayer = this.map.findLayerById(`${arr[0]}_${arr[1]}`);
+
         let sublayer = parentLayer.findSublayerById(Number(arr[2]));
+
         if (sublayer) {
-          sublayer.visible = false;
+          if (sublayer.visible === true) {
+            // console.log(parentLayer);
+
+            // console.log(sublayer);
+            sublayer.visible = false;
+          }
         }
       });
     }
@@ -278,8 +287,15 @@ export class IndexComponent implements OnInit {
         let arr = element.split('_');
         const parentLayer = this.map.findLayerById(`${arr[0]}_${arr[1]}`);
         let sublayer = parentLayer.findSublayerById(Number(arr[2]));
+
         if (sublayer) {
-          sublayer.visible = true;
+          if (sublayer.visible === false) {
+            // console.log(parentLayer);
+
+            // console.log(sublayer);
+            parentLayer.visible = true;
+            sublayer.visible = true;
+          }
         }
       });
     }

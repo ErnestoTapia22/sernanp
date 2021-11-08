@@ -944,84 +944,76 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
 
     this.disabled = true;
 
-    const edits = {
-      addFeatures: graphics,
-    };
-
     const featureLayer = new FeatureLayer({
       url: graphics[0].attributes.url,
       outFields: ['*'],
       popupEnabled: true,
       id: 'featureLayer',
     });
+    let edits;
     //console.log(edits);
 
+    const agreementCode = this.form.get('code').value;
     featureLayer
-      .applyEdits(edits)
-      .then((editsResult) => {
-        //console.log(editsResult);
-
-        if (editsResult.addFeatureResults.length > 0) {
-          if (editsResult.addFeatureResults[0].error) {
-            this.alertService.error(
-              'Error al subir el shapefile' +
-                editsResult.addFeatureResults[0].error.message,
-              'Error',
-              {
-                autoClose: true,
-              }
-            );
-          } else {
-            this.layersGraphic[id - 1].attributes.sended = true;
-            this.alertService.success(
-              'Se subió correctamente el archivo',
-
-              'Ok',
-              {
-                autoClose: true,
-              }
-            );
-            this.cleanLayer();
-          }
-        }
-        this.spinner.hide();
-        this.upLoadDisable = false;
+      .queryFeatures({
+        where: `ac_codi = '${agreementCode}'`,
+        outFields: ['*'],
       })
-      .catch((error) => {
-        this.disabled = false;
-        console.log(error);
-        this.spinner.hide();
-        this.upLoadDisable = false;
-      });
+      .then((response) => {
+        console.log(response);
 
-    // this.featureLayer
-    //   .applyEdits(edits)
-    //   .then(function (editsResult) {
-    //     console.log(editsResult);
-    //     if (editsResult.addFeatureResults.length > 0) {
-    //       // thiss.blockExpand();
-    //       thiss.alertService.success(
-    //         'Se subieron exitosamente los shapefiles',
-    //         'Ok',
-    //         { autoClose: true }
-    //       );
-    //     }
-    //     thiss.disabled = false;
-    //   })
-    //   .catch(function (error) {
-    //     thiss.disabled = false;
-    //     thiss.alertService.error(
-    //       '[ applyEdits ] FAILURE: ' +
-    //         error.code +
-    //         ' | ' +
-    //         error.name +
-    //         ' | ' +
-    //         error.message,
-    //       'Ok',
-    //       { autoClose: true }
-    //     );
-    //     console.log('error = ', error);
-    //   });
+        if (response.features.length > 0) {
+          // response.features[0].attributes.objectid;
+          edits = {
+            addFeatures: graphics,
+            deleteFeatures: [
+              { objectId: response.features[0].attributes.objectid },
+            ],
+          };
+        } else {
+          edits = {
+            addFeatures: graphics,
+          };
+        }
+        console.log(edits);
+        featureLayer
+          .applyEdits(edits)
+          .then((editsResult) => {
+            //console.log(editsResult);
+
+            if (editsResult.addFeatureResults.length > 0) {
+              if (editsResult.addFeatureResults[0].error) {
+                this.alertService.error(
+                  'Error al subir el shapefile' +
+                    editsResult.addFeatureResults[0].error.message,
+                  'Error',
+                  {
+                    autoClose: true,
+                  }
+                );
+              } else {
+                this.layersGraphic[id - 1].attributes.sended = true;
+                this.alertService.success(
+                  'Se subió correctamente el archivo',
+
+                  'Ok',
+                  {
+                    autoClose: true,
+                  }
+                );
+                this.cleanLayer();
+              }
+            }
+            this.spinner.hide();
+            this.upLoadDisable = false;
+          })
+          .catch((error) => {
+            this.disabled = false;
+            console.log(error);
+            this.spinner.hide();
+            this.upLoadDisable = false;
+          });
+      });
   }
 
   buildEsriJson() {
@@ -1628,9 +1620,31 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       outFields: ['*'],
       definitionExpression: `ac_codi = '${agreementCode}'`,
     });
-    //featureLayer.load().then(function(e){
-    //  console.log('load termino');
-    //  console.log(e);
+    // featureLayer.load().then(function (e) {
+    //   console.log('load termino');
+    //   console.log(e);
+    // });
+    let thiss = this;
+    //featureLayer.when(function (e) {
+    featureLayer
+      .queryFeatures({
+        where: `ac_codi = '${agreementCode}'`,
+        outFields: ['*'],
+      })
+      .then((response) => {
+        console.log(response);
+
+        if (response.features.length > 0) {
+          const graphic = response.features[0];
+          const geometry = graphic.geometry;
+          const attributes = graphic.attributes;
+          const graphicLayer = new Graphic({
+            geometry: geometry,
+            attributes: attributes,
+          });
+          // thiss.view.graphics.add(graphicLayer);
+        }
+      });
     //});
     this.map.add(featureLayer);
     this.zoomToLayer(featureLayer);
