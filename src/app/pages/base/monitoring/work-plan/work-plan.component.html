@@ -486,7 +486,7 @@
                             *ngIf="activity.commitment.rowspan > 0"
                             [attr.rowspan]="activity.commitment.rowspan"
                           >
-                            {{ activity.commitment.description }}
+                            {{ activity.commitment.description + ' - ' + activity.commitment.allied.name }}
                           </td>
                           <td>
                             {{ activity.name }}
@@ -757,7 +757,7 @@
                             *ngIf="item.commitment.rowspan > 0"
                             [attr.rowspan]="item.commitment.rowspan"
                           >
-                            {{ item.commitment.description }}
+                            {{ item.commitment.description + ' - ' + item.commitment.allied.name }}
                           </td>
                           <td>
                             {{ item.name }}

@@ -198,7 +198,7 @@ public class WorkPlanService {
 				commitment.getActionLine().setName(activity.getCommitment().getActionLine().getName());
 				commitment.getActionLine().setObjetive(new ObjetiveModel());
 				commitment.getActionLine().getObjetive().setDescription(activity.getCommitment().getActionLine().getObjetive().getDescription());
-								
+				commitment.setAllied(activity.getCommitment().getAllied());
 				if (commitmentMap.containsKey(""+activity.getCommitment().getId())) {
 					if (!commitmentMap2.containsKey(""+activity.getCommitment().getId())) {
 						commitment.setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());
