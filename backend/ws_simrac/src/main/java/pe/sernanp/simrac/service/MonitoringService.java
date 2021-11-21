@@ -168,7 +168,7 @@ public class MonitoringService {
 					commitment.getActionLine().setObjetive(new ObjetiveModel());
 					commitment.getActionLine().getObjetive().setId(activity.getActivity().getCommitment().getActionLine().getObjetive().getId());
 					commitment.getActionLine().getObjetive().setDescription(activity.getActivity().getCommitment().getActionLine().getObjetive().getDescription());
-										
+					commitment.setAllied(activity.getActivity().getCommitment().getAllied());
 					if (commitmetProgress.containsKey("activity"+activity.getActivity().getCommitment().getId()))
 						commitmetProgress.put("activity"+ activity.getActivity().getCommitment().getId(), (commitmetProgress.get("activity"+ activity.getActivity().getCommitment().getId()).doubleValue() +  itemActivity.getProgress() ) /2);
 					else 
