@@ -88,4 +88,7 @@ export class AuthenticationService {
       this.router.navigate([environment.logOutUrl]);
     }
   }
+  getNotifications(): Observable<any> {
+    return this.apiBaseService.get(`${environment.apiUrl}/getNotifications`);
+  }
 }

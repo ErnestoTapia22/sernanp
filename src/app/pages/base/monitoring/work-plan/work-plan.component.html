@@ -164,7 +164,7 @@
                   </div>
                   <div class="col-md-3">
                     <label for="txtSuscriptionDate" class="form-label"
-                      >Fecha de suscripción  (*)
+                      >Fecha de suscripción (*)
                     </label>
                     <input
                       type="date"
@@ -175,7 +175,7 @@
                   </div>
                   <div class="col-md-3">
                     <label class="form-label" for="numbValidity"
-                      >Vigencia en años  (*)
+                      >Vigencia en años (*)
                     </label>
                     <input
                       type="number"
@@ -295,82 +295,205 @@
           role="tabpanel"
           aria-labelledby="workPlan-tab"
         >
-          <div class="card">
-            <div class="card-header">
-              <label class="mb-0 fw-bold"
-                >Compromisos del Plan de Trabajo</label
+          <div class="row">
+            <div class="col-md-12">
+              <ul
+                class="nav nav-tabs nav-tabs-flat"
+                id="workPlantab"
+                role="tablist"
               >
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-primary mx-2"
-                  (click)="saveWorkPlan()"
-                  [disabled]="disabled || !fieldArrayTotalTemp.length"
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="newWorkPlan-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tabNewWorkPlan"
+                    type="button"
+                    role="tab"
+                  >
+                    Crear plan de trabajo
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="historyWorkPlan-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tabHistoryWorkPlan"
+                    type="button"
+                    role="tab"
+                  >
+                    Histórico
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabWorkPlanContent">
+                <div
+                  class="tab-pane pt-2 show active"
+                  id="tabNewWorkPlan"
+                  role="tabpanel"
+                  aria-labelledby="workPlan-tab"
                 >
-                  <i class="bi bi-save"></i>
-                  Guardar plan de trabajo
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-info mx-2"
-                  (click)="cleanTempField()"
-                  [disabled]="!fieldArrayTotalTemp.length"
+                  <div class="card">
+                    <div class="card-header">
+                      <label class="mb-0 fw-bold"> </label>
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary mx-2"
+                          (click)="saveWorkPlan()"
+                          [disabled]="disabled || !fieldArrayTotalTemp.length"
+                        >
+                          <i class="bi bi-save"></i>
+                          Guardar plan de trabajo
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-info mx-2"
+                          (click)="cleanTempField()"
+                          [disabled]="!fieldArrayTotalTemp.length"
+                        >
+                          <i class="bi bi-trash"></i>
+                          Deshacer cambios
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Componente</th>
+                                <th>Objetivo</th>
+                                <th>Estrategia</th>
+                                <th>Compromiso</th>
+                                <th>Suscriptor</th>
+                                <th>Actividades</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of commitmentsList;
+                                  index as idx
+                                "
+                              >
+                                <td>
+                                  {{ item.actionLine.objetive.component.name }}
+                                </td>
+                                <td>
+                                  {{ item.actionLine.objetive.description }}
+                                </td>
+                                <td>
+                                  {{ item.actionLine.name }}
+                                </td>
+                                <td>
+                                  {{ item.description }}
+                                </td>
+                                <td>
+                                  {{ item.allied.name }}
+                                </td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-danger
+                                        border-0
+                                      "
+                                      (click)="
+                                        onCreateActivityModal(
+                                          contentCreateActivity,
+                                          item.id
+                                        )
+                                      "
+                                    >
+                                      <i class="bi bi-list-check fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="tab-pane pt-2 fade"
+                  id="tabHistoryWorkPlan"
+                  role="tabpanel"
+                  aria-labelledby="workPlan-tab"
                 >
-                  <i class="bi bi-trash"></i>
-                  Deshacer cambios
-                </button>
-              </div>
-            </div>
-            <div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Componente</th>
-                        <th>Objetivo</th>
-                        <th>Estrategia</th>
-                        <th>Compromiso</th>
-                        <th>Suscriptor</th>
-                        <th>Actividades</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of commitmentsList; index as idx">
-                        <td>
-                          {{ item.actionLine.objetive.component.name }}
-                        </td>
-                        <td>
-                          {{ item.actionLine.objetive.description }}
-                        </td>
-                        <td>
-                          {{ item.actionLine.name }}
-                        </td>
-                        <td>
-                          {{ item.description }}
-                        </td>
-                        <td>
-                          {{ item.allied.name }}
-                        </td>
-                        <td>
-                          <div class="text-nowrap">
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-outline-danger border-0"
-                              (click)="
-                                onCreateActivityModal(
-                                  contentCreateActivity,
-                                  item.id
-                                )
-                              "
-                            >
-                              <i class="bi bi-list-check fs-lg"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="card">
+                    <div class="card-header">
+                      <label class="mb-0 fw-bold"> </label>
+                    </div>
+                    <div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Código</th>
+                                <th>Componente</th>
+                                <th>Objetivo</th>
+                                <th>Estrategia</th>
+                                <th>F. registro</th>
+                                <th>Ver</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let item of workPlanHistoryList;
+                                  index as idx
+                                "
+                              >
+                                <td>
+                                  {{ item.code }}
+                                </td>
+                                <td>
+                                  {{ item.component }}
+                                </td>
+                                <td>
+                                  {{ item.objective }}
+                                </td>
+                                <td>
+                                  {{ item.strategic }}
+                                </td>
+                                <td>
+                                  {{ item.registrationDate }}
+                                </td>
+                                <td>
+                                  <div class="text-nowrap">
+                                    <button
+                                      type="button"
+                                      class="
+                                        btn btn-sm btn-outline-danger
+                                        border-0
+                                      "
+                                      (click)="
+                                        onViewDetailWorkPlanModal(
+                                          contentViewDetailWorkPlan,
+                                          item.id
+                                        )
+                                      "
+                                    >
+                                      <i class="bi bi-eye fs-lg"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -669,7 +792,7 @@
               aria-labelledby="monitoringCurrent-tab"
             >
               <div class="card">
-                <div class="card-header">                  
+                <div class="card-header">
                   <label class="mb-0 fw-bold">Evaluación </label>
                   <div>
                     <button
@@ -1271,6 +1394,81 @@
           [disabled]="!monitoringReady"
         >
           Finalizar Monitoreo
+        </button>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template #contentViewDetailWorkPlan let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createActivityLabel">
+        Detalle del plan de trabajo
+      </h5>
+      <button type="button" class="btn-close" (click)="modal.close()"></button>
+    </div>
+    <form [formGroup]="formDetailWorkPlan" novalidate>
+      <div class="modal-body">
+        <div class="row g-3"></div>
+        <div class="col-md-12">
+          <label class="form-label">Código</label>
+          <input class="form-control" rows="2" formControlName="code" />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Objetivo</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="objective"
+          ></textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Compromiso</label>
+          <textarea class="form-control" rows="2" formControlName="commitment">
+          </textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Suscriptor</label>
+          <input
+            class="form-control"
+            rows="2"
+            formControlName="subscriber"
+            type="text"
+          />
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Actividades</label>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nro.</th>
+                  <th>Indicador</th>
+                  <th>Meta anual</th>
+                  <th>Semestre</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of activityList; index as idx">
+                  <td>
+                    {{ idx + 1 }}
+                  </td>
+                  <td>
+                    {{ item.indicator }}
+                  </td>
+                  <td>
+                    {{ item.goal }}
+                  </td>
+                  <td>
+                    {{ item.semester }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close()">
+          Cerrar
         </button>
       </div>
     </form>

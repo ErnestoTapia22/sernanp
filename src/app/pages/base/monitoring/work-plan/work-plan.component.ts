@@ -64,7 +64,10 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   formMonitoring: FormGroup;
   submitted: boolean = false;
   monitoringReady: boolean = false;
-
+  workPlanHistoryList: any[] = [];
+  workPlanDetailId: number = 0;
+  activityList: any[] = [];
+  formDetailWorkPlan: FormGroup;
   constructor(
     private monitoringService: MonitoringService,
     private alertService: AlertService,
@@ -94,8 +97,63 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     }
 
     this.searchCommitments();
+    //this.searchWorkPlanHistory();
 
     // this.onSearch();
+  }
+  searchWorkPlanHistory() {
+    if (
+      this.agreementId === '' ||
+      this.agreementId === undefined ||
+      this.agreementId === null
+    ) {
+      return;
+    }
+
+    try {
+      this.workPlanService
+        .searchWorkPlanHistory(this.agreementId)
+        .subscribe((response) => {
+          if (response && response.items.length > 0) {
+            this.workPlanHistoryList = response.items;
+          }
+          const sampleData = [
+            {
+              code: 'AGEE90',
+              component: 'Sample component',
+              objective: 'Sample objective',
+              strategic: 'Sample strategic',
+              registrationDate: '2020-01-01',
+              id: 1,
+            },
+            {
+              code: 'AGEE90',
+              component: 'Sample component',
+              objective: 'Sample objective',
+              strategic: 'Sample strategic',
+              registrationDate: '2020-01-01',
+              id: 2,
+            },
+            {
+              code: 'AGEE90',
+              component: 'Sample component',
+              objective: 'Sample objective',
+              strategic: 'Sample strategic',
+              registrationDate: '2020-01-01',
+              id: 3,
+            },
+          ];
+          this.workPlanHistoryList = sampleData;
+        });
+    } catch (error) {
+      this.alertService.error(
+        'Error al obtener el historial del plan de trabajo',
+        'error',
+        {
+          autoClose: true,
+        }
+      );
+    }
   }
   get f() {
     return this.formMonitoring.controls;
@@ -195,6 +253,12 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
       achievement: ['', Validators.required],
       activities: new FormArray([]),
     });
+    this.formDetailWorkPlan = this.fb.group({
+      code: [''],
+      objective: [''],
+      commitment: [''],
+      subscriber: [''],
+    });
   }
   searchCommitments() {
     if (
@@ -210,6 +274,33 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
+            const sampleData = [
+              {
+                code: 'AGEE90',
+                component: 'Sample component',
+                objective: 'Sample objective',
+                strategic: 'Sample strategic',
+                registrationDate: '2020-01-01',
+                id: 1,
+              },
+              {
+                code: 'AGEE90',
+                component: 'Sample component',
+                objective: 'Sample objective',
+                strategic: 'Sample strategic',
+                registrationDate: '2020-01-01',
+                id: 2,
+              },
+              {
+                code: 'AGEE90',
+                component: 'Sample component',
+                objective: 'Sample objective',
+                strategic: 'Sample strategic',
+                registrationDate: '2020-01-01',
+                id: 3,
+              },
+            ];
+            this.workPlanHistoryList = sampleData;
           }
         });
     } catch (error) {
@@ -272,6 +363,27 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     this.commitmentId = id;
 
     this.activityListByCommitment();
+  }
+  onViewDetailWorkPlanModal(content, id) {
+    this.modalRef = this.modalService.open(content, {
+      size: 'md',
+      backdrop: 'static',
+      centered: true,
+    });
+    this.workPlanDetailId = id;
+    //this.getWorkPlanDetail(id);
+  }
+  getWorkPlanDetail(id) {
+    this.workPlanService.getWorkPlanDetail(id).subscribe((response) => {
+      if (response && response.item !== null) {
+        this.formDetailWorkPlan.setValue({
+          code: response.item.code,
+          objective: response.item.objective,
+          commitment: response.item.commitment,
+          subscriber: response.item.subscriber,
+        });
+      }
+    });
   }
   onCreateEvaluationModal(content) {
     this.modalRef = this.modalService.open(content, {
