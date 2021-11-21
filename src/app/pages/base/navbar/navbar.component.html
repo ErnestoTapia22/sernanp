@@ -53,19 +53,17 @@
         <!-- User Profile -->
         <!-- ============================================================== -->
 
-        <!-- <li class="nav-item dropdown u-pro">
-        <li class="nav-item dropdown u-pro d-none">
+        <li class="nav-item u-pro">
           <a
-            class="dropdown-toggle nav-link"
+            class="nav-link"
             id="notification"
             role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            [ngClass]="{ disabled: !hasAlerts }"
+            (click)="onViewNotifications(contentViewNotifications)"
+            [ngClass]="{ disabled: !notificationsList.length }"
           >
             <i class="bi bi-bell" style="font-size: 1.5rem"></i>
             <span
-              *ngIf="hasAlerts"
+              *ngIf="notificationsList.length"
               class="
                 position-absolute
                 top-17
@@ -79,13 +77,13 @@
               <span class="visually-hidden">New alerts</span>
             </span>
           </a>
-          <ul
+          <!-- <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="notification"
           >
-            <app-alert (hasAlerts)="hasAlertsForDisplay($event)"></app-alert>
-          </ul>
-        </li> -->
+            <li>qweeqw</li>
+          </ul> -->
+        </li>
         <li class="nav-item dropdown u-pro">
           <a
             class="nav-link dropdown-toggle profile-pic"
@@ -143,3 +141,31 @@
     <app-alert (hasAlerts)="hasAlertsForDisplay($event)"></app-alert>
   </nav>
 </header>
+<ng-template #contentViewNotifications let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="createActivityLabel">Notificaciones</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="list-group">
+      <a
+        *ngFor="let notification of notificationsList; index as idx"
+        class="list-group-item list-group-item-action"
+        (click)="onViewNotification(notification.id)"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ notification.title }}</h5>
+          <small>{{ notification.time }}</small>
+        </div>
+        <p class="mb-1">{{ notification.message }}</p>
+        <small>{{ notification.action }}</small>
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cerrar
+    </button>
+  </div>
+</ng-template>
