@@ -7,7 +7,8 @@
   <!-- ============================================================== -->
   <div class="row page-titles">
     <div class="col-auto align-self-center">
-      <h4 class="text-nowrap">Crear Acuerdo</h4>
+      <h4 class="text-nowrap" *ngIf="!edit">Nuevo Acuerdo de Conservación</h4>
+      <h4 class="text-nowrap" *ngIf="edit">Editar Acuerdo de Conservación</h4>
     </div>
     <div class="col">
       <div class="d-flex justify-content-end align-items-center text-end">
@@ -15,9 +16,9 @@
           <ol class="breadcrumb justify-content-end">
             <li class="breadcrumb-item"><a routerLink="/map">Inicio</a></li>
             <li class="breadcrumb-item">
-              <a routerLink="/agreement">Acuerdos</a>
+              <a routerLink="/agreement">Acuerdos de Conservación</a>
             </li>
-            <li class="breadcrumb-item text-nowrap active">Nuevo acuerdo</li>
+            <li class="breadcrumb-item text-nowrap active">Nuevo Acuerdo de Conservación</li>
           </ol>
         </nav>
       </div>
@@ -81,8 +82,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Código"
-                      formControlName="code"
-                      disabled
+                      formControlName="code"                      
                     />
                   </div>
                   <div class="col-md-6">
@@ -659,7 +659,7 @@
                 </div>
               </div>
             </div>
-            <div class="card">
+            <div class="card d-none">
               <div class="card-header">
                 <label class="mb-0 fw-bold"
                   >Alineamiento con instrumentos de planificación</label
@@ -893,7 +893,27 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Ámbito</label>
+                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group" role="group" aria-label="First group">
+                    <label class="mb-0 fw-bold">Ámbito del ADC</label>
+                    <i
+                      class="bi bi-info-circle mx-1"
+                      placement="top"
+                      ngbTooltip="El ámbito del acuerdo de conservación debe ser la sumatoria de: superficie productiva, superficie bajo restauración, superficie del sector o sectores de vigilancia y control."
+                    ></i>
+                  </div>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      id="numbScope"
+                      formControlName="areaAmbitc"
+                    />
+                    <span class="input-group-text">Ha</span>
+                  </div>
+                </div>    
+                
                 <div class="float-right">
                   <button
                     type="submit"
@@ -903,23 +923,7 @@
                     <i class="bi bi-save"></i>
                     Guardar
                   </button>
-                  <!-- <button
-                    type="button"
-                    class="btn btn-sm btn-outline-success mx-1"
-                    (click)="addFeatureToService()"
-                    [disabled]="!agreementExist"
-                    [disabled]="disabled"
-                  >
-                
-                    <span
-                      *ngIf="disabled"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    Guardar Shapefiles
-                  </button> -->
-                </div>
+                </div>            
               </div>
               <div class="card-body">
                 <ul
@@ -948,7 +952,7 @@
                       type="button"
                       role="tab"
                     >
-                      Previsualización
+                      Mapa
                     </button>
                   </li>
                 </ul>
@@ -1003,20 +1007,39 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="restHect" class="form-label"
-                          >Superficie bajo restauración (Ha)</label
+                        <label for="numbInterventionA" class="form-label"
+                          >Ubicacion Superficie de intervención</label
                         >
-                        <div class="input-group">
-                          <input
-                            type="number"
-                            min="0"
-                            class="form-control"
-                            id="restHect"
-                            formControlName="restHect"
-                          />
-                          <span class="input-group-text">Ha</span>
-                        </div>
-                      </div>                      
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"
+                        ></i>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="surfaceIntervention"
+                          formControlName="surfaceIntervention"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="detalleProduction" class="form-label"
+                          >Detalle superficie intervención
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Precisar si la superficie productiva corresponde a una línea productiva en específica; por ejemplo: 20 Ha de café y 5 Ha de achiote, o de manera general; peces amazónicos, actividad maderera, turismo, entre otros."
+                        ></i>
+                        <textarea
+                          id="detalleProduction"
+                          class="form-control"
+                          rows="2"
+                          formControlName="detailProduction"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
                       <div class="col-md-3">
                         <label for="numbAreaVC" class="form-label"
                           >Superficie del(os) sector(es) bajo V y C (Ha)</label
@@ -1033,38 +1056,49 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <label for="surfaceAmbito" class="form-label"
-                          >Superficie del Ámbito de control</label
+                        <label for="txtaSectorVC" class="form-label"
+                          >Nombre(s) del(os) sector(es) bajo V y C
+                        </label>
+                        <textarea
+                          id="txtaSectorVC"
+                          class="form-control"
+                          rows="1"
+                          formControlName="sectNom"
+                        ></textarea>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="txtaDetailSVC" class="form-label"
+                          >Detalle del(os) sector(es) bajo vigilancia y control
+                        </label>
+                        <i
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Ejemplo: Sector Y donde 250 Ha están al interior del ANP y 100 Ha en ZA."
+                        ></i>
+                        <textarea
+                          id="txtaDetailSVC"
+                          class="form-control"
+                          rows="2"
+                          formControlName="sectDet"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-3">
+                        <label for="restHect" class="form-label"
+                          >Superficie bajo restauración (Ha)</label
                         >
                         <div class="input-group">
                           <input
                             type="number"
                             min="0"
                             class="form-control"
-                            id="surfaceAmbito"
-                            formControlName="surfaceAmbito"
+                            id="restHect"
+                            formControlName="restHect"
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col-md-3">
-                        <label for="numbInterventionA" class="form-label"
-                          >Ubicacion Superficie de intervención</label
-                        >
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="interior, zona de amortiguamiento o paisaje asociado"
-                        ></i>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="surfaceIntervention"
-                          formControlName="surfaceIntervention"
-                        />
-                      </div>
+                      </div> 
                       <div class="col-md-3">
                         <label for="txtaIndirectB" class="form-label"
                           >Detalle ámbito bajo restauración</label
@@ -1080,17 +1114,21 @@
                           rows="1"
                           formControlName="restdet"
                         ></textarea>
-                      </div>                       
+                      </div>
                       <div class="col-md-3">
-                        <label for="txtaSectorVC" class="form-label"
-                          >Nombre(s) del(os) sector(es) najo V y C
-                        </label>
-                        <textarea
-                          id="txtaSectorVC"
-                          class="form-control"
-                          rows="1"
-                          formControlName="sectNom"
-                        ></textarea>
+                        <label for="surfaceAmbito" class="form-label"
+                          >Superficie del Ámbito de control</label
+                        >
+                        <div class="input-group">
+                          <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            id="surfaceAmbito"
+                            formControlName="surfaceAmbito"
+                          />
+                          <span class="input-group-text">Ha</span>
+                        </div>
                       </div>
                       <div class="col-md-3">
                         <label for="surfaceAmbito" class="form-label"
@@ -1101,40 +1139,6 @@
                           class="form-control"
                           rows="1"
                           formControlName="sectNom"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div class="row mt-2">                                          
-                      <div class="col-md-3">
-                        <label for="detalleProduction" class="form-label"
-                          >Detalle superficie intervención
-                        </label>
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Precisar si la superficie productiva corresponde a una línea productiva en específica; por ejemplo: 20 Ha de café y 5 Ha de achiote, o de manera general; peces amazónicos, actividad maderera, turismo, entre otros."
-                        ></i>
-                        <textarea
-                          id="detalleProduction"
-                          class="form-control"
-                          rows="2"
-                          formControlName="detailProduction"
-                        ></textarea>
-                      </div>
-                      <div class="col-md-3 offset-md-3">
-                        <label for="txtaDetailSVC" class="form-label"
-                          >Detalle del(os) sector(es) bajo vigilancia y control
-                        </label>
-                        <i
-                          class="bi bi-info-circle mx-1"
-                          placement="top"
-                          ngbTooltip="Ejemplo: Sector Y donde 250 Ha están al interior del ANP y 100 Ha en ZA."
-                        ></i>
-                        <textarea
-                          id="txtaDetailSVC"
-                          class="form-control"
-                          rows="2"
-                          formControlName="sectDet"
                         ></textarea>
                       </div>
                     </div>

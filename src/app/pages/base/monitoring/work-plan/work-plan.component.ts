@@ -286,11 +286,11 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     if (
       (!this.existKey('goal', this.newAttribute) || this.newAttribute.goal === 0)||
         (!this.existKey('name', this.newAttribute) || this.newAttribute.name === "")||
-        (!this.existKey('indicator', this.newAttribute) || this.newAttribute.indicator === "")||
-        ((!this.existKey('trim1', this.newAttribute) || this.newAttribute.trim1 === false)&&(!this.existKey('trim2', this.newAttribute) || this.newAttribute.trim2 === false) )
+        (!this.existKey('indicator', this.newAttribute) || this.newAttribute.indicator === "")//||
+        //((!this.existKey('trim1', this.newAttribute) || this.newAttribute.trim1 === false)&&(!this.existKey('trim2', this.newAttribute) || this.newAttribute.trim2 === false) )
          
     ) {
-      this.alertService.error('Complete los campos requeridos', 'Error', {
+      this.alertService.error('Complete todos los campos', 'Error', {
         autoClose: true,
       });
       return;

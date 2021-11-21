@@ -914,7 +914,7 @@
   </div>
   <ng-template #contentCreateActivity let-modal>
     <div class="modal-header">
-      <h5 class="modal-title" id="createActivityLabel">Crear actividades</h5>
+      <h5 class="modal-title" id="createActivityLabel">Crear Actividades</h5>
       <button type="button" class="btn-close" (click)="modal.close()"></button>
     </div>
     <div class="modal-body">
@@ -955,8 +955,8 @@
                   <!-- <td>Tipo indicador</td> -->
                   <td>Indicador</td>
                   <td>Meta Anual</td>
-                  <td>Semestre</td>
-                  <td></td>
+                  <td class="d-none">Semestre</td>
+                  <td class="d-none"></td>
                   <td>Opción</td>
                 </tr>
               </thead>
@@ -1007,7 +1007,7 @@
                       [disabled]="!field.edit"
                     />
                   </td>
-                  <td>
+                  <td class="d-none">
                     <div class="form-check form-check-inline">
                       <input
                         class="form-check-input"
@@ -1035,7 +1035,7 @@
                       >
                     </div>
                   </td>
-                  <td>
+                  <td class="d-none">
                     {{ field.isNew ? "Nuevo" : "" }}
                   </td>
                   <td>
@@ -1113,7 +1113,7 @@
                       name="newAttributeGoal"
                     />
                   </td>
-                  <td>
+                  <td class="d-none">
                     <div class="form-check form-check-inline">
                       <input
                         class="form-check-input"
@@ -1137,7 +1137,7 @@
                       >
                     </div>
                   </td>
-                  <td></td>
+                  <td class="d-none"></td>
                   <td>
                     <div class="text-nowrap">
                       <button
