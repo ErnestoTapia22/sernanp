@@ -7,8 +7,7 @@ import org.springframework.data.repository.query.Param;
 import pe.sernanp.simrac.model.ActivityModel;
 
 
-public interface ActivityRepository extends JpaRepository<ActivityModel, Integer> {
-	
+public interface ActivityRepository extends JpaRepository<ActivityModel, Integer> {	
 		
 	@Query(value="select a.* from simrac.t_actividad as a "
 			+ "	inner join simrac.t_plan_trabajo as pt on pt.srl_id = a.int_plantrabajoid and pt.bol_activo = true "
@@ -20,4 +19,10 @@ public interface ActivityRepository extends JpaRepository<ActivityModel, Integer
 			+ "	where pt.int_compromisoid=:pcommitmentid "
 			+ "	order by a.srl_id", nativeQuery=true)
     List<ActivityModel> searchByCommitment(@Param("pcommitmentid") int id);
+	
+	@Query(value="select a.* from simrac.t_actividad as a "
+			+ "	inner join simrac.t_plan_trabajo as pt on pt.srl_id = a.int_plantrabajoid "
+			+ "	where pt.srl_id=:pworkplanid "
+			+ "	order by a.srl_id", nativeQuery=true)
+    List<ActivityModel> searchByWorkPlan(@Param("pworkplanid") int id);
 }

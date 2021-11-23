@@ -20,7 +20,7 @@ export class WorkPlanService {
     this.segmentActivityListByCommitment = '/activity/searchbycommitment/';
     this.segmentMonitoringSearch = '/workplan/searchbyagreement/';
     this.segmentMonitoringSearchHistory = '/monitoring/searchbyagreement/';
-    this.segmentWorkPlanSearchHistory = '/monitoring/searchworkPlan/';
+    this.segmentWorkPlanSearchHistory = '/workplan/search/';
     this.segmentMonitoringInsert = '/monitoring/save';
     this.segmentWorkPlanGetDetail = '/monitoring/workPlanDetail/';
   }

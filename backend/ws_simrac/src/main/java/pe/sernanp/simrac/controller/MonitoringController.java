@@ -22,16 +22,16 @@ public class MonitoringController extends BaseController {
 	@Autowired
 	private MonitoringService _service;	
 	
-	@RequestMapping(value = "/save2", method = RequestMethod.POST)
-	@ResponseBody()
-	private ResponseEntity<?> save (@RequestBody MonitoringModel item) {
-		try {
-			ResponseEntity<?> response = this._service.save(item);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}		
-	}
+	//@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	//@ResponseBody()
+	//private ResponseEntity<?> save (@RequestBody MonitoringModel item) {
+	//	try {
+	//		ResponseEntity<?> response = this._service.save(item);
+	//		return response;
+	//	} catch (Exception ex) {
+	//		return super.getJSON(ex);
+	//	}		
+	//}
 		
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody()

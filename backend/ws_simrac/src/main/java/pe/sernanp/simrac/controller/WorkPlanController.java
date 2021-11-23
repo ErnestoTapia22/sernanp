@@ -23,16 +23,16 @@ public class WorkPlanController extends BaseController {
 	@Autowired
 	private WorkPlanService _service;
 	
-	@RequestMapping(value = "/save2", method = RequestMethod.POST)
-	@ResponseBody()
-	private ResponseEntity<?> save (@RequestBody WorkPlanModel item) {
-		try {
-			ResponseEntity<?> response = this._service.save(item);
-			return response;
-		} catch (Exception ex) {
-			return super.getJSON(ex);
-		}		
-	}
+	//@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	//@ResponseBody()
+	//private ResponseEntity<?> save (@RequestBody WorkPlanModel item) {
+	//	try {
+	//		ResponseEntity<?> response = this._service.save(item);
+	//		return response;
+	//	} catch (Exception ex) {
+	//		return super.getJSON(ex);
+	//	}
+	//}
 	
 	@RequestMapping(value = "/searchbyagreement/{id}", method = RequestMethod.GET)
 	@ResponseBody()
@@ -54,5 +54,16 @@ public class WorkPlanController extends BaseController {
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}		
+	}
+	
+	@RequestMapping(value = "/search/{id}", method = RequestMethod.GET)
+	@ResponseBody()
+	public ResponseEntity<WorkPlanDTO> listByAgreement(@PathVariable("id") int id) throws IOException {
+		try {
+			ResponseEntity<WorkPlanDTO> response = this._service.listByAgreement(id);
+			return response;
+		} catch (Exception ex) {
+			return super.getJSON(ex);
+		}
 	}
 }

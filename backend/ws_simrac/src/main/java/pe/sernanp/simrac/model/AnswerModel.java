@@ -32,8 +32,8 @@ public class AnswerModel {
 	@ManyToOne
 	private ActivityModel activity;
 	
-	@Column (name= "int_valor")
-	private int value;
+	@Column (name= "num_valor", columnDefinition="NUMERIC (12,2)")
+	private double value;
 	
 	@Column (name= "tsp_fec", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE", nullable=false)
 	private Date registrationDate;
@@ -66,11 +66,11 @@ public class AnswerModel {
 		this.activity = activity;
 	}
 
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

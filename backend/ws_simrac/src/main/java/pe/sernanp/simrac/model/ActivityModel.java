@@ -49,8 +49,8 @@ public class ActivityModel implements java.io.Serializable {
 	@Column (name= "bol_flg", nullable=false)	
 	private Boolean state;	
 	
-	@Column (name= "int_meta")
-	private int goal;
+	@Column (name= "num_meta", columnDefinition="NUMERIC (12,2)")
+	private double goal = 0.0;
 	
 	@Column (name= "bol_activo")
 	private Boolean active;	
@@ -109,10 +109,10 @@ public class ActivityModel implements java.io.Serializable {
 	public void setState(Boolean state) {
 		this.state = state;
 	}	
-	public int getGoal() {
+	public double getGoal() {
 		return goal;
 	}
-	public void setGoal(int goal) {
+	public void setGoal(double goal) {
 		this.goal = goal;
 	}
 	public Boolean getActive() {

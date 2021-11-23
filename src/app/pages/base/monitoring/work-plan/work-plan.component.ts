@@ -97,7 +97,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     }
 
     this.searchCommitments();
-    //this.searchWorkPlanHistory();
+    this.searchWorkPlanHistory();
 
     // this.onSearch();
   }
@@ -117,33 +117,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           if (response && response.items.length > 0) {
             this.workPlanHistoryList = response.items;
           }
-          const sampleData = [
-            {
-              code: 'AGEE90',
-              component: 'Sample component',
-              objective: 'Sample objective',
-              strategic: 'Sample strategic',
-              registrationDate: '2020-01-01',
-              id: 1,
-            },
-            {
-              code: 'AGEE90',
-              component: 'Sample component',
-              objective: 'Sample objective',
-              strategic: 'Sample strategic',
-              registrationDate: '2020-01-01',
-              id: 2,
-            },
-            {
-              code: 'AGEE90',
-              component: 'Sample component',
-              objective: 'Sample objective',
-              strategic: 'Sample strategic',
-              registrationDate: '2020-01-01',
-              id: 3,
-            },
-          ];
-          this.workPlanHistoryList = sampleData;
         });
     } catch (error) {
       this.alertService.error(
@@ -274,33 +247,6 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
         .subscribe((response) => {
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
-            const sampleData = [
-              {
-                code: 'AGEE90',
-                component: 'Sample component',
-                objective: 'Sample objective',
-                strategic: 'Sample strategic',
-                registrationDate: '2020-01-01',
-                id: 1,
-              },
-              {
-                code: 'AGEE90',
-                component: 'Sample component',
-                objective: 'Sample objective',
-                strategic: 'Sample strategic',
-                registrationDate: '2020-01-01',
-                id: 2,
-              },
-              {
-                code: 'AGEE90',
-                component: 'Sample component',
-                objective: 'Sample objective',
-                strategic: 'Sample strategic',
-                registrationDate: '2020-01-01',
-                id: 3,
-              },
-            ];
-            this.workPlanHistoryList = sampleData;
           }
         });
     } catch (error) {

@@ -33,37 +33,37 @@ public class WorkPlanService {
 	@Autowired
 	private ActivityRepository _activityRepository;
 
-	@Transactional
-	public ResponseEntity save (WorkPlanModel item) throws Exception{
-		try {
-			Integer id = item.getId();
-			String message = "";
-			boolean success = false;
-			int rowsAffected = 0;			
-			item.setRegistrationDate(item.getRegistrationDate());
-			this._repository.updatePlanActive(item.getConservationAgreement().getId());
-			if (id == 0) {
-				WorkPlanModel item2 = this._repository.save(item);
-				id = item2.getId();
-				message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
-						: " Se guardaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
-			} else {
-				this._repository.save(item);
-				message += "Se actualizaron sus datos de manera correcta";
-				success = (id == 0) ? false : true;
-			}
-			
-			ResponseEntity response = new ResponseEntity();
-			response.setExtra(id.toString());
-			response.setMessage(message);
-			response.setSuccess(success);
-			return response;
-		} catch (Exception ex) {
-			throw new Exception(ex.getMessage());
-			
-		}
-	}
+	//@Transactional
+	//public ResponseEntity save (WorkPlanModel item) throws Exception{
+	//	try {
+	//		Integer id = item.getId();
+	//		String message = "";
+	//		boolean success = false;
+	//		int rowsAffected = 0;			
+	//		item.setRegistrationDate(item.getRegistrationDate());
+	//		this._repository.updatePlanActive(item.getConservationAgreement().getId());
+	//		if (id == 0) {
+	//			WorkPlanModel item2 = this._repository.save(item);
+	//			id = item2.getId();
+	//			message += (id == 0) ? "Ha ocurrido un error al guardar sus datos"
+	//					: " Se guardaron sus datos de manera correcta";
+	//			success = (id == 0) ? false : true;
+	//		} else {
+	//			this._repository.save(item);
+	//			message += "Se actualizaron sus datos de manera correcta";
+	//			success = (id == 0) ? false : true;
+	//		}
+	//		
+	//		ResponseEntity response = new ResponseEntity();
+	//		response.setExtra(id.toString());
+	//		response.setMessage(message);
+	//		response.setSuccess(success);
+	//		return response;
+	//	} catch (Exception ex) {
+	//		throw new Exception(ex.getMessage());
+	//		
+	//	}
+	//}
 	
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
@@ -122,9 +122,7 @@ public class WorkPlanService {
 				throw new Exception(ex.getMessage());
 		}
 	}	
-	
-	
-	
+		
 	public ResponseEntity<WorkPlanDTO> search(int id) throws Exception {
 		try {
 			if (id == 0) {
@@ -229,6 +227,108 @@ public class WorkPlanService {
 		}
 	}
 	
-	
+	public ResponseEntity<WorkPlanDTO> listByAgreement(int id) throws Exception {
+		try {
+			if (id == 0) {
+				throw new Exception("No existe el elemento");
+			}
+			boolean success = true;
+			ResponseEntity<WorkPlanDTO> response = new ResponseEntity<WorkPlanDTO>();			
+			//List<ActivityModel> items = this._activityRepository.searchByAgreement(id);			
+			WorkPlanDTO item = new WorkPlanDTO();
+			
+			List<WorkPlanModel> itemWorkPlans = this._repository.searchByAgreement(id);
+			
+			List<WorkPlanDTO> works = new ArrayList<WorkPlanDTO>(); 
+			itemWorkPlans.forEach( t -> {
+				
+				WorkPlanDTO work = new WorkPlanDTO();
+				work.setId(t.getId());
+				work.setName(t.getName());
+				work.setVersion(t.getVersion());
+				work.setYear(t.getYear());
+				
+				List<ActivityModel> itemsActivity = this._activityRepository.searchByWorkPlan(t.getId());	
+				
+				LinkedHashMap<String,Integer> commitmentMap = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> actionLineMap = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> objetiveMap = new LinkedHashMap<String, Integer>();
+				
+				Collections.sort(itemsActivity, (f1, f2)->{
+					return f1.getCommitment().getActionLine().getObjetive().getDescription().compareTo( f2.getCommitment().getActionLine().getObjetive().getDescription() );
+				});
+				
+				//item.setName(itemWorkPlan.getName());
+				//item.setVersion(itemWorkPlan.getVersion());
+				//item.setYear(itemWorkPlan.getYear());
+				itemsActivity.forEach(activity -> {			
+					if (commitmentMap.containsKey(""+activity.getCommitment().getId()))
+						commitmentMap.put(""+ activity.getCommitment().getId(), (commitmentMap.get(""+ activity.getCommitment().getId()).intValue() +  1 ));
+					else
+						commitmentMap.put(""+activity.getCommitment().getId(), 1);	
+					
+					if (actionLineMap.containsKey(""+activity.getCommitment().getActionLine().getId()))
+						actionLineMap.put(""+ activity.getCommitment().getActionLine().getId(), (actionLineMap.get(""+ activity.getCommitment().getActionLine().getId()).intValue() +  1 ));
+					else
+						actionLineMap.put(""+activity.getCommitment().getActionLine().getId(), 1);
+					
+					if (objetiveMap.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId()))
+						objetiveMap.put(""+ activity.getCommitment().getActionLine().getObjetive().getId(), (objetiveMap.get(""+ activity.getCommitment().getActionLine().getObjetive().getId()).intValue() +  1 ));
+					else
+						objetiveMap.put(""+activity.getCommitment().getActionLine().getObjetive().getId(), 1);
+				});
+				
+				LinkedHashMap<String,Integer> commitmentMap2 = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> actionLineMap2 = new LinkedHashMap<String, Integer>();
+				LinkedHashMap<String,Integer> objetiveMap2 = new LinkedHashMap<String, Integer>();
+
+				List<ActivityModel> itemsActivies = new ArrayList<ActivityModel>();
+				for (ActivityModel activity : itemsActivity) {
+					ActivityModel activityModel = new ActivityModel();
+					activityModel.setId(activity.getId());
+					activityModel.setIndicator(activity.getIndicator());
+					activityModel.setName(activity.getName());
+					activityModel.setSemester(activity.getSemester());
+					activityModel.setGoal(activity.getGoal());
+					activityModel.setWorkPlan(activity.getWorkPlan());
+					CommitmentModel commitment = new CommitmentModel();
+					commitment.setId(activity.getCommitment().getId());
+					commitment.setDescription(activity.getCommitment().getDescription());
+					commitment.setActionLine(new ActionLineModel());
+					commitment.getActionLine().setName(activity.getCommitment().getActionLine().getName());
+					commitment.getActionLine().setObjetive(new ObjetiveModel());
+					commitment.getActionLine().getObjetive().setDescription(activity.getCommitment().getActionLine().getObjetive().getDescription());
+					commitment.setAllied(activity.getCommitment().getAllied());
+					if (commitmentMap.containsKey(""+activity.getCommitment().getId())) {
+						if (!commitmentMap2.containsKey(""+activity.getCommitment().getId())) {
+							commitment.setRowspan(commitmentMap.get(""+ activity.getCommitment().getId()).intValue());
+							commitmentMap2.put(""+activity.getCommitment().getId(), activity.getCommitment().getId());
+						}
+					}
+					if (actionLineMap.containsKey(""+activity.getCommitment().getActionLine().getId())) {
+						if (!actionLineMap2.containsKey(""+activity.getCommitment().getActionLine().getId())) {
+							commitment.getActionLine().setRowspan(actionLineMap.get(""+ activity.getCommitment().getActionLine().getId()).intValue());
+							actionLineMap2.put(""+activity.getCommitment().getActionLine().getId(), activity.getCommitment().getActionLine().getId());
+						}
+					}
+					if (objetiveMap.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {
+						if (!objetiveMap2.containsKey(""+activity.getCommitment().getActionLine().getObjetive().getId())) {						
+							commitment.getActionLine().getObjetive().setRowspan(objetiveMap.get(""+ activity.getCommitment().getActionLine().getObjetive().getId()).intValue());
+							objetiveMap2.put(""+activity.getCommitment().getActionLine().getObjetive().getId(), activity.getCommitment().getActionLine().getObjetive().getId());
+						}
+					}	
+					activityModel.setCommitment(commitment);
+					itemsActivies.add(activityModel);
+				}				
+				work.setActivities(itemsActivies);
+				works.add(work);
+			});			
+			response.setSuccess(success);
+			response.setItems(works);
+			return response;
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
+	}
 	
 }

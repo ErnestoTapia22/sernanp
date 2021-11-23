@@ -20,10 +20,10 @@ public class ActivityDTO {
 	private String description;	
 	private Date registrationDate;	
 	private Boolean state;	
-	private int goal;	
+	private double goal;
 	private Boolean active;		
 	private String semester;
-	private int value;
+	private Double value;
 	
 	private Double progress = 0.0;
 	
@@ -74,10 +74,10 @@ public class ActivityDTO {
 	public void setState(Boolean state) {
 		this.state = state;
 	}		
-	public int getGoal() {
+	public double getGoal() {
 		return goal;
 	}
-	public void setGoal(int meta) {
+	public void setGoal(double meta) {
 		this.goal = meta;
 	}
 	public Boolean getActive() {
@@ -92,10 +92,10 @@ public class ActivityDTO {
 	public void setSemester(String semester) {
 		this.semester = semester;
 	}
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 	public String getIndicator() {
