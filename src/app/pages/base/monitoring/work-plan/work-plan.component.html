@@ -297,11 +297,23 @@
         >
           <div class="row">
             <div class="col-md-12">
-              <ul
-                class="nav nav-tabs nav-tabs-flat"
-                id="workPlantab"
-                role="tablist"
-              >
+              <ul class="nav nav-tabs nav-tabs-flat" id="workPlantab" role="tablist">                
+                <li *ngFor="let e of [].constructor(workPlanHistoryCount);let i = index"
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <button
+                    class="nav-link"
+                    id="workPlanHistory-tab"
+                    data-bs-toggle="tab"
+                    [attr.data-bs-target]="'#tabWorkPlanHistory' + i"
+                    type="button"
+                    role="tab"
+                  >
+                    Plan de trabajo N° {{ i + 1 }}
+                  </button>
+                </li>
+              
                 <li class="nav-item" role="presentation">
                   <button
                     class="nav-link active"
@@ -311,23 +323,88 @@
                     type="button"
                     role="tab"
                   >
-                    Crear plan de trabajo
+                    Nuevo plan de trabajo
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    id="historyWorkPlan-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#tabHistoryWorkPlan"
-                    type="button"
-                    role="tab"
-                  >
-                    Histórico
-                  </button>
-                </li>
+                
               </ul>
               <div class="tab-content" id="myTabWorkPlanContent">
+
+                <div
+                    *ngFor="let item of workPlanHistoryList; let i = index"
+                    class="tab-pane pt-2 fade"
+                    [id]="'tabWorkPlanHistory' + i"
+                    role="tabpanel"
+                    aria-labelledby="workPlanHistory-tab"
+                  >
+              <div class="card">
+                <div class="card-header">
+                  <label class="mb-0 fw-bold">{{
+                    item.activities[0].workPlan.name
+                  }}</label>
+                  <div></div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-bordered align-middle"
+                    >
+                      <thead style="font-weight: bold">
+                        <tr>
+                          <td>Objetivo P.M.</td>
+                          <td>Estrategia</td>
+                          <td>Compromisos</td>
+                          <td>Actividades</td>
+                          <td>Indicadores</td>
+                          <td>Meta Anual</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="let activity of item.activities; index as idx"
+                        >
+                          <td
+                            *ngIf="
+                              activity.commitment.actionLine.objetive.rowspan >
+                              0
+                            "
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.objetive.rowspan
+                            "
+                          >
+                            {{
+                              activity.commitment.actionLine.objetive
+                                .description || "sin datos"
+                            }}
+                          </td>
+                          <td
+                            *ngIf="activity.commitment.actionLine.rowspan > 0"
+                            [attr.rowspan]="
+                              activity.commitment.actionLine.rowspan
+                            "
+                          >
+                            {{
+                              activity.commitment.actionLine.name || "sin datos"
+                            }}
+                          </td>
+                          <td
+                            *ngIf="activity.commitment.rowspan > 0"
+                            [attr.rowspan]="activity.commitment.rowspan"
+                          >
+                            {{ activity.commitment.description + ' - ' + activity.commitment.allied.name }}
+                          </td>
+                          <td>
+                            {{ activity.name }}
+                          </td>
+                          <td>{{ activity.indicator }}</td>                          
+                          <td>{{ activity.goal }}</td>                     
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
                 <div
                   class="tab-pane pt-2 show active"
                   id="tabNewWorkPlan"
@@ -422,79 +499,7 @@
                   </div>
                 </div>
 
-                <div
-                  class="tab-pane pt-2 fade"
-                  id="tabHistoryWorkPlan"
-                  role="tabpanel"
-                  aria-labelledby="workPlan-tab"
-                >
-                  <div class="card">
-                    <div class="card-header">
-                      <label class="mb-0 fw-bold"> </label>
-                    </div>
-                    <div>
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Código</th>
-                                <th>Componente</th>
-                                <th>Objetivo</th>
-                                <th>Estrategia</th>
-                                <th>F. registro</th>
-                                <th>Ver</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr
-                                *ngFor="
-                                  let item of workPlanHistoryList;
-                                  index as idx
-                                "
-                              >
-                                <td>
-                                  {{ item.name }}
-                                </td>
-                                <td>
-                                  {{ item.version }}
-                                </td>
-                                <td>
-                                  {{ item.active }}
-                                </td>
-                                <td>
-                                  {{ item.year }}
-                                </td>
-                                <td>
-                                  {{ item.registrationDate }}
-                                </td>
-                                <td>
-                                  <div class="text-nowrap">
-                                    <button
-                                      type="button"
-                                      class="
-                                        btn btn-sm btn-outline-danger
-                                        border-0
-                                      "
-                                      (click)="
-                                        onViewDetailWorkPlanModal(
-                                          contentViewDetailWorkPlan,
-                                          item.id
-                                        )
-                                      "
-                                    >
-                                      <i class="bi bi-eye fs-lg"></i>
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>

@@ -61,6 +61,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   monitoringList: any[] = [];
   monitoringListHistory: any[] = [];
   monitoringHistoryCount: number = 0;
+  workPlanHistoryCount: number = 0;
   formMonitoring: FormGroup;
   submitted: boolean = false;
   monitoringReady: boolean = false;
@@ -117,6 +118,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
           if (response && response.items.length > 0) {
             this.workPlanHistoryList = response.items;
           }
+          this.workPlanHistoryCount = response.items.length;
         });
     } catch (error) {
       this.alertService.error(
