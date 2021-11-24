@@ -936,7 +936,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     if (graphics[0].attributes.sended) {
       this.upLoadDisable = false;
       this.spinner.hide();
-      this.alertService.error('Ya se subió el archivo', 'Error', {
+      this.alertService.error('Ya se subió el archivo, debe cerrar la ficha, y volver a cargar', 'Error', {
         autoCLose: true,
       });
       return;
@@ -995,7 +995,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
                 this.layersGraphic[id - 1].attributes.sended = true;
                 this.alertService.success(
                   'Se subió correctamente el archivo',
-
                   'Ok',
                   {
                     autoClose: true,
@@ -1006,6 +1005,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             }
             this.spinner.hide();
             this.upLoadDisable = false;
+            this.disabled = false;
           })
           .catch((error) => {
             this.disabled = false;

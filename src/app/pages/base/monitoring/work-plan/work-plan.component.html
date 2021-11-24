@@ -7,7 +7,7 @@
   <!-- ============================================================== -->
   <div class="row page-titles">
     <div class="col-auto align-self-center">
-      <h4 class="text-nowrap">Plan de trabajo</h4>
+      <h4 class="text-nowrap">{{detailTitle}}</h4>
     </div>
     <div class="col">
       <div class="d-flex justify-content-end align-items-center text-end">
@@ -50,6 +50,7 @@
             data-bs-target="#tabAgreementDetail"
             type="button"
             role="tab"
+            (click)="demoClick(1)"
           >
             Detalle acuerdo
           </button>
@@ -63,7 +64,7 @@
                 data-bs-target="#tabWorkPlan"
                 type="button"
                 role="tab"
-                
+                (click)="demoClick(2)"
               >
               <!-- [ngClass]="{ 'disabled': !agreementExist }"
                 [disabled]="!agreementExist" -->
@@ -79,7 +80,7 @@
                 data-bs-target="#tabMonitoring"
                 type="button"
                 role="tab"
-                
+                (click)="demoClick(3)"
               >
               <!-- [ngClass]="{ 'disabled': !agreementExist }"
                 [disabled]="!agreementExist" -->
@@ -1332,7 +1333,7 @@
   <ng-template #contentCreateEvaluation let-modal>
     <div class="modal-header">
       <h5 class="modal-title" id="createActivityLabel">
-        Crear envaluación del monitoreo
+        Crear evaluación del monitoreo
       </h5>
       <button type="button" class="btn-close" (click)="modal.close()"></button>
     </div>

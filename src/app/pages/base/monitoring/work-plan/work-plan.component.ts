@@ -31,6 +31,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   pageSize: any;
   page: Number;
   form: FormGroup;
+  detailTitle: string = 'Detalle de acuerdo';
   queryObserver = new BehaviorSubject({
     item: '',
     paginator: '',
@@ -2271,6 +2272,16 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
   }
   deActivateMonitoring() {
     this.monitoringReady = false;
+  }
+  demoClick(e) {
+    if (e == 1)
+      this.detailTitle = 'Detalle de acuerdo';
+    else if (e == 2)
+      this.detailTitle = 'Plan de Trabajo';
+    else if (e == 3)
+      this.detailTitle = 'Monitoreo';
+    else 
+      this.detailTitle = '';
   }
   ngOnDestroy() {}
 }
