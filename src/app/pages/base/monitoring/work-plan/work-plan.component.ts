@@ -489,6 +489,7 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
             );
             this.searchMonitoring();
             this.monitoringSearchHistory();
+            this.searchWorkPlanHistory();
             this.fieldArrayTotalTemp = [];
           } else {
             this.alertService.error('' + response.message, 'Error', {

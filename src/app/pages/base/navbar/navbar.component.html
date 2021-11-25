@@ -143,7 +143,7 @@
 </header>
 <ng-template #contentViewNotifications let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="createActivityLabel">Notificaciones</h5>
+    <h5 class="modal-title" id="createNotificationLabel">Notificaciones</h5>
     <button type="button" class="btn-close" (click)="modal.close()"></button>
   </div>
 
@@ -155,10 +155,11 @@
         (click)="onViewNotification(notification.id)"
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ notification.title }}</h5>
-          <small>{{ notification.time }}</small>
+          <h5 class="mb-1">{{ notification.code }}</h5>
+          <small>{{ notification.firm }} ({{ notification.vigency }}) </small>
         </div>
-        <p class="mb-1">{{ notification.message }}</p>
+        <p class="mb-1">{{ notification.name }}</p>
+        <p class="mb-1">El acuerdo esta a punto de vencer</p>
         <small>{{ notification.action }}</small>
       </a>
     </div>

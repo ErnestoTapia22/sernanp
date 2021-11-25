@@ -89,6 +89,6 @@ export class AuthenticationService {
     }
   }
   getNotifications(): Observable<any> {
-    return this.apiBaseService.get(`${environment.apiUrl}/getNotifications`);
+    return this.apiBaseService.get(`${environment.apiUrl}/conservationagreement/notifications`);
   }
 }

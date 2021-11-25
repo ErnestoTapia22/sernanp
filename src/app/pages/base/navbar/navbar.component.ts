@@ -112,41 +112,41 @@ export class NavbarComponent implements OnInit {
     // this.router.navigate(['/notifications/' + id]);
   }
   callNotification() {
-    const sampleData = [
-      {
-        id: 1,
-        title: 'Acuerdo 20211009',
-        message: 'El acuerdo esta a punto de vencer',
-        time: '3 days ago',
-        action: '',
-      },
-      {
-        id: 2,
-        title: 'Acuerdo 20211006',
-        message: 'El acuerdo esta a punto de vencer',
-        time: '3 days ago',
-        action: '',
-      },
-      {
-        id: 3,
-        title: 'Acuerdo 20211005',
-        message: 'El acuerdo esta a punto de vencer',
-        time: '3 days ago',
-        action: '',
-      },
-    ];
-    this.notificationsList = sampleData;
+    //const sampleData = [
+    //  {
+    //    id: 1,
+    //    title: 'Acuerdo 20211009',
+    //    message: 'El acuerdo esta a punto de vencer',
+    //    time: '3 days ago',
+    //    action: '',
+    //  },
+    //  {
+    //    id: 2,
+    //    title: 'Acuerdo 20211006',
+    //    message: 'El acuerdo esta a punto de vencer',
+    //    time: '3 days ago',
+    //    action: '',
+    //  },
+    //  {
+    //    id: 3,
+    //    title: 'Acuerdo 20211005',
+    //    message: 'El acuerdo esta a punto de vencer',
+    //    time: '3 days ago',
+    //    action: '',
+    //  },
+    //];
+    //this.notificationsList = sampleData;
 
-    // try {
-    //   this.authenticationService.getNotifications().subscribe((response) => {
-    //     if (response && response.items.length > 0) {
-    //       this.notificationsList = response.items;
-    //     }
-    //   });
-    // } catch (error) {
-    //   this.alertService.error('Error al traer las notificaciones', 'Error', {
-    //     autoClose: true,
-    //   });
-    // }
+     try {
+       this.authenticationService.getNotifications().subscribe((response) => {
+         if (response && response.items.length > 0) {
+           this.notificationsList = response.items;
+         }
+       });
+     } catch (error) {
+       this.alertService.error('Error al traer las notificaciones', 'Error', {
+         autoClose: true,
+       });
+     }
   }
 }
