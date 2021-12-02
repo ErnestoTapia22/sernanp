@@ -27,6 +27,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ExcelService } from '@app/_services/report/excel.service';
 import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-agreement-new',
@@ -239,6 +240,9 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     polygon4: true,
     point4: false,
   };
+  districtList = [];
+  selectedDistricts = [];
+  districtSettings: IDropdownSettings = {};
   constructor(
     private agreementService: AgreementService,
     private fb: FormBuilder,
@@ -285,6 +289,25 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     this.searchCommitments();
     this.autocalculatedField();
     this.searchCommitmentsExternal();
+    this.districtList = [
+      { item_id: 1, item_text: 'Mumbai' },
+      { item_id: 2, item_text: 'Bangaluru' },
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' },
+      { item_id: 5, item_text: 'New Delhi' },
+    ];
+
+    this.districtSettings = {
+      singleSelection: false,
+      idField: 'code',
+      textField: 'name',
+      selectAllText: 'Seleccionar todo',
+      unSelectAllText: 'Deseleccionar todo',
+      itemsShowLimit: 2,
+      allowSearchFilter: true,
+      searchPlaceholderText: 'Buscar',
+      noDataAvailablePlaceholderText: 'No se encontraron datos',
+    };
   }
   ngOnDestroy() {
     if (this.closeRegisterObserver !== undefined)
@@ -854,7 +877,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
   insertAgreement() {
     try {
       this.submitted = true;
-      // this.disabled = true;
 
       if (this.form.invalid) {
         this.disabled = false;
@@ -862,10 +884,19 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
         return;
       }
       this.form.patchValue({
-        districtId: this.form.get('district').value,
+        districtId: 0,
       });
-      console.log(this.form.getRawValue());
 
+      if (this.selectedDistricts.length > 0) {
+        let array: any[] = this.selectedDistricts;
+        console.log(array);
+        let stringArray: string = Array.prototype.map
+          .call(array, function (item) {
+            return item.code;
+          })
+          .join(',');
+        this.form.controls.district.patchValue(stringArray);
+      }
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.getRawValue()))
         .subscribe((response) => {
@@ -892,7 +923,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     } catch (error) {
       this.disabled = false;
       this.submitted = false;
-
+      console.log(error);
       this.alertService.error('Error al guardar el acuerdo', 'Error', {
         autoClose: true,
       });
@@ -936,9 +967,13 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
     if (graphics[0].attributes.sended) {
       this.upLoadDisable = false;
       this.spinner.hide();
-      this.alertService.error('Ya se subió el archivo, debe cerrar la ficha, y volver a cargar', 'Error', {
-        autoCLose: true,
-      });
+      this.alertService.error(
+        'Ya se subió el archivo, debe cerrar la ficha, y volver a cargar',
+        'Error',
+        {
+          autoCLose: true,
+        }
+      );
       return;
     }
 
@@ -1971,4 +2006,6 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
       this.featureLayer = null;
     }
   }
+  onItemSelect(item: any) {}
+  onSelectAll(items: any) {}
 }

@@ -18,7 +18,9 @@
             <li class="breadcrumb-item">
               <a routerLink="/agreement">Acuerdos de Conservación</a>
             </li>
-            <li class="breadcrumb-item text-nowrap active">Nuevo Acuerdo de Conservación</li>
+            <li class="breadcrumb-item text-nowrap active">
+              Nuevo Acuerdo de Conservación
+            </li>
           </ol>
         </nav>
       </div>
@@ -82,7 +84,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Código"
-                      formControlName="code"                      
+                      formControlName="code"
                     />
                   </div>
                   <div class="col-md-6">
@@ -97,7 +99,7 @@
                   </div>
                   <div class="col-md-3" formGroupName="anp">
                     <label for="ddAnp" class="form-label">ANP (*)</label>
-                    <select                      
+                    <select
                       id="ddAnp"
                       class="form-select"
                       formControlName="id"
@@ -256,7 +258,7 @@
                       <label for="ddlProvince" class="form-label"
                         >Distrito (*)</label
                       >
-                      <select
+                      <!-- <select
                         id="ddlProvince"
                         class="form-select"
                         formControlName="district"
@@ -264,6 +266,7 @@
                           'input-invalid':
                             submitted && form.get('district').errors?.min
                         }"
+                        multiple
                       >
                         <option selected value="0">SELECCIONE</option>
                         <option
@@ -272,7 +275,23 @@
                         >
                           {{ item.name }}
                         </option>
-                      </select>
+                      </select> -->
+                      <!-- [(ngModel)]="selectedDistricts" -->
+                      <!-- formControlName="district" -->
+                      <ng-multiselect-dropdown
+                        [placeholder]="'SELECCIONE'"
+                        [settings]="districtSettings"
+                        [data]="districts"
+                        [(ngModel)]="selectedDistricts"
+                        [ngModelOptions]="{ standalone: true }"
+                        (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)"
+                        [ngClass]="{
+                          'input-invalid':
+                            submitted && form.get('district').errors?.min
+                        }"
+                      >
+                      </ng-multiselect-dropdown>
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -291,7 +310,9 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <label class="mb-0 fw-bold">Articulaciones del Acuerdo de Conservación</label>
+                <label class="mb-0 fw-bold"
+                  >Articulaciones del Acuerdo de Conservación</label
+                >
                 <button
                   type="submit"
                   class="btn btn-sm btn-outline-success mx-2"
@@ -446,8 +467,7 @@
                       />
                       <label class="form-check-label" for="zonningNot"
                         >No
-                        </label
-                      >
+                      </label>
                     </div>
                     <div class="form-check">
                       <input
@@ -460,11 +480,11 @@
                       />
                       <label class="form-check-label" for="zonningNotApply"
                         >Proceso no desarrollado<i
-                        class="bi bi-info-circle mx-1"
-                        placement="top"
-                        ngbTooltip="Hace referencia a que el proceso de zonificación forestal no fue iniciada por la autoridad competente"
-                      ></i></label
-                      >
+                          class="bi bi-info-circle mx-1"
+                          placement="top"
+                          ngbTooltip="Hace referencia a que el proceso de zonificación forestal no fue iniciada por la autoridad competente"
+                        ></i
+                      ></label>
                     </div>
                   </div>
                 </div>
@@ -786,7 +806,8 @@
                   <div class="col-md-8">
                     <div class="row">
                       <div class="col-md-6">
-                        <label class="form-label">Número de participantes </label
+                        <label class="form-label"
+                          >Número de participantes </label
                         ><i
                           class="bi bi-info-circle mx-1"
                           placement="top"
@@ -870,7 +891,7 @@
                           formControlName="benFamily"
                         ></textarea>
                       </div>
-                    </div>                    
+                    </div>
                   </div>
                   <div class="col-md-4">
                     <label for="benIndirect" class="form-label"
@@ -893,9 +914,13 @@
             </div>
             <div class="card">
               <div class="card-header">
-                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                <div
+                  class="btn-toolbar justify-content-between"
+                  role="toolbar"
+                  aria-label="Toolbar with button groups"
+                >
                   <div class="btn-group" role="group" aria-label="First group">
-                    <label class="mb-0 fw-bold">Ámbito del ADC  &nbsp;</label>
+                    <label class="mb-0 fw-bold">Ámbito del ADC &nbsp;</label>
                     <i
                       class="bi bi-info-circle mx-1"
                       placement="top"
@@ -912,8 +937,8 @@
                     />
                     <span class="input-group-text">Ha</span>
                   </div>
-                </div>    
-                
+                </div>
+
                 <div class="float-right">
                   <button
                     type="submit"
@@ -923,7 +948,7 @@
                     <i class="bi bi-save"></i>
                     Guardar
                   </button>
-                </div>            
+                </div>
               </div>
               <div class="card-body">
                 <ul
@@ -1098,7 +1123,7 @@
                           />
                           <span class="input-group-text">Ha</span>
                         </div>
-                      </div> 
+                      </div>
                       <div class="col-md-3">
                         <label for="txtaIndirectB" class="form-label"
                           >Detalle ámbito bajo restauración</label
@@ -1797,7 +1822,7 @@
                                       >
                                         <i class="bi bi-cloud-upload"></i>
                                         Subir
-                                      </button>                                      
+                                      </button>
                                     </div>
                                   </div>
                                   <div
@@ -2275,12 +2300,14 @@
                               </div>
                             </div>
                             <div class="card">
-                              <button type="button"
+                              <button
+                                type="button"
                                 class="btn btn-primary btn-block"
                                 (click)="cleanLayer()"
                                 placement="bottom"
-                                ngbTooltip="Eliminar gráfico del mapa">
-                                <i class="bi bi-trash" ></i>                                        
+                                ngbTooltip="Eliminar gráfico del mapa"
+                              >
+                                <i class="bi bi-trash"></i>
                               </button>
                             </div>
                           </div>
@@ -2638,7 +2665,7 @@
           <select class="form-select" (change)="searchActionLines($event)">
             <option value="0">SELECCIONE</option>
             <option *ngFor="let item of objectiveList" [value]="item.id">
-              {{ item.code + ' ' + item.description }}
+              {{ item.code + " " + item.description }}
             </option>
           </select>
         </div>

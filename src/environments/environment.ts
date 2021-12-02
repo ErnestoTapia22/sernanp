@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  apiUrl2: 'http://desarrollo.sernanp.gob.pe:28081/ws_simrac/api',
-  apiUrl3: 'http://100.122.8.47:8060/ws_simrac/api',
-  apiUrl: 'http://localhost:8050/simrac/api',
+  apiUrl3: 'http://desarrollo.sernanp.gob.pe:28081/ws_simrac/api',
+  apiUrl: 'http://100.122.8.47:8060/ws_simrac/api',
+  apiUrl2: 'http://localhost:8050/simrac/api',
   authUrl: 'http://desarrollo.sernanp.gob.pe:28081/api-lanp/oauth/token',
   logOutUrl: '/default/login',
-  authCredentials: 'dj-sernanp-app:@re34n@tur4l',  
+  authCredentials: 'dj-sernanp-app:@re34n@tur4l',
   initialLayers: [
     {
       id: 0,
