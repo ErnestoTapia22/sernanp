@@ -1,6 +1,6 @@
 package pe.sernanp.simrac.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import pe.sernanp.simrac.model.AgreementStateModel;
 
@@ -26,6 +26,8 @@ public class ConservationAgreementDTO implements java.io.Serializable {
 	
 	private boolean state;
 
+	private int vigency;
+	
 	public String getCode() {
 		return code;
 	}
@@ -106,4 +108,11 @@ public class ConservationAgreementDTO implements java.io.Serializable {
 		this.state = state;
 	}
 	
+	public int getVigency() {
+		return vigency;
+	}
+	
+	public void setVigency(int vigency) {
+		this.vigency = vigency;
+	}
 }

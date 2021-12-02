@@ -42,7 +42,7 @@ public class ConservationAgreementModel implements java.io.Serializable {
 	@ManyToOne
 	private AnpModel anp;
 	
-	@Column (name= "var_distritoid", length=6)
+	@Column (name= "var_distritoid", length=40)
 	private String districtId;
 	
 	@Column (name= "var_nom", length=200, nullable=true)

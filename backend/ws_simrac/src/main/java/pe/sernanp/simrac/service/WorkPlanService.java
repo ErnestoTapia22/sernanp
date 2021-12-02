@@ -12,7 +12,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import net.sf.jasperreports.engine.export.data.BooleanTextValue;
 import pe.sernanp.simrac.dto.ActivityDTO;
 import pe.sernanp.simrac.dto.WorkPlanDTO;
 import pe.sernanp.simrac.entity.ResponseEntity;

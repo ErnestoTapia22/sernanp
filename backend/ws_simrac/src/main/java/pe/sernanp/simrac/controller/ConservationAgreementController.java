@@ -85,22 +85,15 @@ public class ConservationAgreementController extends BaseController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "unchecked" })
-	@RequestMapping(value = "/search2", method = RequestMethod.POST)
+	@RequestMapping(value = "/notifications", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<ConservationAgreementModel> search2(@RequestBody ConservationAgreementDTO item) throws IOException {
+	public ResponseEntity<ConservationAgreementDTO> notifications() throws IOException {
 		try {
-			ResponseEntity<ConservationAgreementModel> response = this._service.search2(item);
+			ResponseEntity<ConservationAgreementDTO> response = this._service.notifications();
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
 		}
 	}
 	
-	@RequestMapping(value = "/reportpdf/{id}", method = RequestMethod.GET)
-	public org.springframework.http.ResponseEntity<byte[]> reportPdf(@PathVariable("id") int id) throws Exception {
-
-		org.springframework.http.ResponseEntity<byte[]> response = this._service.generatePdf(id);
-		return response;
-
-	}
 }

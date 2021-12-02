@@ -53,6 +53,12 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 											String departmentId, String provinceId, String districtId,
 											Date firm, Date firmEnd, int id);
 	
+	@Query(value="select * from simrac.t_acuerdo_conservacion where bol_flg = true and "
+			+ " cast( (dte_fec_firma + cast( (int_vig || ' year') as interval)) as Date) >= CURRENT_DATE  and "
+			+ " cast( (dte_fec_firma + cast( (int_vig || ' year') as interval)) as Date) <= CURRENT_DATE + interval '3 month'",
+			nativeQuery=true)
+	List<ConservationAgreementModel> notifications();
+	
 	@Query(value="select t_ac.*, SUBSTRING(t_ac.var_distritoid,1,2) FROM simrac.t_acuerdo_conservacion t_ac "
 			+ "		where SUBSTRING(t_ac.var_distritoid,1,2) = :pdepartment" ,
 			nativeQuery=true)
