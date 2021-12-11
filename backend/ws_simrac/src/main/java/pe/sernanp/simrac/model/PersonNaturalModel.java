@@ -20,58 +20,60 @@ public class PersonNaturalModel {
 	@Id
 	private int id;
 	
-	@Column (name= "idpersona")
+	@Column (name= "idpersona", nullable=true)
 	private int personId;
 	
-	@Column (name= "nombre")
+	@Column (name= "nombre", nullable=true)
 	private String name;
 	
-	@Column (name= "apepat")
+	@Column (name= "apepat", nullable=true)
 	private String lastName;
 	
-	@Column (name= "apemat")
+	@Column (name= "apemat", nullable=true)
 	private String maindenName;
 	
-	@Column (name= "idtipodocumento")
+	@Column (name= "idtipodocumento", nullable=true)
 	private int documentTypeId;
 	
-	@Column (name= "numerodoc")
+	@Column (name= "numerodoc", nullable=true)
 	private String documentNumber;
 	
-	@Column (name= "fechanacimiento")
+	@Column (name= "fechanacimiento", nullable=true)
 	private Date birthDate;	
 	
-	@Column (name= "idsexo")
+	@Column (name= "idsexo", nullable=true)
 	private int sexId;	
 	
-	@Column (name= "idestadocivil")
+	@Column (name= "idestadocivil", nullable=true)
 	private int civilStatusId;
 	
-	@Column (name= "temporal")
+	@Transient
+	@Column (name= "temporal", nullable=true)
 	private int temporal;
 	
-	@Column (name= "ruc")
+	@Column (name= "ruc", nullable=true)
 	private String ruc;
 	
-	@Column (name= "direccion")
+	@Column (name= "direccion", nullable=true)
 	private String address;
 	
-	@Column (name= "idubigeo")
+	@Column (name= "idubigeo", nullable=true)
 	private int ubigeoId;
 	
-	@Column (name= "var_num_file")
+	@Column (name= "var_num_file", nullable=true)
 	private String fileNumber;
 	
-	@Column (name= "var_num_caja")
+	@Column (name= "var_num_caja", nullable=true)
 	private String boxNumber;
 	
-	@Column (name= "var_numero_pasaporte")
+	@Column (name= "var_numero_pasaporte", nullable=true)
 	private String passportNumber;
 	
-	@Column (name= "var_numero_brevete")
+	@Column (name= "var_numero_brevete", nullable=true)
 	private String briefNumber;
 	
-	@Column (name= "int_id_tipo")
+	@Transient
+	@Column (name= "int_id_tipo", nullable=true)
 	private int typeId;
 	
 	@Transient

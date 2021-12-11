@@ -22,11 +22,10 @@ public class UserModel {
 	private String userName;
 	
 	@Column (name= "idpersonal")
-	private int _idPersonal;
+	private int _idPersonal;	
 	
-	@JoinColumn (name= "idpersona", referencedColumnName = "idpersonanatural", nullable=true, foreignKey = @ForeignKey(javax.persistence.ConstraintMode.NO_CONSTRAINT))
-	@OneToOne
-	private PersonNaturalModel person;
+	@Column (name= "idpersona")
+	private int idPerson;
 
 	public int getId() {
 		return id;
@@ -52,12 +51,12 @@ public class UserModel {
 		this._idPersonal = _idPersonal;
 	}
 
-	public PersonNaturalModel getPerson() {
-		return person;
+	public int getIdPerson() {
+		return idPerson;
 	}
 
-	public void setPerson(PersonNaturalModel person) {
-		this.person = person;
+	public void setIdPerson(int person) {
+		this.idPerson = person;
 	}
 	
 }

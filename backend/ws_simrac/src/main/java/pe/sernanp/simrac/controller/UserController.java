@@ -47,11 +47,11 @@ public class UserController extends BaseController {
 	@SuppressWarnings({ "unchecked", "unchecked" })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody()
-	public ResponseEntity<UserModel> search(@RequestParam("item") String item) throws IOException {
+	public ResponseEntity<UserDTO> search(@RequestParam("item") String item) throws IOException {
 		try {
 			PaginatorEntity paginador = super.setPaginator();
 			UserDTO item2 = super.fromJson(item, UserDTO.class);
-			ResponseEntity<UserModel> response = this._service.search(item2, paginador);
+			ResponseEntity<UserDTO> response = this._service.search(item2, paginador);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);
@@ -60,9 +60,9 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/searchwithoutlogin/{dni}/{system}", method = RequestMethod.GET)
 	@ResponseBody()
-	public ResponseEntity<UserModel> search(@PathVariable("dni") String dni, @PathVariable("system") int system) throws IOException {
+	public ResponseEntity<UserDTO> search(@PathVariable("dni") String dni, @PathVariable("system") int system) throws IOException {
 		try {
-			ResponseEntity<UserModel> response = this._service.searchWithoutLogin(dni, system);
+			ResponseEntity<UserDTO> response = this._service.searchWithoutLogin(dni, system);
 			return response;
 		} catch (Exception ex) {
 			return super.getJSON(ex);

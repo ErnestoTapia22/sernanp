@@ -1,5 +1,6 @@
 package pe.sernanp.simrac.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,10 +32,12 @@ import pe.sernanp.simrac.entity.PaginatorEntity;
 import pe.sernanp.simrac.entity.ResponseEntity;
 import pe.sernanp.simrac.model.LoginModel;
 import pe.sernanp.simrac.model.ModuleModel;
+import pe.sernanp.simrac.model.PersonNaturalModel;
 import pe.sernanp.simrac.model.RoleModel;
 import pe.sernanp.simrac.model.UserModel;
 import pe.sernanp.simrac.repository.LoginRepository;
 import pe.sernanp.simrac.repository.ModuleRepository;
+import pe.sernanp.simrac.repository.PersonNaturalRepository;
 import pe.sernanp.simrac.repository.RoleRepository;
 import pe.sernanp.simrac.repository.UserRepository;
 
@@ -49,6 +52,9 @@ public class UserService {
 	
 	@Autowired
 	private ModuleRepository _repositoryModule;
+	
+	@Autowired
+	private PersonNaturalRepository _repositoryPerson;
 	
 	//Inicio Agregado
 	@Autowired	
@@ -98,13 +104,22 @@ public class UserService {
 		}
 	}
 	
-	public ResponseEntity<UserModel> search(UserDTO item, PaginatorEntity paginator) throws Exception{
+	public ResponseEntity<UserDTO> search(UserDTO item, PaginatorEntity paginator) throws Exception{
 		try {			
 			Pageable page = PageRequest.of(paginator.getOffset()-1, paginator.getLimit());
 			Page<UserModel> pag = this._repository.search(item.getName(), item.getUserName(), item.getLastName(), item.getSystem(), item.getRole().getId(), page);
 			List<UserModel> items = pag.getContent();
-			ResponseEntity<UserModel> response = new ResponseEntity<UserModel>();
-			response.setItems(items);
+			List<UserDTO> items2 = new ArrayList<UserDTO>();
+			items.forEach(t -> {
+				PersonNaturalModel itemPerson = this._repositoryPerson.search(t.getIdPerson());
+				UserDTO user = new UserDTO();
+				user.setId(t.getId());
+				user.setUserName(t.getUserName());				
+				user.setPerson(itemPerson);
+				items2.add(user);
+			});
+			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
+			response.setItems(items2);
 			response.setPaginator(paginator);
 			return response;
 		} catch (Exception ex) {
@@ -112,15 +127,23 @@ public class UserService {
 		}
 	}
 	
-	@Transactional
-	public ResponseEntity<UserModel> searchWithoutLogin(String dni, int system) throws Exception {
-		try {
-		
+	
+	public ResponseEntity<UserDTO> searchWithoutLogin(String dni, int system) throws Exception {
+		try {		
 			boolean success = true;
-			ResponseEntity<UserModel> response = new ResponseEntity<UserModel>();
+			ResponseEntity<UserDTO> response = new ResponseEntity<UserDTO>();
+			List<UserDTO> items = new ArrayList<UserDTO>();
 			List<UserModel> item = this._repository.searchWithoutLogin(dni, system);
+			if (item.size()>0) {
+				PersonNaturalModel itemPerson = this._repositoryPerson.search(item.get(0).getIdPerson());
+				UserDTO user = new UserDTO();
+				user.setId(item.get(0).getId());
+				user.setUserName(item.get(0).getUserName());
+				user.setPerson(itemPerson);
+				items.add(user);
+			}			
 			response.setSuccess(success);
-			response.setItems(item);
+			response.setItems(items);
 			return response;
 		} catch (Exception ex) {
 			throw new Exception(ex.getMessage());

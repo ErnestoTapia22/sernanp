@@ -38,6 +38,7 @@ public interface UserRepository extends JpaRepository<UserModel, Integer>{
 			+ "		where s.idsistema=:psystem)", nativeQuery=true)
 	List <UserModel> searchWithoutLogin(@Param("pdni") String pdni, @Param("psystem") int psystem);
 
+	@Modifying
 	@Query(value="INSERT INTO sernanp.usuariorol(idrol, idusuario, int_estado, tsp_fecha_reg) VALUES (:proleid, :pid, 1, :pregistrationdate)", nativeQuery=true)
 	void insert(@Param("proleid") int proleid, @Param("pid") int pid, @Param("pregistrationdate") Date pregistrationdate);
 	
