@@ -895,7 +895,7 @@ export class AgreementNewComponent implements OnInit, OnDestroy {
             return item.code;
           })
           .join(',');
-        this.form.controls.district.patchValue(stringArray);
+        this.form.controls.districtId.patchValue(stringArray);
       }
       this.agreementService
         .agreementInsert(JSON.stringify(this.form.getRawValue()))

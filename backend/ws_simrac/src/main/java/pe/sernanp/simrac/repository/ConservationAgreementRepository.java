@@ -24,7 +24,7 @@ public interface ConservationAgreementRepository extends JpaRepository<Conservat
 			+ "	and case when ?4 > 0 then t_ac.int_estadoacuerdoid = ?4 else 1 = 1 end "
 			+ "	and case when ?5 <> '' then SUBSTRING(t_ac.var_distritoid,1,2) = ?5 else 1 = 1 end "	
 			+ "	and case when ?6 <> '' then SUBSTRING(t_ac.var_distritoid,1,4) = ?6 else 1 = 1 end "
-			+ "	and case when ?7 <> '' then t_ac.var_distritoid = ?7 else 1 = 1 end "
+			+ "	and case when ?7 <> '' then t_ac.var_distritoid like %?7% else 1 = 1 end "
 			+ "	and case when ?10 > 0 then t_ac.dte_fec_firma >= ?8 else 1 = 1 end "
 			+ "	and case when ?10 > 0 then t_ac.dte_fec_firma <= ?9 else 1 = 1 end order by srl_id ",
 			//+ "			  and case when pstate = false then 1 = 1 /*t_ac.bol_flg = pstate*/ else 1 = 1 end;",
