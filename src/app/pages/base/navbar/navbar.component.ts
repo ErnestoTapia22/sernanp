@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from '../../../_services/base/alert.service';
-import { AuthenticationService } from '@app/_services/auth/authentication.service';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { User } from '@app/_models/auth/user';
+import { AuthenticationService } from '@app/_services/auth/authentication.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {
-  Router,
-  Event,
-  NavigationStart,
-  NavigationEnd,
-  NavigationError,
-} from '@angular/router';
+import { AlertService } from '../../../_services/base/alert.service';
 
 @Component({
   selector: 'app-navbar',
@@ -137,16 +131,16 @@ export class NavbarComponent implements OnInit {
     //];
     //this.notificationsList = sampleData;
 
-     try {
-       this.authenticationService.getNotifications().subscribe((response) => {
-         if (response && response.items.length > 0) {
-           this.notificationsList = response.items;
-         }
-       });
-     } catch (error) {
-       this.alertService.error('Error al traer las notificaciones', 'Error', {
-         autoClose: true,
-       });
-     }
+    try {
+      this.authenticationService.getNotifications().subscribe((response) => {
+        if (response && response.items.length > 0) {
+          this.notificationsList = response.items;
+        }
+      });
+    } catch (error) {
+      this.alertService.error('Error al traer las notificaciones', 'Error', {
+        autoClose: true,
+      });
+    }
   }
 }

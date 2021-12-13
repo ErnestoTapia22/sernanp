@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MasterPlanService } from '../../../_services/masterplan/masterplan/master-plan.service';
-import { AlertService } from '../../../_services/base/alert.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { AlertService } from '../../../_services/base/alert.service';
+import { MasterPlanService } from '../../../_services/masterplan/masterplan/master-plan.service';
 
 @Component({
   selector: 'app-master-plan',
@@ -50,13 +50,12 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       this.route.snapshot.paramMap.get('id') !== undefined &&
       this.route.snapshot.paramMap.get('id') !== null &&
       this.route.snapshot.paramMap.get('id') !== ''
-    ){
+    ) {
       this.anpId = parseInt(this.route.snapshot.paramMap.get('id'));
-      if (this.route.snapshot.paramMap.get('withMasterPlan')=="1")
+      if (this.route.snapshot.paramMap.get('withMasterPlan') == '1')
         this.withMasterPlan = true;
-      else
-        this.withMasterPlan = false;
-      if (this.route.snapshot.paramMap.get('withMasterPlan')=="2")
+      else this.withMasterPlan = false;
+      if (this.route.snapshot.paramMap.get('withMasterPlan') == '2')
         this.isRew = true;
     }
     this.buildForms();
@@ -70,13 +69,13 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       state: [true],
       anp: [{ id: this.anpId || 0 }],
       active: [true],
-      version: [1]
-    });    
+      version: [1],
+    });
     this.resetActionLine();
-  }  
+  }
   formReset() {
     this.form.reset();
-  }  
+  }
   insertMasterPlan() {
     try {
       this.submitted = true;
@@ -87,8 +86,10 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         .masterPlanInsert(JSON.stringify(this.form.value))
         .subscribe((response) => {
           this.submitted = false;
-          if (response && response.success === true) {            
-            this.router.navigateByUrl(`/anp/masterplan/${this.form.value.anp.id}/1`);
+          if (response && response.success === true) {
+            this.router.navigateByUrl(
+              `/anp/masterplan/${this.form.value.anp.id}/1`
+            );
             this.alertService.success('Se guardo correctamente', 'Ok', {
               autoClose: true,
             });
@@ -115,7 +116,11 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         this.masterPlanService
           .masterPlanDetailByAnp(this.anpId)
           .subscribe((response) => {
-            if (response && response.item !== null && response.item !== undefined) {
+            if (
+              response &&
+              response.item !== null &&
+              response.item !== undefined
+            ) {
               this.form.setValue({
                 id: response.item.id,
                 name: response.item.name,
@@ -171,7 +176,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       });
       this.insertGoals.patchValue({
         component: { id: this.insertGoals.get('component').value },
-      });      
+      });
       this.masterPlanService
         .goalsInsert(JSON.stringify(this.insertGoals.value))
         .subscribe((response) => {
@@ -189,17 +194,17 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       });
     }
   }
-  deleteObjetive(id){
+  deleteObjetive(id) {
     this.submitted = true;
     try {
       this.masterPlanService.commitmentDelete(id).subscribe((response) => {
         this.submitted = false;
-        if (response && response.success == true) {          
+        if (response && response.success == true) {
           this.getGoalsList();
-        }
-        else this.alertService.error('No se ha podido eliminar', 'Error', {
-          autoClose: true,
-        });
+        } else
+          this.alertService.error('No se ha podido eliminar', 'Error', {
+            autoClose: true,
+          });
       });
     } catch (error) {
       this.submitted = false;
@@ -219,7 +224,7 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       code: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
       masterPlan: [0],
-      state: [true]
+      state: [true],
     });
     this.closeRegisterObserver = this.modalRef.closed.subscribe(() => {
       this.insertGoals.reset({});
@@ -276,12 +281,12 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
       });
     }
   }
-  resetActionLine(){
+  resetActionLine() {
     this.insertLineAction = this.fb.group({
       objetive: [{ id: 0 }],
       name: ['', Validators.compose([Validators.required])],
       description: [''],
-      state: [true]
+      state: [true],
     });
   }
   saveLineAction() {
@@ -323,10 +328,10 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
           this.submitted = false;
           this.actionLinesList = [];
           this.actionLineList(this.objectiveId);
-        }
-        else this.alertService.error('No se ha podido eliminar', 'Error', {
-          autoClose: true,
-        });
+        } else
+          this.alertService.error('No se ha podido eliminar', 'Error', {
+            autoClose: true,
+          });
       });
     } catch (error) {
       this.submitted = false;
@@ -334,5 +339,5 @@ export class MasterPlanComponent implements OnInit, OnDestroy {
         autoClose: true,
       });
     }
-  }  
+  }
 }

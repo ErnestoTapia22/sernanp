@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
-import domtoimage from 'dom-to-image';
 @Injectable({
   providedIn: 'root',
 })

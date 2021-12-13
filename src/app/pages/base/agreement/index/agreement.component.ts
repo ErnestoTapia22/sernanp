@@ -1,21 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MonitoringService } from '../../../../_services/base/monitoring.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AnpService } from '@app/_services/masterplan/anp/anp.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AgreementService } from '../../../../_services/base/agreement.service';
 import { AlertService } from '../../../../_services/base/alert.service';
-import { AnpService } from '@app/_services/masterplan/anp/anp.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { query } from '@angular/animations';
-import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-agreement',
@@ -31,7 +21,7 @@ export class AgreementComponent implements OnInit, OnDestroy {
   form: FormGroup;
   moduleContext: any = {};
   modalRef: NgbModalRef;
-  id : 0;
+  id: 0;
   closeRegisterObserver: Subscription;
   queryObserver = new BehaviorSubject({
     item: '',
@@ -312,10 +302,10 @@ export class AgreementComponent implements OnInit, OnDestroy {
           this.initQuery();
           this.onSearch();
           this.modalRef.close();
-        }
-        else this.alertService.error('No se ha podido eliminar', 'Error', {
-          autoClose: true,
-        });
+        } else
+          this.alertService.error('No se ha podido eliminar', 'Error', {
+            autoClose: true,
+          });
       });
     } catch (error) {
       //this.submitted = false;
@@ -323,7 +313,7 @@ export class AgreementComponent implements OnInit, OnDestroy {
         autoClose: true,
       });
     }
-  }  
+  }
   onDeleteModal(content, id) {
     this.modalRef = this.modalService.open(content, {
       centered: true,

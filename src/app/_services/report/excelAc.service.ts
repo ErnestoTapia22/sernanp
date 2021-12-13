@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
 import * as XLSX2 from 'sheetjs-style';
 
 @Injectable({
@@ -55,12 +54,12 @@ export class ExcelAcService {
       { width: objectMaxLength[16], wpx: 100 },
       { width: objectMaxLength[17], wpx: 100 },
       { width: objectMaxLength[18], wpx: 100 },
-      { width: objectMaxLength[19], wpx: 100 }
+      { width: objectMaxLength[19], wpx: 100 },
     ];
     const worksheet: XLSX2.WorkSheet = XLSX2.utils.json_to_sheet(json, {
       dateNF: 'dd/MM/yyyy',
     });
-    worksheet['!cols'] = wscols;    
+    worksheet['!cols'] = wscols;
     worksheet.A1.v = 'Código';
     worksheet.B1.v = 'Nombre';
     worksheet.C1.v = 'ANP';
@@ -75,7 +74,7 @@ export class ExcelAcService {
     worksheet.L1.v = 'Se ha apalancado financiamiento';
     worksheet.M1.v = 'Fuente financiamiento';
     //worksheet.N1.v = 'Objetivo General';
-    
+
     var range = XLSX2.utils.decode_range(worksheet['!ref']);
     for (var C = range.s.c; C <= range.e.c; ++C) {
       var address = XLSX2.utils.encode_col(C) + '1'; // <-- first row, column number C

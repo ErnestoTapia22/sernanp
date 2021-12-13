@@ -1,19 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MonitoringService } from '../../../../_services/base/monitoring.service';
-import { AlertService } from '../../../../_services/base/alert.service';
-import { AgreementService } from '../../../../_services/base/agreement.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { query } from '@angular/animations';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+import { AgreementService } from '../../../../_services/base/agreement.service';
+import { AlertService } from '../../../../_services/base/alert.service';
+import { MonitoringService } from '../../../../_services/base/monitoring.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -67,14 +59,14 @@ export class MonitoringComponent implements OnInit, OnDestroy {
     };
     let item = {
       code: '',
-      name: '',      
+      name: '',
       agreementState: { id: 0 },
       anp: { id: 0 },
       departmentId: '',
       provinceId: '',
       districtId: '',
       firm: '',
-      firmEnd: ''
+      firmEnd: '',
     };
     this.queryObserver.next({
       item: JSON.stringify(item),
@@ -130,12 +122,12 @@ export class MonitoringComponent implements OnInit, OnDestroy {
   searchProvinces(event) {
     const id = event;
     if (id == 0) {
-      this.provinces = [];      
+      this.provinces = [];
       return;
     }
     this.form.patchValue({
       provinceId: '',
-      districtId: ''
+      districtId: '',
     });
     this.districts = [];
     try {
@@ -159,7 +151,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       return;
     }
     this.form.patchValue({
-      districtId: ''
+      districtId: '',
     });
     try {
       this.agreementService.searchDistricts(id).subscribe((response) => {
@@ -195,7 +187,9 @@ export class MonitoringComponent implements OnInit, OnDestroy {
           } else {
             this.isLoading = false;
             this.spinner.hide();
-            this.alertService.info('No se encontraron elementos', 'Ok', { autoClose: true });
+            this.alertService.info('No se encontraron elementos', 'Ok', {
+              autoClose: true,
+            });
           }
         });
     } catch (error) {
@@ -290,7 +284,7 @@ export class MonitoringComponent implements OnInit, OnDestroy {
       name: '',
       firm: '',
       firmEnd: '',
-      pageSize : 10
+      pageSize: 10,
     });
     this.initQuery();
     this.onSearch();

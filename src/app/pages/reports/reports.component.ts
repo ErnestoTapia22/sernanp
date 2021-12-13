@@ -7,16 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PdfService } from '@app/_services/report/pdf.service';
 import { environment } from 'src/environments/environment';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import printPdf from '@app/print/pdf/index';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import Zoom from '@arcgis/core/widgets/Zoom';
 import { ExcelAcService } from '@app/_services/report/excelAc.service';
 import * as _ from 'lodash';
 
@@ -91,7 +84,7 @@ export class ReportsComponent implements OnInit {
         position: 1,
       },
       geometry: {},
-    }
+    },
   ];
   constructor(
     public sanitizer: DomSanitizer,
@@ -102,7 +95,7 @@ export class ReportsComponent implements OnInit {
     private pdfService: PdfService,
     private modalService: NgbModal,
     private anpService: AnpService,
-    private excelService: ExcelAcService,
+    private excelService: ExcelAcService
   ) {}
 
   ngOnInit(): void {
@@ -466,16 +459,20 @@ export class ReportsComponent implements OnInit {
           console.log(response);
           if (response && response.items.length > 0) {
             this.alliedList = response.items;
-            response.items.forEach(item => {
-              this.alliedList2.push(
-                { 
-                  text: [{ text: item.name + '\n', decoration: 'underline', lineHeight: 1.5}, 
-                  {text:item.alliedCategory.name}],
-                  alignment: 'center'
-                }
-              );
+            response.items.forEach((item) => {
+              this.alliedList2.push({
+                text: [
+                  {
+                    text: item.name + '\n',
+                    decoration: 'underline',
+                    lineHeight: 1.5,
+                  },
+                  { text: item.alliedCategory.name },
+                ],
+                alignment: 'center',
+              });
             });
-          }          
+          }
         });
     } catch (error) {
       this.alertService.error('Error al traer los suscriptores', 'error', {
@@ -499,32 +496,31 @@ export class ReportsComponent implements OnInit {
           if (response && response.items.length > 0) {
             this.commitmentsList = response.items;
             console.log(this.commitmentsList);
-            this.commitmentsList2.push(
-              [
-                {
-                  text: 'Compromiso',
-                  style: 'tableHeader',
-                },
-                {
-                  text: 'Suscriptor',
-                  style: 'tableHeader',
-                },
-                {
-                  text: 'Fecha registro',
-                  style: 'tableHeader',
-                },
-                {
-                  text: 'Estado',
-                  style: 'tableHeader',
-                },
-              ]
-            );
-            response.items.forEach(item => {
-              this.commitmentsList2.push(
-                
-                  [ item.description, item.actionLine.name, item.allied.name, '03/11/2021' ]
-                
-              );
+            this.commitmentsList2.push([
+              {
+                text: 'Compromiso',
+                style: 'tableHeader',
+              },
+              {
+                text: 'Suscriptor',
+                style: 'tableHeader',
+              },
+              {
+                text: 'Fecha registro',
+                style: 'tableHeader',
+              },
+              {
+                text: 'Estado',
+                style: 'tableHeader',
+              },
+            ]);
+            response.items.forEach((item) => {
+              this.commitmentsList2.push([
+                item.description,
+                item.actionLine.name,
+                item.allied.name,
+                '03/11/2021',
+              ]);
             });
           }
         });
@@ -685,7 +681,10 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: this.agreementDetail['agreementState'] == null ? '' : this.agreementDetail['agreementState'].name,
+                      text:
+                        this.agreementDetail['agreementState'] == null
+                          ? ''
+                          : this.agreementDetail['agreementState'].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -814,7 +813,7 @@ export class ReportsComponent implements OnInit {
                 {
                   border: [true, false, true, true],
                   margin: [0, 0, 0, 10],
-                  columns: this.alliedList2
+                  columns: this.alliedList2,
                 },
               ],
             ],
@@ -839,9 +838,7 @@ export class ReportsComponent implements OnInit {
                   table: {
                     widths: '*',
                     headerRows: 1,
-                    body: 
-                      this.commitmentsList2
-                    ,
+                    body: this.commitmentsList2,
                     alignment: 'center',
                     keepWithHeaderRows: 1,
                   },
@@ -970,7 +967,9 @@ export class ReportsComponent implements OnInit {
                               alignment: 'left',
                             },
                             {
-                              text: this.agreementDetail['partMen'] + this.agreementDetail['partWomen'],
+                              text:
+                                this.agreementDetail['partMen'] +
+                                this.agreementDetail['partWomen'],
                               alignment: 'right',
                               bold: true,
                             },
@@ -1210,7 +1209,10 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: this.agreementDetail['hasMasterPlan'] == true ? "Si" : "No",
+                      text:
+                        this.agreementDetail['hasMasterPlan'] == true
+                          ? 'Si'
+                          : 'No',
                       alignment: 'right',
                       bold: true,
                     },
@@ -1227,7 +1229,10 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: this.agreementDetail['hasDevelopmentPlan'] == true ? "Si" : "No",
+                      text:
+                        this.agreementDetail['hasDevelopmentPlan'] == true
+                          ? 'Si'
+                          : 'No',
                       alignment: 'right',
                       bold: true,
                     },
@@ -1314,7 +1319,8 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: this.agreementDetail['finanApa'] == true ? "Si" : "No",
+                      text:
+                        this.agreementDetail['finanApa'] == true ? 'Si' : 'No',
                       alignment: 'right',
                       bold: true,
                     },
@@ -1348,7 +1354,10 @@ export class ReportsComponent implements OnInit {
                       alignment: 'left',
                     },
                     {
-                      text: this.agreementDetail['source'] == null ? '' : this.agreementDetail['source'].name,
+                      text:
+                        this.agreementDetail['source'] == null
+                          ? ''
+                          : this.agreementDetail['source'].name,
                       alignment: 'right',
                       bold: true,
                     },
@@ -1577,8 +1586,8 @@ export class ReportsComponent implements OnInit {
       item.a9 = item.numFamily;
       item.a10 = item.benFamily;
       item.a11 = item.areaAmbitc;
-      item.a12 = item.finanApa == false ? "No" : "Si";
-      item.a12 = item.source != null ? item.source.name : "";
+      item.a12 = item.finanApa == false ? 'No' : 'Si';
+      item.a12 = item.source != null ? item.source.name : '';
       item.a13 = item.genObj;
       return _.omit(item, [
         'agreementState',
@@ -1629,7 +1638,7 @@ export class ReportsComponent implements OnInit {
         'surfaceAmbito',
         'surfaceIntervention',
         'vigency',
-        'territoryMod'
+        'territoryMod',
       ]);
     });
   }

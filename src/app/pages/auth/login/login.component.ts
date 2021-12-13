@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../../_services/base/alert.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from '../../../_services/auth/authentication.service';
-import { first } from 'rxjs/operators';
 import { UserService } from '../../../_services/auth/user.service';
+import { AlertService } from '../../../_services/base/alert.service';
 
 @Component({
   selector: 'app-login',

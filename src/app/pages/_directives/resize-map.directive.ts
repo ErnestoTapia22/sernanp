@@ -1,11 +1,10 @@
 import {
-  Directive,
-  Input,
   AfterViewInit,
-  OnDestroy,
+  Directive,
   ElementRef,
+  Input,
+  OnDestroy,
   Renderer2,
-  HostBinding,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';

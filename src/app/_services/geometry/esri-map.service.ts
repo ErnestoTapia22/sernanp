@@ -1,11 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import WebMap from '@arcgis/core/WebMap';
-import Widget from '@arcgis/core/widgets/Widget';
-import Layer from '@arcgis/core/layers/Layer';
-import Map from '@arcgis/core/Map';
-import layer from '@arcgis/core/layers/MapImageLayer';
 import Popup from '@arcgis/core/widgets/Popup';
 
 export type Position =

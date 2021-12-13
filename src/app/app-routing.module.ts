@@ -1,26 +1,21 @@
-import { Component, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { BlankLayoutComponent } from './pages/base/layout/blank-layout/blank-layout.component';
-import { EmptyLayoutComponent } from './pages/base/layout/empty-layout/empty-layout.component';
-import { FullLayoutComponent } from './pages/base/layout/full-layout/full-layout.component';
-import { BaseMapComponent } from './pages/geometry/base-map/base-map.component';
-import { IndexComponent } from './pages/base/index/index.component';
-import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
-import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
-import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
-import { ReportsComponent } from './pages/reports/reports.component';
-import { UserComponent } from './pages/user/user.component';
-import { TestComponent } from './pages/base/test/test.component';
+import { AuthGuard } from './helpers/auth.guard';
 import { AdminComponent } from './pages/admin/admin.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { AgreementNewComponent } from './pages/base/agreement/agreement-new/agreement-new.component';
+import { AgreementComponent } from './pages/base/agreement/index/agreement.component';
+import { IndexComponent } from './pages/base/index/index.component';
+import { BlankLayoutComponent } from './pages/base/layout/blank-layout/blank-layout.component';
+import { FullLayoutComponent } from './pages/base/layout/full-layout/full-layout.component';
+import { MonitoringComponent } from './pages/base/monitoring/index/monitoring.component';
+import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.component';
+import { NotFoundComponent } from './pages/base/not-found/not-found.component';
+import { PublicComponent } from './pages/base/public/public.component';
 import { AnpComponent } from './pages/masterplan/anp/anp.component';
 import { MasterPlanComponent } from './pages/masterplan/master-plan/master-plan.component';
-import { NotFoundComponent } from './pages/base/not-found/not-found.component';
-import { AuthGuard } from './helpers/auth.guard';
-import { Role } from './_models/auth/role';
-import { PublicComponent } from './pages/base/public/public.component';
-import { WorkPlanComponent } from './pages/base/monitoring/work-plan/work-plan.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { UserComponent } from './pages/user/user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'default', pathMatch: 'full' },

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { ApiBaseService } from '../base/api-base.service';
-import { AlertService } from '../base/alert.service';
-import { lastValueFrom } from 'rxjs';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import WFSLayer from '@arcgis/core/layers/WFSLayer';
+import { lastValueFrom, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { AlertService } from '../base/alert.service';
+import { ApiBaseService } from '../base/api-base.service';
 
 @Injectable({
   providedIn: 'root',

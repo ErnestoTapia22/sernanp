@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AdminService } from '../../_services/admin/admin.service';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { AdminService } from '../../_services/admin/admin.service';
 import { AlertService } from '../../_services/base/alert.service';
-
-import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -54,7 +53,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         id: 0,
         items: [],
         item: {},
-      }
+      },
     };
   }
 
@@ -134,7 +133,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.modules && Object.keys(this.modules).length > 0) {
         for (const key in this.modules) {
           this.adminService.moduleList(key).subscribe((response) => {
-            if (response && response.items && response.items.length > 0) {              
+            if (response && response.items && response.items.length > 0) {
               this.modules[key].items = [];
               this.modules[key].items = response.items;
             } else {

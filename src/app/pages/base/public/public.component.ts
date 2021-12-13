@@ -1,29 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-//services
-import { LayerService } from '../../../_services/geometry/layer.service';
-import { AlertService } from '../../../_services/base/alert.service';
-import { BaseService } from '../../../_services/base/base.service';
+//auth
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services/auth/authentication.service';
-
-//widgets
-import BookMarks from '@arcgis/core/widgets/Bookmarks';
-import Home from '@arcgis/core/widgets/Home';
-import ScaleBar from '@arcgis/core/widgets/ScaleBar';
-import Expand from '@arcgis/core/widgets/Expand';
-import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
+//widgets
+import BookMarks from '@arcgis/core/widgets/Bookmarks';
+import Expand from '@arcgis/core/widgets/Expand';
+import Home from '@arcgis/core/widgets/Home';
+import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 //tree
-import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
-import { TreeModel } from '../../../_models/base/tree-model';
-import { CustomTreeItem } from '../../../helpers/custom-tree-item';
+import { TreeviewComponent } from 'ngx-treeview';
+import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //environment
 import { environment } from '../../../../environments/environment';
-
-//auth
-import { Router, ActivatedRoute } from '@angular/router';
+import { CustomTreeItem } from '../../../helpers/custom-tree-item';
+import { AlertService } from '../../../_services/base/alert.service';
+import { BaseService } from '../../../_services/base/base.service';
+//services
+import { LayerService } from '../../../_services/geometry/layer.service';
 
 @Component({
   selector: 'app-public',

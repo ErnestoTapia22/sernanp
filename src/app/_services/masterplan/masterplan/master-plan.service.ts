@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseService } from '../../base/api-base.service';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { ApiBaseService } from '../../base/api-base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class MasterPlanService {
     this.segmentActionLineInsert = '/actionline/save';
     this.segmentActionLineDelete = '/actionline/delete/';
     this.segmentMasterPlanInsert = '/masterplan/save';
-  }  
+  }
   masterPlanInsert(item): Observable<any> {
     return this.apiBaseService.post(
       `${environment.apiUrl}${this.segmentMasterPlanInsert}`,
@@ -73,8 +73,6 @@ export class MasterPlanService {
     );
   }
   componentList(): Observable<any> {
-    return this.apiBaseService.get(
-      `${environment.apiUrl}/component/list`
-    );
+    return this.apiBaseService.get(`${environment.apiUrl}/component/list`);
   }
 }

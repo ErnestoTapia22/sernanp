@@ -1,24 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MonitoringService } from '../../../../_services/base/monitoring.service';
-import { AlertService } from '../../../../_services/base/alert.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AgreementService } from '@app/_services/base/agreement.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { WorkPlanService } from '@app/_services/base/work-plan.service';
-
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { query } from '@angular/animations';
+import { AnpService } from '@app/_services/masterplan/anp/anp.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { debug } from 'console';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject } from 'rxjs';
+import { AlertService } from '../../../../_services/base/alert.service';
+import { MonitoringService } from '../../../../_services/base/monitoring.service';
+
 @Component({
   selector: 'app-work-plan',
   templateUrl: './work-plan.component.html',
@@ -2275,14 +2266,10 @@ export class WorkPlanComponent implements OnInit, OnDestroy {
     this.monitoringReady = false;
   }
   demoClick(e) {
-    if (e == 1)
-      this.detailTitle = 'Detalle de acuerdo';
-    else if (e == 2)
-      this.detailTitle = 'Plan de Trabajo';
-    else if (e == 3)
-      this.detailTitle = 'Monitoreo';
-    else 
-      this.detailTitle = '';
+    if (e == 1) this.detailTitle = 'Detalle de acuerdo';
+    else if (e == 2) this.detailTitle = 'Plan de Trabajo';
+    else if (e == 3) this.detailTitle = 'Monitoreo';
+    else this.detailTitle = '';
   }
   ngOnDestroy() {}
 }

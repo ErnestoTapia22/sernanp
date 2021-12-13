@@ -1,20 +1,14 @@
 import {
   Component,
-  OnInit,
-  ViewChild,
   ElementRef,
-  OnDestroy,
-  NgZone,
-  Input,
-  Output,
   EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
-// import MapView from '@arcgis/core/views/MapView';
-// import Map from '@arcgis/core/Map';
-import BookMarks from '@arcgis/core/widgets/Bookmarks';
-import Expand from '@arcgis/core/widgets/Expand';
-// import WebMap from '@arcgis/core/WebMap';
-import config from '@arcgis/core/config';
 import { EsriMapService } from '../../../_services/geometry/esri-map.service';
 
 @Component({

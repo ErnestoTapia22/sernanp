@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseService } from '../../base/api-base.service';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { ApiBaseService } from '../../base/api-base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,6 @@ export class AnpService {
     );
   }
   anpList(): Observable<any> {
-    return this.apiBaseService.get(
-      `${environment.apiUrl}/anp/list`
-    );
+    return this.apiBaseService.get(`${environment.apiUrl}/anp/list`);
   }
 }

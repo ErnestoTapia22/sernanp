@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
 import * as XLSX2 from 'sheetjs-style';
 
 @Injectable({
@@ -50,7 +49,7 @@ export class ExcelService {
     const worksheet: XLSX2.WorkSheet = XLSX2.utils.json_to_sheet(json, {
       dateNF: 'dd/MM/yyyy',
     });
-    worksheet['!cols'] = wscols;    
+    worksheet['!cols'] = wscols;
     worksheet.A1.v = 'Objetivo';
     worksheet.B1.v = 'compromiso';
     worksheet.C1.v = 'Estrategia';

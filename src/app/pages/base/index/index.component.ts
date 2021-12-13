@@ -1,33 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-//services
-import { LayerService } from '../../../_services/geometry/layer.service';
-import { AlertService } from '../../../_services/base/alert.service';
-import { BaseService } from '../../../_services/base/base.service';
+//auth
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services/auth/authentication.service';
-
-//widgets
-import BookMarks from '@arcgis/core/widgets/Bookmarks';
-import Home from '@arcgis/core/widgets/Home';
-import ScaleBar from '@arcgis/core/widgets/ScaleBar';
-import Expand from '@arcgis/core/widgets/Expand';
-import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
-import Search from '@arcgis/core/widgets/Search';
-import Locator from '@arcgis/core/tasks/Locator';
-import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 //map
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import Locator from '@arcgis/core/tasks/Locator';
+import BaseMapGallery from '@arcgis/core/widgets/BasemapGallery';
+//widgets
+import BookMarks from '@arcgis/core/widgets/Bookmarks';
+import Expand from '@arcgis/core/widgets/Expand';
+import Home from '@arcgis/core/widgets/Home';
+import ScaleBar from '@arcgis/core/widgets/ScaleBar';
+import Search from '@arcgis/core/widgets/Search';
 //tree
-import { TreeviewItem, TreeviewComponent } from 'ngx-treeview';
-import { TreeModel } from '../../../_models/base/tree-model';
-import { CustomTreeItem } from '../../../helpers/custom-tree-item';
+import { TreeviewComponent } from 'ngx-treeview';
+import CustomWidget from 'src/app/pages/geometry/widgets/custom-widget';
 //environment
 import { environment } from '../../../../environments/environment';
-//popup
-import PopupTemplate from '@arcgis/core/PopupTemplate';
-import Popup from '@arcgis/core/widgets/Popup';
-//auth
-import { Router, ActivatedRoute } from '@angular/router';
+import { CustomTreeItem } from '../../../helpers/custom-tree-item';
+import { AlertService } from '../../../_services/base/alert.service';
+import { BaseService } from '../../../_services/base/base.service';
+//services
+import { LayerService } from '../../../_services/geometry/layer.service';
 
 @Component({
   selector: 'app-index',

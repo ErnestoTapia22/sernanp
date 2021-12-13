@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AnpService } from '../../../_services/masterplan/anp/anp.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '@app/_services/base/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { AnpService } from '../../../_services/masterplan/anp/anp.service';
 
 @Component({
   selector: 'app-anp',

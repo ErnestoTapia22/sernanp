@@ -3,14 +3,8 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AlertService } from '../../_services/base/alert.service';
 
-import {
-  HttpHeaders,
-  HttpParams,
-  HttpClient,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { debug } from 'console';
 
 @Injectable({
   providedIn: 'root',
